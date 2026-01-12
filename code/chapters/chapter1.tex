@@ -1,0 +1,560 @@
+\chapter{The Axioms of ALL}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}} % Reset section numbering for Chapter 1 onwards
+
+In modern mathematics, is there any single axiom that can be called “The Axioms of all Branches”? It’s quite a tricky question because researchers in different fields have different answers for it. But if we take the intersection of the answers from most of them, we would find only one element in this set: The Set Theory.
+
+\section{The Naïve Set Theory}
+Actually, if you are a student majoring in engineering or applied mathematics, learning naïve set theory is enough for you to cover the math you need during your work and study. But we need to know that the naïve theory is basically an intuitive definition, which is not included as a part of the modern axiomatic set theory. Although we say that the naïve set theory is a really clear and useful definition of the concept “set”, we have to declare that the naïve set theory is incomplete because naïve set theory itself cannot resolve Russell's paradox. We will introduce the paradox that causes the third mathematical crisis to readers later.
+
+\begin{definition}[Set]
+A \textbf{set} is an unordered collection of distinct objects, called \textbf{elements} or \textbf{members} of the set. A set is said to \emph{contain} its elements. We write $a \in A$ to denote that $a$ is an element of the set $A$. The notation $a \notin A$ means $a$ is not an element of the set.
+\end{definition}
+
+The concept of set is quite simple. A set can be the container of anything, like numbers, points, other sets, even an apple can be a set. The only requirement is that the elements in a set must be distinct. For example, the set $\{1, 2, 2, 3\}$ is actually equal to the set $\{1, 2, 3\}$ because the element $2$ is repeated.
+
+\begin{note}
+An object can only be in one of the two states: 'belonging to $A$' or 'not belonging to $A$'; it cannot be in both states at the same time, nor can it be in neither state.
+\end{note}
+
+
+\begin{definition}[Subset]
+We say that the set $A$ is a \textbf{subset} of $B$, written $A \subseteq B$, if every element of $A$ is an element of $B$. Additionally, $A$ is a \textbf{proper subset} of $B$, written $A \subset B$, if $A \subseteq B$ and $A \ne B$.
+\end{definition}
+
+The concept of subset is quite straightforward. If all the elements in set $A$ can be found in set $B$, then $A$ is a subset of $B$. For example, $\{1, 2\} \subseteq \{1, 2, 3\}$, and $\{1, 2\} \subset \{1, 2, 3\}$. However, in later study, we will find that the concept of subset creates contradcitions in naïve set theory, which is the root cause of Russell's paradox.
+
+\begin{definition}[Equality]
+Two sets $A$ and $B$ are \textbf{equal} (i.e., they are the same set), written $A = B$, if they contain the same members.
+\end{definition}
+
+Set equality can be determined using the definition of subset. If $A \subseteq B$ and $B \subseteq A$, then $A = B$. This is the formal definition of set equality.
+
+Here are several common set operations, shown below:
+
+\begin{definition}[Set Union]
+The \textbf{union} of sets $A$ and $B$ is denoted as $A \cup B$, which contains all the elements of $A$ together with the elements of $B$.
+\end{definition}
+
+\begin{definition}[Set Intersection]
+The \textbf{intersection} of sets $A$ and $B$ is denoted as $A \cap B$, which contains the elements that are the members of both $A$ and $B$.
+\end{definition}
+
+\begin{definition}[Set difference]
+The \textbf{difference} of the set $A$ w.r.t $B$, written as $A - B$ (or $A \setminus B$), is the set consisting of those elements of $A$ that are not in $B$.
+\end{definition}
+
+\begin{definition}[Empty set]
+The \textbf{empty set}, denoted $\emptyset$, is the set that contains no elements.
+\end{definition}
+
+Note that the empty set is a subset of every set. And there is only one empty set in the whole universe of sets. Which means that if two sets have no elements, they are equal.
+
+\begin{definition}[Power set]
+The \textbf{power set} $\mathcal{P}(x)$ (aka $2^{x}$): the set consisting of all subsets of $x$.
+\end{definition}
+
+According to the definition above, we can easily find several conclusions below:
+\begin{inference}
+$\emptyset \subseteq A$ for any set $A$.
+\end{inference}
+\begin{inference}
+Assume that the number of elements in the finite set $x$ is $\text{card}(x)$, then $\text{card}(\mathcal{P}(x)) = 2^{\text{card}(x)}$.
+\end{inference}
+\begin{inference}
+If the set $x$ is empty, then $\text{card}(\mathcal{P}(\emptyset)) = 1$. (This inference can be seen as an extension of the inference 1.1.2).
+\end{inference}
+
+\subsection*{Russell’s Paradox}
+Russell’s Paradox makes the naïve set theory incomplete. Russell assumed there exists a set $X$ that contains sets that don’t include themselves.
+$$ X = \{ x \mid x \notin x \} $$
+And then he found $X$ doesn't belong to set $X$ nor does it belong to set $X$.
+\begin{align*}
+    X \in X \implies X \notin X \\
+    X \notin X \implies X \in X
+\end{align*}
+So, does $X$ belong to $X$ or not? Thus, this creates a contradiction, because $X$ either belongs to $X$ or does not belong to $X$, which is determined by the nature of naive set theory itself. However, the properties of the naïve set theory allow the existence of set $X$, which creates a contradiction.
+
+In order to mend such a flaw present in naive set theory, countless mathematicians devoted themselves tirelessly and proposed the ZFC axiomatic system, which ultimately became the core of modern set theory.
+
+\section{The Axiomatic Set Theory}
+
+\subsection{The ZFC Axioms System}
+ZFC stands for \textbf{Zermelo-Fraenkel Set theory with the axiom of choice}, which includes 9 different axioms (numbered from ZF1 to ZF8 and AC). We will now introduce them to the readers one by one.
+
+\paragraph{Principles:}
+\begin{itemize}
+    \item Either $a \in A$ or $a \notin A$ but not both.
+    \item A formal language is required for constructing meaningful statements.
+    \item Every object is a set, and every set is an object.
+\end{itemize}
+
+\paragraph{ZF1 (Axiom of Extensionality)}
+If $X$ and $Y$ have the same elements, then $X = Y$.
+$$ \forall X \forall Y (\forall u (u \in X \leftrightarrow u \in Y) \to X = Y) $$
+(ZF1 defines the “=” in set theory)
+
+\paragraph{ZF2 (Axiom of the Unordered Pair)}
+For any $a$ and $b$, there exists a set $\{a,b\}$ that contains exactly $a$ and $b$. (Also called Axiom of Pairing)
+$$ \forall a \forall b \exists Z \forall u (u \in Z \leftrightarrow (u = a \vee u = b)) $$
+(ZF2 constructs the unordered pairs and allows the existence of ordered pairs.)
+
+\paragraph{ZF3 (Axiom of Subsets)}
+Assume $\phi$ is a property with parameter $p$, then for any $X$ and $p$, there exists a Set $Y = \{u \in X \mid \phi(u, p)\}$ that contains all those $u \in X$ that have the property $\phi$. (also called Axiom of Separation or Axiom of Comprehension)
+$$ \forall X \forall p \exists Y \forall u (u \in Y \leftrightarrow (u \in X \wedge \phi(u, p))) $$
+(ZF3 is the key axiom that prevents the situation Russell’s paradox described. Assume $X = \{ x \in C \mid x \notin x \}$. According to the axiom of subsets, $X$ must be constructed from an existing set $C$. This form of definition automatically excluded $X$ from being a “set of all sets”.)
+
+\paragraph{ZF4 (Axiom of the Sum Set)}
+For any $X$, there exists a set $Y = \bigcup X$, the union of all elements of $X$. (Also called Axiom of Union)
+$$ \forall X \exists Y \forall u (u \in Y \leftrightarrow \exists Z (Z \in X \wedge u \in Z)) $$
+(ZF4 allows the construction of a union set, allowing mathematicians to construct bigger sets and form more complex mathematical structures.)
+
+\paragraph{ZF5 (Axiom of the Power Set)}
+For any $X$, there exists a set $Y = \mathcal{P}(X)$, the set of all subsets of $X$.
+$$ \forall X \exists Y \forall u (u \in Y \leftrightarrow u \subseteq X) $$
+(ZF5 defines the concept of a power set.)
+
+\paragraph{ZF6 (Axiom of Infinity)}
+There exists an infinite set.
+$$ \exists S (\emptyset \in S \wedge \forall x (x \in S \to x \cup \{x\} \in S)) $$
+(ZF6 allows the existence of infinite sets, which is the basis of the set of $\mathbb{N}$.)
+
+\paragraph{ZF7 (Axiom of Replacement)}
+If $F$ is a function, then for any $X$, there exists a set $Y = F[X] = \{F(x) \mid x \in X\}$.
+$$ \forall X [(\forall x \in X \exists! y \phi(x,y)) \to \exists Y \forall y (y \in Y \leftrightarrow \exists x \in X \phi(x,y))] $$
+(ZF7 allows mathematicians to construct new sets using existing sets and a function. It can imply ZF3.)
+
+\paragraph{ZF8 (Axiom of Foundation)}
+Every non-empty set $A$ contains a member that is disjoint from $A$.
+$$ \forall A (A \ne \emptyset \to \exists x (x \in A \wedge x \cap A = \emptyset)) $$
+(ZF8 avoids infinite nesting of sets ($A \in A$) and is a powerful aid to ZF3 when refuting Russell's paradox. If $A \in A$, construct $B=\{A\}$. Then $A$ is the only element in $B$. By ZF8, $A \cap B = \emptyset$. But $A \in B$ and $A \in A$, so $A \in A \cap B$, which means $A \cap B \ne \emptyset$. This is a contradiction.)
+
+\paragraph{AC (Axiom of Choice)}
+Every family of nonempty sets has a choice function.
+$$ \forall \mathcal{F} [(\emptyset \notin \mathcal{F}) \to \exists f: \mathcal{F} \to \bigcup \mathcal{F} (\forall A \in \mathcal{F} (f(A) \in A))] $$
+(AC is fundamental as it guarantees the ability to make infinitely many simultaneous, non-constructive choices, which is indispensable for proving a vast number of crucial theorems across diverse fields of mathematics.)
+
+Although Gödel's incompleteness theorems tell us that the ZFC axiom system cannot be proven to be consistent, most mathematicians believe that ZFC is consistent because it has not yet produced any fundamental contradiction that threatens the integrity of mathematics. Therefore, it can be regarded as a reliable foundation for modern mathematics.
+
+Of course, other axiomatic systems exist, like the NBG (von Neumann–Bernays–Gödel) axiomatic system. But for practical purposes, ZFC is enough. From the ZFC axiomatic system, we know that no set includes everything.
+
+\section{Extensions of Axiomatic Set Theory}
+
+\subsection{Ordered Pairs and Cartesian Product}
+
+\subsubsection{Ordered Pairs}
+Now, with the help of ZFC axiomatic set theory, we can define ordered pairs:
+\begin{definition}[Ordered Pair]
+We define the ordered pair $(a,b)$ as:
+$$ (a,b) := \{\{a\}, \{a,b\}\} $$
+$\{a\} \in \{\{a\}, \{a,b\}\}$ guarantees the order of the pair $(a,b)$.
+\end{definition}
+
+\begin{inference}
+$(a,b) = (c,d)$ if and only if $a=c$ and $b=d$.
+\end{inference}
+\begin{inference}
+$(a,a) = \{\{a\}, \{a,a\}\} = \{\{a\}\}$.
+\end{inference}
+
+\subsubsection{Cartesian Product}
+\begin{definition}[Cartesian Product]
+The Cartesian Product of two sets $A$ and $B$ is defined as:
+$$ A \times B := \{ (a,b) \in 2^{2^{x \cup y}} \mid a \in A \wedge b \in B \} $$
+\end{definition}
+Furthermore, we can define the n-ary Cartesian product as below:
+$$ X_1 \times X_2 \times \dots \times X_n := \{ (x_1, x_2, \dots, x_n) \mid x_i \in X_i \text{ for } i=1, \dots, n \} $$
+Cartesian Product is widely used in Mathematical Analysis, Analytic Geometry, and Group Theory, etc.
+
+\subsection{Relations and Their Special Types}
+
+\subsubsection{Relations}
+Now, based on the concept of Cartesian Product, we can define Relations.
+\begin{definition}[Relation]
+Suppose we are given two sets $X$ and $Y$. A \textbf{relation} $R$ from $X$ to $Y$ is a subset of the Cartesian Product $X \times Y$.
+$$ R \subseteq X \times Y $$
+If $X=Y$, we can say that $R$ is a relation on $A$. We write $xRy$ for $(x,y) \in R$.
+\end{definition}
+For all relations, there are descriptions unique to themselves, which we denote as $P(x,y)$. Then a relation can be described as $R = \{ (x,y) \in X \times Y \mid P(x,y) \}$.
+
+\begin{remark}
+Mark that the $Y$ is the range of the relation, and $X$ is the domain of the relation. This fact may contradict our common sense of the relation.
+\[
+\text{dom}R:=\{x \in \cup \cup R| \exists y (x,y) \in R\}
+\]
+\[
+\text{ran}R:=\{y\in \cup \cup R| \exists x(x,y) \in R\}
+\]
+\end{remark}
+
+\subsubsection{Some special types of relations}
+Here are a few properties that can be used to classify different relations on a set $A$.
+\begin{description}
+    \item[Reflexive] $R$ is reflexive if and only if $\forall a \in A ((a,a) \in R)$.
+    \item[Antireflexive (or Irreflexive)] $R$ is antireflexive if and only if $\forall a \in A ((a,a) \notin R)$.
+    \item[Symmetric] $R$ is symmetric if and only if $\forall a,b \in A ((a,b) \in R \to (b,a) \in R)$.
+    \item[Antisymmetric] $R$ is antisymmetric if and only if $\forall a,b \in A [((a,b) \in R \wedge (b,a) \in R) \to a = b]$.
+    \item[Transitive] $R$ is transitive if and only if $\forall a,b,c \in A [((a,b) \in R \wedge (b,c) \in R) \to (a,c) \in R]$.
+\end{description}
+Using these properties, we can define a very important concept in mathematics: the equivalence relation.
+
+\begin{definition}[Equivalence Relation]
+Suppose $R$ is a relation on $A$. If $R$ simultaneously possesses reflexivity, symmetry, and transitivity, then $R$ is an \textbf{equivalence relation} on $A$.
+\end{definition}
+
+We can use an equivalence relation to classify a set.
+\begin{definition}[Equivalence Class]
+We define the \textbf{equivalence class} $[a]$ of an element $a \in A$ by:
+$$ [a] = \{ x \in A \mid xRa \} $$
+\end{definition}
+We can completely classify a set using equivalence classes. For example, in SJTU, we can classify all students by their nationality. This relation satisfies reflexivity, symmetry, and transitivity, so it’s an equivalence relation.
+
+Similarly, we can define order relations.
+\begin{definition}[Partial Order]
+Suppose $R$ is a relation on $A$. If $R$ simultaneously possesses reflexivity, antisymmetry, and transitivity, then $R$ is a \textbf{partial order relation} on $A$. A set $A$ with a partial order $R$ is a \textbf{partially ordered set (poset)}, denoted $(A, R)$ or $(A, \preceq)$.
+\end{definition}
+
+\begin{definition}[Total/Linear Order]
+Suppose $R$ is a partial order relation on $A$. If for all $a, b \in A$, either $aRb$ or $bRa$ is true, then $R$ is a \textbf{total order relation} on $A$.
+\end{definition}
+
+\begin{definition}[Strict Partial Order]
+Suppose $R$ is a relation on $A$. If $R$ simultaneously possesses antireflexivity and transitivity, then $R$ is a \textbf{strict partial order relation} on $A$. (Note: antireflexivity and transitivity imply asymmetry).
+\end{definition}
+
+We can also define inverse and composite relations.
+
+Mind that the domain and range of the inverse relation are swapped compared to the original relation.
+
+\begin{definition}[Inverse Relation]
+We define the \textbf{inverse relation} $R^{-1} \subseteq Y \times X$:
+$$ R^{-1} = \{ (y,x) \mid (x,y) \in R \} $$
+In more formal language:
+\[
+R^{-1} = \{(x,y) \in \text{ran}R \times \text{dom}R | yRx\}
+\]
+\end{definition}
+
+\begin{definition}[Composite Relation]
+Let $R \subseteq X \times Y$ and $S \subseteq Y \times Z$. We define the \textbf{composite relation} $S \circ R \subseteq X \times Z$ by:
+$$ S \circ R = \{ (x,z) \mid \exists y \in Y ((x,y) \in R \wedge (y,z) \in S) \} $$
+\end{definition}
+\begin{theorem}
+\begin{enumerate}
+    \item $(R^{-1})^{-1} = R$
+    \item $(R \circ S)^{-1} = S^{-1} \circ R^{-1}$
+    \item $(R \circ (S \cup T)) = (R \circ S) \cup (R \circ T)$
+\end{enumerate}
+\end{theorem}
+However, mind that$R \circ (S \cap T) \neq (R \circ S) \cap (R \circ T)$.
+Here is an counterexample:
+We define $U=\{a,b,c,d\}$ $R=\{(a,b),(a,c)\}$, $S=\{(b,d)\}$, $T=\{(c,d)\}$.
+We know that $R \circ (S \cap T)  = \emptyset$ because $S \cap T = \emptyset$. But $(R \circ S) \cap (R \circ T) = \{(a,d)\}$, which is an counterexample.
+
+Using the concept of equivalence relation, we can “divide” a set precisely.
+\begin{definition}[Partition]
+Assume $A$ is a nonempty set. A collection $P$ of non-empty subsets of $A$ ($P \subseteq \mathcal{P}(A)$) is a \textbf{partition} on $A$ if:
+\begin{enumerate}
+    \item No set in $P$ is empty: $\forall S \in P (S \ne \emptyset)$.
+    \item The union of sets in $P$ is $A$: $\bigcup_{S \in P} S = A$.
+    \item The sets in $P$ are pairwise disjoint: $\forall S_1, S_2 \in P (S_1 \ne S_2 \to S_1 \cap S_2 = \emptyset)$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+Every partition of a set $A$ corresponds to an equivalence relation on $A$, and vice versa.
+\end{theorem}
+
+\subsection{A Brief Example: Measure}
+Here comes a question: can we assign a non-negative value representing the “length” of a subset of $\mathbb{R}$?
+
+\begin{definition}[Measure]
+A \textbf{measure} $\mu$ on a collection $\mathcal{M}$ (of subsets of a set $X$) is a function $\mu: \mathcal{M} \to [0, \infty]$ such that for any pairwise-disjoint countable-infinite sequence of sets $\{A_i\}_{i=1}^\infty$ in $\mathcal{M}$ (i.e., $A_i \cap A_j = \emptyset$ whenever $i \ne j$), if their union is also in $\mathcal{M}$, then
+$$ \mu\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty \mu(A_i) $$
+This key property is called \textbf{countable additivity}.
+\end{definition}
+
+Does there exist a measure $m$ on $\mathcal{P}(\mathbb{R})$ (i.e., all subsets of the real numbers) that satisfies the following conditions (our naïve understanding of "length"):
+\begin{enumerate}
+    \item $m([0,1]) = 1$.
+    \item Translation invariance: $m(A+x) = m(A)$ for any $A \subseteq \mathbb{R}$ and $x \in \mathbb{R}$, where $A+x = \{a+x \mid a \in A\}$. Which means that the same measure apply to all the set with the same structure on the axis.
+    \item Countable additivity.
+\end{enumerate}
+
+Unfortunately, the answer is no. We construct the \textbf{Vitali Set}, which can’t be measured following these conditions.
+
+\begin{proof}[Proof of the existence of a non-measurable set (Vitali Set)]
+Define an equivalence relation $\sim$ on $[0,1]$ by $x \sim y \iff x-y \in \mathbb{Q}$.
+This is an equivalence relation. Let $V$ be the set of its equivalence classes.
+According to the Axiom of Choice, we can choose exactly one element from each equivalence class, altogether to form a set of representatives $M$. We can assume that $M \subseteq [0,1]$.
+Let $\mathbb{Q}^* = \mathbb{Q} \cap [-1, 1]$. For each $q \in \mathbb{Q}^*$, define $M_q = M+q = \{m+q \mid m \in M\}$.
+We have the following conclusions:
+\begin{enumerate}
+    \item All $M_q$ (for $q \in \mathbb{Q}^*$) are pairwise disjoint. (If $y \in M_q \cap M_r$, then $y = m_1+q = m_2+r$. This means $m_1 - m_2 = r-q \in \mathbb{Q}$, so $m_1 \sim m_2$. By construction of $M$, this implies $m_1=m_2$, so $q=r$.)
+    \item $[0,1] \subseteq \bigcup_{q \in \mathbb{Q}^*} M_q$. (For any $x \in [0,1]$, let $m \in M$ be the representative $x$ is equivalent to, so $x-m = q \in \mathbb{Q}$. Since $x,m \in [0,1]$, $q \in [-1,1]$. Thus $x = m+q \in M_q$.)
+    \item $\bigcup_{q \in \mathbb{Q}^*} M_q \subseteq [-1, 2]$. (Since $M \subseteq [0,1]$ and $\mathbb{Q}^* \subseteq [-1,1]$.)
+\end{enumerate}
+Now, let's try to measure $M$. Assume $m(M) = c$.
+By translation invariance, $m(M_q) = m(M) = c$ for all $q \in \mathbb{Q}^*$.
+By countable additivity (since $\mathbb{Q}^*$ is countable):
+$$ m\left(\bigcup_{q \in \mathbb{Q}^*} M_q\right) = \sum_{q \in \mathbb{Q}^*} m(M_q) = \sum_{q \in \mathbb{Q}^*} c $$
+From our inclusions:
+$$ m([0,1]) \le m\left(\bigcup_{q \in \mathbb{Q}^*} M_q\right) \le m([-1,2]) $$
+$$ 1 \le \sum_{q \in \mathbb{Q}^*} c \le 3 $$
+If $c = 0$, then $1 \le 0$, a contradiction.
+If $c > 0$, then $1 \le \infty$, which is not a contradiction, but $\sum c \le 3$ implies $\infty \le 3$, a contradiction.
+Thus, $M$ cannot be assigned a measure $m(M)$, and is \textbf{non-measurable}.
+\end{proof}
+
+
+\subsection*{Additional Knowledge: The Definition of Lebesgue Measure}
+
+\begin{remark}
+\textbf{Note:} This section provides supplementary material on the definition of the Lebesgue measure. It presents both the original constructive approach and the modern, abstract definition. This content is provided for a deeper historical and theoretical context and can be considered optional for the first reading.
+\end{remark}
+
+\subsubsection*{1. Lebesgue's Original Idea \& Construction}
+
+The original idea, as developed by Henri Lebesgue, is a constructive process for defining the measure of a set \( E \subset \mathbb{R}^n \). It starts with simple sets (intervals) and then approximates more complex sets from the outside.
+
+\begin{definition}[Lebesgue Outer Measure and Measurability]
+The \textbf{Lebesgue outer measure} \( m^*(E) \) of any set \( E \subset \mathbb{R}^n \) is defined by covering \( E \) with a \textbf{countable} collection of \( n \)-dimensional intervals (or cubes) and taking the infimum of the total volume of such coverings.
+\[
+m^*(E) = \inf \left\{ \sum_{k=1}^{\infty} \ell(I_k) : E \subset \bigcup_{k=1}^{\infty} I_k \right\}
+\]
+where \( \{I_k\} \) is a countable collection of \( n \)-dimensional intervals, and \( \ell(I_k) \) is the product of the lengths of its sides (its volume).
+
+A set \( E \) is called \textbf{Lebesgue measurable} if for every \( \epsilon > 0 \), there exists an open set \( O \supset E \) such that the outer measure of the difference \( m^*(O \setminus E) < \epsilon \). This is Carathéodory's criterion, a later improvement that perfectly captures the idea that a measurable set can be "approximated closely" by open sets.
+
+For a measurable set \( E \), its Lebesgue measure \( m(E) \) is simply defined as its outer measure: \( m(E) = m^*(E) \).
+\end{definition}
+
+\subsubsection*{2. Modern (Improved) Definition via \(\sigma\)-Algebras}
+
+The modern approach, which is more abstract and powerful, defines the Lebesgue measure as the completion of a measure defined on a specific \(\sigma\)-algebra. This is the standard definition found in most modern textbooks on measure theory.
+
+\begin{definition}[Lebesgue Measure via \(\sigma\)-Algebra]
+Let \( \mathcal{B}(\mathbb{R}^n) \) be the Borel \(\sigma\)-algebra on \( \mathbb{R}^n \). The \textbf{Lebesgue \(\sigma\)-algebra}, denoted \( \mathcal{L} \), is the completion of \( \mathcal{B}(\mathbb{R}^n) \) with respect to the Lebesgue measure.
+
+The \textbf{Lebesgue measure} is the unique measure
+\[
+m : \mathcal{L} \to [0, \infty]
+\]
+satisfying the following properties:
+\begin{enumerate}
+    \item \textbf{Translation Invariance:} For any \( A \in \mathcal{L} \) and \( x \in \mathbb{R}^n \), \( m(A + x) = m(A) \).
+    \item \textbf{Normalization:} The measure of the unit cube is 1: \( m([0,1]^n) = 1 \).
+    \item \textbf{Countable Additivity:} For any countable collection \( \{E_i\}_{i=1}^\infty \) of pairwise disjoint Lebesgue measurable sets, \( m\left( \bigcup_{i=1}^\infty E_i \right) = \sum_{i=1}^\infty m(E_i) \).
+\end{enumerate}
+Equivalently, it is the unique extension of the pre-measure defined on the algebra of elementary sets (finite unions of intervals) to the full Lebesgue \(\sigma\)-algebra, via Carathéodory's extension theorem.
+\end{definition}
+
+\subsubsection*{3. The Vitali Set: An Example of a Non-Measurable Set}
+
+An important consequence of the properties of the Lebesgue measure is the existence of sets that are not Lebesgue measurable. The most famous example is the \textbf{Vitali set}, constructed by Giuseppe Vitali in 1905.
+
+\begin{definition}[Construction of the Vitali Set]
+Consider the interval \([0,1] \subset \mathbb{R}\). Define an equivalence relation \(\sim\) on \([0,1]\) by:
+\[
+x \sim y \iff x - y \in \mathbb{Q}.
+\]
+This partitions \([0,1]\) into equivalence classes. Using the Axiom of Choice, we select exactly one element from each equivalence class to form a set \( V \subset [0,1] \). This set \( V \) is called a \textbf{Vitali set}.
+\end{definition}
+
+\begin{theorem}[The Vitali Set is Not Lebesgue Measurable]
+The Vitali set \( V \) is not Lebesgue measurable.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds by contradiction. Assume \( V \) is Lebesgue measurable.
+
+Consider the rational numbers in \([-1,1]\), denoted \(\mathbb{Q} \cap [-1,1]\). For each \( q \in \mathbb{Q} \cap [-1,1] \), define the translation:
+\[
+V_q = V + q = \{ v + q : v \in V \}.
+\]
+
+These sets \( V_q \) are pairwise disjoint. If \( v_1 + q_1 = v_2 + q_2 \) for \( v_1, v_2 \in V \) and \( q_1, q_2 \in \mathbb{Q} \), then \( v_1 - v_2 = q_2 - q_1 \in \mathbb{Q} \), which implies \( v_1 \sim v_2 \). Since \( V \) contains exactly one element from each equivalence class, \( v_1 = v_2 \) and thus \( q_1 = q_2 \).
+
+By translation invariance of the Lebesgue measure, if \( V \) is measurable, then each \( V_q \) is measurable and \( m(V_q) = m(V) \).
+
+Now, observe that:
+\[
+[0,1] \subset \bigcup_{q \in \mathbb{Q} \cap [-1,1]} V_q \subset [-1,2].
+\]
+
+If \( V \) is measurable with \( m(V) = 0 \), then by countable additivity:
+\[
+m\left( \bigcup_{q} V_q \right) = \sum_{q} m(V_q) = 0,
+\]
+which contradicts \( m([0,1]) = 1 \).
+
+If \( m(V) > 0 \), then:
+\[
+m\left( \bigcup_{q} V_q \right) = \sum_{q} m(V_q) = \infty,
+\]
+which contradicts \( m([-1,2]) = 3 \).
+
+Therefore, our assumption that \( V \) is measurable must be false. The Vitali set \( V \) is not Lebesgue measurable. We can't find any countable intervals to cover the Vitali set.
+\end{proof}
+
+
+\begin{remark}
+The existence of non-measurable sets like the Vitali set demonstrates that the Lebesgue measure cannot be extended to all subsets of \(\mathbb{R}^n\) while preserving translation invariance and countable additivity. This result relies on the Axiom of Choice, and indeed, it can be shown that in models of set theory without the Axiom of Choice, all subsets of \(\mathbb{R}\) can be Lebesgue measurable.
+\end{remark}
+
+\subsection{Another Example: Closure of Relation}
+Having defined the fundamental properties of relations, we now address a natural question: if a relation $R$ on a set $A$ lacks a certain property, what is the \emph{smallest} relation containing $R$ that \emph{does} possess that property? This leads to the concept of the \textbf{closure} of a relation.
+
+\begin{definition}[Closure]
+Let $P$ be a property of relations (such as reflexivity, symmetry, or transitivity). The \textbf{$P$-closure} of a relation $R$ on a set $A$ is the smallest relation $S$ on $A$ such that:
+\begin{enumerate}
+    \item $R \subseteq S$
+    \item $S$ has the property $P$
+\end{enumerate}
+\end{definition}
+
+There are three important types of closure:
+\begin{description}
+    \item[Reflexive Closure] $R' = R \cup I_A$, where $I_A = \{(a,a) \mid a \in A\}$ is the identity relation on $A$.
+    \item[Symmetric Closure] $R' = R \cup R^{-1}$.
+    \item[Transitive Closure] $R^* = \bigcup_{n=1}^\infty R^n$, where $R^1=R$ and $R^{n+1} = R^n \circ R$.
+\end{description}
+
+\begin{proof}[Proof that $R^*$ is the Transitive Closure]
+We must show $R^*$ is transitive and is the smallest such relation containing $R$.
+\begin{enumerate}
+    \item \textbf{(Transitivity)}
+    Let $(x,y) \in R^*$ and $(y,z) \in R^*$. By definition, $(x,y) \in R^m$ for some $m \ge 1$ and $(y,z) \in R^n$ for some $n \ge 1$.
+    By definition of composition, this implies $(x,z) \in R^{m+n}$.
+    Since $m+n \ge 1$, $(x,z) \in \bigcup_{k=1}^\infty R^k = R^*$.
+    Thus $R^*$ is transitive.
+    
+    \item \textbf{(Minimality)}
+    Let $T$ be any transitive relation such that $R \subseteq T$. We must show $R^* \subseteq T$.
+    We know $R^1 = R \subseteq T$.
+    Assume $R^k \subseteq T$ (inductive hypothesis).
+    Let $(a,c) \in R^{k+1} = R^k \circ R$. Then $\exists b$ such that $(a,b) \in R^k$ and $(b,c) \in R$.
+    By the inductive hypothesis, $(a,b) \in T$. Since $R \subseteq T$, $(b,c) \in T$.
+    Because $T$ is transitive, $(a,b) \in T \wedge (b,c) \in T \implies (a,c) \in T$.
+    Thus $R^{k+1} \subseteq T$.
+    By induction, $R^n \subseteq T$ for all $n \ge 1$.
+    Therefore, $R^* = \bigcup_{n=1}^\infty R^n \subseteq T$.
+    This shows $R^*$ is the smallest transitive relation containing $R$.
+\end{enumerate}
+\end{proof}
+
+\subsection{Mapping and Function}
+In mathematical expressions, we use the language of set theory to define what a map is.
+\begin{definition}[Map / Function]
+A \textbf{map} (or \textbf{function}) $f$ from $A$ to $B$, denoted $f: A \to B$, is a relation $f \subseteq A \times B$ such that for every $x \in A$, there is a \emph{unique} object $y \in B$ such that $(x,y) \in f$. We write this unique $y$ as $f(x)$.
+\begin{itemize}
+    \item The set $A$ is called the \textbf{domain} of $f$.
+    \item The set $B$ is called the \textbf{codomain} of $f$.
+    \item The set $\{f(x) \mid x \in A\} \subseteq B$ is called the \textbf{range} or \textbf{image} of $f$.
+\end{itemize}
+The uniqueness requirement is: $\forall x \in A \forall y_1, y_2 \in B [((x,y_1) \in f \wedge (x,y_2) \in f) \to y_1 = y_2]$.
+\end{definition}
+
+\begin{definition}[Injection]
+A function $f: A \to B$ is an \textbf{injection} (or one-to-one) if and only if:
+$$ \forall x_1, x_2 \in A (f(x_1) = f(x_2) \to x_1 = x_2) $$
+This means that each element in the domain corresponds to a unique element in the codomain.
+\end{definition}
+
+\begin{definition}[Surjection]
+A function $f: A \to B$ is a \textbf{surjection} (or onto) if and only if:
+$$ \forall y \in B \exists x \in A (f(x) = y) $$
+This means that the codomain is equal to the range.
+\end{definition}
+
+\begin{definition}[Bijection]
+A function $f: A \to B$ is a \textbf{bijection} if and only if it is both an injection and a surjection.
+\end{definition}
+
+\begin{definition}[Inverse Function]
+Let $f: A \to B$ be a function. A function $g: B \to A$ is called the \textbf{inverse function} (or inverse map) of $f$ if and only if it satisfies the following two conditions:
+\begin{enumerate}
+    \item $g \circ f = id_A$ (where $id_A$ is the identity map on $A$)
+    \item $f \circ g = id_B$ (where $id_B$ is the identity map on $B$)
+\end{enumerate}
+The inverse map of $f$, if it exists, is unique and denoted by $f^{-1}$. A function has an inverse if and only if it is a bijection.
+\end{definition}
+
+\begin{definition}[Function Composition]
+Let $f: A \to B$ and $g: B \to C$ be two functions. The \textbf{composition} of $g$ and $f$ is a new function denoted $g \circ f: A \to C$ defined as:
+$$ (g \circ f)(x) = g(f(x)) \quad \text{for all } x \in A $$
+\end{definition}
+
+\subsubsection{Function (Special Types)}
+\begin{definition}[Real Function]
+If the domain $X \subseteq \mathbb{R}$ and the codomain $Y \subseteq \mathbb{R}$, the mapping is called a \textbf{real function of one variable}, denoted $y = f(x)$.
+\end{definition}
+
+\paragraph{Piecewise Function}
+A piecewise function is a function that is defined by multiple sub-functions, each of which applies to a certain interval or region of the main function's domain.
+$$ f(x) = \begin{cases}
+    f_1(x) & \text{if condition 1} \\
+    f_2(x) & \text{if condition 2} \\
+    \vdots & \vdots
+    \end{cases} $$
+    
+\paragraph{Implicit Function}
+An implicit function is a function that is defined by an equation relating its variables, e.g., $F(x,y) = 0$, rather than by an explicit formula $y = f(x)$.
+
+\paragraph{Parametric Function}
+A parametric function describes a curve by expressing the coordinates of the points on the curve as functions of a third variable, called a parameter, $t$.
+$$ \begin{cases}
+    x = f(t) \\
+    y = g(t)
+    \end{cases} \quad \text{for } t \text{ in some interval } I $$
+    
+\begin{definition}[Basic Elementary Functions]
+Basic elementary functions are a finite set of fundamental functions:
+\begin{enumerate}
+    \item Constant Functions: $f(x) = c$.
+    \item Power Functions: $f(x) = x^\alpha$.
+    \item Exponential Functions: $f(x) = a^x$ (where $a > 0, a \ne 1$).
+    \item Logarithmic Functions: $f(x) = \log_a x$.
+    \item Trigonometric Functions: $\sin x, \cos x, \tan x$, etc.
+    \item Inverse Trigonometric Functions: $\arcsin x, \arccos x$, etc.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Elementary Function]
+An \textbf{elementary function} is any function that can be obtained from the basic elementary functions by performing a finite number of the following operations:
+\begin{itemize}
+    \item Arithmetic Operations: Addition, subtraction, multiplication, division.
+    \item Composition: The operation of function composition.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Operation]
+An \textbf{operation} is a function from a set to itself. More specifically, an \textbf{n-ary operation} $\omega$ on a set $X$ is a function $\omega: X^n \to X$.
+\end{definition}
+
+\newpage
+
+\subsection{Ordered Structure}
+
+\subsubsection{Well-order}
+In previous parts, we introduced several ordered relations. Now we will define the concept and property of well-order. This is the last part of chapter 1, and well-order can be seen as a bridge to the next chapter.
+
+\begin{definition}[Well-ordered Set]
+A totally ordered set $(W, \le)$ is called a \textbf{well-ordered set} if it satisfies that every non-empty subset has a least element.
+$$ \forall S \subseteq W (S \ne \emptyset \to \exists s \in S \forall x \in S (s \le x)) $$
+\end{definition}
+
+\begin{theorem}
+The set of natural numbers $\mathbb{N}$ under the usual order $\le$ is well-ordered. (This is the \textbf{Well-Ordering Principle}).
+\end{theorem}
+\begin{proof}
+Consider an arbitrary non-empty subset $S$ of $\mathbb{N}$. Start checking each natural number from 0 onwards. The first number that belongs to $S$ is the least element. This process must terminate in a finite number of steps, because if no such element were ever found, it would imply that $S$ is empty, contradicting the assumption. Thus, $\mathbb{N}$ under the usual order is a well-ordered set.
+\end{proof}
+
+It seems that there is a very close connection between the well-ordering principle and the set of natural numbers. And this principle of “starting from the least element” is seemingly very symmetrical to Mathematical Induction (MI). We will reveal their relationships in the next chapter.
+
+\vspace{1cm}
+\noindent
+\textbf{Keywords:} Set, Axiom, ZFC Axiomatic Set theory, Ordered Pairs, Cartesian Product, Relations, Well-ordered Sets. \\
+\textbf{Reference:} Discrete Mathematics and Its Applications (Eighth Edition), Kenneth H. Rosen, McGraw-Hill Education.
+
+\cleardoublepage
