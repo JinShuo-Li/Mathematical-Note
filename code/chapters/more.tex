@@ -254,15 +254,133 @@ If a series converges, we can group terms (insert parentheses) without changing 
 This highlights the dangerous nature of conditional convergence: the order of summation matters!
 \end{theorem}
 
+\subsubsection{Product of Series}
+Now we shall dive into the topic of multiplying two series together. We have following definition:
+
+\begin{definition}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n$ and $\sum_{n=0}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
+    \[\begin{pmatrix}
+        a_1 b_1 & a_1 b_2 & a_1 b_3 & a_1 b_4 & \cdots \\
+        a_2 b_1 & a_2 b_2 & a_2 b_3 & a_2 b_4 & \cdots \\
+        a_3 b_1 & a_3 b_2 & a_3 b_3 & a_3 b_4 & \cdots \\
+        a_4 b_1 & a_4 b_2 & a_4 b_3 & a_4 b_4 & \cdots \\
+    \vdots   & \vdots   & \vdots   & \vdots   & \ddots
+    \end{pmatrix}\]
+\end{definition}
+
+The reason we define the product of two series in this way is that, due to the properties of rearranged sequences, changing the order of summation may alter the sum of the series. For example, we have following two arrangements of the Cauchy product:
+
+\textbf{Cauchy arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=2}^{\infty} \sum_{k=1}^{n-1} a_k b_{n-k} = a_1 b_1 + (a_1 b_2 + a_2 b_1) + (a_1 b_3 + a_2 b_2 + a_3 b_1) + \cdots
+\]
+
+\textbf{Square arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=1}^{\infty} \left(\sum_{i=1}^{n}(a_i b_n+ a_n b_i) - a_n b_n \right)
+\]
+
+Under certain conditions, both arrangements converge to the same sum. This is formalized in the following theorem:
+
+\begin{theorem}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n = A$ and $\sum_{n=0}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
+\end{theorem}
+
+The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
+
+\subsubsection{Infinite Product}
+\begin{definition}
+    Assume $\{a_n\}$ is a sequence such that $a_n \neq 0$ for all $n$. The \textbf{infinite product} $\prod_{n=1}^{\infty} a_n$ is defined as the limit of the partial products:
+    \[ P_N = \prod_{n=1}^{N} a_n \]
+    If the limit $\lim_{N \to \infty} P_N$ exists and is non-zero, we say the infinite product converges to that limit.
+    Else, the infinite product diverges.
+\end{definition}
+
+Just like series, we call $P_N$ the $N$-th partial product of the infinite product.
+
+Mind that if the infinite product "converges to zero", we still say it diverges. We will see why in the following theorem.
+
+Here are some properties of infinite products:
+
+\begin{theorem}
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{n \to \infty} a_n = 1$.
+    
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{m \to \infty} \prod_{n=m+1}^{\infty} a_n = 1$.
+\end{theorem}
+
+Sometimes, it is easier to study the convergence of infinite products by expressing it in terms of $p_n = 1 + a_n$:
+
+\[
+\prod_{n=1}^{\infty} p_n = \prod_{n=1}^{\infty} (1 + a_n)
+\]
+
+Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
+
+\begin{theorem}
+    The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
+    
+    Furthermore, if $a_n \to 0$, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+\end{theorem}
+
+Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
+
+Also, matheaticians use the infinite product deduce some famous formulas, for example:
+
+\textbf{Wallis Law}:
+\[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1} = \left(\frac{2 \cdot 2}{1 \cdot 3}\right) \left(\frac{4 \cdot 4}{3 \cdot 5}\right) \left(\frac{6 \cdot 6}{5 \cdot 7}\right) \cdots\]
+\textbf{Viete Law}:
+\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \frac{\sqrt{2 + \sqrt{2 + \sqrt{2 + \cdots}}}}{2} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
+\textbf{Stirling Law}:
+\[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
+
 \subsection{Function Series}
 
 Function series generalize numerical series by summing functions instead of numbers. They are crucial for representing functions as power series, Fourier series, etc.
+
+Now we will broaden our discussion to series of functions. Consider a sequence of functions $\{f_n(x)\}$ defined on a set $E \subseteq \mathbb{R}$. We define the series of functions as:
+
+\begin{definition}[Function Series]
+A \textbf{function series} is an expression of the form:
+\[ \sum_{n=1}^{\infty} u_n(x) = u_1(x) + u_2(x) + u_3(x) + \cdots \]
+where each $u_n(x)$ is a function defined on $E$.
+\end{definition}
+
+How can we determine whether such a series converges? We need to use the concept of convergence of series:
+
+\begin{definition}
+    Assume $u_n(x)$ is a function defined on a set $E$. For each fixed $x \in E$, we can consider the numerical series $\sum_{n=1}^{\infty} u_n(x)$. If this series converges to a limit $S(x)$, we say that the function series converges at the point $x$, and we call the point the \textbf{point of convergence}.
+\end{definition}
+
+For all the points of convergence, we call the set of them the \textbf{domain of convergence}. Then we can define the sum function of the series:
+
+\begin{definition}[Sum Function]
+If the function series $\sum_{n=1}^{\infty} u_n(x)$ converges at every point $x \in D$, we define the \textbf{sum function} $S(x)$ as:
+\[ S(x) = \sum_{n=1}^{\infty} u_n(x), \quad x \in D \].
+\end{definition}
+
+Likewise, we can define the sequence of partial sums:
+
+\newpage
+
+\begin{definition}[Partial Sums]
+The $N$-th \textbf{partial sum} of the function series $\sum_{n=1}^{\infty} u_n(x)$ is defined as:
+\[ S_N(x) = \sum_{n=1}^{N} u_n(x) \]
+for each $x \in E$.
+\end{definition}
+
+Which means, the function series and $\{S_n(x)\}$ are actually equivalent. To make things simpler, we will use the sequence of partial sums to study the convergence of function series.
+
+After all, how can we define the convergence of function series? There are two main types: pointwise convergence and uniform convergence. First, we have pointwise convergence:
 
 \begin{definition}[Pointwise Convergence]
 Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ \textbf{converges pointwise} to a function $f$ on $E$ if for every $x \in E$:
 \[ \lim_{n \to \infty} f_n(x) = f(x) \]
 Similarly, a series $\sum_{n=1}^{\infty} f_n(x)$ converges pointwise to $S(x)$ if the sequence of partial sums converges pointwise to $S(x)$.
 \end{definition}
+
+Pointwise convergence means that for each fixed $x$, the sequence $\{f_n(x)\}$ converges to $f(x)$.
 
 However, pointwise convergence is often too weak to preserve important properties of functions, such as continuity, differentiability, and integrability.
 
@@ -274,19 +392,32 @@ The limit function is:
 Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
 \end{example}
 
+Not only continuity, but also integration and differentiation may fail under pointwise convergence. There are more examples illustrating these failures. Readers are encouraged to explore them independently.
+
 To fix this, we introduce a stronger form of convergence.
 
 \subsubsection{Uniform Convergence}
 
-
-
 \begin{definition}[Uniform Convergence]
-A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N$ and all $x \in E$:
+A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
 \[ |f_n(x) - f(x)| < \epsilon \]
-We write $f_n \rightrightarrows f$ on $E$.
+We write $f_n \xRightarrow{D} f$ on $E$.
 \end{definition}
 
 Geometrically, this means that for $n > N$, the graph of $f_n(x)$ lies entirely within a "tube" of width $2\epsilon$ centered around $f(x)$.
+
+From the concept of uniform convergence, we can derive the corollary for function series:
+
+\begin{corollary}
+    If a function series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $E$, then the function sequence $\{u_n(x)\}$ converges uniformly to $u(x) \equiv 0$ on $E$.
+\end{corollary}
+
+\begin{definition}[Compact Convergence]
+    The sequence of functions converges compactly on the open set.
+\end{definition}
+
+The compact convergence is weaker than uniform convergence on the whole set, but stronger than pointwise convergence. In many cases, it can still preserve properties like continuity.
+
 
 \begin{theorem}[Cauchy Criterion for Uniform Convergence]
 The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
