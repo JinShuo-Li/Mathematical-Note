@@ -1,0 +1,249 @@
+\documentclass[oneside]{book}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epigraph}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage[bookmarks=false, unicode]{hyperref}
+\usepackage{float}
+\usetikzlibrary{calc, decorations.pathreplacing}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+
+% Code Listings Configuration
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,           
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+% Theorem Environments
+\allowdisplaybreaks
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arctanh}{arctanh}
+
+\newcommand{\chapterzero}{%
+  \cleardoublepage
+  \chapter*{Chapter 0: Basic Knowledge and Notations}
+  \addcontentsline{toc}{chapter}{Chapter 0: Basic Knowledge and Notations}
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{0.\arabic{section}}
+}
+
+\newcommand{\preface}{%
+  \cleardoublepage
+  \chapter*{Preface}
+  \addcontentsline{toc}{chapter}{Preface}
+}
+
+% Colorful Environments for Theorems, Definitions, etc.
+\newtcbtheorem[number within=section]{mydef}{Definition}{
+    enhanced,
+    breakable,
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=blue!75!black, colframe=blue!75!black}
+}{def}
+
+\newtcbtheorem[number within=section]{mythm}{Theorem}{
+    enhanced,
+    breakable,
+    colback=red!5!white,
+    colframe=red!75!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=red!75!black, colframe=red!75!black}
+}{thm}
+
+\newtcbtheorem[number within=section]{myproposition}{Proposition}{
+    enhanced,
+    breakable,
+    colback=orange!5!white,
+    colframe=orange!80!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=orange!80!black, colframe=orange!80!black}
+}{prp}
+
+\newtcbtheorem[number within=section]{myprop}{Property}{
+    enhanced,
+    breakable,
+    colback=green!5!white,
+    colframe=green!60!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=green!60!black, colframe=green!60!black}
+}{prop}
+
+\newtcbtheorem[number within=section]{mycor}{Corollary}{
+    enhanced,
+    breakable,
+    colback=violet!5!white,
+    colframe=violet!75!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=violet!75!black, colframe=violet!75!black}
+}{cor}
+
+\newtcbtheorem[number within=section]{myex}{Example}{
+    enhanced,
+    breakable,
+    colback=teal!5!white,
+    colframe=teal!75!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=teal!75!black, colframe=teal!75!black}
+}{ex}
+
+\newtcbtheorem[number within=section]{myrem}{Remark}{
+    enhanced,
+    breakable,
+    colback=gray!5!white,
+    colframe=gray!75!black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    boxed title style={colback=gray!75!black, colframe=gray!75!black}
+}{rem}
+
+\newtcolorbox{mynote}{
+    enhanced,
+    breakable,
+    colback=yellow!10!white,
+    colframe=orange!85!black,
+    title={\textbf{Note}},
+    coltitle=black,
+    attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+    boxed title style={colback=orange!50!yellow, colframe=orange!85!black},
+    sharp corners=south,
+}
+
+% Environment Mappings
+\ProvideDocumentEnvironment{definition}{o}
+  {\IfValueTF{#1}{\begin{mydef}{#1}{}}{\begin{mydef}{}{}}}
+  {\end{mydef}}
+
+\ProvideDocumentEnvironment{theorem}{o}
+  {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+  {\end{mythm}}
+
+\ProvideDocumentEnvironment{proposition}{o}
+  {\IfValueTF{#1}{\begin{myproposition}{#1}{}}{\begin{myproposition}{}{}}}
+  {\end{myproposition}}
+
+\ProvideDocumentEnvironment{property}{o}
+  {\IfValueTF{#1}{\begin{myprop}{#1}{}}{\begin{myprop}{}{}}}
+  {\end{myprop}}
+
+\ProvideDocumentEnvironment{corollary}{o}
+  {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+  {\end{mycor}}
+
+\ProvideDocumentEnvironment{inference}{o}
+  {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+  {\end{mycor}}
+
+\ProvideDocumentEnvironment{example}{o}
+  {\IfValueTF{#1}{\begin{myex}{#1}{}}{\begin{myex}{}{}}}
+  {\end{myex}}
+
+\ProvideDocumentEnvironment{remark}{o}
+  {\IfValueTF{#1}{\begin{myrem}{#1}{}}{\begin{myrem}{}{}}}
+  {\end{myrem}}
+
+\ProvideDocumentEnvironment{note}{}{\begin{mynote}}{\end{mynote}}
+
+\ProvideDocumentEnvironment{lemma}{o}
+  {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+  {\end{mythm}}
+
+\begin{document}
+
+\begin{titlepage}
+
+    \definecolor{elegantblue}{RGB}{0, 51, 102}
+
+    \vspace*{3cm}
+    {\color{elegantblue}\hrule height 3pt}
+    \vspace{1cm}
+
+    \noindent
+    {\Huge \bfseries \color{elegantblue} Mathematics And Axiomatization\par}
+
+    \vspace{1cm}
+    {\color{elegantblue}\hrule height 3pt}
+
+    \vfill
+    \begin{flushleft}
+        {\Large \textbf{Jinshuo Li}}\\[15pt]
+        {\large Shanghai Jiao Tong University}\\[8pt]
+        {\large \today}
+    \end{flushleft}
+    \vspace{2cm}
+\end{titlepage}
+\thispagestyle{empty}
+
+
+\cleardoublepage
+
+\pagenumbering{gobble}
+\tableofcontents
+\thispagestyle{empty}
+
+\cleardoublepage
+% Preface content should be in chapters/preface.tex
+\input{chapters/preface}
+\thispagestyle{empty}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Chapter 0 content should be in chapters/chapter0.tex
+\input{chapters/chapter0.tex}
+
+% Chapter 1 content should be in chapters/chapter1.tex
+\input{chapters/chapter1.tex}
+\input{chapters/chapter2.tex}
+\input{chapters/chapter3.tex}
+\input{chapters/chapter4.tex}
+\input{chapters/more.tex}
+
+\end{document}

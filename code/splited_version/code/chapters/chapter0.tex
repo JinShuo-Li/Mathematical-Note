@@ -1,0 +1,307 @@
+\chapterzero
+
+All mathematical insights undergo a process from “naïve understanding” to “rigorous formulation”. Mathematics itself is the same; all axiomatized languages cannot be separated from the empiricist’s naïve descriptive language.
+
+To introduce certain special mathematical symbols that will be frequently used in the future, I have specially added a Chapter Zero before Chapter One, intended to present parts of the knowledge concerning mathematical language and mathematical logic. In this chapter, I will also introduce knowledge related to axioms; however, in the future, we will not necessarily define axioms so rigorously every time.
+
+\section{Propositional Logic}
+
+\subsection{Naïve introduction to propositional logic}
+Before we start the main part of the propositional logic, let’s start with a question: what is a proposition? Take a look at the sentences below:
+\begin{enumerate}
+    \item The equation $x^2+1=0$ has a real-number solution;
+    \item There are infinitely many prime numbers;
+    \item Every even integer $n \ge 4$ is a sum of two prime numbers (The famous Goldbach Conjecture);
+    \item What time is it?
+    \item This statement is false;
+\end{enumerate}
+In the sentences above, the first 3 sentences share the same properties: 1) they are sentences or assertions that declare facts. 2) They are either true or false, but not both. However, the 4th sentence is not a declarative sentence, and we can’t judge the correctness of the 5th sentence.
+
+So, to study mathematics, we need the sentences that assert one or several facts. Sometimes, whether it is true or not is not that important once it can be determined. It doesn’t mean that other types of expressions are not vital. We value this kind of expression because all the axioms, definitions, and theorems are written in this form.
+
+\begin{definition}[Proposition]
+Propositions are sentences or assertions that declare facts and are either true or false, but not both.
+\end{definition}
+
+To make propositions more actionable, we use \textbf{propositional variables} to represent different propositions. Commonly used propositional variables are letters like $p, q, r, \dots$
+
+Sometimes we need to connect different propositional variables to form a new proposition. And we need to use words like “and”, “or”, “imply” to explain their relationships.
+
+\begin{definition}[Logical operators/connectives]
+Logical operators/connectives are marks that are used to connect propositional variables, forming compound propositions.
+\end{definition}
+
+Here are some common operators:
+\begin{description}
+    \item[$\neg$] negation (“not”)
+    \item[$\wedge$] conjunction (“and”)
+    \item[$\vee$] disjunction (“or”)
+    \item[$\to$ (or $\Rightarrow$)] conditional (“imply”)
+    \item[$\leftrightarrow$] biconditional (“if and only if” (“iff”))
+    \item[$\oplus$] exclusive-or
+\end{description}
+
+\begin{definition}[Compound proposition]
+A compound proposition is built from propositional variables or constants through logical operators.
+\end{definition}
+
+\begin{definition}[Atomic proposition]
+An atomic proposition is a proposition that can't be divided any further. It is the most basic building block of logical expressions and is considered an indivisible semantic unit.
+\end{definition}
+
+If we want to determine whether an atomic proposition is true or not, we need to use correlated knowledge of different fields in mathematics. But how can we determine the truth of a compound proposition? We can use truth tables!
+
+\begin{definition}[Truth table]
+A truth table is a mathematical table used in logic to compute the functional values of logical expressions based on their inputs.
+\end{definition}
+
+\paragraph{Negation}
+\begin{center}
+\begin{tabular}{c|c}
+\toprule
+$p$ & $\neg p$ \\
+\midrule
+T & F \\
+F & T \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Conjunction}
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \wedge q$ \\
+\midrule
+T & T & T \\
+T & F & F \\
+F & T & F \\
+F & F & F \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+\paragraph{Disjunction}
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \vee q$ \\
+\midrule
+T & T & T \\
+T & F & T \\
+F & T & T \\
+F & F & F \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Conditional (Imply)}
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \to q$ \\
+\midrule
+T & T & T \\
+T & F & F \\
+F & T & T \\
+F & F & T \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Biconditional (iff)}
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \leftrightarrow q$ \\
+\midrule
+T & T & T \\
+T & F & F \\
+F & T & F \\
+F & F & T \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Exclusive-or}
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \oplus q$ \\
+\midrule
+T & T & F \\
+T & F & T \\
+F & T & T \\
+F & F & F \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Just like numerical computation, logical operators also have precedence. Here is the order of precedence for logical operators (from highest to lowest):
+$$ ( ), [ ] \quad \neg \quad \wedge \quad \vee \quad \oplus \quad \to \quad \leftrightarrow $$
+Apart from this, operators that appear first are of higher precedence. In short, we compute higher-precedence logical operators first, then lower ones.
+
+Using these laws, we can define the truth value of different propositions. But there exist some sub-classes of compound propositions:
+\begin{description}
+    \item[Tautology] A tautology is a compound proposition that is always true, no matter what the truth values of the propositional variables are.
+    \item[Contradiction] A compound proposition that is always false, regardless of the truth values of propositional variables.
+    \item[Contingency] A compound proposition that is neither a tautology nor a contradiction. It can be true or false, depending on the value of the variables.
+\end{description}
+
+Based on the definitions above, now we can rigorously define what logical equivalence is.
+
+\begin{definition}[Logical Equivalence]
+We can say compound propositions $p, q$ are \textbf{logically equivalent} if $p \leftrightarrow q$ is a tautology. If $p$ and $q$ are logically equivalent, we denote it as $p \equiv q$.
+\end{definition}
+
+This definition means that for different truth values of every atomic proposition, $p$ and $q$ come out with the same truth value. In further study, we will know that several of the operators above will be enough to express all the propositions.
+
+Here are a few frequently used examples. These can be used directly.
+\begin{align*}
+    \text{Identity Laws:} \quad & p \wedge T \equiv p \\
+    & p \vee F \equiv p \\
+    \text{Domination Laws:} \quad & p \vee T \equiv T \\
+    & p \wedge F \equiv F \\
+    \text{Absorption Laws:} \quad & p \vee (p \wedge q) \equiv p \\
+    & p \wedge (p \vee q) \equiv p \\
+    \text{Negation Laws:} \quad & p \vee \neg p \equiv T \\
+    & p \wedge \neg p \equiv F \\
+    \text{Commutative Laws:} \quad & p \vee q \equiv q \vee p \\
+    & p \wedge q \equiv q \wedge p \\
+    \text{Associative Laws:} \quad & (p \vee q) \vee r \equiv p \vee (q \vee r) \\
+    & (p \wedge q) \wedge r \equiv p \wedge (q \wedge r) \\
+    \text{Distributive Laws:} \quad & p \vee (q \wedge r) \equiv (p \vee q) \wedge (p \vee r) \\
+    & p \wedge (q \vee r) \equiv (p \wedge q) \vee (p \wedge r) \\
+    \text{De Morgan’s Laws:} \quad & \neg(p \wedge q) \equiv \neg p \vee \neg q \\
+    & \neg(p \vee q) \equiv \neg p \wedge \neg q
+\end{align*}
+
+\begin{definition}[Satisfiability]
+A compound proposition is \textbf{satisfiable} if it is true under some truth assignment for propositional variables. A truth assignment that makes a compound proposition true is called a \textbf{solution}. If a compound proposition is not satisfiable, we say it is \textbf{unsatisfiable}.
+\end{definition}
+
+For now, we can use a truth table and logical equivalence to check whether a compound proposition is satisfiable. For readers majoring in computer science, they can use special algorithms to solve the so-called “Boolean Satisfiability Problem”, like heuristic searching, etc.
+
+\subsection{Functional Completeness}
+According to previous study, we know that there are connectives for different variables to form compound propositions. However, do we really need that many connectives to represent all the relationships and compound propositions? The answer is absolutely NO! In some cases, we only need two connectives to reach the so-called state of functional completeness!
+
+\begin{definition}[Disjunctive Normal Form]
+A compound proposition is in \textbf{disjunctive normal form (DNF)} if it is a disjunction of conjunctions of propositional variables or their negations.
+\end{definition}
+
+\begin{theorem}
+Every compound proposition is logically equivalent to some compound proposition in disjunctive normal form.
+\end{theorem}
+\begin{proof}
+It's not difficult to prove it. According to previous content, we know that we can make a truth table for every compound proposition. According to the truth table, we can rewrite it in the form of disjunctive normal form. For example, we have the truth table of the exclusive-or connective:
+\begin{center}
+\begin{tabular}{cc|c}
+\toprule
+$p$ & $q$ & $p \oplus q$ \\
+\midrule
+T & T & F \\
+T & F & T \\
+F & T & T \\
+F & F & F \\
+\bottomrule
+\end{tabular}
+\end{center}
+The content of the middle two lines (where the result is T) represents the solution to this compound proposition. Then we can write a proposition like this:
+$$ p \oplus q \equiv (p \wedge \neg q) \vee (\neg p \wedge q) $$
+Every part of the compound proposition connected with the disjunction represents a solution of the satisfiable problem of the proposition. That means if we can make a truth table for all the compound propositions, we can rewrite them in the form of disjunctive normal form. From this perspective, the theorem is quite clear.
+\end{proof}
+
+Let's move further: can we rewrite the compound proposition in other forms? The answer is obviously YES!
+
+\begin{definition}[Conjunctive Normal Form]
+A compound proposition is in \textbf{conjunctive normal form (CNF)} if it is a conjunction of disjunctions of propositional variables or their negations.
+\end{definition}
+
+\begin{theorem}
+Every compound proposition is logically equivalent to some compound proposition in conjunctive normal form.
+\end{theorem}
+\begin{proof}
+We will use the truth table again to prove this theorem. Assume we have a proposition $A$. Firstly, we use Theorem 0.1.1 to rewrite $\neg A$ into the form of disjunctive normal form. Next, we take the negation of $\neg A$, and using De Morgan’s Law, we can now rewrite $A$ in the form of conjunctive normal form.
+\end{proof}
+
+Theorem 0.1.1 and Theorem 0.1.2 are quite a marvel. In circuit design, since we cannot design a circuit component for every logical connector, we must use as few circuit components as possible to express all logical expressions. And according to these theorems, we no longer need to use that many connectives. Only conjunction, disjunction, and negation are necessary to construct logically equivalent propositions to any propositions in the world.
+
+\begin{definition}[Functionally Complete]
+A collection of logical operators is \textbf{functionally complete} if any compound proposition is logically equivalent to a compound proposition that involves only the logical operators in the collection.
+\end{definition}
+
+Thus, we can declare that the collection $\{\neg, \vee, \wedge\}$ is functionally complete. Also, according to De Morgan’s Law:
+\begin{align*}
+    p \wedge q \equiv \neg(\neg p \vee \neg q) \\
+    p \vee q \equiv \neg(\neg p \wedge \neg q)
+\end{align*}
+We found that conjunction can be expressed using disjunction and negation, and disjunction can be expressed using conjunction and negation. Which means that the collections $\{\neg, \vee\}$ and $\{\neg, \wedge\}$ are functionally complete.
+
+\begin{remark}
+The most striking fact is that there exists a connective that is functionally complete in itself (e.g., NAND or NOR)! But we won’t use it in the future, so you can search by yourselves.
+\end{remark}
+
+\section{Predicate Logic}
+In many cases, using propositional logic is enough to cover the usage. But there is a kind of statement that can’t be expressed using the tool of propositional logic. In such cases, we need to use predicate logic to formulate logical expressions.
+
+\begin{definition}[Predicate]
+A \textbf{predicate} is in the form of a statement with variables. A predicate is also known as a \textbf{propositional function}. A predicate can be denoted as $P(x, y, z, \dots)$, and $x, y, z$ are known as the variables.
+\end{definition}
+
+\begin{definition}[Quantifiers]
+We use \textbf{quantifiers} to indicate the quantity of elements being referred to. We have two types of quantifiers, $\forall$ and $\exists$.
+\begin{description}
+    \item[$\forall$] The \textbf{universal quantifier} $\forall$ means “for all”.
+    \item[$\exists$] The \textbf{existential quantifier} $\exists$ means “there exists”.
+\end{description}
+\end{definition}
+
+For example, the statement “Every SJTUer is a talent” can be written in the form of predicate logic: $\forall x (\text{SJTUer}(x) \to \text{Talent}(x))$.
+
+Variables in predicates all have restricted domains; they are the \textbf{domains} of predicates. For all the values in the domain, we can rewrite the predicates in the form of propositions. If the domain is finite, $\{x_1, x_2, \dots, x_n\}$, then:
+$$ \forall x P(x) \equiv P(x_1) \wedge P(x_2) \wedge \dots \wedge P(x_n) $$
+$$ \exists x P(x) \equiv P(x_1) \vee P(x_2) \vee \dots \vee P(x_n) $$
+But if the domain is infinite, we can only express the logic in the form of predicate logic.
+\begin{itemize}
+    \item $\forall x P(x)$ stands for “For every $x$ in domain, $P(x)$”. If there is a value $a$ in the domain such that $P(a)$ is false, the statement is false. $a$ is called a \textbf{counterexample}.
+    \item $\exists x P(x)$ stands for “There exists an $x$, $P(x)$”. If for all values $a$ in the domain, $P(a)$ is false, the statement is false.
+\end{itemize}
+
+However, not all sentences with predicates and quantifiers can form a predicate logic. For example, $\forall x (P(x) \wedge Q(y))$ is not a statement with predicate logic. Because as the value of $y$ varies, we can’t decide whether the sentence is true or false, which makes its truth value unknown.
+
+So, how can we make sure a sentence is a predicate logic? In the case of $\forall x (P(x) \wedge Q(y))$, it is $y$ that causes trouble. And $x$, which is connected with a quantifier, did not cause any inconvenience. So, we call variables that are bounded only if they follow a quantifier, and they are called the \textbf{bounded variables}. Otherwise, they are the \textbf{free variables}. If every variable in a sentence is bounded, it’s a proposition.
+
+Just like propositional logic, predicate logic can also be connected using logical connectives. And there are also a few arithmetic laws.
+
+\paragraph{De Morgan's Laws for Quantifiers}
+\begin{align*}
+    \neg \forall x P(x) \equiv \exists x \neg P(x) \\
+    \neg \exists x P(x) \equiv \forall x \neg P(x)
+\end{align*}
+
+\paragraph{Asymmetric Associative Laws}
+\begin{align*}
+    \forall x \forall y P(x,y) \equiv \forall y \forall x P(x,y) \\
+    \exists x \exists y P(x,y) \equiv \exists y \exists x P(x,y)
+\end{align*}
+\begin{note}
+The associative laws are asymmetric. The following two assertions are not necessarily valid. In some cases, they can be false.
+$$ \forall x \exists y P(x,y) \not\equiv \exists y \forall x P(x,y) $$
+\end{note}
+
+\begin{definition}[Logical Equivalence in Predicate Logic]
+If $\phi$ and $\psi$ are statements with predicates and quantifiers, but without free variables, then we say that $\phi$ and $\psi$ are \textbf{logically equivalent}, written as $\phi \equiv \psi$, if, no matter which concrete predicates (for the predicate symbols) and domains (for variables) are given, the truth values of $\phi, \psi$ coincide.
+\end{definition}
+
+Also, we can define universal validity (just like tautology in propositional logic), and predicate logic also has satisfiability. As this chapter only provides a brief introduction, it will not be elaborated further here.
+
+In this chapter, we came to know what logic is in the form of mathematics. This overview of propositional and predicate logic establishes the formal basis for clear reasoning. Logic is the indispensable scaffolding of rational thought—the \emph{a priori framework} that precedes all specific knowledge. Its importance doesn't need much explanation.
+
+\vspace{1cm}
+\noindent
+\textbf{Keywords:} propositional logic, predicate logic, logical equivalence \\
+\textbf{Reference:} Discrete Mathematics and Its Applications (Eighth Edition), Kenneth H. Rosen, McGraw-Hill Education.
+
+\cleardoublepage

@@ -1,0 +1,2129 @@
+\chapter{Mathematical Analysis II}
+
+Now we will move on to another part of the analysis, which is Mathematical Analysis II. In this chapter, we will study the properties of functions of several variables, including limits, continuity, differentiability, and integrability. We will also introduce the concept of vector-valued functions and study their properties. This chapter will provide a solid foundation for further studies in multivariable calculus, differential equations, and mathematical physics.
+
+\section{Series}
+
+Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
+
+\subsection{Numerical Series}
+
+The study of infinite series is the discrete analogue of improper integrals. It allows us to define sums of infinitely many terms, providing the foundation for representing functions as power series (Taylor series) in later analysis.
+
+\begin{definition}[Infinite Series]
+Given a sequence of real numbers $\{a_n\}_{n=1}^{\infty}$, the formal expression
+\[ \sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots \]
+is called an \textbf{infinite series}. The number $a_n$ is called the general term.
+\end{definition}
+
+To assign a value to this infinite sum, we look at finite sums.
+
+\newpage
+
+\begin{definition}[Convergence]
+Let $S_n$ denote the $n$-th \textbf{partial sum} of the series:
+\[ S_n = \sum_{k=1}^{n} a_k = a_1 + \cdots + a_n \]
+If the sequence of partial sums $\{S_n\}$ converges to a limit $S$ (i.e., $\lim_{n \to \infty} S_n = S$), we say the series \textbf{converges} to $S$, and write $\sum_{n=1}^{\infty} a_n = S$.
+If $\{S_n\}$ does not converge, the series \textbf{diverges}.
+\end{definition}
+
+\begin{theorem}[Cauchy Criterion for Series]
+The series $\sum a_n$ converges if and only if for every $\epsilon > 0$, there exists an integer $N$ such that for all $n > N$ and any $p \ge 1$:
+\[ |S_{n+p} - S_n| = |a_{n+1} + a_{n+2} + \cdots + a_{n+p}| < \epsilon \]
+\end{theorem}
+
+\begin{theorem}[Necessary Condition for Convergence]
+If the series $\sum_{n=1}^{\infty} a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
+\end{theorem}
+\begin{remark}
+The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
+\end{remark}
+
+\begin{example}[Geometric Series]
+The series $\sum_{n=0}^{\infty} ar^n$ converges if and only if $|r| < 1$. In that case, the sum is $\frac{a}{1-r}$.
+\end{example}
+
+\begin{property}[Linearity]
+If $\sum a_n = A$ and $\sum b_n = B$, then for any constants $\alpha, \beta$:
+\[ \sum (\alpha a_n + \beta b_n) = \alpha A + \beta B \]
+\end{property}
+
+\subsubsection{Tests for Positive Series}
+
+A series $\sum a_n$ is called a \textbf{positive series} if $a_n \ge 0$ for all $n$.
+For such series, the partial sum sequence $\{S_n\}$ is monotonically increasing.
+\begin{theorem}
+A positive series converges if and only if its sequence of partial sums is bounded above.
+\end{theorem}
+
+\paragraph{Comparison Tests}
+\begin{theorem}[Direct Comparison Test]
+Let $0 \le a_n \le b_n$ for all $n$.
+\begin{enumerate}
+    \item If $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $\sum a_n$ diverges, then $\sum b_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Limit Comparison Test]
+Let $a_n > 0, b_n > 0$. Consider the limit $L = \lim_{n \to \infty} \frac{a_n}{b_n}$.
+\begin{enumerate}
+    \item If $0 < L < +\infty$, then $\sum a_n$ and $\sum b_n$ converge or diverge together.
+    \item If $L = 0$ and $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $L = +\infty$ and $\sum b_n$ diverges, then $\sum a_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\paragraph{Integral Test and $p$-Series}
+\begin{theorem}[Integral Test]
+Let $f(x)$ be a continuous, positive, and decreasing function on $[1, +\infty)$ such that $f(n) = a_n$. Then the series $\sum_{n=1}^{\infty} a_n$ converges if and only if the improper integral $\int_1^{+\infty} f(x) dx$ converges.
+\end{theorem}
+
+From this, we derive the convergence of the famous $p$-series:
+\begin{corollary}[$p$-Series]
+The series $\sum_{n=1}^{\infty} \frac{1}{n^p}$:
+\begin{itemize}
+    \item Converges if $p > 1$.
+    \item Diverges if $p \le 1$.
+\end{itemize}
+\end{corollary}
+
+More rigorous expressions of this theorem can be described as:
+
+\begin{theorem}
+    Assume $f(x)$ is continuous, positive and integrable on $[a,A]$ for any $A>a>0$. Pick an increasing sequence $\{x_n\}$ such that $x_n \to +\infty$ as $n \to +\infty$ and $a_1 = a$. Then the series $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ and the improper integral $\int_a^{+\infty} f(x) dx$ either both converge or both diverge. 
+    More specifically, if the function is decreasing, then we have:
+    \[\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx = \int_a^{+\infty} f(x) dx\].
+\end{theorem}
+
+\begin{remark}
+    \begin{enumerate}
+        \item The choice of the sequence $\{a_n\}$ is not unique. A common choice is $a_n = n$, which recovers the standard integral test. However, other choices can be made depending on the specific function $f(x)$ and the context of the problem.
+        \item If the function $f(x)$ is not positive, and $\int_a^{+\infty} f(x) dx$ converges, we can judge the convergence of $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ by considering the absolute values of the integrals. But if $\int_a^{+\infty} f(x) dx$ diverges, we cannot conclude anything about the series without additional information.
+    \end{enumerate}
+\end{remark}
+
+Here is some applications of the integral test:
+
+\newpage
+
+\begin{example}
+    Determine the convergence of the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$. \\
+    \textbf{Solution:} Consider the function $f(x) = \frac{1}{x \ln^q x}$ for $x \ge 2$. This function is continuous, positive, and decreasing for $x > e$ when $q > 0$. We apply the integral test:
+    \[\int_2^{+\infty} \frac{1}{x \ln^q x} dx \]
+    Let $t = \ln x$, then $dx = e^t dt$ and when $x = 2$, $t = \ln 2$. The integral becomes:
+    \[\int_{\ln 2}^{+\infty} \frac{1}{t^q} dt \]
+    This integral converges if and only if $q > 1$. Therefore, by the integral test, the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$ converges if and only if $q > 1$ and diverges otherwise.
+\end{example}
+
+Also, we can use the integral test to determine the convergence of improper integrals:
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$. \\
+    \textbf{Solution:} The key process is to find a suitable sequence $\{a_n\}$ to apply the integral test. We can choose $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t}
+    \]
+    As we can observe that:
+    \[
+    (n\pi + t)^2 \sin^2 t < (n+1)^2 \pi^2 t^2 < (n+1)^2 \pi^2 \cdot \frac{1}{(n+1)^2 \pi^2} = 1
+    \]
+    Thus, we have:
+    \[\int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{2} = \frac{1}{2(n+1)\pi}\]
+    Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
+\end{example}
+
+\newpage
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
+    \textbf{Solution:} We again choose the sequence $\{a_n\}$ as $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t}
+    = \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} + \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} = I_1 + I_2
+    \]
+    For $I_1$, we have:
+    \[I_1 > \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + \frac{\pi}{2})^4} = \frac{\pi/2}{1 + (n\pi + \frac{\pi}{2})^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    For $I_2$, we have:
+    \[I_2 > \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + \pi)^4} = \frac{\pi/2}{1 + (n\pi + \pi)^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    Therefore, $a_n = I_1 + I_2 > \frac{1}{2(n+1)^4 \pi^3}$. Since the series $\sum \frac{1}{n^4}$ converges, by the comparison test, the series $\sum a_n$ converges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$ converges.
+\end{example}
+
+\paragraph{Ratio and Root Tests}
+These are the most commonly used tests for computation.
+
+\begin{theorem}[D'Alembert's Ratio Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \lim_{n \to \infty} \frac{a_{n+1}}{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is \textbf{inconclusive} (e.g., $1/n$ diverges but $1/n^2$ converges, both have $\rho=1$).
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Cauchy's Root Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Raabe's Test}
+When the Ratio Test yields $\rho = 1$, Raabe's test provides a finer criterion.
+
+\begin{theorem}[Raabe's Test]
+Let $a_n > 0$. Consider the limit:
+\[ R = \lim_{n \to \infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) \]
+\begin{itemize}
+    \item If $R > 1$, the series converges.
+    \item If $R < 1$, the series diverges.
+    \item If $R = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\subsubsection{Alternating Series}
+An alternating series has the form $\sum_{n=1}^{\infty} (-1)^{n-1} a_n$ where $a_n > 0$.
+
+\begin{theorem}[Leibniz Test]
+If the sequence $\{a_n\}$ satisfies:
+\begin{enumerate}
+    \item Monotonicity: $a_{n+1} \le a_n$ for all $n$;
+    \item Limit zero: $\lim_{n \to \infty} a_n = 0$;
+\end{enumerate}
+then the alternating series $\sum (-1)^{n-1} a_n$ converges.
+Furthermore, the sum $S$ satisfies $|S - S_n| \le a_{n+1}$.
+\end{theorem}
+
+\subsubsection{Absolute and Conditional Convergence}
+For series with arbitrary signs, we distinguish two types of convergence.
+
+\begin{definition}
+A series $\sum a_n$ is called \textbf{absolutely convergent} if the series of absolute values $\sum |a_n|$ converges.
+If $\sum a_n$ converges but $\sum |a_n|$ diverges, the series is called \textbf{conditionally convergent}.
+\end{definition}
+
+\begin{theorem}
+Absolute convergence implies convergence.
+\[ \sum |a_n| < \infty \implies \sum a_n \text{ converges}. \]
+\end{theorem}
+
+\begin{example}
+The series $\sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \dots$ converges by Leibniz Test, but $\sum \frac{1}{n}$ diverges. Thus, it is \textbf{conditionally convergent}.
+\end{example}
+
+\subsubsection{Dirichlet's and Abel's Tests}
+For general series of the form $\sum_{n=1}^{\infty} a_n b_n$, where standard tests fail, these tests are powerful.
+
+\begin{theorem}[Dirichlet's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The partial sums of $\sum a_n$ are bounded (i.e., $|\sum_{k=1}^n a_k| \le M$).
+    \item The sequence $\{b_n\}$ is monotonic and $\lim_{n \to \infty} b_n = 0$.
+\end{enumerate}
+\end{theorem}
+\textit{Example Application:} Proving $\sum \frac{\sin n}{n}$ converges. Here $a_n = \sin n$ (bounded sums) and $b_n = 1/n$ (goes to 0).
+
+\begin{theorem}[Abel's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The series $\sum a_n$ converges.
+    \item The sequence $\{b_n\}$ is monotonic and bounded.
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{Properties of Series}
+
+\begin{theorem}[Associativity]
+If a series converges, we can group terms (insert parentheses) without changing the sum. However, removing parentheses from a grouped series may alter convergence (e.g., $(1-1)+(1-1)+\dots$ converges to 0, but $1-1+1-1\dots$ diverges).
+\end{theorem}
+
+\begin{theorem}[Riemann Rearrangement Theorem]
+\begin{itemize}
+    \item If a series is \textbf{absolutely convergent}, any rearrangement of its terms converges to the same sum.
+    \item If a series is \textbf{conditionally convergent}, for any real number $L$ (or $\pm \infty$), there exists a rearrangement of terms such that the series converges to $L$.
+\end{itemize}
+This highlights the dangerous nature of conditional convergence: the order of summation matters!
+\end{theorem}
+
+\subsubsection{Product of Series}
+Now we shall dive into the topic of multiplying two series together. We have following definition:
+
+\begin{definition}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n$ and $\sum_{n=0}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
+    \[\begin{pmatrix}
+        a_1 b_1 & a_1 b_2 & a_1 b_3 & a_1 b_4 & \cdots \\
+        a_2 b_1 & a_2 b_2 & a_2 b_3 & a_2 b_4 & \cdots \\
+        a_3 b_1 & a_3 b_2 & a_3 b_3 & a_3 b_4 & \cdots \\
+        a_4 b_1 & a_4 b_2 & a_4 b_3 & a_4 b_4 & \cdots \\
+    \vdots   & \vdots   & \vdots   & \vdots   & \ddots
+    \end{pmatrix}\]
+\end{definition}
+
+The reason we define the product of two series in this way is that, due to the properties of rearranged sequences, changing the order of summation may alter the sum of the series. For example, we have following two arrangements of the Cauchy product:
+
+\textbf{Cauchy arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=2}^{\infty} \sum_{k=1}^{n-1} a_k b_{n-k} = a_1 b_1 + (a_1 b_2 + a_2 b_1) + (a_1 b_3 + a_2 b_2 + a_3 b_1) + \cdots
+\]
+
+\textbf{Square arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=1}^{\infty} \left(\sum_{i=1}^{n}(a_i b_n+ a_n b_i) - a_n b_n \right)
+\]
+
+Under certain conditions, both arrangements converge to the same sum. This is formalized in the following theorem:
+
+\begin{theorem}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n = A$ and $\sum_{n=0}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
+\end{theorem}
+
+The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
+
+\subsubsection{Infinite Product}
+\begin{definition}
+    Assume $\{a_n\}$ is a sequence such that $a_n \neq 0$ for all $n$. The \textbf{infinite product} $\prod_{n=1}^{\infty} a_n$ is defined as the limit of the partial products:
+    \[ P_N = \prod_{n=1}^{N} a_n \]
+    If the limit $\lim_{N \to \infty} P_N$ exists and is non-zero, we say the infinite product converges to that limit.
+    Else, the infinite product diverges.
+\end{definition}
+
+Just like series, we call $P_N$ the $N$-th partial product of the infinite product.
+
+Mind that if the infinite product "converges to zero", we still say it diverges. We will see why in the following theorem.
+
+Here are some properties of infinite products:
+
+\begin{theorem}
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{n \to \infty} a_n = 1$.
+    
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{m \to \infty} \prod_{n=m+1}^{\infty} a_n = 1$.
+\end{theorem}
+
+Sometimes, it is easier to study the convergence of infinite products by expressing it in terms of $p_n = 1 + a_n$:
+
+\[
+\prod_{n=1}^{\infty} p_n = \prod_{n=1}^{\infty} (1 + a_n)
+\]
+
+Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
+
+\begin{theorem}
+    The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
+    
+    Furthermore, if $a_n \to 0$, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+\end{theorem}
+
+Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
+
+Also, matheaticians use the infinite product deduce some famous formulas, for example:
+
+\textbf{Wallis Law}:
+\[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1} = \left(\frac{2 \cdot 2}{1 \cdot 3}\right) \left(\frac{4 \cdot 4}{3 \cdot 5}\right) \left(\frac{6 \cdot 6}{5 \cdot 7}\right) \cdots\]
+\textbf{Viete Law}:
+\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \frac{\sqrt{2 + \sqrt{2 + \sqrt{2 + \cdots}}}}{2} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
+\textbf{Stirling Law}:
+\[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
+
+\subsection{Function Series}
+
+Function series generalize numerical series by summing functions instead of numbers. They are crucial for representing functions as power series, Fourier series, etc.
+
+Now we will broaden our discussion to series of functions. Consider a sequence of functions $\{f_n(x)\}$ defined on a set $E \subseteq \mathbb{R}$. We define the series of functions as:
+
+\begin{definition}[Function Series]
+A \textbf{function series} is an expression of the form:
+\[ \sum_{n=1}^{\infty} u_n(x) = u_1(x) + u_2(x) + u_3(x) + \cdots \]
+where each $u_n(x)$ is a function defined on $E$.
+\end{definition}
+
+How can we determine whether such a series converges? We need to use the concept of convergence of series:
+
+\begin{definition}
+    Assume $u_n(x)$ is a function defined on a set $E$. For each fixed $x \in E$, we can consider the numerical series $\sum_{n=1}^{\infty} u_n(x)$. If this series converges to a limit $S(x)$, we say that the function series converges at the point $x$, and we call the point the \textbf{point of convergence}.
+\end{definition}
+
+For all the points of convergence, we call the set of them the \textbf{domain of convergence}. Then we can define the sum function of the series:
+
+\begin{definition}[Sum Function]
+If the function series $\sum_{n=1}^{\infty} u_n(x)$ converges at every point $x \in D$, we define the \textbf{sum function} $S(x)$ as:
+\[ S(x) = \sum_{n=1}^{\infty} u_n(x), \quad x \in D \].
+\end{definition}
+
+Likewise, we can define the sequence of partial sums:
+
+\newpage
+
+\begin{definition}[Partial Sums]
+The $N$-th \textbf{partial sum} of the function series $\sum_{n=1}^{\infty} u_n(x)$ is defined as:
+\[ S_N(x) = \sum_{n=1}^{N} u_n(x) \]
+for each $x \in E$.
+\end{definition}
+
+Which means, the function series and $\{S_n(x)\}$ are actually equivalent. To make things simpler, we will use the sequence of partial sums to study the convergence of function series.
+
+After all, how can we define the convergence of function series? There are two main types: pointwise convergence and uniform convergence. First, we have pointwise convergence:
+
+\begin{definition}[Pointwise Convergence]
+Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ \textbf{converges pointwise} to a function $f$ on $E$ if for every $x \in E$:
+\[ \lim_{n \to \infty} f_n(x) = f(x) \]
+Similarly, a series $\sum_{n=1}^{\infty} f_n(x)$ converges pointwise to $S(x)$ if the sequence of partial sums converges pointwise to $S(x)$.
+\end{definition}
+
+Pointwise convergence means that for each fixed $x$, the sequence $\{f_n(x)\}$ converges to $f(x)$.
+
+However, pointwise convergence is often too weak to preserve important properties of functions, such as continuity, differentiability, and integrability.
+
+\begin{example}[Failure of Pointwise Convergence]
+Consider $f_n(x) = x^n$ on the interval $[0, 1]$.
+For any $x \in [0, 1)$, $\lim_{n \to \infty} x^n = 0$. For $x = 1$, $\lim_{n \to \infty} 1^n = 1$.
+The limit function is:
+\[ f(x) = \begin{cases} 0 & 0 \le x < 1 \\ 1 & x = 1 \end{cases} \]
+Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
+\end{example}
+
+Not only continuity, but also integration and differentiation may fail under pointwise convergence. There are more examples illustrating these failures. Readers are encouraged to explore them independently.
+
+To fix this, we introduce a stronger form of convergence.
+
+\subsubsection{Uniform Convergence}
+
+\begin{definition}[Uniform Convergence]
+A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
+\[ |f_n(x) - f(x)| < \epsilon \]
+We write $f_n \xRightarrow{D} f$ on $E$.
+\end{definition}
+
+Geometrically, this means that for $n > N$, the graph of $f_n(x)$ lies entirely within a "tube" of width $2\epsilon$ centered around $f(x)$.
+
+From the concept of uniform convergence, we can derive the corollary for function series:
+
+\begin{corollary}
+    If a function series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $E$, then the function sequence $\{u_n(x)\}$ converges uniformly to $u(x) \equiv 0$ on $E$.
+\end{corollary}
+
+\begin{definition}[Compact Convergence]
+    The sequence of functions converges compactly on the open set.
+\end{definition}
+
+The compact convergence is weaker than uniform convergence on the whole set, but stronger than pointwise convergence. In many cases, it can still preserve properties like continuity.
+
+\begin{theorem}[Cauchy Criterion for Uniform Convergence]
+The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
+\[ |f_n(x) - f_m(x)| < \epsilon \]
+\end{theorem}
+
+For series $\sum u_n(x)$, the most practical tool for proving uniform convergence is the Weierstrass M-Test.
+
+\begin{theorem}[Weierstrass M-Test]
+Let $\{u_n(x)\}$ be a sequence of functions defined on $E$. Suppose there exists a sequence of positive constants $\{M_n\}$ such that:
+\begin{enumerate}
+    \item $|u_n(x)| \le M_n$ for all $x \in E$ and all $n \ge 1$.
+    \item The numerical series $\sum_{n=1}^{\infty} M_n$ converges.
+\end{enumerate}
+Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and absolutely on $E$.
+\end{theorem}
+
+\subsubsection{Properties of Uniformly Convergent Series}
+
+Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus.
+
+\begin{theorem}[Continuity]
+If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
+Consequently, for a series of continuous functions $\sum u_n(x)$, if the series converges uniformly to $S(x)$, then $S(x)$ is continuous:
+\[ \lim_{x \to x_0} \sum_{n=1}^{\infty} u_n(x) = \sum_{n=1}^{\infty} \lim_{x \to x_0} u_n(x) \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Integration]
+Let $\{u_n(x)\}$ be continuous on $[a, b]$ and suppose $\sum u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then:
+\[ \int_a^b S(x) \, dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) \, dx \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Differentiation]
+Suppose $\sum u_n(x)$ converges at some point $x_0 \in [a, b]$. If the series of derivatives $\sum u_n'(x)$ converges \textbf{uniformly} on $[a, b]$, then the original series converges uniformly to a differentiable function $S(x)$, and:
+\[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
+\end{theorem}
+
+\subsection{Power Series}
+
+A power series is a specific type of function series of the form:
+\[ \sum_{n=0}^{\infty} a_n (x - x_0)^n \]
+where $a_n$ are coefficients and $x_0$ is the center. For simplicity, we usually set $x_0 = 0$.
+
+\subsubsection{Radius of Convergence}
+
+Unlike general function series, power series have a very structured domain of convergence.
+
+\begin{theorem}[Cauchy-Hadamard]
+Given a power series $\sum a_n x^n$, let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{|a_n|} \]
+The \textbf{radius of convergence} $R$ is defined as:
+\[ R = \begin{cases} 0 & \text{if } \rho = +\infty \\ 1/\rho & \text{if } 0 < \rho < +\infty \\ +\infty & \text{if } \rho = 0 \end{cases} \]
+The series converges absolutely for $|x| < R$ and diverges for $|x| > R$. The behavior at endpoints $x = \pm R$ must be checked individually.
+\end{theorem}
+
+\begin{property}
+Inside the interval of convergence $(-R, R)$, the power series converges \textbf{uniformly} on any closed sub-interval $[-r, r]$ where $r < R$.
+This implies that power series define continuous, infinitely differentiable ($C^\infty$) functions inside their radius of convergence.
+\end{property}
+
+\subsubsection{Abel's Theorem}
+What happens if a series converges at an endpoint $x=R$?
+
+\begin{theorem}[Abel's Continuity Theorem]
+If the power series $\sum_{n=0}^{\infty} a_n x^n$ converges at $x = R$ (or $x = -R$), then the function $f(x) = \sum a_n x^n$ is continuous at $x = R$ from the left (or at $x = -R$ from the right).
+\[ \lim_{x \to R^-} \sum_{n=0}^{\infty} a_n x^n = \sum_{n=0}^{\infty} a_n R^n \]
+\end{theorem}
+
+This theorem is powerful for evaluating sums of numerical series. For example, using the expansion $\ln(1+x) = x - x^2/2 + x^3/3 - \dots$, which converges for $x=1$, Abel's theorem justifies $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
+
+\subsection{Taylor and Maclaurin Series}
+
+If a function $f(x)$ can be represented by a power series $\sum a_n (x-x_0)^n$, what must the coefficients $a_n$ be?
+
+\begin{theorem}[Taylor Series]
+If $f(x)$ is represented by a power series centered at $x_0$ with radius of convergence $R > 0$, then the coefficients are unique and given by:
+\[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
+The series is called the \textbf{Taylor Series} of $f$ at $x_0$. If $x_0=0$, it is called the \textbf{Maclaurin Series}.
+\end{theorem}
+
+\begin{remark}
+Even if a function $f(x)$ is $C^\infty$ (infinitely differentiable), its Taylor series does not necessarily converge to $f(x)$. It might converge to a different function or only at $x_0$.
+Functions for which the Taylor series converges to the function itself are called \textbf{analytic functions}.
+\end{remark}
+
+\begin{example}[Standard Expansions]
+The following expansions are essential:
+\begin{align*}
+    e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots & (R = \infty) \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \dots & (R = \infty) \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \dots & (R = \infty) \\
+    \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + \dots & (R = 1)
+\end{align*}
+\end{example}
+
+\section{Limits and Continuity in Euclidean Space}
+
+Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
+
+\subsection{The Structure of Euclidean Space $\mathbb{R}^n$}
+
+The space $\mathbb{R}^n$ is the set of all ordered $n$-tuples of real numbers. An element $\mathbf{x} \in \mathbb{R}^n$ is written as $\mathbf{x} = (x_1, x_2, \dots, x_n)$, where $x_i$ are the components.
+
+\begin{definition}[Inner Product and Norm]
+For $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$, the \textbf{Euclidean inner product} (or dot product) is defined as:
+\[ \mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^n x_i y_i \]
+The \textbf{Euclidean norm} (or length) of $\mathbf{x}$ is defined as:
+\[ \|\mathbf{x}\| = \sqrt{\mathbf{x} \cdot \mathbf{x}} = \sqrt{\sum_{i=1}^n x_i^2} \]
+The \textbf{distance} between two points $\mathbf{x}$ and $\mathbf{y}$ is $d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|$.
+\end{definition}
+
+The geometry of $\mathbb{R}^n$ is governed by two fundamental inequalities.
+
+\begin{theorem}[Cauchy-Schwarz Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ |\mathbf{x} \cdot \mathbf{y}| \le \|\mathbf{x}\| \|\mathbf{y}\| \]
+Equality holds if and only if $\mathbf{x}$ and $\mathbf{y}$ are linearly dependent.
+\end{theorem}
+
+\begin{theorem}[Triangle Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ \|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\| \]
+\end{theorem}
+
+\subsection{Basic Topology of $\mathbb{R}^n$}
+
+To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" in $\mathbb{R}^n$.
+
+\begin{definition}[Open Ball]
+Let $\mathbf{a} \in \mathbb{R}^n$ and $r > 0$. The \textbf{open ball} of radius $r$ centered at $\mathbf{a}$ is the set:
+\[ B_r(\mathbf{a}) = \{ \mathbf{x} \in \mathbb{R}^n : \|\mathbf{x} - \mathbf{a}\| < r \} \]
+\end{definition}
+
+\begin{definition}[Open and Closed Sets]
+A set $U \subseteq \mathbb{R}^n$ is called \textbf{open} if for every point $\mathbf{x} \in U$, there exists an $r > 0$ such that $B_r(\mathbf{x}) \subseteq U$.
+A set $F \subseteq \mathbb{R}^n$ is called \textbf{closed} if its complement $\mathbb{R}^n \setminus F$ is open.
+\end{definition}
+
+For limits, the concept of an accumulation point is crucial.
+
+\begin{definition}[Accumulation Point]
+A point $\mathbf{x}_0$ is an \textbf{accumulation point} (or limit point) of a set $E$ if every open ball $B_r(\mathbf{x}_0)$ contains at least one point of $E$ distinct from $\mathbf{x}_0$.
+\end{definition}
+
+\subsection{Limits of Functions of Several Variables}
+
+Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ be a function defined on a domain $D$. We are interested in the behavior of $f(\mathbf{x})$ as $\mathbf{x}$ approaches a point $\mathbf{a}$.
+
+\begin{definition}[Limit]
+Let $\mathbf{a}$ be an accumulation point of $D$. We say that the limit of $f(\mathbf{x})$ as $\mathbf{x}$ approaches $\mathbf{a}$ is $\mathbf{L}$, written as:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = \mathbf{L} \]
+if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $\mathbf{x} \in D$:
+\[ 0 < \|\mathbf{x} - \mathbf{a}\| < \delta \implies \|f(\mathbf{x}) - \mathbf{L}\| < \epsilon \]
+\end{definition}
+
+\subsubsection{Path Dependence and Non-existence of Limits}
+
+In single-variable calculus ($n=1$), $x$ can approach $a$ from only two directions (left or right). In $\mathbb{R}^n$ ($n \ge 2$), $\mathbf{x}$ can approach $\mathbf{a}$ from \textbf{infinitely many directions} along infinitely many different paths (lines, parabolas, spirals, etc.).
+
+\begin{theorem}
+If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous curve $\gamma(t)$ ending at $\mathbf{a}$, the limit along the curve must be $L$.
+Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
+\end{theorem}
+
+\begin{example}
+Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
+\begin{enumerate}
+    \item Approach along the $x$-axis ($y=0$):
+    \[ \lim_{x \to 0} f(x, 0) = \lim_{x \to 0} \frac{0}{x^2} = 0 \]
+    \item Approach along the line $y=x$:
+    \[ \lim_{x \to 0} f(x, x) = \lim_{x \to 0} \frac{x^2}{x^2 + x^2} = \frac{1}{2} \]
+\end{enumerate}
+Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
+\end{example}
+
+\begin{remark}
+It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
+\[ f(x, y) = \frac{x y^2}{x^2 + y^4} \]
+Along any line $y = mx$ (and $x=0$), the limit is $0$. However, along the parabola $x = y^2$, the limit is $1/2$. Thus, the limit does not exist.
+\end{remark}
+
+\subsubsection{Iterated Limits vs. Simultaneous Limits}
+
+For a function of two variables $f(x,y)$, we can define \textbf{iterated limits}:
+\[ L_{12} = \lim_{x \to a} \left( \lim_{y \to b} f(x, y) \right) \quad \text{and} \quad L_{21} = \lim_{y \to b} \left( \lim_{x \to a} f(x, y) \right) \]
+
+\begin{proposition}
+The existence of iterated limits does not imply the existence of the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$.
+Even if $L_{12} = L_{21}$, the simultaneous limit may not exist.
+Conversely, if the simultaneous limit exists, the iterated limits may not exist (because the inner limits might not be defined).
+However, if the simultaneous limit exists AND the inner limits exist, then they must all be equal.
+\end{proposition}
+
+\subsection{Continuity}
+
+The definition of continuity in $\mathbb{R}^n$ is formally identical to that in $\mathbb{R}$.
+
+\begin{definition}[Continuity]
+A function $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ is \textbf{continuous} at a point $\mathbf{a} \in D$ if:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = f(\mathbf{a}) \]
+If $f$ is continuous at every point in $D$, we say $f$ is continuous on $D$.
+\end{definition}
+
+Elementary operations preserve continuity:
+\begin{itemize}
+    \item The sum, difference, product, and quotient (denominator non-zero) of continuous functions are continuous.
+    \item The composition of continuous functions is continuous. That is, if $f$ is continuous at $\mathbf{a}$ and $g$ is continuous at $f(\mathbf{a})$, then $g \circ f$ is continuous at $\mathbf{a}$.
+\end{itemize}
+
+\subsection{Properties of Continuous Functions on Compact Sets}
+
+The notions of boundedness and extreme values rely on the domain being "compact".
+
+\begin{definition}[Compact Set]
+A set $K \subseteq \mathbb{R}^n$ is \textbf{compact} if it is both \textbf{closed} and \textbf{bounded}.
+(This is the Heine-Borel Theorem characterization for Euclidean spaces).
+\end{definition}
+
+\begin{theorem}[Weierstrass Extreme Value Theorem]
+Let $K \subseteq \mathbb{R}^n$ be a compact set and let $f: K \to \mathbb{R}$ be a continuous function. Then:
+\begin{enumerate}
+    \item $f$ is bounded on $K$.
+    \item $f$ attains its maximum and minimum values on $K$. That is, there exist points $\mathbf{x}_{\min}, \mathbf{x}_{\max} \in K$ such that for all $\mathbf{x} \in K$:
+    \[ f(\mathbf{x}_{\min}) \le f(\mathbf{x}) \le f(\mathbf{x}_{\max}) \]
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Uniform Continuity]
+Let $K \subseteq \mathbb{R}^n$ be a compact set. If $f: K \to \mathbb{R}^m$ is continuous on $K$, then $f$ is \textbf{uniformly continuous} on $K$.
+\end{theorem}
+
+\begin{definition}[Uniform Continuity]
+$f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that for all $\mathbf{x}, \mathbf{y} \in D$:
+\[ \|\mathbf{x} - \mathbf{y}\| < \delta \implies \|f(\mathbf{x}) - f(\mathbf{y})\| < \epsilon \]
+Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
+\end{definition}
+
+\begin{remark}
+If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
+For example, $f(x) = 1/x$ on $(0, 1)$ is continuous but unbounded and not uniformly continuous.
+\end{remark}
+
+\subsection{Connectedness and the Intermediate Value Theorem}
+
+To generalize the Intermediate Value Theorem, we need the concept of connectedness.
+
+\begin{definition}[Path-Connected Set]
+A set $D \subseteq \mathbb{R}^n$ is \textbf{path-connected} if for any two points $\mathbf{a}, \mathbf{b} \in D$, there exists a continuous curve $\gamma: [0, 1] \to D$ such that $\gamma(0) = \mathbf{a}$ and $\gamma(1) = \mathbf{b}$.
+\end{definition}
+
+\begin{theorem}[Generalized Intermediate Value Theorem]
+Let $D \subseteq \mathbb{R}^n$ be a path-connected set and let $f: D \to \mathbb{R}$ be continuous. If $\mathbf{a}, \mathbf{b} \in D$ and $f(\mathbf{a}) < c < f(\mathbf{b})$, then there exists a point $\mathbf{c} \in D$ such that $f(\mathbf{c}) = c$.
+\end{theorem}
+
+This ensures that the image of a path-connected set under a continuous real-valued function is an interval.
+
+
+\chapter{Mathematical Analysis III}
+
+\chapter{Topology}
+
+From this chapter onward, we will explore more abstract mathematical structures. Topology provides the foundational language for discussing continuity, convergence, and compactness in a general setting beyond Euclidean spaces. We will define topological spaces, continuous maps, and various topological properties, establishing a rigorous framework for further study in analysis and geometry.
+
+Honestly speaking, topology is a very abstract and theoretical subject. It may seem disconnected from practical applications at first glance. However, its concepts underpin many areas of modern mathematics, including analysis, geometry, and even fields like data science and physics. Understanding topology equips you with a powerful language to describe and analyze complex structures in a rigorous way.
+
+We shall begin with the basic definitions and gradually build up to more advanced topics, ensuring a solid foundation in topological concepts. Readers are encouraged to engage deeply with the material, as topology often requires a shift in thinking from concrete examples to abstract reasoning.
+
+\section{Topological Space and Continuous Function}
+
+The standard definition of a topological space and topology is evolved from some very intuitive concepts. In the Euclidean space $\mathbb{R}^n$, we have already defined open sets using open balls. This notion of "openness" can be abstracted to define a topology on any set.
+
+\subsection{Topology and Topological Space}
+
+\begin{definition}[Topology]
+Let $X$ be a non-empty set. A collection $\tau$ of subsets of $X$ is called a \textbf{topology} on $X$ if it satisfies the following three axioms:
+\begin{enumerate}
+    \item The empty set $\emptyset$ and the entire set $X$ are in $\tau$.
+    \item The union of any collection of sets in $\tau$ is also in $\tau$.
+    \item The intersection of any finite number of sets in $\tau$ is also in $\tau$.
+\end{enumerate}
+The pair $(X, \tau)$ is called a \textbf{topological space}, and the sets in $\tau$, which are the subsets of $X$, are called \textbf{open sets}.
+\end{definition}
+
+Using the concept of open sets, we can restate the definition of topology in a more intuitive way. A topology on a set $X$ is a way of specifying which subsets of $X$ are considered "open" in a manner that generalizes the familiar notion of open sets in Euclidean spaces.
+
+\begin{definition}[Special Class of Topology]
+For any non-empty set $X$, the \textbf{discrete topology} on $X$ is defined by taking $\tau$ to be the power set of $X$ (i.e., all subsets of $X$ are open). Conversely, the \textbf{trivial topology}, or \textbf{indiscrete topology}, on $X$ consists only of the empty set and the entire set $X$.
+
+Let $X$ be a non-empty set. The \textbf{finite complement topology} on $X$ is defined by taking $\tau$ to be the collection of all subsets $U \subseteq X$ such that either $U = \emptyset$ or the complement $X \setminus U$ is a finite set.
+\end{definition}
+
+\begin{definition}[Finer and Coarser Topologies]
+Let $X$ be a set with two topologies $\tau_1$ and $\tau_2$. We say that $\tau_1$ is \textbf{finer} than $\tau_2$ (or $\tau_2$ is \textbf{coarser} than $\tau_1$) if $\tau_2 \subseteq \tau_1$. If $\tau_1 \ne \tau_2$, we say that $\tau_1$ is \textbf{strictly finer} than $\tau_2$.
+\end{definition}
+
+The definition of \textbf{finer and coarser} might seems a bit contradicted at first glance. However, it is quite intuitive if we think in terms of open sets. A finer topology has more open sets, which means it allows for more "flexibility" in defining neighborhoods and continuity. Conversely, a coarser topology has fewer open sets, which can make it "stricter" in terms of continuity and convergence.
+
+We can think of the concept of topology space as a truck that carries pieces of stones, each stone representing an open set. Any collection of stones are still stones, so any union of stones is still a stone. Also, we can break a stone into finite pieces, so any finite intersection of stones is still a stone. Now we create a new truck which carries more stones than the previous truck. This new truck is finer than the previous one because it has more stones (open sets) to work with.
+
+Although using $\tau$ to describe topology is standard, but it will cause some inconvenience in later discussions. Therefore, we need to use a new concept to describe topology.
+
+\begin{definition}[Basis for a Topology]
+Let $X$ be a non-empty set. A collection $\mathcal{B}$ of subsets of $X$ is called a \textbf{basis} for a topology on $X$ if:
+\begin{enumerate}
+    \item For each $x \in X$, there is at least one basis element $B \in \mathcal{B}$ such that $x \in B$.
+    \item If $x$ belongs to the intersection of two basis elements $B_1$ and $B_2$, then there is a basis element $B_3$ such that $x \in B_3 \subseteq B_1 \cap B_2$.
+\end{enumerate}
+Given a basis $\mathcal{B}$, the topology $\tau$ generated by $\mathcal{B}$ is defined as the collection of all unions of basis elements. The pair $(X, \tau)$ is then a topological space. More explicitly,
+\[
+\tau = \left\{ \bigcup_{B \in \mathcal{B'}} B \mid \mathcal{B'} \subseteq \mathcal{B} \right\}
+\]
+\end{definition}
+
+Here we provide a proof for the fact that a basis indeed generates a topology.
+
+\begin{proof}
+To show that the collection $\tau$ generated by the basis $\mathcal{B}$ is a topology on $X$, we need to verify the three axioms of a topology:
+\begin{enumerate}
+    \item \textbf{The empty set and the entire set $X$ are in $\tau$.} 
+    The empty set can be expressed as the union of an empty collection of basis elements, so $\emptyset \in \tau$. For the entire set $X$, by the first condition of the basis, for each $x \in X$, there exists a basis element $B_x \in \mathcal{B}$ such that $x \in B_x$. Thus, we can express $X$ as the union of all these basis elements:
+    \[
+    X = \bigcup_{x \in X} B_x
+    \]
+    Since each $B_x$ is in $\mathcal{B}$, it follows that $X \in \tau$.
+
+    \item \textbf{The union of any collection of sets in $\tau$ is also in $\tau$.} 
+    Let $\{U_\alpha\}_{\alpha \in A}$ be a collection of sets in $\tau$. By definition of $\tau$, each $U_\alpha$ can be expressed as a union of basis elements:
+    \[
+    U_\alpha = \bigcup_{B \in \mathcal{B}_\alpha} B
+    \]
+    for some subcollection $\mathcal{B}_\alpha \subseteq \mathcal{B}$. Therefore, the union of all $U_\alpha$ is:
+    \[
+    \bigcup_{\alpha \in A} U_\alpha = \bigcup_{\alpha \in A} \left( \bigcup_{B \in \mathcal{B}_\alpha} B \right) = \bigcup_{B \in \bigcup_{\alpha \in A} \mathcal{B}_\alpha} B
+    \]
+    Since $\bigcup_{\alpha \in A} \mathcal{B}_\alpha$ is a subcollection of $\mathcal{B}$, it follows that $\bigcup_{\alpha \in A} U_\alpha$ is also in $\tau$.
+
+    \item \textbf{The intersection of any finite number of sets in $\tau$ is also in $\tau$.} 
+    Let $U_1, U_2, \ldots, U_n$ be sets in $\tau$. Each $U_i$ can be expressed as a union of basis elements:
+    \[
+    U_i = \bigcup_{B \in \mathcal{B}_i} B
+    \]
+    for some subcollection $\mathcal{B}_i \subseteq \mathcal{B}$. The intersection of these sets is:
+    \[
+    U_1 \cap U_2 \cap \ldots \cap U_n = \left( \bigcup_{B_1 \in \mathcal{B}_1} B_1 \right) \cap \left( \bigcup_{B_2 \in \mathcal{B}_2} B_2 \right) \cap \ldots \cap \left( \bigcup_{B_n \in \mathcal{B}_n} B_n \right)
+    \]
+    To show that this intersection is in $\tau$, we consider an arbitrary point $x$ in the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$. By definition, $x$ must belong to at least one basis element from each $U_i$. Let $B_i$ be a basis element such that $x \in B_i \subseteq U_i$ for each $i = 1, 2, \ldots, n$.
+
+    By the second condition of the basis, since $x$ belongs to the intersection $B_1 \cap B_2 \cap \ldots \cap B_n$, there exists a basis element $B_x$ such that:
+    \[x \in B_x \subseteq B_1 \cap B_2 \cap \ldots \cap B_n \]
+    Since $B_x$ is a basis element, it follows that $B_x \subseteq U_1 \cap U_2 \cap \ldots \cap U_n$. Therefore, every point in the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$ is contained in some basis element that is also contained in the intersection. This implies that the intersection can be expressed as a union of such basis elements:
+    \[
+    U_1 \cap U_2 \cap \ldots \cap U_n = \bigcup_{x \in U_1 \cap U_2 \cap \ldots \cap U_n} B_x
+    \]
+    Thus, the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$ is in $\tau$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Subbasis for a Topology]
+Let $X$ be a non-empty set. A collection $\mathcal{S}$ of subsets of $X$ is called a \textbf{subbasis} for a topology on $X$ if the finite intersections of elements of $\mathcal{S}$ form a basis for a topology on $X$. The topology generated by the subbasis $\mathcal{S}$ is the collection of all unions of finite intersections of elements from $\mathcal{S}$.
+\[
+\tau = \left\{\bigcup_{B \in \mathcal{B'}} B \mid \mathcal{B'} \in \mathcal{B}\right\}, \quad \mathcal{B} = \left\{ \bigcap_{i=1}^n S_i \mid S_i \in \mathcal{S}, n \in \mathbb{N} \right\}
+\]
+\end{definition}
+
+Basis and subbasis provide convenient ways to define and work with topologies, especially in more complex settings where directly specifying all open sets would be impractical.
+
+As long as the set $X$ can be equipped with a partial order, we can define a special topology called the \textbf{order topology}.
+
+\begin{definition}[Order Topology]
+Let $(X, \leq)$ be a partially ordered set. The \textbf{order topology} on $X$ is generated by the basis consisting of all open intervals of the form:
+\begin{enumerate}
+    \item $(a, b) = \{ x \in X \mid a < x < b \}$ for all $a, b \in X$ with $a < b$,
+    \item $[a_0, b) = \{ x \in X \mid a \leq x < b \}$ for all $b \in X$ with $a_0$ is the minimum of $X$ (if it exists),
+    \item $(a, b_0] = \{ x \in X \mid a < x \leq b \}$ for all $a \in X$ with $b_0$ is the maximum of $X$ (if it exists),
+\end{enumerate}
+\end{definition}
+
+We can also define a special topology on product sets, which is widely used in various fields of mathematics.
+
+\begin{definition}[Product Topology]
+Let $\{(X_i, \tau_i)\}_{i \in I}$ be a family of topological spaces indexed by a set $I$. The \textbf{product topology} on the Cartesian product $X = \prod_{i \in I} X_i$ is defined as the topology generated by the basis consisting of all products of the form:
+\[\prod_{i \in I} U_i\]
+where $U_i \in \tau_i$ for each $i \in I$, and $U_i = X_i$ for all but finitely many $i \in I$.
+\end{definition}
+
+\begin{theorem}
+Assume $\mathcal{B}$ is a basis of a topology on $X$ and $\mathcal{C}$ is a basis of a topology on $Y$. Then the collection
+\[\mathcal{D} = \{ B \times C \mid B \in \mathcal{B}, C \in \mathcal{C} \} \]
+is a basis for the product topology on $X \times Y$.
+\end{theorem}
+
+\begin{proof}
+To show that $\mathcal{D}$ is a basis for the product topology on $X \times Y$, we need to verify the two conditions for a basis:
+\begin{enumerate}
+    \item \textbf{For each point $(x, y) \in X \times Y$, there is at least one basis element $D \in \mathcal{D}$ such that $(x, y) \in D$.} 
+    Since $\mathcal{B}$ is a basis for the topology on $X$, there exists a basis element $B \in \mathcal{B}$ such that $x \in B$. Similarly, since $\mathcal{C}$ is a basis for the topology on $Y$, there exists a basis element $C \in \mathcal{C}$ such that $y \in C$. Therefore, the product $B \times C$ is a basis element in $\mathcal{D}$, and we have:
+    \[
+    (x, y) \in B \times C
+    \]
+    
+    \item \textbf{If $(x, y)$ belongs to the intersection of two basis elements $D_1$ and $D_2$ in $\mathcal{D}$, then there is a basis element $D_3$ in $\mathcal{D}$ such that $(x, y) \in D_3 \subseteq D_1 \cap D_2$.} 
+    Let $D_1 = B_1 \times C_1$ and $D_2 = B_2 \times C_2$ be two basis elements in $\mathcal{D}$ such that $(x, y) \in D_1 \cap D_2$. This means that:
+    \[
+    x \in B_1 \cap B_2 \quad \text{and} \quad y \in C_1 \cap C_2
+    \]
+    Since $\mathcal{B}$ is a basis for the topology on $X$, there exists a basis element $B_3 \in \mathcal{B}$ such that:
+    \[
+    x \in B_3 \subseteq B_1 \cap B_2
+    \]
+    Similarly, since $\mathcal{C}$ is a basis for the topology on $Y$, there exists a basis element $C_3 \in \mathcal{C}$ such that:
+    \[
+    y \in C_3 \subseteq C_1 \cap C_2
+    \]
+    Therefore, the product $D_3 = B_3 \times C_3$ is a basis element in $\mathcal{D}$, and we have:
+    \[(x, y) \in D_3 \subseteq D_1 \cap D_2\]
+\end{enumerate}
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Measure Theory}
+
+
+
+\chapter{Applied Mathematics: Graph Theory}
+
+\section{Introduction to Graph Theory}
+
+Graph theory is the study of mathematical structures used to model pairwise relations between objects. It provides the theoretical foundation for analyzing networks, data structures, scheduling, optimization, and computational complexity. This chapter establishes rigorous definitions of graph-theoretic structures and provides detailed proofs for central theorems concerning connectivity, planarity, and traversability.
+
+\subsection{Basic Concepts and Classification}
+
+This section covers the fundamental building blocks of graph theory, including definitions, representations, connectivity, and specific classifications of graphs.
+
+\subsubsection{Fundamental Definitions and Theorems}
+
+We begin by distinguishing between different types of graph structures based on the nature of their edges.
+
+\begin{definition}[Simple Graph]
+A \textbf{simple graph} $G = (V, E)$ consists of a non-empty finite set of vertices $V$ and a set $E$ of 2-element subsets of $V$ (unordered pairs of distinct vertices). In a simple graph, there are no loops (edges connecting a vertex to itself) and no multiple edges (more than one edge between the same pair of vertices).
+\end{definition}
+
+\begin{definition}[Multigraph]
+A \textbf{multigraph} $G = (V, E)$ is a graph where multiple edges (also called parallel edges) are allowed between the same pair of vertices. Formally, $E$ is a multiset of unordered pairs of vertices. Loops are typically not allowed in a strict multigraph definition, though conventions vary.
+\end{definition}
+
+\begin{definition}[Pseudograph]
+A \textbf{pseudograph} is a generalization of a multigraph that allows both multiple edges between distinct vertices and \textbf{loops} (edges connecting a vertex to itself).
+\end{definition}
+
+\begin{definition}[Directed Graph]
+A \textbf{directed graph} (or digraph) $G = (V, E)$ consists of a set of vertices $V$ and a set of \textbf{ordered} pairs $E \subseteq V \times V$, called arcs or directed edges. An edge $(u, v)$ is directed from $u$ to $v$.
+\end{definition}
+
+\begin{definition}[Degree]
+The \textbf{degree} of a vertex $v$, denoted $\deg(v)$, is the number of edges incident to it. In a graph with loops, each loop contributes 2 to the degree. In a directed graph, we distinguish between in-degree ($\deg^-(v)$) and out-degree ($\deg^+(v)$).
+\end{definition}
+
+According to these definitions, we can now state and prove a fundamental theorem regarding vertex degrees.
+
+\begin{theorem}[The Handshaking Lemma]
+For any undirected graph $G = (V, E)$, $\sum_{v \in V} \deg(v) = 2|E|$.
+\end{theorem}
+\begin{proof}
+We count the number of incident pairs $(v, e)$ where $v \in V, e \in E$ and $v \in e$.
+Summing over vertices, each vertex $v$ contributes $\deg(v)$ pairs, yielding $\sum \deg(v)$.
+Summing over edges, each edge $\{u, v\}$ has exactly two endpoints, contributing exactly 2 to the sum.
+Thus, the sum of degrees equals twice the number of edges.
+\end{proof}
+
+\subsubsection{Graph Operations and Isomorphism}
+
+\begin{definition}[Graph Isomorphism]
+Two graphs $G = (V, E)$ and $H = (W, F)$ are \textbf{isomorphic} if there exists a bijection $f: V \to W$ such that $\{u, v\} \in E$ if and only if $\{f(u), f(v)\} \in F$.
+\end{definition}
+
+Just like isotope in chemistry, isomorphic graphs are structurally identical, differing only in the labeling of vertices.
+
+\begin{theorem}[Isomorphism Invariants]
+If two graphs are isomorphic, they must have:
+\begin{itemize}
+    \item Same number of vertices and edges
+    \item Same degree sequence
+    \item Same number of cycles of each length
+    \item Same connectivity properties
+\end{itemize}
+\end{theorem}
+
+This invariants remain unchanged under isomorphism, providing necessary (but not sufficient) conditions for two graphs to be isomorphic.
+
+\subsubsection{Degree Sequences and Realizability}
+A sequence of integers is \textbf{graphic} if there exists a simple graph with that degree sequence.
+
+\begin{theorem}[Havel-Hakimi Theorem]
+Let $S = (d_1, d_2, \dots, d_n)$ be a finite list of nonnegative integers that is non-increasing (i.e., $d_1 \ge d_2 \ge \dots \ge d_n$). Let $S'$ be the list obtained by deleting $d_1$ and subtracting 1 from the next $d_1$ elements of $S$. Then, $S$ is graphic if and only if $S'$ is graphic.
+\end{theorem}
+
+\begin{proof}
+\textbf{Intuition:} This theorem provides a recursive algorithm to check if a degree sequence is valid.
+
+($\Leftarrow$) If $S'$ is graphic, there exists a graph $G'$ with degree sequence $S'$. We can construct a graph $G$ with sequence $S$ by adding a new vertex $v_1$ and connecting it to the $d_1$ vertices whose degrees were reduced by 1 in $S'$. Since we connect $v_1$ to distinct vertices, the result is a simple graph.
+
+($\Rightarrow$) If $S$ is graphic, there exists a realization $G$. We must show that there exists a \textit{specific} realization where the vertex with degree $d_1$ connects to the $d_1$ vertices with the highest degrees.
+Let $v_1$ be a vertex with degree $d_1$. Let $N(v_1)$ be its neighbors. If $N(v_1)$ consists of the $d_1$ vertices with the highest degrees (excluding $v_1$), we are done (removing $v_1$ yields $S'$).
+If not, there exist vertices $x, y$ such that $x \in N(v_1)$, $y \notin N(v_1)$, but $\deg(y) > \deg(x)$ (or $\deg(y) \ge \deg(x)$ where $y$ is a preferred high-degree target).
+Since $\deg(y) \ge \deg(x)$, there must be a vertex $z$ such that $z$ is adjacent to $y$ but not to $x$.
+We perform an \textbf{edge swap}: remove edges $\{v_1, x\}$ and $\{y, z\}$, and add edges $\{v_1, y\}$ and $\{x, z\}$.
+This preserves all degrees but moves a neighbor of $v_1$ to a higher-degree vertex. Repeating this process eventually ensures $v_1$ is connected to the $d_1$ highest-degree vertices. Removing $v_1$ then yields a graph with sequence $S'$.
+\end{proof}
+
+The key point of the proof is to \textbf{SWAP} edges to ensure the highest-degree vertices are connected to the vertex with larger degree, thus preserving the degree sequence while constructing a valid graph.
+
+\subsubsection{Graph Representations}
+
+\begin{definition}[Adjacency Matrix]
+For a graph $G = (V, E)$ with $n$ vertices, the \textbf{adjacency matrix} $A$ is an $n \times n$ matrix where $A_{ij} = 1$ if vertices $i$ and $j$ are adjacent, and $0$ otherwise.
+\end{definition}
+
+Adjacency matrices can be applied to different types of graphs.
+
+\begin{theorem}
+For an adjacency matrix $A$:
+\begin{itemize}
+    \item $A^k_{ij}$ counts the number of walks of length $k$ from vertex $i$ to $j$
+    \item The eigenvalues of $A$ provide information about graph structure
+    \item For regular graphs, the largest eigenvalue equals the degree
+\end{itemize}
+\end{theorem}
+
+Adjacency matrices are particularly useful for algorithmic applications and spectral graph theory. In the adjacency matrix, the element $A^k_{ij}$ of the $k$-th power $A^k$ represents the number of paths of length $k$ from vertex $i$ to vertex $j$.
+
+\begin{definition}[Incidence Matrix]
+The \textbf{incidence matrix} $M$ of a graph with $n$ vertices and $m$ edges is an $n \times m$ matrix where $M_{ve} = 1$ if vertex $v$ is incident to edge $e$, and $0$ otherwise.
+\end{definition}
+
+\subsubsection{Connectivity}
+
+Connectivity measures the resilience of a graph.
+
+\begin{definition}[Paths of undirected Graphs]
+A path of length $n,(n \geq 0)$ from $u$ to $v$ in an undirected graph $G=(V,E)$ is a finite sequence of vertices $u = v_0, v_1, v_2, \ldots, v_n = v$ such that each set pair $\{v_{i-1}, v_i\}$ is an edge in $E$.
+\end{definition}
+
+With the definition of paths, we can define connectivity now.
+
+\begin{definition}
+A graph $G$ is \textbf{connected} if there exists a path between every pair of vertices in $G$. Otherwise, it is \textbf{disconnected}.
+\end{definition}
+
+The definitions of directed graphs is similar, except that the edges are ordered pairs.
+
+\begin{definition}[Paths of directed Graphs]
+A path of length $n,(n \geq 0)$ from $u$ to $v$ in a directed graph $G=(V,E)$ is a finite sequence of vertices $u = v_0, v_1, v_2, \ldots, v_n = v$ such that each ordered pair $(v_{i-1}, v_i)$ is an edge in $E$.
+\end{definition}
+
+But the connectivity definition is a bit different. We have two types of connectivity in directed graphs.
+
+\begin{definition}
+A directed graph $G$ is \textbf{strongly connected} if there exists a directed path from every vertex to every other vertex. It is \textbf{weakly connected} if the underlying undirected graph (obtained by replacing all directed edges with undirected edges) is connected.
+\end{definition}
+
+However, simply understanding the concept of connectivity is not enough. We need to quantify how connected a graph is. This leads us to the concepts of vertex and edge connectivity.
+
+\begin{definition}
+\begin{enumerate}
+    \item A \textbf{cut vertex} is a vertex $v \in V$ such that the removal of the vertex $v$ results in more connected components than $G$.
+    \item A subset $V'$ in $V$ is called a vertex cut if the subgraph $G-V'$ is disconnected.
+    \item The \textbf{vertex connectivity} $\kappa(G)$ is the minimum number of vertices whose removal disconnects $G$ or results in a single vertex.
+\end{enumerate}
+\end{definition}
+
+Likewise, we can define edge connectivity using the same format.
+
+\begin{definition}
+\begin{enumerate}
+    \item A \textbf{bridge} (or cut edge) is an edge $e \in E$ such that the removal of the edge $e$ results in more connected components than $G$.
+    \item A subset $E'$ in $E$ is called an edge cut if the subgraph $G-E'$ is disconnected.
+    \item The \textbf{edge connectivity} $\lambda(G)$ is the minimum number of edges whose removal disconnects $G$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Whitney's Inequality]
+For any graph $G$, the vertex connectivity $\kappa(G)$, edge connectivity $\lambda(G)$, and minimum degree $\delta(G)$ satisfy:
+\[ \kappa(G) \le \lambda(G) \le \delta(G) \]
+\end{theorem}
+
+\begin{proof}
+\textbf{Part 1: $\lambda(G) \le \delta(G)$}
+Let $v$ be a vertex with minimum degree $\delta(G)$. The set of edges incident to $v$ forms an edge cut separating $v$ from the rest of the graph (assuming $n > 1$). This cut has size $\delta(G)$. Since $\lambda(G)$ is the size of the \textit{minimum} edge cut, $\lambda(G) \le \delta(G)$.
+
+\textbf{Part 2: $\kappa(G) \le \lambda(G)$}
+Consider a minimum edge cut $[S, \bar{S}]$ consisting of $\lambda(G)$ edges.
+\begin{itemize}
+    \item \textbf{Case A:} If every vertex in $S$ is adjacent to every vertex in $\bar{S}$, then $\lambda(G) = |S||\bar{S}|$. In this case, removing all vertices in $S$ (or $\bar{S}$, whichever is smaller) disconnects the graph (or leaves a trivial graph). Since $|S| \le |S||\bar{S}|$ (assuming non-trivial sets), the inequality holds.
+    \item \textbf{Case B:} If not all edges exist between $S$ and $\bar{S}$, there exist $x \in S$ and $y \in \bar{S}$ such that $\{x, y\} \notin E$. We construct a vertex cut. For every edge $e = \{u, v\}$ in the edge cut, choose the endpoint that belongs to $S$ (or consistently $\bar{S}$). Let $T$ be this set of vertices. Removing $T$ breaks all paths between $S \setminus T$ and $\bar{S}$. We can optimize this selection: strictly speaking, Menger's Theorem or a direct construction shows that a vertex cut of size $\le \lambda(G)$ exists.
+\end{itemize}
+Thus, $\kappa(G) \le \lambda(G)$.
+\end{proof}
+
+\subsubsection{Special Graph Classes}
+
+In this part we will introduce some special classes of graphs along with their properties.
+
+\paragraph{Complete Graphs}
+\begin{definition}
+A \textbf{complete graph} $K_n$ is a simple graph where every pair of distinct vertices is connected by an edge.
+\end{definition}
+
+Complete graphs are maximally connected and serve as important examples in graph theory. Here are some of the properties of complete graphs.
+
+\begin{theorem}
+For $K_n$:
+\begin{itemize}
+    \item Number of edges: $\frac{n(n-1)}{2}$
+    \item Regular of degree $n-1$
+    \item Hamiltonian and Eulerian for $n \geq 3$
+\end{itemize}
+\end{theorem}
+
+\paragraph{Bipartite Graphs}
+Another important class of graphs is bipartite graphs. They are widely used in modeling relationships between two distinct sets as well as data structures like matchings. Databases, recommendation systems, and scheduling problems often utilize bipartite graphs.
+
+\begin{definition}
+A \textbf{bipartite graph} is a graph $G = (V, E)$ where the vertex set $V$ can be partitioned into two disjoint sets $X$ and $Y$ such that every edge in $E$ connects a vertex in $X$ to a vertex in $Y$. There are no edges between vertices within the same set.
+\end{definition}
+
+A wonderful property of bipartite graphs is defined by the concept of matchings. A matching is a set of edges without common vertices.
+
+\begin{definition}
+A \textbf{matching} in a graph $G = (V, E)$ is a subset of edges $M \subseteq E$ such that no two edges in $M$ share a common vertex. A maximal matching is a matching with the largest number of edges.
+\end{definition}
+
+\begin{definition}
+A \textbf{complete matching} is a matching that covers every vertex of the graph. In a bipartite graph $G = (X, Y, E)$, a complete matching pairs every vertex in $X$ with a unique vertex in $Y$.
+\end{definition}
+
+\begin{theorem}[Characterization of Bipartite Graphs]
+A graph $G$ is bipartite if and only if it contains no odd cycles.
+\end{theorem}
+
+\begin{proof}
+(\textbf{$\Rightarrow$}) Let $G$ be bipartite with partitions $X$ and $Y$. Any path must alternate between sets: $x_1 \in X, y_1 \in Y, x_2 \in X, \dots$. To return to the starting set $X$ to close a cycle, one must traverse an even number of steps. Thus, any cycle must have even length.
+
+(\textbf{$\Leftarrow$}) Assume $G$ has no odd cycles. We assume $G$ is connected (otherwise apply to components). Pick a start vertex $v_0$.
+Define sets $V_i = \{ v \in V \mid d(v_0, v) = i \}$.
+Let $X = \bigcup_{k \text{ even}} V_k$ and $Y = \bigcup_{k \text{ odd}} V_k$.
+We claim $X$ and $Y$ are independent sets.
+Suppose there is an edge between $u, w \in X$. Then $u \in V_i, w \in V_j$ with $i, j$ even.
+There is a path from $v_0$ to $u$ of length $i$ and to $w$ of length $j$. Combining these with edge $\{u, w\}$ creates a closed walk of length $i+j+1$ (odd).
+While a closed walk is not a simple cycle, a closed odd walk \textit{must} contain a simple odd cycle (standard lemma). This contradicts the hypothesis.
+Thus, no edges exist within $X$ (similarly for $Y$). $G$ is bipartite.
+\end{proof}
+
+There is a famous theorem regarding matchings in bipartite graphs, known as Hall's Marriage Theorem. The theorem provides a necessary and sufficient condition for the existence of a perfect matching that saturates one part of the bipartition.
+
+\begin{theorem}[Hall's Marriage Theorem]
+Let $G = (X, Y, E)$ be a bipartite graph. There exists a matching that saturates $X$ if and only if for every subset $S \subseteq X$, $|N(S)| \ge |S|$, where $N(S)$ denotes the set of neighbors of vertices in $S$.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) If a matching saturates $X$, every vertex in $S$ is matched to a distinct vertex in $N(S)$ (its partner). Thus, the number of available neighbors must be at least the number of elements in $S$.
+
+($\Leftarrow$) \textit{Proof by induction on $|X|$.}
+Base case $|X|=1$: If $|N(S)| \ge |S| \implies \deg(x) \ge 1$, edge exists, matching exists.
+Assume true for $|X| < k$. Consider $|X|=k$.
+\begin{itemize}
+    \item \textbf{Case 1 (Strong Condition):} If for all proper subsets $\emptyset \subset S \subset X$, we have the strict inequality $|N(S)| \ge |S| + 1$.
+    Pick any edge $\{u, v\}$ with $u \in X$. Match them. Consider $G' = G - \{u, v\}$.
+    For any subset $S' \subseteq X \setminus \{u\}$, its neighborhood in $G'$ is $N_{G'}(S') = N_G(S') \setminus \{v\}$.
+    Since $|N_G(S')| \ge |S'| + 1$, we have $|N_{G'}(S')| \ge |S'|$.
+    By induction, the rest of $X$ can be matched.
+
+    \item \textbf{Case 2 (Tight Condition):} There exists a "critical" proper subset $A \subset X$ where $|N(A)| = |A|$.
+    By the induction hypothesis (since $|A| < k$), $A$ can be matched to $N(A)$.
+    Let $G' = G - (A \cup N(A))$. We must show $G'$ satisfies Hall's condition for the remaining set $X' = X \setminus A$.
+    Let $S' \subseteq X'$. Note that $N_G(S' \cup A) = N_{G'}(S') \cup N(A)$.
+    By Hall's condition on $G$: $|N_G(S' \cup A)| \ge |S' \cup A| = |S'| + |A|$.
+    Since $N(A)$ and $N_{G'}(S')$ are disjoint (by definition of removing $N(A)$):
+    $|N_{G'}(S')| + |N(A)| \ge |S'| + |A|$.
+    Substituting $|N(A)| = |A|$, we get $|N_{G'}(S')| \ge |S'|$.
+    Thus, $X'$ can also be matched. Combining matchings yields the result.
+\end{itemize}
+\end{proof}
+
+\textit{Note on Matchings}
+\begin{itemize}
+    \item \textbf{König's Theorem:} In any bipartite graph, the size of the maximum matching equals the size of the minimum vertex cover.
+    \item \textbf{Regular Bipartite Graphs:} Every $k$-regular bipartite graph has a perfect matching (for $k \geq 1$).
+\end{itemize}
+
+\paragraph{Planar Graphs}
+
+Another important class of graphs is planar graphs. They are widely used in geographic mapping, circuit design, and network visualization.
+
+\begin{definition}[Planar Graph]
+A graph is \textbf{planar} if it can be drawn on a plane without any edges crossing.
+\end{definition}
+
+One of the most famous results in planar graph theory is Euler's formula, which relates the number of vertices, edges, and faces in a connected planar graph.
+
+\begin{theorem}[Euler's Formula]
+For any connected planar graph with $v$ vertices, $e$ edges, and $f$ faces (regions), the following holds:
+\[ v - e + f = 2 \]
+\end{theorem}
+
+\begin{proof}
+\textit{Proof by induction on the number of edges $e$.}
+\begin{itemize}
+    \item \textbf{Base Case:} If $e=0$, then $v=1$ (since connected). There is 1 face (the outer infinite region).
+    \[ 1 - 0 + 1 = 2 \]
+    The formula holds.
+    \item \textbf{Inductive Step:} Assume the formula holds for all connected planar graphs with fewer than $k$ edges. Let $G$ have $k$ edges.
+    \begin{itemize}
+        \item \textbf{Subcase 1: $G$ is a tree.} Then $G$ has no cycles. $e = v - 1$ and $f = 1$.
+        \[ v - (v-1) + 1 = 2 \]
+        Formula holds.
+        \item \textbf{Subcase 2: $G$ contains a cycle.} Choose an edge $E_{cycle}$ that lies on a cycle. Since it is on a cycle, it separates two distinct faces. Removing $E_{cycle}$ merges these two faces into one, decreasing $f$ by 1. The number of edges $e$ decreases by 1. The number of vertices $v$ remains constant. The graph remains connected.
+        Let the parameters for $G - E_{cycle}$ be $v', e', f'$.
+        By induction: $v' - e' + f' = 2$.
+        Substitute $v'=v$, $e'=e-1$, $f'=f-1$:
+        \[ v - (e-1) + (f-1) = 2 \implies v - e + 1 + f - 1 = 2 \implies v - e + f = 2 \]
+    \end{itemize}
+\end{itemize}
+The formula holds for all connected planar graphs.
+\end{proof}
+
+We see that Euler's formula in graph theory shares a similar structure to Euler's characteristic in topology, highlighting the deep connections between these fields. Actually, Euler's formula can be viewed as a special case of the Euler characteristic for surfaces, where planar graphs correspond to graphs embedded on a sphere (which has Euler characteristic 2). We can also use the formula to derive the Euler's formula in topology by considering graphs drawn on surfaces of different genus. Readers interested in topology may explore this connection further.
+
+So how can we define whether a graph is planar or not? Kuratowski's Theorem provides a complete characterization of planar graphs in terms of forbidden subgraphs. But before stating the theorem, we need to define the concept of \textbf{homeomorphism}.
+
+\begin{definition}
+A graph $H$ is a \textbf{homeomorphism} of a graph $G$ if $H$ can be obtained from $G$ by subdividing edges (replacing each edge with a path of length 2).
+\end{definition}
+
+\begin{theorem}[Kuratowski's Theorem]
+A graph is planar if and only if it does not contain a subgraph that is homeomorphism $K_5$ or $K_{3,3}$.
+\end{theorem}
+
+After all, why do we care about planar graphs? One of the most famous problems in graph theory is the Four Color Theorem, which states that any planar graph can be colored using at most four colors such that no two adjacent vertices share the same color. This theorem has important applications in map coloring, scheduling, and network design.
+
+\begin{theorem}[Four Color Theorem]
+Every planar graph is 4-colorable.
+\end{theorem}
+
+\section{Paths and Circuits}
+
+In graph theory, paths and circuits are fundamental concepts that describe ways to traverse a graph. A path is a sequence of vertices connected by edges, while a circuit is a closed path that starts and ends at the same vertex. This section explores key theorems related to Eulerian circuits and Hamiltonian cycles, providing rigorous proofs for each. We shall pay special attention to two special types of traversals: Eulerian circuits, which cover every edge exactly once, and Hamiltonian cycles, which visit every vertex exactly once.
+
+\subsection{Eulerian Circuits}
+
+\begin{definition}
+An \textbf{Eulerian circuit} in a graph is a closed trail that visits every edge exactly once.
+\end{definition}
+
+To define whether a graph has an Eulerian circuit, we can use the following theorem.
+
+\begin{theorem}
+A connected graph $G$ has an Eulerian circuit (a closed trail covering every edge exactly once) if and only if every vertex in $G$ has an even degree.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) If there is an Eulerian circuit, consider the traversal of the circuit. Every time the trail enters a vertex $v$, it must subsequently leave $v$ via a different edge. Thus, the edges incident to $v$ are used in pairs (entry and exit). Consequently, the total degree of every vertex must be even.
+
+($\Leftarrow$) Assume all vertices have even degree. We construct a trail $T$ of maximum length.
+\begin{enumerate}
+    \item \textbf{$T$ must be a closed cycle.} Suppose $T$ starts at $u$ and ends at $v$ ($u \neq v$). The number of edges in $T$ incident to $v$ is odd (one entry for every exit, plus one final entry). However, $\deg(v)$ is even in $G$. Thus, there is at least one unused edge incident to $v$. We could extend $T$ through this edge, contradicting the assumption that $T$ is a maximal trail. Thus, $T$ must end at $u$.
+    \item \textbf{$T$ covers all edges.} Suppose $T$ does not include all edges. Since $G$ is connected, there must be an unused edge $e=\{x, y\}$ where $x$ lies on $T$. Consider the subgraph $G' = G - E(T)$. Since $T$ is a cycle, every vertex in $T$ has even degree in $T$. Since vertices in $G$ have even degree, vertices in $G'$ must also have even degree (even - even = even).
+    We can start a new trail $T'$ from $x$ in $G'$. Because degrees are even, this trail can be extended until it returns to $x$. We can then splice $T'$ into $T$ to form a longer closed trail, contradicting the maximality of $T$.
+\end{enumerate}
+Therefore, $T$ must contain all edges.
+\end{proof}
+
+Also, there is another concept similar to Eulerian circuits, called Euler paths.
+
+\begin{definition}
+An \textbf{Euler path} in a graph is a trail that visits every edge exactly once but does not necessarily start and end at the same vertex.
+\end{definition}
+
+Similarly, we can define whether a graph has an Euler path or not.
+
+\begin{theorem}
+A connected graph $G$ has an Euler path (a trail covering every edge exactly once) if and only if exactly two vertices in $G$ have odd degree.(Except there is a trivial case that all vertices have even degree, which means there is an Eulerian circuit.)
+\end{theorem}
+
+The proof is similar to the previous theorem, so we omit it here.
+
+\subsection{Hamiltonian Cycles}
+
+Another important concept in graph theory is the existence of Hamiltonian cycles.
+
+\begin{definition}
+A \textbf{Hamiltonian cycle} in a graph is a closed loop that visits every vertex exactly once.
+\end{definition}
+
+Unfortunately, there is no simple necessary and sufficient condition for the existence of Hamiltonian cycles like there is for Eulerian circuits. However, we do have some sufficient conditions, such as Ore's Theorem.
+
+\begin{theorem}[Ore's Theorem]
+Let $G$ be a simple graph with $n \ge 3$ vertices. If for every pair of non-adjacent vertices $u$ and $v$,
+\[ \deg(u) + \deg(v) \ge n \]
+then $G$ is Hamiltonian.
+\end{theorem}
+
+\begin{proof}
+\textit{Proof by Contradiction.}
+Assume the condition holds but $G$ is not Hamiltonian. We add edges to $G$ as long as the graph remains non-Hamiltonian. Let the resulting maximal non-Hamiltonian graph be $G^*$.
+In $G^*$, adding any single edge $\{u, v\}$ creates a Hamiltonian cycle. This implies there is a Hamiltonian path in $G^*$ from $u$ to $v$: $u = v_1 \to v_2 \to \dots \to v_n = v$.
+Since edge $\{u, v\}$ does not exist in $G^*$, the degree condition applies: $\deg(u) + \deg(v) \ge n$.
+
+We look for a "crossover" index. Let $S = \{i \mid \{u, v_{i+1}\} \in E(G^*)\}$ be the indices where $u$ connects to the node \textit{after} $v_i$.
+Let $T = \{i \mid \{v_i, v\} \in E(G^*)\}$ be the indices where $v$ connects to $v_i$.
+Note that indices are taken from $\{1, \dots, n-1\}$.
+The size $|S| = \deg(u)$ and $|T| = \deg(v)$.
+Sum of sizes: $|S| + |T| \ge n$.
+The available indices are $1, \dots, n-1$. By the Pigeonhole Principle, $S \cap T \neq \emptyset$.
+Let $k \in S \cap T$. Then $\{u, v_{k+1}\} \in E$ and $\{v_k, v\} \in E$.
+We can construct a cycle:
+\[ u \to v_{k+1} \to v_{k+2} \dots \to v \to v_k \to v_{k-1} \dots \to v_2 \to u \]
+This cycle visits every vertex exactly once, making $G^*$ Hamiltonian, which is a contradiction.
+\end{proof}
+
+\section{Trees and Forests}
+
+Trees and forests are fundamental structures in graph theory with numerous applications in computer science, biology, and network design. A tree is a connected acyclic graph, while a forest is a disjoint union of trees. This section explores the properties and characterizations of trees and forests, providing rigorous definitions and theorems.
+
+\subsection{Definitions and Characterization}
+
+\begin{definition}[Trees]
+A tree is a connected undirected simple graph without simple circuits (acyclic).
+\end{definition}
+
+Forests are closely related to trees. You can think of a forest as a collection of trees. Remember that a tree is a special case of a forest with only one connected component.
+
+\begin{definition}[Forests]
+A forest is a undirected simple graph without simple circuits (acyclic).
+\end{definition}
+
+There is a relatively abstract characterization of trees.
+
+\begin{theorem}
+An undirected graph $G$ is a tree iff any two vertices in $G$ is connected by a unique simple path.
+\end{theorem}
+
+\begin{theorem}[Characterization of Trees]
+A graph $G$ with $|V|=n$ vertices is a tree if and only if it is connected and $|E|=n-1$.
+\end{theorem}
+
+\begin{theorem}[Corollary]
+A connected simple graph $G=(V,E)$ satisfies that $|E| \geq |V|-1$.
+\end{theorem}
+
+\begin{proof}
+If a connected simple graph $G$ has $|E| < |V|-1$, then we can add edges to $G$ until it has $|V|-1$ edges. The resulting graph is still connected, but by the previous theorem, it must be a tree. However, a tree with $n$ vertices has exactly $n-1$ edges, so adding edges to reach $n-1$ edges contradicts the assumption that we started with fewer than $n-1$ edges. Therefore, any connected simple graph must have at least $|V|-1$ edges.
+\end{proof}
+
+\begin{proof}
+\textbf{($\Rightarrow$) Tree $\implies$ Connected and $n-1$ edges.}
+We proceed by induction on $n$.
+\textit{Base Case:} For $n=1$, $e=0$. The condition holds ($0 = 1-1$).
+\textit{Inductive Step:} Assume all trees with $k$ vertices have $k-1$ edges. Let $T$ be a tree with $k+1$ vertices.
+Since $T$ is acyclic and finite ($n \ge 2$), it must contain at least two vertices of degree 1 (leaves). Let $v$ be a leaf and $e$ be the incident edge.
+Consider $T' = T - \{v\}$. $T'$ is still connected (removing a leaf does not break connectivity) and acyclic. Thus $T'$ is a tree with $k$ vertices.
+By the inductive hypothesis, $T'$ has $k-1$ edges. Since $T$ has exactly one more edge than $T'$, $|E(T)| = (k-1) + 1 = k = (k+1)-1$.
+
+A more rigorous proof is done by randomly selecting a vertex in the tree, and discussing all the vertices in the neighborhood of the vertex. Once we remove the vertex, all the neighbors become roots of subtrees. We can apply the inductive hypothesis on each subtree because they all satisfy the inductive hypothesis, and sum up the number of edges. Mark that according to the definition of tree, there is no cycle in the graph, so there is no edge between any two subtrees, and the intersections between subtrees are empty. Thus the total number of edges is the sum of edges in each subtree plus the number of edges connecting the root vertex to each subtree (which is exactly the number of subtrees). This gives us the desired result.
+
+\textbf{($\Leftarrow$) Connected and $n-1$ edges $\implies$ Tree.}
+Assume $G$ is connected with $n-1$ edges. We must show $G$ is acyclic.
+Suppose $G$ contains a cycle. Remove an edge from this cycle. The graph remains connected. Repeat this process until the graph is acyclic. Let the resulting graph be $T$.
+$T$ is a tree (connected and acyclic) on $n$ vertices. By the first part of this proof, $T$ must have $n-1$ edges.
+However, we started with $n-1$ edges and removed at least one edge to break the cycle. This implies $G$ initially had $> n-1$ edges, a contradiction. Thus, $G$ contains no cycles.
+\end{proof}
+
+\subsection{Rooted Trees}
+
+\begin{definition}[Rooted Tree]
+A rooted tree is a tree with a designated vertex called the root, and the designated vertex is the root of the tree.
+\end{definition}
+
+\begin{definition}
+Assume we have a rooted tree $(V,E)$ with the root r. Then we define that:
+\begin{enumerate}
+    \item The \textbf{level} of a vertex v is the length of the unique simple path from r to v.
+    \item The \textbf{height} of the tree is the maximum level of any vertex in the tree.
+    \item The partial order $\leq$ on V is defined as: for any two vertices u,v in V, u $\leq$ v if and only if u lies on the unique simple path from r to v.
+    \item The \textbf{parent} of a vertex $v \neq r$ is the unique vertex $u$ such that $\{u,v\} \in E$ and $u$ is on the unique simple path from r to v.
+    \item The \textbf{children} of a vertex v is the set of vertices $\{u \in V | \{u,v\} \in E$ and v is the parent of u$\}$.
+    \item A \textbf{leaf} is a vertex with no children (degree 1 if not the root, degree 0 if it is the root).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+If $G$ is a rooted tree, then $G$ is m-ary is every internal vertex has at most m children. If every internal vertex has exactly m children, then G is a \textbf{full m-ary tree}.
+\end{definition}
+
+\begin{definition}
+A rooted tree $G$ is binary if it is 2-ary.
+\end{definition}
+
+\begin{theorem}
+In a full m-ary tree with $n$ internal vertices, the number of leaves $L$ is given by:
+\[ L = mn + 1 \]
+\end{theorem}
+
+\begin{theorem}
+An m-ary tree of height $h$ has at most $m^h$ leaves.
+\end{theorem}
+
+The proofs of the above two theorems are left as exercises for the reader. Hints: use induction on the number of internal vertices for the first theorem, and induction on the height for the second theorem.
+
+\begin{definition}
+A rooted m-ary tree of height $h$ is balanced if all its leaves are at leverl $h$ or $h-1$.
+\end{definition}
+
+\subsection{Spanning Trees}
+
+\begin{definition}[Spanning Tree]
+If $G=(V,E)$ is a connected graph, then a \textbf{spanning tree} of $G$ is a subgraph $T=(V,E')$ that is a tree. $T$ contains all the vertices of $G$.
+\end{definition}
+
+\begin{theorem}
+A simple graph $G$ is connected if and only if it has a spanning tree.
+\end{theorem}
+
+\begin{proof}
+(\textbf{If}) If $G$ has a spanning tree $T$, then $T$ is connected (by definition of tree). Since $T$ is a subgraph of $G$ and contains all vertices of $G$, $G$ must also be connected.
+(\textbf{Only if}) Assume $G$ is connected. We can construct a spanning tree by starting with an arbitrary vertex and performing a depth-first search (DFS) or breadth-first search (BFS) to explore all vertices. As we explore, we add edges to our spanning tree whenever we encounter a new vertex. Since $G$ is connected, this process will eventually visit all vertices, resulting in a spanning tree that includes all vertices of $G$.
+Actually, a spanning tree can be obtained by removing edges from $G$ until no cycles remain while ensuring the graph remains connected. This process will yield a spanning tree.
+\end{proof}
+
+\begin{definition}[Weighted Graph]
+A \textbf{weighted graph} is a graph $G=(V,E)$ together with a weight function $w: E \to \mathbb{R}$ that assigns a real number (weight) to each edge.
+\end{definition}
+
+\begin{definition}[Minimum Spanning Tree]
+In a weighted connected graph $G$, a \textbf{minimum spanning tree} is a spanning tree with the smallest total edge weight.
+\end{definition}
+
+To find a minimum spanning tree, we can use algorithms such as Kruskal's or Prim's algorithm.
+\textbf{Prim's Algorithm:}
+\begin{enumerate}
+    \item Start with an arbitrary vertex and initialize the tree with this vertex.
+    \item At each step, add the minimum-weight edge that connects a vertex in the tree to a vertex outside the tree.
+    \item Repeat until all vertices are included in the tree.
+\end{enumerate}
+
+\begin{theorem}[Prim's Algorithm Correctness]
+Prim's algorithm correctly finds a minimum spanning tree in a connected weighted graph.
+\end{theorem}
+
+\begin{proof}
+We will prove that the spanning tree $T$ produced by Prim's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
+
+The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
+\begin{quote}
+Let $G=(V,E)$ be a connected, undirected graph with edge weights. For any nonempty proper subset $S \subset V$ (i.e., $S$ is a set containing some, but not all, vertices of the graph), let $e$ be a minimum-weight edge with one endpoint in $S$ and the other in $V \setminus S$. Then $e$ is contained in \textbf{some} minimum spanning tree of $G$.
+\end{quote}
+Prim's algorithm, at each step, chooses exactly such a minimum-weight edge (a \emph{light edge}) crossing the cut $(S, V \setminus S)$, where $S$ is the set of vertices already included in the partially constructed tree.
+
+We will now prove that every edge added by Prim's algorithm belongs to at least one MST. The proof proceeds by \textbf{contradiction}.
+
+Assume, for the sake of contradiction, that the tree $T$ produced by Prim's algorithm is \emph{not} a minimum spanning tree. Then there exists at least one MST, say $T'$, of $G$ such that $w(T') < w(T)$. Since both $T$ and $T'$ span all vertices of $G$ but have different edge sets, there must be an edge $e$ that is selected by Prim's algorithm at some step but is \emph{not} in $T'$.
+
+Let us consider the moment when Prim's algorithm adds edge $e = (u,v)$ to $T$. At that moment, the algorithm's vertex set $S$ contains $u$ (without loss of generality) but not $v$. Since $e$ is not in $T'$, if we add $e$ to $T'$, it creates a unique cycle $C$ in $T' \cup \{e\}$.
+
+Within this cycle $C$, there must be at least one other edge $e' = (x,y)$ that also crosses the cut $(S, V \setminus S)$ (with $x \in S$ and $y \in V \setminus S$). This is because the cycle starts and ends in $S$ and must leave and re-enter $S$; edge $e$ provides one crossing, so there must be another crossing to complete the cycle.
+
+By Prim's algorithm's greedy choice, $e$ is a minimum-weight edge crossing the cut $(S, V \setminus S)$. Therefore, we have
+\[
+w(e) \leq w(e').
+\]
+
+Now, consider the new tree $T'' = T' \setminus \{e'\} \cup \{e\}$. $T''$ is also a spanning tree of $G$ because it is connected and has exactly $|V|-1$ edges. The weight of $T''$ is
+\[
+w(T'') = w(T') - w(e') + w(e).
+\]
+Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$.
+
+\begin{itemize}
+    \item If $w(e) < w(e')$, then $w(T'') < w(T')$, which contradicts the assumption that $T'$ is an MST (since an MST must have minimum possible weight).
+    \item If $w(e) = w(e')$, then $w(T'') = w(T')$, meaning $T''$ is also an MST. However, $T''$ now contains the edge $e$ selected by Prim's algorithm.
+\end{itemize}
+
+Therefore, in either case, the edge $e$ chosen by Prim's algorithm is contained in at least one MST (namely, either $T'$ or $T''$). This argument can be applied iteratively to every edge added by Prim's algorithm. Consequently, the final tree $T$ produced by Prim's algorithm must be a minimum spanning tree itself.
+
+Thus, Prim's algorithm correctly computes a minimum spanning tree of the given graph $G$.
+
+\end{proof}
+
+Another popular algorithm for finding a minimum spanning tree is Kruskal's algorithm.
+\textbf{Kruskal's Algorithm}
+\begin{enumerate}
+    \item Choose the initial graph $G_1$ with all the vertices included and no edges.
+    \item Construct $G_{i+1}$ by adding the smallest weight edge that forms a forest.
+    \item Finally, $G_{m-1}$ is a minimum spanning tree, where $m$ is the number of vertices.
+\end{enumerate}
+
+Mind that we view each step as adding an edge to the existing forest, connecting two isolated components, ensuring that no cycles are formed. Every isolated vertex is considered a component.
+
+\begin{proof}
+\textbf{Kruskal's Algorithm Correctness}
+We will prove that the spanning tree $T$ produced by Kruskal's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
+The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
+\begin{quote}
+Let $S \subset V$ be a subset of vertices, and let $e$ be a minimum-weight edge crossing the cut $(S, V \setminus S)$. Then, $e$ belongs to every MST of $G$.
+\end{quote}
+Kruskal's algorithm, at each step, chooses exactly such a minimum-weight edge (a \emph{light edge}) that does not form a cycle with the edges already selected.
+
+We will now prove that every edge added by Kruskal's algorithm belongs to at least one MST. The proof proceeds by \textbf{contradiction}.
+
+Assume, for the sake of contradiction, that the tree $T$ produced by Kruskal's algorithm is \emph{not} a minimum spanning tree. Then there exists at least one MST, say $T'$, of $G$ such that $w(T') < w(T)$. Since both $T$ and $T'$ span all vertices of $G$ but have different edge sets, there must be an edge $e$ that is selected by Kruskal's algorithm at some step but is \emph{not} in $T'$. We choose the first such edge in the order selected by Kruskal's algorithm.
+
+Let us consider the moment when Kruskal's algorithm adds edge $e = (u,v)$ to $T$. At that moment, the algorithm's selected edges form a forest, and adding $e$ connects two distinct components of this forest, or adding $e$ connects two vertices in a connected component, which is contradicted to the rule of the algorithm, we shall ignore this case. Let $S$ be the set of vertices in one of these components (say, the component containing $u$). Since $e$ is not in $T'$, if we add $e$ to $T'$, it creates a unique cycle $C$ in $T' \cup \{e\}$.
+
+Within this cycle $C$, there must be at least one other edge $e' = (x,y)$ that also crosses the cut $(S, V \setminus S)$ (with $x \in S$ and $y \in V \setminus S$). This is because the cycle starts and ends in $S$ and must leave and re-enter $S$; edge $e$ provides one crossing, so there must be another crossing to complete the cycle.
+
+By Kruskal's algorithm's greedy choice, $e$ is a minimum-weight edge crossing the cut $(S, V \setminus S)$. Therefore, we have
+
+\[w(e) \leq w(e').\]
+
+Now, consider the new tree $T'' = T' \setminus \{e' \} \cup \{e\}$. $T''$ is also a spanning tree of $G$ because it is connected and has exactly $|V|-1$ edges. The weight of $T''$ is
+
+\[w(T'') = w(T') - w(e') + w(e).\]
+
+Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$. But this contradicts the assumption that $w(T') < w(T)$, since $T''$ is a spanning tree of $G$ and $w(T'') \leq w(T')$. Therefore, our assumption must be false, and Kruskal's algorithm produces a minimum spanning tree.
+
+\end{proof}
+
+Another possible application of spanning trees is the Huffman coding tree, which is widely used in data compression algorithms.
+
+The Huffman coding tree is a binary tree used for lossless data compression. It assigns variable-length codes to input characters based on their frequencies, with more frequent characters receiving shorter codes. The tree is constructed using a greedy algorithm that combines the two least frequent nodes iteratively until a single tree is formed.
+
+Here are the steps to construct a Huffman coding tree:
+\begin{enumerate}
+    \item Construct the forest conssisting of single-node trees for each character, with the weight of each node equal to the frequency of the corresponding character.
+    \item Sort the weights of the trees in the forest in non-decreasing order.
+    \item While there is more than one tree in the forest:
+    \begin{enumerate}
+        \item Select the two trees with the smallest weights.
+        \item Create a new internal node with these two trees as children, and assign it a weight equal to the sum of their weights.
+        \item Insert the new tree back into the forest, maintaining the sorted order of weights.
+    \end{enumerate}
+    \item The remaining tree in the forest is the Huffman coding tree.
+\end{enumerate}
+
+Each leaf node in the Huffman coding tree represents a character, and the path from the root to the leaf determines the binary code for that character (left edge = 0, right edge = 1).
+
+For example, consider the characters A, B, C, and D with frequencies 5, 9, 12, and 13, respectively. The Huffman coding tree would be constructed as follows:
+\begin{enumerate}
+    \item Create single-node trees: A(5), B(9), C(12), D(13).
+    \item Sort: A(5), B(9), C(12), D(13).
+    \item Combine A and B: New node AB(14) with children A and B.
+    \item Sort: C(12), D(13), AB(14).
+    \item Combine C and D: New node CD(25) with children C and D.
+    \item Sort: AB(14), CD(25).
+    \item Combine AB and CD: New root node ABCD(39) with children AB and CD.
+    \item Then the final Huffman coding tree is formed.
+\end{enumerate}
+
+Why the Huffman coding tree is optimal can be proved using a greedy choice argument and an exchange argument, showing that any other prefix-free code would result in a longer average code length.
+
+\begin{proof}
+\textbf{Huffman's Algorithm Correctness}
+
+We will prove that the binary tree $T$ produced by Huffman's algorithm is an optimal prefix-free code for the given set of characters with their frequencies.
+
+Notation:
+\begin{itemize}
+    \item Let $C$ be the set of characters.
+    \item Let $f(c)$ be the frequency of character $c \in C$.
+    \item Let $d_T(c)$ be the depth of character $c$ in the tree $T$.
+    \item The cost of the code represented by tree $T$ is given by:
+    \[
+    \text{Cost}(T) = \sum_{c \in C} f(c) \cdot d_T(c).
+    \]
+\end{itemize}
+
+We will prove the optimality of Huffman's algorithm using induction on the number of characters $|C|$.
+
+\textbf{Base case}: For $|C| = 2$, the optimal code is trivial: assign one character to '0' and the other to '1'. Huffman's algorithm produces this code, which is optimal.
+\textbf{Inductive step}: Assume Huffman's algorithm produces an optimal code for any set of $k$ characters. We will show it also produces an optimal code for $k+1$ characters.
+Let $C = \{c_1, c_2, \ldots, c_{k+1}\}$ be the set of characters with frequencies $f(c_1) \leq f(c_2) \leq \ldots \leq f(c_{k+1})$.
+Huffman's algorithm combines the two characters with the smallest frequencies, say $c_1$ and $c_2$, into a new character $c_{12}$ with frequency $f(c_{12}) = f(c_1) + f(c_2)$.
+By the inductive hypothesis, Huffman's algorithm produces an optimal code for the reduced set $C' = \{c_{12}, c_3, \ldots, c_{k+1}\}$.
+Let $T'$ be the optimal tree for $C'$. We can construct the tree $T$ for $C$ by replacing the leaf node for $c_{12}$ in $T'$ with an internal node having $c_1$ and $c_2$ as its children.
+The cost of the tree $T$ can be expressed as:
+\[\text{Cost}(T) = \text{Cost}(T') + f(c_1) + f(c_2).\]
+Now, consider any other prefix-free code tree $T^*$ for the original set $C$. We can construct a tree $T'^*$ for the reduced set $C'$ by merging the leaves for $c_1$ and $c_2$ into a single leaf for $c_{12}$. The cost of $T^*$ can be expressed as:
+\[\text{Cost}(T^*) = \text{Cost}(T'^*) + f(c_1) + f(c_2).\]
+By the inductive hypothesis, we have:
+\[\text{Cost}(T') \leq \text{Cost}(T'^*).\]
+Thus,
+\[\text{Cost}(T) = \text{Cost}(T') + f(c_1) + f(c_2) \leq \text{Cost}(T'^*) + f(c_1) + f(c_2) = \text{Cost}(T^*).\]
+Therefore, Huffman's algorithm produces an optimal prefix-free code for any set of $k+1$ characters.
+By induction, Huffman's algorithm produces an optimal prefix-free code for any set of characters.
+
+\end{proof}
+
+We have to claim that the construction process of the Huffman coding tree itself is an implementation of Kruskal's algorithm, since at each step we are combining two trees with the smallest weights, which is equivalent to adding the smallest weight edge that connects two components in Kruskal's algorithm.
+
+Also, as we dive deeper into the processes, the construction itself is a kind of mathematical induction, since at each step we are reducing the problem size by one (combining two characters into one), and we can prove the optimality using induction as shown in the proof above.
+
+\subsection*{Graph Algorithms Implementation}
+The following Python code implements BFS, DFS, Prim's Algorithm, and Kruskal's Algorithm using adjacency matrices represented as nested lists.
+
+\textbf{BFS Algorithm}
+\begin{lstlisting}[language=Python]
+def find_shortest_path_BFS(matrix, start, end):
+    """
+    Find shortest path using Breadth-First Search (unweighted).
+    """
+    vertices_count = len(matrix)
+    if not (isinstance(start, int) and isinstance(end, int)):
+        raise TypeError("Start and End vertices must be integers")
+    if not (0 <= start < vertices_count and 0 <= end < vertices_count):
+        raise ValueError("Vertex index out of range")
+
+    queue = [start]
+    memory = {start: None}
+    found = False
+    idx = 0
+
+    while idx < len(queue):
+        curr = queue[idx]
+        if curr == end:
+            found = True
+            break
+        
+        for i in range(vertices_count):
+            if matrix[curr][i] != 0 and i not in memory:
+                memory[i] = curr
+                queue.append(i)
+                if i == end:
+                    found = True
+                    break
+        if found:
+            break
+        idx += 1
+        
+    if not found:
+        return None
+        
+    path = []
+    index = end
+    while index is not None:
+        path.append(index)
+        index = memory[index]
+    return path[::-1]
+\end{lstlisting}
+
+\textbf{DFS Algorithm}
+\begin{lstlisting}[language=Python]
+def find_path_DFS(matrix, start, end):
+    """
+    Find a path using Depth-First Search.
+    """
+    vertices_count = len(matrix)
+    if not (isinstance(start, int) and isinstance(end, int)):
+        raise TypeError("Start and End vertices must be integers")
+    if not (0 <= start < vertices_count and 0 <= end < vertices_count):
+        raise ValueError("Vertex index out of range")
+
+    stack = [start]
+    memory = {start: None}
+    found = False
+    
+    while len(stack) > 0:
+        curr = stack.pop()
+        if curr == end:
+            found = True
+            break
+        
+        for i in range(vertices_count):
+            if matrix[curr][i] != 0 and i not in memory:
+                memory[i] = curr
+                stack.append(i)
+                
+    if not found:
+        return None
+        
+    path = []
+    curr_node = end
+    while curr_node is not None:
+        path.append(curr_node)
+        curr_node = memory[curr_node]
+    return path[::-1]
+\end{lstlisting}
+
+\textbf{Prim's Algorithm}
+\begin{lstlisting}[language=Python]
+def minimum_spanning_tree_prim(weights):
+    """
+    Implementation of Prim's algorithm for MST.
+    Returns the MST as an adjacency matrix.
+    """
+    if not isinstance(weights, list):
+        raise TypeError("Weights must be a nested list (matrix)")
+    if len(weights) == 0:
+        raise ValueError("Weights matrix cannot be empty")
+    if len(weights) != len(weights[0]):
+         raise ValueError("Weights matrix must be square")
+    
+    n = len(weights)
+    INF = float('inf')
+    key = [INF] * n
+    parent = [None] * n
+    mst_set = [False] * n
+    key[0] = 0
+    parent[0] = -1
+
+    for _ in range(n):
+        min_val = INF
+        u = -1
+        for v in range(n):
+            if not mst_set[v] and key[v] < min_val:
+                min_val = key[v]
+                u = v
+                
+        if u == -1: 
+            break
+        mst_set[u] = True
+        for v in range(n):
+            w = weights[u][v]
+            if w > 0 and not mst_set[v] and w < key[v]:
+                key[v] = w
+                parent[v] = u
+                
+    mst_matrix = [[0] * n for _ in range(n)]
+    for i in range(1, n):
+        if parent[i] is not None:
+            u, v = parent[i], i
+            weight = weights[u][v]
+            mst_matrix[u][v] = weight
+            mst_matrix[v][u] = weight
+    return mst_matrix
+\end{lstlisting}
+
+\textbf{Kruskal's Algorithm}
+\begin{lstlisting}[language=Python]
+def minimum_spanning_tree_kruskal(weights):
+    """
+    Implementation of Kruskal's algorithm for MST.
+    Returns the MST as an adjacency matrix.
+    """
+    if not isinstance(weights, list):
+        raise TypeError("Weights must be a nested list (matrix)")
+
+    n = len(weights)
+    edges = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if weights[i][j] > 0:
+                edges.append((weights[i][j], i, j))
+    edges.sort()
+    
+    parent = list(range(n))
+    
+    def find(i):
+        if parent[i] == i:
+            return i
+        parent[i] = find(parent[i])
+        return parent[i]
+        
+    def union(i, j):
+        root_i = find(i)
+        root_j = find(j)
+        if root_i != root_j:
+            parent[root_i] = root_j
+            return True
+        return False
+        
+    mst_matrix = [[0] * n for _ in range(n)]
+    
+    for w, u, v in edges:
+        if union(u, v):
+            mst_matrix[u][v] = w
+            mst_matrix[v][u] = w
+    return mst_matrix
+\end{lstlisting}
+
+
+
+\section{Random Graphs}
+
+\subsection{Basic Properties of Random Graphs}
+
+\paragraph{Degree Distribution}
+\begin{theorem}[Degree Distribution of $G(n,p)$]
+In $G(n,p)$, the degree of each vertex follows a binomial distribution $\text{Bin}(n-1, p)$. For large $n$ and small $p$, it approximates a Poisson distribution $\text{Po}(\lambda)$ with $\lambda = p(n-1)$.
+\end{theorem}
+
+\paragraph{Threshold Functions and Phase Transitions}
+Many properties in random graphs exhibit threshold phenomena: as the parameter $p$ crosses a critical threshold $p_c$, the property changes from almost surely not holding to almost surely holding.
+
+\begin{theorem}[Connectivity Threshold]
+For $G(n,p)$, the threshold function for connectivity is $p_c = \frac{\ln n}{n}$. More precisely:
+\begin{itemize}
+\item If $p = \frac{\ln n + c}{n}$, then $\mathbb{P}(G(n,p) \text{ is connected}) \to e^{-e^{-c}}$ as $n \to \infty$.
+\item If $p \ll \frac{\ln n}{n}$, then $G(n,p)$ is almost surely disconnected.
+\item If $p \gg \frac{\ln n}{n}$, then $G(n,p)$ is almost surely connected.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Emergence of the Giant Component]
+In $G(n,p)$, there is a critical value $p_c = 1/n$:
+\begin{itemize}
+\item For $p < 1/n$, the largest connected component has size $O(\log n)$.
+\item For $p = 1/n$, the largest component has size $\Theta(n^{2/3})$.
+\item For $p > 1/n$, a "giant component" emerges with size approximately $yn$, where $y$ is the nonzero solution to $y = 1 - e^{-c y}$ with $c = pn$.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Diameter and Average Distance}
+\begin{theorem}[Diameter of $G(n,p)$]
+For $p$ such that $np \to \infty$ and $p$ not too large, the diameter of $G(n,p)$ is approximately $\frac{\ln n}{\ln(np)}$.
+\end{theorem}
+
+\paragraph{Clustering Coefficient}
+\begin{definition}[Local Clustering Coefficient]
+The local clustering coefficient of vertex $i$ is defined as
+\begin{equation}
+C_i = \frac{2 \times \text{number of edges between neighbors of } i}{k_i(k_i-1)}
+\end{equation}
+where $k_i$ is the degree of vertex $i$.
+\end{definition}
+
+\begin{theorem}[Clustering Coefficient of $G(n,p)$]
+In $G(n,p)$, the average clustering coefficient is $p$, independent of network size. This contrasts with many real-world networks where clustering coefficients typically scale inversely with $n$.
+\end{theorem}
+
+\subsection{Important Theorems in Random Graph Theory}
+
+\paragraph{Zero-One Laws}
+\begin{theorem}[Zero-One Law]
+For any monotone graph property $\mathcal{P}$ (a property preserved by adding edges) in $G(n,p)$, there exists a threshold function $p^*(n)$ such that
+\[
+\lim_{n\to\infty} \mathbb{P}(G(n,p) \in \mathcal{P}) = 
+\begin{cases}
+0, & \text{if } p/p^* \to 0 \\
+1, & \text{if } p/p^* \to \infty
+\end{cases}
+\]
+\end{theorem}
+
+\paragraph{Subgraph Appearance}
+\begin{theorem}[Subgraph Threshold]
+Let $H$ be a fixed graph with $v_H$ vertices and $e_H$ edges. Define $\rho(H) = e_H/v_H$. In $G(n,p)$:
+\begin{itemize}
+\item If $p \ll n^{-1/\rho(H)}$, then $G(n,p)$ almost surely does not contain $H$ as a subgraph.
+\item If $p \gg n^{-1/\rho(H)}$, then $G(n,p)$ almost surely contains $H$ as a subgraph.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Hamiltonicity}
+\begin{theorem}[Hamiltonian Cycles]
+For $G(n,p)$, the threshold for the existence of a Hamiltonian cycle is approximately $p \approx \frac{\ln n + \ln \ln n}{n}$. When $p$ exceeds this threshold, $G(n,p)$ is almost surely Hamiltonian.
+\end{theorem}
+
+\subsection{Algorithmic Generation of Random Graphs}
+The $G(n,p)$ model can be generated using a simple algorithm that considers each potential edge independently with probability $p$.
+
+\subsection{Applications of Random Graphs}
+
+\paragraph{Complex Network Modeling}
+Random graph models provide foundational frameworks for modeling social networks, the Internet, biological networks, and other complex systems. While classical models like $G(n,p)$ differ from real networks in certain statistical properties, they serve as the basis for developing more accurate models.
+
+\paragraph{Network Robustness}
+By studying connectivity in random graphs, we can analyze network robustness against random failures. Research shows that many complex systems exhibit remarkable robustness to random failures.
+
+\paragraph{Epidemic Spread}
+Random graph models are used to study disease spread in populations, where vertices represent individuals and edges represent contacts.
+
+\subsection{Conclusion and Future Directions}
+Random graph theory offers a powerful mathematical framework for studying complex networks. Although classical models like $G(n,p)$ differ from real-world networks in certain statistical properties (e.g., degree distribution, clustering), they remain foundational. Current research directions include:
+\begin{itemize}
+\item Developing more realistic random graph models
+\item Studying dynamic random graph processes
+\item Exploring algorithms and computational problems on random graphs
+\item Applying random graph theory to machine learning and data science
+\end{itemize}
+
+\chapter{Applied Mathematics: Probability Theory}
+
+Probability theory serves as the fundamental mathematical framework for quantifying uncertainty and analyzing random phenomena. While the discipline has evolved into a rigorous branch of analysis built firmly upon the axioms of Measure Theory, its origins lie in the intuitive study of games of chance and discrete outcomes. This chapter is designed to bridge the conceptual gap between these two eras: we begin with the tangible foundations of classical probability and combinatorics, which rely on symmetry and finite sets, before transitioning to the modern, axiomatic approach formalized by Kolmogorov. By first establishing a strong intuition for how probability behaves in simple, discrete systems, we motivate the necessity for the sophisticated machinery of measure theory needed to handle continuous variables, infinite sequences, and complex stochastic processes.
+
+\section{Classical Probability and Combinatorics}
+
+Historically, probability theory began with games of chance. The \textbf{Classical Definition} applies when an experiment has a finite number of outcomes, all of which are \textit{equally likely}.
+
+\subsection{The Classical Definition}
+
+\begin{definition}[Classical Probability]
+Let $\Omega$ be a finite sample space where every elementary outcome $\omega \in \Omega$ has the same likelihood. The probability of an event $A \subseteq \Omega$ is given by:
+\[ P(A) = \frac{|A|}{|\Omega|} = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible outcomes}} \]
+\end{definition}
+
+Calculating these cardinalities often requires \textbf{Combinatorics}.
+
+\newpage
+
+\begin{theorem}[Fundamental Counting Principles]
+\begin{enumerate}
+    \item \textbf{Permutations (Order matters):} The number of ways to arrange $k$ distinct items from a set of $n$ is:
+    \[ P(n, k) = \frac{n!}{(n-k)!} \]
+    \item \textbf{Combinations (Order does not matter):} The number of ways to choose $k$ items from $n$ is given by the binomial coefficient:
+    \[ C(n, k) = \binom{n}{k} = \frac{n!}{k!(n-k)!} \]
+\end{enumerate}
+\end{theorem}
+
+\subsection{Conditional Probability and Independence}
+
+A crucial concept in applied mathematics is updating probabilities based on new information.
+
+\begin{definition}[Conditional Probability]
+The probability of event $A$ occurring given that event $B$ has already occurred is:
+\[ P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{provided } P(B) > 0 \]
+\end{definition}
+
+From this definition, we derive the \textbf{Multiplication Rule}: $P(A \cap B) = P(A \mid B)P(B)$. This leads to the definition of independence. Two events are \textbf{independent} if knowing $B$ occurred gives no information about $A$:
+\[ P(A \mid B) = P(A) \iff P(A \cap B) = P(A)P(B) \]
+
+\subsection{Bayes' Theorem}
+
+In fields like Machine Learning and Signal Processing, we often need to infer the cause from an observed effect. This is formalized by Bayes' Theorem.
+
+\begin{theorem}[Law of Total Probability]
+Let $\{H_1, H_2, \dots, H_n\}$ be a partition of the sample space $\Omega$ (i.e., disjoint and exhaustive). Then for any event $E$:
+\[ P(E) = \sum_{i=1}^n P(E \mid H_i)P(H_i) \]
+\end{theorem}
+
+\begin{theorem}[Bayes' Theorem]
+The posterior probability of hypothesis $H_k$ given evidence $E$ is:
+\[ P(H_k \mid E) = \frac{P(E \mid H_k)P(H_k)}{P(E)} = \frac{P(E \mid H_k)P(H_k)}{\sum_{j} P(E \mid H_j)P(H_j)} \]
+\end{theorem}
+Here, $P(H_k)$ is the \textit{prior} probability, and $P(E \mid H_k)$ is the \textit{likelihood}.
+
+\section{Discrete Random Variables}
+
+In the classical setting, random variables map outcomes to discrete values (e.g., integers).
+
+\begin{definition}[Probability Mass Function]
+For a discrete random variable $X$, the \textbf{Probability Mass Function (PMF)} is denoted by $p_X(k)$:
+\[ p_X(k) = P(X = k) \]
+Properties: $0 \le p_X(k) \le 1$ and $\sum_k p_X(k) = 1$.
+\end{definition}
+
+\begin{definition}[Discrete Expectation and Variance]
+The expected value (weighted average) is:
+\[ \mathbb{E}[X] = \sum_{k} k \cdot p_X(k) \]
+The variance is $\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$.
+\end{definition}
+
+\subsection{Common Discrete Distributions}
+
+\begin{enumerate}
+    \item \textbf{Bernoulli Distribution ($X \sim \text{Bern}(p)$):}
+    Models a single trial with success probability $p$.
+    \[ P(X=1) = p, \quad P(X=0) = 1-p \]
+    
+    \item \textbf{Binomial Distribution ($X \sim B(n, p)$):}
+    Models the number of successes in $n$ independent Bernoulli trials.
+    \[ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} \]
+    
+    \item \textbf{Geometric Distribution ($X \sim \text{Geom}(p)$):}
+    Models the number of trials needed to get the first success.
+    \[ P(X = k) = (1-p)^{k-1}p, \quad k=1, 2, \dots \]
+    
+    \item \textbf{Poisson Distribution ($X \sim \text{Pois}(\lambda)$):}
+    Models the number of rare events occurring in a fixed interval. It is the limit of the Binomial distribution as $n \to \infty, p \to 0$ while $np = \lambda$.
+    \[ P(X = k) = e^{-\lambda} \frac{\lambda^k}{k!} \]
+\end{enumerate}
+
+\section{Transition to Modern Probability}
+
+\subsection{Limitations of Classical Probability}
+
+While the classical framework handles dice, coins, and discrete counts perfectly, it fails when dealing with continuous phenomena.
+
+\begin{enumerate}
+    \item \textbf{The Continuum Problem:} If we pick a real number uniformly from $[0, 1]$, the probability of picking exactly $0.5$ (or any specific number) is 0. The classical definition $\frac{\text{favorable}}{\text{total}}$ becomes $\frac{1}{\infty}$, which is ill-defined without limits.
+    
+    \item \textbf{Bertrand's Paradox:} Consider a chord drawn randomly in a circle. What is the probability that the chord is longer than the side of the inscribed equilateral triangle?
+    Depending on how we define "randomly" (random endpoints vs. random midpoint vs. random radius), we get three different answers ($1/3$, $1/2$, $1/4$).
+\end{enumerate}
+
+\textbf{Conclusion:} Classical probability lacks a rigorous way to define "uniformity" and "size" on continuous sets. To resolve these ambiguities and handle continuous variables (like time, mass, or distance) consistently, we need a mathematical theory of "size." This theory is \textbf{Measure Theory}.
+
+The following sections will rebuild probability theory upon the axiomatic foundations laid by Kolmogorov, utilizing measure theory to unify discrete and continuous cases.
+
+\begin{remark}
+In this chapter, we assume the reader is familiar with the basic concepts of Measure Theory (measurable spaces, Lebesgue integration, Radon-Nikodym theorem). We define probability as a normalized measure and random variables as measurable functions.
+\end{remark}
+
+\section{Axiomatic Foundations}
+
+The modern treatment of probability was formalized by Andrey Kolmogorov in 1933. It begins with the concept of a probability space.
+
+\subsection{Probability Space}
+
+\begin{definition}[Probability Space]
+A \textbf{probability space} is a triple $(\Omega, \mathcal{F}, \mathbb{P})$, where:
+\begin{enumerate}
+    \item $\Omega$ is a non-empty set, called the \textbf{sample space}, representing the set of all possible outcomes.
+    \item $\mathcal{F}$ is a $\sigma$-algebra on $\Omega$, called the \textbf{event space}. Elements of $\mathcal{F}$ are called \textbf{events}.
+    \item $\mathbb{P}$ is a measure on $(\Omega, \mathcal{F})$ such that $\mathbb{P}(\Omega) = 1$. This measure is called the \textbf{probability measure}.
+\end{enumerate}
+\end{definition}
+
+Since $\mathbb{P}$ is a finite measure, it satisfies the properties of \textbf{continuity of probability}.
+
+\begin{proposition}[Continuity]
+\begin{enumerate}
+    \item If $\{A_n\}$ is an increasing sequence of events ($A_n \subseteq A_{n+1}$), then $\mathbb{P}(\cup A_n) = \lim_{n \to \infty} \mathbb{P}(A_n)$.
+    \item If $\{A_n\}$ is decreasing ($A_n \supseteq A_{n+1}$), then $\mathbb{P}(\cap A_n) = \lim_{n \to \infty} \mathbb{P}(A_n)$.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Random Variables and Vectors}
+
+In applied mathematics, we analyze numerical values associated with outcomes.
+
+\begin{definition}[Random Variable]
+Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space. A \textbf{random variable} (r.v.) $X$ is a measurable function $X: (\Omega, \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+That is, for every Borel set $B \in \mathcal{B}(\mathbb{R})$, the preimage is an event:
+\[ X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F} \]
+\end{definition}
+
+\begin{definition}[Random Vector]
+A \textbf{random vector} is a mapping $\mathbf{X}: \Omega \to \mathbb{R}^n$ such that each component $X_i$ is a random variable.
+\end{definition}
+
+Every random variable induces a probability measure on $\mathbb{R}$, called its \textbf{distribution} (or law), denoted by $\mu_X(B) = \mathbb{P}(X \in B)$.
+
+\begin{definition}[CDF and PDF]
+The \textbf{Cumulative Distribution Function (CDF)} $F_X(x) = \mathbb{P}(X \le x)$ characterizes the distribution completely.
+If the induced measure is absolutely continuous with respect to the Lebesgue measure $\lambda$ (i.e., $\mu_X \ll \lambda$), then by the Radon-Nikodym theorem, there exists a function $f_X$, called the \textbf{Probability Density Function (PDF)}, such that:
+\[ F_X(x) = \int_{-\infty}^x f_X(t) \, dt \]
+\end{definition}
+
+\section{Expectation and Integration}
+
+\subsection{Mathematical Expectation}
+
+The expectation is simply the Lebesgue integral of the random variable with respect to the measure $\mathbb{P}$.
+
+\begin{definition}[Expectation]
+The \textbf{expectation} of $X$, denoted $\mathbb{E}[X]$, is defined as:
+\[ \mathbb{E}[X] = \int_\Omega X(\omega) \, d\mathbb{P}(\omega) \]
+provided that $\mathbb{E}[|X|] < \infty$ (i.e., $X \in L^1(\Omega, \mathcal{F}, \mathbb{P})$).
+\end{definition}
+
+If $X$ has a density $f_X$, the change of variables theorem allows us to compute expectation on $\mathbb{R}$:
+\[ \mathbb{E}[g(X)] = \int_{\mathbb{R}} g(x) f_X(x) \, dx \]
+
+\begin{definition}[Moments and Variance]
+For $p \ge 1$, if $X \in L^p$, the $p$-th moment is $\mathbb{E}[X^p]$.
+The \textbf{variance} is defined as:
+\[ \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \]
+\end{definition}
+
+\subsection{Fundamental Inequalities}
+
+Inequalities are the primary tools for proving convergence theorems.
+
+\begin{theorem}[Markov's and Chebyshev's Inequalities]
+Let $X$ be a random variable.
+\begin{enumerate}
+    \item \textbf{Markov:} If $X \ge 0$ and $a > 0$, then $\mathbb{P}(X \ge a) \le \frac{\mathbb{E}[X]}{a}$.
+    \item \textbf{Chebyshev:} If $X$ has finite mean $\mu$ and variance $\sigma^2$, for any $k > 0$:
+    \[ \mathbb{P}(|X - \mu| \ge k) \le \frac{\sigma^2}{k^2} \]
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Jensen's Inequality]
+If $\phi: \mathbb{R} \to \mathbb{R}$ is a \textbf{convex} function and $X$ is an integrable random variable, then:
+\[ \phi(\mathbb{E}[X]) \le \mathbb{E}[\phi(X)] \]
+\end{theorem}
+
+\begin{theorem}[Hölder's and Cauchy-Schwarz Inequalities]
+Let $p, q > 1$ with $1/p + 1/q = 1$. Then:
+\[ \mathbb{E}[|XY|] \le (\mathbb{E}[|X|^p])^{1/p} (\mathbb{E}[|Y|^q])^{1/q} \]
+The case $p=q=2$ yields the \textbf{Cauchy-Schwarz inequality}: $|\mathbb{E}[XY]| \le \sqrt{\mathbb{E}[X^2]\mathbb{E}[Y^2]}$.
+\end{theorem}
+
+\section{Independence and Conditioning}
+
+\subsection{Independence}
+
+\begin{definition}[Independence]
+A family of $\sigma$-algebras $\{\mathcal{G}_i\}_{i \in I}$ is independent if for any distinct indices $i_1, \dots, i_n$ and events $A_k \in \mathcal{G}_{i_k}$:
+\[ \mathbb{P}\left(\bigcap_{k=1}^n A_k\right) = \prod_{k=1}^n \mathbb{P}(A_k) \]
+Random variables $X_i$ are independent if the $\sigma$-algebras generated by them, $\sigma(X_i)$, are independent.
+\end{definition}
+
+\begin{theorem}[Borel-Cantelli Lemmas]
+Let $\{A_n\}$ be a sequence of events.
+\begin{enumerate}
+    \item (BC1) If $\sum \mathbb{P}(A_n) < \infty$, then $\mathbb{P}(\limsup A_n) = 0$.
+    \item (BC2) If $\sum \mathbb{P}(A_n) = \infty$ and events are \textbf{independent}, then $\mathbb{P}(\limsup A_n) = 1$.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Conditional Expectation}
+
+Classical probability defines $P(A|B) = P(A \cap B)/P(B)$, but this fails when $P(B)=0$. Measure theory provides a general definition using Radon-Nikodym derivatives.
+
+\begin{definition}[Conditional Expectation]
+Let $X$ be an integrable r.v. and $\mathcal{G} \subseteq \mathcal{F}$ be a sub-$\sigma$-algebra. The \textbf{conditional expectation} $\mathbb{E}[X|\mathcal{G}]$ is the unique (a.s.) random variable $Z$ such that:
+\begin{enumerate}
+    \item $Z$ is $\mathcal{G}$-measurable.
+    \item For all $G \in \mathcal{G}$, $\int_G Z \, d\mathbb{P} = \int_G X \, d\mathbb{P}$.
+\end{enumerate}
+\end{definition}
+This concept is fundamental to the theory of Martingales and stochastic processes.
+
+\section{Characteristic Functions}
+
+The characteristic function is the Fourier transform of the probability measure. It is a powerful tool because it uniquely determines the distribution and handles sums of independent variables elegantly.
+
+\begin{definition}[Characteristic Function]
+The characteristic function of a random variable $X$ is $\phi_X: \mathbb{R} \to \mathbb{C}$ defined by:
+\[ \phi_X(t) = \mathbb{E}[e^{itX}] = \int_{-\infty}^\infty e^{itx} \, dF_X(x) \]
+\end{definition}
+
+\begin{theorem}[Properties]
+\begin{enumerate}
+    \item $\phi_X(0) = 1$, $|\phi_X(t)| \le 1$.
+    \item \textbf{Uniqueness:} If $\phi_X(t) = \phi_Y(t)$ for all $t$, then $X$ and $Y$ have the same distribution.
+    \item \textbf{Independence:} If $X$ and $Y$ are independent, $\phi_{X+Y}(t) = \phi_X(t)\phi_Y(t)$.
+\end{enumerate}
+\end{theorem}
+
+\section{Convergence and Limit Theorems}
+
+\subsection{Modes of Convergence}
+
+Let $\{X_n\}$ be a sequence of random variables. We distinguish between four modes of convergence:
+
+\begin{enumerate}
+    \item \textbf{Almost Sure ($X_n \xrightarrow{a.s.} X$):} $\mathbb{P}(\lim_{n \to \infty} X_n = X) = 1$.
+    \item \textbf{In $L^p$ ($X_n \xrightarrow{L^p} X$):} $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$.
+    \item \textbf{In Probability ($X_n \xrightarrow{\mathbb{P}} X$):} $\forall \epsilon > 0, \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
+    \item \textbf{In Distribution ($X_n \xrightarrow{d} X$):} $\lim_{n \to \infty} F_n(x) = F(x)$ at continuity points of $F$.
+\end{enumerate}
+
+\begin{remark}[Relationships]
+\[ (X_n \xrightarrow{a.s.} X) \implies (X_n \xrightarrow{\mathbb{P}} X) \implies (X_n \xrightarrow{d} X) \]
+\[ (X_n \xrightarrow{L^p} X) \implies (X_n \xrightarrow{\mathbb{P}} X) \]
+Convergence in probability implies almost sure convergence only along a subsequence.
+\end{remark}
+
+\subsection{Law of Large Numbers (LLN)}
+
+The LLN justifies the use of averages to estimate expectations.
+
+\begin{theorem}[Weak Law (WLLN)]
+If $X_n$ are i.i.d. with finite mean $\mu$, then $\frac{S_n}{n} \xrightarrow{\mathbb{P}} \mu$.
+\end{theorem}
+
+\begin{theorem}[Kolmogorov's Strong Law (SLLN)]
+If $X_n$ are i.i.d. with finite mean $\mu$ (i.e., $\mathbb{E}[|X_1|] < \infty$), then:
+\[ \frac{S_n}{n} \xrightarrow{a.s.} \mu \]
+This is a deeper result, implying that sample paths converge to the mean with probability 1.
+\end{theorem}
+
+\subsection{The Central Limit Theorem (CLT)}
+
+The CLT explains the prevalence of the Gaussian distribution.
+
+\begin{theorem}[Lindeberg-Lévy CLT]
+Let $\{X_n\}$ be i.i.d. with mean $\mu$ and finite variance $\sigma^2$. Let $S_n = \sum X_i$. Then:
+\[ \frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1) \]
+\end{theorem}
+
+\begin{proof}[Proof Sketch using Characteristic Functions]
+Let $Y_i = (X_i - \mu)/\sigma$. Then $\mathbb{E}[Y_i]=0, \text{Var}(Y_i)=1$.
+The Taylor expansion of $\phi_Y(t)$ near 0 is $1 - \frac{t^2}{2} + o(t^2)$.
+The characteristic function of the normalized sum $Z_n = \frac{1}{\sqrt{n}}\sum Y_i$ is:
+\[ \phi_{Z_n}(t) = \left[ \phi_Y\left(\frac{t}{\sqrt{n}}\right) \right]^n \approx \left( 1 - \frac{t^2}{2n} \right)^n \]
+As $n \to \infty$, this converges to $e^{-t^2/2}$, which is the characteristic function of $N(0,1)$. By the \textbf{Lévy Continuity Theorem}, convergence of characteristic functions implies convergence in distribution.
+\end{proof}
+
+\section{Introduction to Stochastic Processes}
+
+A stochastic process is a collection of random variables $\{X_t\}_{t \in T}$ indexed by time.
+
+\begin{definition}[Martingale]
+A discrete-time sequence $\{X_n\}$ is a \textbf{martingale} with respect to a filtration $\{\mathcal{F}_n\}$ if:
+\begin{enumerate}
+    \item $\mathbb{E}[|X_n|] < \infty$.
+    \item $X_n$ is $\mathcal{F}_n$-measurable.
+    \item $\mathbb{E}[X_{n+1} \mid \mathcal{F}_n] = X_n$.
+\end{enumerate}
+Martingales model "fair games" and are essential in modern financial mathematics (e.g., option pricing).
+\end{definition}
+
+\section{Conclusion}
+We have traversed from the axioms of measure theory to the powerful limit theorems. The rigorous definitions of conditional expectation and convergence modes provided here form the necessary background for advanced topics such as Stochastic Calculus, Brownian Motion, and High-Dimensional Statistics.
