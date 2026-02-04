@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  25 JAN 2026 16:39
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  4 FEB 2026 20:25
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1122,24 +1122,24 @@ Chapter 7.
 [134]
 
 [135]
+
+[136]
+
+[137]
+
+[138]
 Chapter 8.
 
 
-[136
+[139
 
 ]
 Chapter 9.
 
 
-[137
+[140
 
 ]
-
-[138]
-
-[139]
-
-[140]
 
 [141]
 
@@ -1161,31 +1161,31 @@ Chapter 9.
 
 [150]
 
-[151] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
-)
+[151]
 
 [152]
 
 [153]
 
-[154]
+[154] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
 
 [155]
 
 [156]
-Chapter 10.
 
-
-[157
-
-]
+[157]
 
 [158]
 
 [159]
+Chapter 10.
 
-[160]
+
+[160
+
+]
 
 [161]
 
@@ -1193,19 +1193,25 @@ Chapter 10.
 
 [163]
 
-[164] (./M&A.aux)
+[164]
+
+[165]
+
+[166]
+
+[167] (./M&A.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 31457 strings out of 473832
- 635269 string characters out of 5733157
+ 31475 strings out of 473832
+ 635587 string characters out of 5733157
  1585410 words of memory out of 5000000
- 54015 multiletter control sequences out of 15000+600000
+ 54033 multiletter control sequences out of 15000+600000
  570816 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,15n,107p,1019b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on M&A.pdf (171 pages).
+Output written on M&A.pdf (174 pages).

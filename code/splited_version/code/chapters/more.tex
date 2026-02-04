@@ -834,6 +834,38 @@ To show that $\mathcal{D}$ is a basis for the product topology on $X \times Y$, 
 \end{enumerate}
 \end{proof}
 
+\begin{definition}[Subspace Topology]
+Let $(X, \tau)$ be a topological space and let $Y \subseteq X$ be a subset. The \textbf{subspace topology} on $Y$ is defined by:
+\[\tau_Y = \{ U \cap Y \mid U \in \tau \} \]
+The pair $(Y, \tau_Y)$ is called a \textbf{subspace} of $(X, \tau)$.
+\end{definition}
+
+From the definition of subspace topology, it is easy to see that the open sets in the subspace topology are precisely the intersections of open sets in the original topology with the subset $Y$. This means that the subspace topology inherits the "openness" properties from the larger space, but only within the context of the subset $Y$.
+
+Also, we can get the following theorem about basis for subspace topology.
+
+\begin{theorem}
+Let $(X, \tau)$ be a topological space with basis $\mathcal{B}$, and let $Y \subseteq X$ be a subset. Then the collection
+\[\mathcal{B}_Y = \{ B \cap Y \mid B \in \mathcal{B} \} \]
+is a basis for the subspace topology on $Y$.
+\end{theorem}
+
+We have now established the foundational concepts of topological spaces, including various ways to define topologies through bases and subbases, as well as special types of topologies like order and product topologies. With these tools in hand, we can explore further properties of topological spaces and continuous functions in subsequent sections.
+
+\subsection{Continuous Functions between Topological Spaces}
+
+Before we define continuous functions in the context of topological spaces, we still need to define some concepts.
+
+\begin{definition}[Closed Set in Topological Space]
+Let $(X, \tau)$ be a topological space. A subset $F \subseteq X$ is called \textbf{closed} if its complement $X \setminus F$ is an open set in $\tau$.
+\end{definition}
+
+\begin{remark}
+Mind that the concept of open set and closed set are not mutually exclusive. A set can be both open and closed (clopen set), or neither open nor closed, depending on the topology. For example, in the discrete topology, every set is both open and closed. In the trivial topology, only the empty set and the entire set are both open and closed.
+\end{remark}
+
+
+
 
 
 

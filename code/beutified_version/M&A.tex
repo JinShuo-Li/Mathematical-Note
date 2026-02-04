@@ -6457,6 +6457,114 @@ To show that $\mathcal{D}$ is a basis for the product topology on $X \times Y$, 
 \end{proof}
 
 
+\begin{definition}[Subspace Topology]
+Let $(X, \tau)$ be a topological space and let $Y \subseteq X$ be a subset. The \textbf{subspace topology} on $Y$ is defined by:
+\[\tau_Y = \{ U \cap Y \mid U \in \tau \} \]
+The pair $(Y, \tau_Y)$ is called a \textbf{subspace} of $(X, \tau)$.
+\end{definition}
+
+From the definition of subspace topology, it is easy to see that the open sets in the subspace topology are precisely the intersections of open sets in the original topology with the subset $Y$. This means that the subspace topology inherits the "openness" properties from the larger space, but only within the context of the subset $Y$.
+
+Also, we can get the following theorem about basis for subspace topology.
+
+\begin{theorem}
+Let $(X, \tau)$ be a topological space with basis $\mathcal{B}$, and let $Y \subseteq X$ be a subset. Then the collection
+\[\mathcal{B}_Y = \{ B \cap Y \mid B \in \mathcal{B} \} \]
+is a basis for the subspace topology on $Y$.
+\end{theorem}
+
+We have now established the foundational concepts of topological spaces, including various ways to define topologies through bases and subbases, as well as special types of topologies like order and product topologies. With these tools in hand, we can explore further properties of topological spaces and continuous functions in subsequent sections.
+
+\subsection{Continuous Functions between Topological Spaces}
+
+Before we define continuous functions in the context of topological spaces, we still need to define some concepts. These concepts will help us understand the behavior of functions between topological spaces, and bridge the gap between abstract topology and more familiar notions of continuity.
+
+\begin{definition}[Closed Set in Topological Space]
+Let $(X, \tau)$ be a topological space. A subset $F \subseteq X$ is called \textbf{closed} if its complement $X \setminus F$ is an open set in $\tau$.
+\end{definition}
+
+\begin{remark}
+Mind that the concept of open set and closed set are not mutually exclusive. A set can be both open and closed (clopen set), or neither open nor closed, depending on the topology. For example, in the discrete topology, every set is both open and closed. In the trivial topology, only the empty set and the entire set are both open and closed.
+\end{remark}
+
+\begin{mythm}{Properties of Closed Sets}{}
+Let $(X, \tau)$ be a topological space. Then the following conditions hold:
+\begin{enumerate}
+    \item $\emptyset$ and $X$ are closed sets.
+    \item Arbitrary intersections of closed sets are closed.
+    \item Finite unions of closed sets are closed.
+\end{enumerate}
+\end{mythm}
+
+\newpage
+
+\begin{proof}
+\begin{enumerate}
+    \item Since $X$ and $\emptyset$ are open sets, their complements $X \setminus X = \emptyset$ and $X \setminus \emptyset = X$ are closed sets.
+    \item Let $\{F_\alpha\}_{\alpha \in A}$ be a collection of closed sets. Then $X \setminus F_\alpha$ is open for each $\alpha$. By De Morgan's laws:
+    \[
+    X \setminus \left(\bigcap_{\alpha \in A} F_\alpha\right) = \bigcup_{\alpha \in A} (X \setminus F_\alpha)
+    \]
+    Since arbitrary unions of open sets are open, the complement of the intersection is open. Thus, $\bigcap_{\alpha \in A} F_\alpha$ is closed.
+    \item Let $F_1, \dots, F_n$ be closed sets. Then $X \setminus F_i$ is open for each $i$. By De Morgan's laws:
+    \[
+    X \setminus \left(\bigcup_{i=1}^n F_i\right) = \bigcap_{i=1}^n (X \setminus F_i)
+    \]
+    Since finite intersections of open sets are open, the complement of the union is open. Thus, $\bigcup_{i=1}^n F_i$ is closed.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Interior and Closure]
+Let $(X, \tau)$ be a topological space and $S \subseteq X$ be a subset.
+\begin{enumerate}
+    \item The \textbf{interior} of $S$, denoted by $S^\circ$ or $\operatorname{Int}(S)$, is the union of all open sets contained in $S$.
+    \item The \textbf{closure} of $S$, denoted by $\overline{S}$ or $\operatorname{Cl}(S)$, is the intersection of all closed sets containing $S$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Properties of Interior and Closure]
+Let $(X, \tau)$ be a topological space and $S \subseteq X$.
+\begin{enumerate}
+    \item $S^\circ$ is an open set and is the largest open set contained in $S$.
+    \item $\overline{S}$ is a closed set and is the smallest closed set containing $S$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item By definition, $S^\circ = \bigcup \{U \in \tau \mid U \subseteq S\}$. Since the union of any collection of open sets is open, $S^\circ$ is open. Furthermore, if $U$ is any open set contained in $S$, then $U$ is one of the sets in the union, so $U \subseteq S^\circ$. Thus $S^\circ$ is the largest open set contained in $S$.
+    \item By definition, $\overline{S} = \bigcap \{F \subseteq X \mid F \text{ is closed and } S \subseteq F\}$. Since the intersection of any collection of closed sets is closed (by the properties of closed sets), $\overline{S}$ is closed. Furthermore, if $F$ is any closed set containing $S$, then $F$ is one of the sets in the intersection, so $\overline{S} \subseteq F$. Thus $\overline{S}$ is the smallest closed set containing $S$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}[Neighborhood and Limit Point]
+Let $(X, \tau)$ be a topological space.
+\begin{enumerate}
+    \item A subset $N \subseteq X$ is called a \textbf{neighborhood} of a point $x \in X$ if there exists an open set $U$ such that $x \in U \subseteq N$.
+    \item A point $x \in X$ is called a \textbf{limit point} (or accumulation point) of a subset $A \subseteq X$ if every open neighborhood $U$ of $x$ intersects $A$ in some point other than $x$, i.e., $U \cap (A \setminus \{x\}) \neq \emptyset$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Characterization of Closed Sets]
+A subset $A$ of a topological space $X$ is closed if and only if it contains all its limit points.
+\end{theorem}
+
+\begin{proof}
+Let $A'$ denote the set of all limit points of $A$. We want to show that $A$ is closed $\iff A' \subseteq A$.
+
+($\Rightarrow$) Suppose $A$ is closed. Let $x$ be a limit point of $A$. If $x \notin A$, then $x \in X \setminus A$. Since $A$ is closed, $U = X \setminus A$ is an open neighborhood of $x$. However, $U \cap A = \emptyset$, which contradicts the definition of a limit point (every neighborhood must intersect $A \setminus \{x\}$). Therefore, limit points cannot be outside $A$, so $A' \subseteq A$.
+
+($\Leftarrow$) Suppose $A$ contains all its limit points ($A' \subseteq A$). We want to show that $A$ is closed, or equivalently, that $X \setminus A$ is open.
+Let $x \in X \setminus A$. Since $x \notin A$ and $A' \subseteq A$, $x$ is not a limit point of $A$. By the definition of a limit point, there exists an open neighborhood $U_x$ of $x$ such that $U_x \cap (A \setminus \{x\}) = \emptyset$. Since $x \notin A$, this implies $U_x \cap A = \emptyset$, meaning $U_x \subseteq X \setminus A$.
+Thus, for every $x \in X \setminus A$, there exists an open set $U_x$ contained in $X \setminus A$. The union of these open sets is $X \setminus A$ itself:
+\[
+X \setminus A = \bigcup_{x \in X \setminus A} U_x
+\]
+Since a union of open sets is open, $X \setminus A$ is open. Therefore $A$ is closed.
+\end{proof}
+
+
+
 
 
 

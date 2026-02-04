@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  4 FEB 2026 19:53
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  4 FEB 2026 20:13
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1127,20 +1127,20 @@ Chapter 7.
 [136]
 
 [137]
+
+[138]
 Chapter 8.
-
-
-[138
-
-]
-Chapter 9.
 
 
 [139
 
 ]
+Chapter 9.
 
-[140]
+
+[140
+
+]
 
 [141]
 
@@ -1166,11 +1166,11 @@ Chapter 9.
 
 [152]
 
-[153] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+[153]
+
+[154] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-
-[154]
 
 [155]
 
@@ -1179,14 +1179,14 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 [157]
 
 [158]
+
+[159]
 Chapter 10.
 
 
-[159
+[160
 
 ]
-
-[160]
 
 [161]
 
@@ -1196,21 +1196,23 @@ Chapter 10.
 
 [164]
 
-[165])
+[165]
 
-[166] (./main.aux)
+[166])
+
+[167] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 31505 strings out of 473832
- 636363 string characters out of 5733157
+ 31513 strings out of 473832
+ 636505 string characters out of 5733157
  1585666 words of memory out of 5000000
- 54042 multiletter control sequences out of 15000+600000
+ 54050 multiletter control sequences out of 15000+600000
  570816 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,15n,107p,1050b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (173 pages).
+Output written on main.pdf (174 pages).
