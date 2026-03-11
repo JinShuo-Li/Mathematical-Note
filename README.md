@@ -32,6 +32,7 @@ The notes are organized into the following chapters:
     * Groups, Rings, and Fields
     * Galois Theory
 * **More**: More content will be comming soon.
+* **The author is currently updating the content of Topology and Mathematical Analysis II**
 
 ## 🛠️ Usage & Compilation
 

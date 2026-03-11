@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  4 FEB 2026 20:13
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  8 MAR 2026 11:23
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -823,9 +823,7 @@ Chapter 1.
 
 [19]
 
-[20]
-
-[21]) (./chapters/chapter2.tex
+[20]) (./chapters/chapter2.tex
 Chapter 2.
 
 Overfull \hbox (3.85704pt too wide) in paragraph at lines 23--24
@@ -834,10 +832,12 @@ Overfull \hbox (3.85704pt too wide) in paragraph at lines 23--24
 
 
 
-[22
+[21
 
 
 ]
+
+[22]
 
 [23]
 
@@ -860,13 +860,13 @@ Overfull \hbox (3.85704pt too wide) in paragraph at lines 23--24
 [32]
 
 [33]
-
-[34]
-Overfull \hbox (23.6631pt too wide) in paragraph at lines 653--656
+Overfull \hbox (23.6631pt too wide) in paragraph at lines 667--670
 \TU/lmr/m/n/10 Bolzano-Weierstrass Theorem guarantees that it has a convergent subsequence, say $\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 x[]\OMS/cmsy/m/n/10 g$\TU/lmr/m/n/10 . Let $[][] \OML/cmm/m/it/10 x[] \OT1/cmr/m/n/10 =
  []
 
 
+
+[34]
 
 [35]
 
@@ -891,12 +891,12 @@ Overfull \hbox (23.6631pt too wide) in paragraph at lines 653--656
 [45]
 
 [46]
-Underfull \hbox (badness 10000) in paragraph at lines 1373--1376
+Underfull \hbox (badness 10000) in paragraph at lines 1361--1364
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1373--1376
+Underfull \hbox (badness 10000) in paragraph at lines 1361--1364
 
  []
 
@@ -909,13 +909,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 1373--1376
 [49]
 
 [50]
-
-[51]
-Overfull \hbox (11.74605pt too wide) detected at line 1598
+Overfull \hbox (11.74605pt too wide) detected at line 1576
 []
  []
 
 
+
+[51]
 
 [52]
 
@@ -939,17 +939,18 @@ Overfull \hbox (11.74605pt too wide) detected at line 1598
 
 [62]
 
-[63]
-
-[64]) (./chapters/chapter3.tex
-
-[65]
+[63]) (./chapters/chapter3.tex
 Chapter 3.
 
 
-[66
+[64
+
 
 ]
+
+[65]
+
+[66]
 
 [67]
 
@@ -994,15 +995,15 @@ Chapter 3.
 [87]
 
 [88]
-
-[89]
-
-[90]
-Overfull \hbox (9.06868pt too wide) in paragraph at lines 1221--1228
+Overfull \hbox (9.06868pt too wide) in paragraph at lines 1220--1227
 []\TU/lmr/m/n/10 Let the set be $\OMS/cmsy/m/n/10 f\OT1/cmr/bx/n/10 v[]\OML/cmm/m/it/10 ; [] ; \OT1/cmr/bx/n/10 v[]\OMS/cmsy/m/n/10 g$ \TU/lmr/m/n/10 in $\U/msb/m/n/10 R[]$\TU/lmr/m/n/10 . Form the $\OML/cmm/m/it/10 n \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 p$ \TU/lmr/m/n/10 matrix $\OML/cmm/m/it/10 A \OT1/cmr/m/n/10 = []$\TU/lmr/m/n/10 .
  []
 
 
+
+[89]
+
+[90]
 
 [91]
 
@@ -1011,14 +1012,14 @@ Overfull \hbox (9.06868pt too wide) in paragraph at lines 1221--1228
 [93]
 
 [94]
+LaTeX Font Info:    Trying to load font information for U+euf on input line 1484.
+ (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueuf.fd
+File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
+)
 
 [95]
 
 [96]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 1485.
- (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueuf.fd
-File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-)
 
 [97]
 
@@ -1036,17 +1037,18 @@ File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 
 [104]
 
-[105]
-
-[106]) (./chapters/chapter4.tex
-
-[107]
+[105]) (./chapters/chapter4.tex
 Chapter 4.
 
 
-[108
+[106
+
 
 ]
+
+[107]
+
+[108]
 
 [109]
 
@@ -1056,28 +1058,29 @@ Chapter 4.
 
 [112]
 
-[113]
-
-[114]) (./chapters/more.tex
-
-[115]
+[113]) (./chapters/chapter5.tex
 Chapter 5.
 
 
-[116
+[114
+
 
 ]
+
+[115]
+
+[116]
 
 [117]
 
 [118]
-
-[119]
-Overfull \hbox (32.46773pt too wide) detected at line 148
+Overfull \hbox (32.46773pt too wide) detected at line 174
 [][] [] \OT1/cmr/m/n/10 = [][] [] = [][] [] + [][] [] = \OML/cmm/m/it/10 I[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 I[]
  []
 
 
+
+[119]
 
 [120]
 
@@ -1100,7 +1103,7 @@ Overfull \hbox (32.46773pt too wide) detected at line 148
 [129]
 
 [130]
-Underfull \hbox (badness 2318) in paragraph at lines 606--610
+Underfull \hbox (badness 2318) in paragraph at lines 653--657
 []\TU/lmr/m/n/10 The existence of iterated limits does not imply the existence of the simultaneous limit
  []
 
@@ -1108,14 +1111,10 @@ Underfull \hbox (badness 2318) in paragraph at lines 606--610
 
 [131]
 
-[132]
+[132]) (./chapters/chapter6.tex
+
+[133]
 Chapter 6.
-
-
-[133
-
-]
-Chapter 7.
 
 
 [134
@@ -1129,22 +1128,18 @@ Chapter 7.
 [137]
 
 [138]
-Chapter 8.
 
+[139]
 
-[139
-
-]
-Chapter 9.
-
-
-[140
-
-]
+[140]) (./chapters/chapter7.tex
 
 [141]
+Chapter 7.
 
-[142]
+
+[142
+
+]
 
 [143]
 
@@ -1154,11 +1149,15 @@ Chapter 9.
 
 [146]
 
-[147]
+[147]) (./chapters/chapter8.tex
 
 [148]
+Chapter 8.
 
-[149]
+
+[149
+
+]
 
 [150]
 
@@ -1168,9 +1167,7 @@ Chapter 9.
 
 [153]
 
-[154] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
-)
+[154]
 
 [155]
 
@@ -1181,38 +1178,58 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 [158]
 
 [159]
-Chapter 10.
 
-
-[160
-
-]
+[160]
 
 [161]
 
 [162]
 
-[163]
+[163] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
 
 [164]
 
 [165]
 
-[166])
+[166]
 
-[167] (./main.aux)
+[167]) (./chapters/chapter9.tex
+
+[168]
+Chapter 9.
+
+
+[169
+
+]
+
+[170]
+
+[171]
+
+[172]
+
+[173]
+
+[174]
+
+[175]
+
+[176] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
- ) 
+ ) ) 
 Here is how much of TeX's memory you used:
- 31513 strings out of 473832
- 636505 string characters out of 5733157
- 1585666 words of memory out of 5000000
- 54050 multiletter control sequences out of 15000+600000
+ 31575 strings out of 473832
+ 637791 string characters out of 5733157
+ 1585524 words of memory out of 5000000
+ 54100 multiletter control sequences out of 15000+600000
  570816 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,15n,107p,1050b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,15n,107p,1107b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (174 pages).
+Output written on main.pdf (183 pages).

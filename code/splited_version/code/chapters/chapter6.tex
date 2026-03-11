@@ -1,0 +1,309 @@
+\chapter{Topology}
+
+Topology is frequently characterized as "rubber-sheet geometry," a field of mathematics concerned with the properties of space that are preserved under continuous deformations including stretching, crumpling, and bending, but strictly excluding tearing or gluing. This chapter marks a profound conceptual shift in our mathematical journey: we transition from the rigid, distance-based measurements characteristic of Euclidean and Metric Spaces to a more flexible, qualitative understanding of "nearness," "connectivity," and "continuity."
+
+In Classical Analysis, concepts such as limits, continuity, and convergence are rigidly defined using a distance function (metric), typically $d(x, y) = |x - y|$. However, mathematicians in the late 19th and early 20th centuries realized that many fundamental analytical theorems---such as the Intermediate Value Theorem, the Extreme Value Theorem, and the Bolzano-Weierstrass Theorem---do not rely on the specific numerical values of distances. Instead, they depend on the structural organization of points, specifically how subsets of a space "hang together" or "accumulate." Topology distills these essential structural properties into a rigorous axiomatic system, keeping only what is necessary to define continuity.
+
+We will begin by defining the most fundamental object: the Topological Space. From there, we will rebuild our understanding of continuity, limits, and convergence from the ground up, eventually reaching sophisticated concepts like Compactness and Connectedness.
+
+\section{Topological Spaces}
+
+\subsection{Motivation: From Metric to Topology}
+
+Consider the difference between a ceramic coffee mug and a donut. Geometrically, they are distinct shapes with different curvatures and surface areas. However, to a topologist, they are identical. If you were to make the mug out of highly pliable clay, you could continuously reshape it into a donut by thickening the bottom and shrinking the cup part, eventually smoothing it into a ring. No tearing (breaking the clay) or gluing (fusing distinct parts) is required.
+
+To formalize this, we look at the definition of continuity in metric spaces. A function $f$ is continuous if the inverse image of every open ball is "open" in some sense. In a metric space $(M, d)$, a set $U$ is called "open" if every point $x \in U$ has a safety buffer (an open ball $B_r(x)$) totally contained within $U$.
+\[ \forall x \in U, \exists r > 0 \text{ such that } B_r(x) \subseteq U \]
+This collection of open sets satisfies certain properties (unions of open sets are open, finite intersections of open sets are open). Topology takes these properties as \textit{axioms}, discarding the metric entirely.
+
+\subsection{Definition of a Topology}
+
+\begin{definition}[Topological Space]
+Let $X$ be a non-empty set. A collection $\tau$ of subsets of $X$ is called a \textbf{topology} on $X$ if it satisfies the following three axioms:
+\begin{enumerate}
+    \item \textbf{(T1) Trivial Sets:} The empty set $\emptyset$ and the entire set $X$ are in $\tau$.
+    \item \textbf{(T2) Arbitrary Union:} The union of \textbf{any} collection of sets in $\tau$ is also in $\tau$. That is, if $\{U_\alpha\}_{\alpha \in I} \subseteq \tau$, then $\bigcup_{\alpha \in I} U_\alpha \in \tau$.
+    \item \textbf{(T3) Finite Intersection:} The intersection of any \textbf{finite} number of sets in $\tau$ is also in $\tau$. That is, if $U_1, \dots, U_n \in \tau$, then $\bigcap_{i=1}^n U_i \in \tau$.
+\end{enumerate}
+The pair $(X, \tau)$ is called a \textbf{topological space}. The elements of $\tau$ are referred to as \textbf{open sets}.
+\end{definition}
+
+\textbf{Remark on Axioms:}
+\begin{itemize}
+    \item \textbf{Why infinite unions?} In the real line $\mathbb{R}$, any open interval $(a, b)$ can be written as a union of smaller intervals. We want "arbitrary" unions so that shapes like an open disk can be formed by uniting infinitely many small rectangles.
+    \item \textbf{Why only finite intersections?} Consider the open intervals $U_n = (-1/n, 1/n)$ in $\mathbb{R}$. Each is an open set. However, their infinite intersection is:
+    \[ \bigcap_{n=1}^{\infty} \left(-\frac{1}{n}, \frac{1}{n}\right) = \{0\} \]
+    The singleton set $\{0\}$ is \textit{not} "open" in the standard sense (it contains no ball around 0). Thus, if we allowed infinite intersections, single points would become open sets, collapsing the structure of the space into something trivial (the discrete topology).
+\end{itemize}
+
+\subsection{Fundamental Examples}
+
+To grasp the breadth of this definition, we examine several key examples.
+
+\begin{example}[Discrete Topology]
+Let $X$ be any non-empty set. Let $\tau_{disc} = \mathcal{P}(X)$, the power set of $X$.
+In this topology, \textbf{every} subset of $X$ is an open set.
+\begin{itemize}
+    \item \textit{Intuition:} Every point is "isolated" from every other point.
+    \item \textit{Sequence Convergence:} A sequence $\{x_n\}$ converges to $x$ if and only if the sequence is eventually constant (i.e., $x_n = x$ for all $n \ge N$).
+    \item \textit{Continuity:} Any function $f: X \to Y$ originating from a discrete space is continuous.
+\end{itemize}
+\end{example}
+
+\begin{example}[Indiscrete / Trivial Topology]
+Let $X$ be any non-empty set. Let $\tau_{ind} = \{\emptyset, X\}$.
+Only the whole space and the empty set are open.
+\begin{itemize}
+    \item \textit{Intuition:} All points are "glued" together into a single lump.
+    \item \textit{Sequence Convergence:} Every sequence converges to \textbf{every} point in $X$. This chaos illustrates why we often need stronger axioms (like Hausdorff).
+\end{itemize}
+\end{example}
+
+\newpage
+
+\begin{example}[Cofinite Topology]
+Let $X$ be an infinite set. Let $\tau_{cof} = \{ U \subseteq X \mid X \setminus U \text{ is finite} \} \cup \{ \emptyset \}$.
+Check the axioms:
+\begin{itemize}
+    \item The complement of $X$ is $\emptyset$ (finite), so $X \in \tau$.
+    \item Intersection: $(X \setminus U) \cup (X \setminus V) = X \setminus (U \cap V)$. If complements are finite, their union is finite, so the intersection $U \cap V$ has a finite complement.
+\end{itemize}
+This topology behaves like the Zariski topology in algebraic geometry and cannot be generated by a standard distance metric.
+\end{example}
+
+\begin{example}[Sierpinski Space]
+Let $X = \{0, 1\}$. The possible topologies are:
+\begin{itemize}
+    \item Discrete: $\{\emptyset, \{0\}, \{1\}, \{0,1\}\}$
+    \item Indiscrete: $\{\emptyset, \{0,1\}\}$
+    \item \textbf{Sierpinski:} $\tau = \{\emptyset, \{1\}, \{0,1\}\}$. Here $\{1\}$ is open, but $\{0\}$ is not. This is a non-symmetric space used frequently in computer science (domain theory) and logic.
+\end{itemize}
+\end{example}
+
+\subsection{Comparing Topologies}
+
+On a single set $X$, we can define many different topologies. They effectively form a hierarchy.
+
+\begin{definition}[Finer and Coarser]
+Let $\tau_1$ and $\tau_2$ be two topologies on $X$.
+\begin{itemize}
+    \item If $\tau_2 \subseteq \tau_1$, we say $\tau_1$ is \textbf{finer} (or stronger) than $\tau_2$.
+    \item Conversely, $\tau_2$ is \textbf{coarser} (or weaker) than $\tau_1$.
+\end{itemize}
+\end{definition}
+
+\textbf{Visualization:} Think of the topology as a "resolution" or a "mesh size."
+\begin{itemize}
+    \item \textbf{Fine Topology:} Many open sets. Highly detailed. A "high-resolution" view of the space. The Discrete topology is the finest possible topology (maximum resolution).
+    \item \textbf{Coarse Topology:} Few open sets. Blurry. A "low-resolution" view. The Indiscrete topology is the coarsest possible topology (minimum resolution).
+\end{itemize}
+Continuity is harder to achieve with a finer domain topology (easy to map out of) but easier to achieve with a finer codomain topology (hard to map into).
+
+\section{Generating Topologies: Basis and Subbasis}
+
+Explicitly listing all open sets for spaces like $\mathbb{R}$ is impossible. Instead, we specify a smaller collection of "building blocks" that generate the entire topology.
+
+\subsection{Basis for a Topology}
+
+\begin{definition}[Basis]
+A collection $\mathcal{B}$ of subsets of $X$ is a \textbf{basis} for a topology if:
+\begin{enumerate}
+    \item \textbf{Covering:} $\bigcup_{B \in \mathcal{B}} B = X$. (Every point belongs to at least one basis element).
+    \item \textbf{Intersection compatibility:} For any $B_1, B_2 \in \mathcal{B}$ and any point $x \in B_1 \cap B_2$, there exists a third basis element $B_3 \in \mathcal{B}$ such that $x \in B_3 \subseteq B_1 \cap B_2$.
+\end{enumerate}
+\end{definition}
+
+If $\mathcal{B}$ is a basis, the topology $\tau$ generated by $\mathcal{B}$ is defined as the collection of \textbf{all possible unions} of elements of $\mathcal{B}$.
+\[ U \text{ is open } \iff \forall x \in U, \exists B \in \mathcal{B} \text{ such that } x \in B \subseteq U \]
+
+\textbf{Standard Basis for $\mathbb{R}$:} The collection of all open intervals $(a, b)$ with $a, b \in \mathbb{R}$.
+\textbf{Standard Basis for $\mathbb{R}^n$:} The collection of all open balls $B_r(x)$. Alternatively, the collection of all open "boxes" (rectangles) $(a_1, b_1) \times \dots \times (a_n, b_n)$. These two bases generate the \textit{same} topology (the Euclidean topology).
+
+\subsection{Subbasis}
+
+Sometimes verifying the intersection property of a basis is tedious. We can be even lazier using a subbasis.
+\begin{definition}[Subbasis]
+A collection $\mathcal{S}$ of subsets of $X$ is a \textbf{subbasis} if its union covers $X$. The topology generated by $\mathcal{S}$ is formed by taking \textbf{finite intersections} of elements in $\mathcal{S}$ (to form a basis) and then taking \textbf{arbitrary unions}.
+\end{definition}
+
+Example: In $\mathbb{R}$, the collection of semi-infinite rays $(-\infty, a)$ and $(b, \infty)$ is a subbasis. Their intersection produces bounded open intervals $(b, a)$, which form the basis for the standard topology.
+
+\subsection{Countability Axioms}
+Topologists classify spaces based on the "size" of their bases.
+\begin{itemize}
+    \item \textbf{Second Countable:} The space has a \textit{countable} basis. (e.g., $\mathbb{R}^n$ is second countable because we can use balls with rational radii and rational centers).
+    \item \textbf{First Countable:} Every point has a countable "local basis" of neighborhoods. (e.g., Metric spaces).
+\end{itemize}
+Second countable implies First countable. These properties are crucial for proving equivalence between sequence convergence and topological accumulation.
+
+\section{Closed Sets and Limit Points}
+
+Just as light defines shadow, open sets define closed sets.
+
+\begin{definition}[Closed Set]
+A subset $F \subseteq X$ is \textbf{closed} if its complement $X \setminus F$ is open.
+\end{definition}
+
+\textbf{Essential Properties:}
+\begin{enumerate}
+    \item $\emptyset$ and $X$ are closed.
+    \item Finite unions of closed sets are closed. (Inverse of infinite intersections of open sets).
+    \item Arbitrary intersections of closed sets are closed.
+\end{enumerate}
+
+\newpage
+
+\subsection{Closure, Interior, and Boundary}
+Given an arbitrary subset $A \subseteq X$, we can define three related sets:
+
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Interior ($\operatorname{Int}(A), A^\circ$):} The union of all open sets contained in $A$. It is the largest open set inside $A$.
+    \item \textbf{Closure ($\operatorname{Cl}(A), \overline{A}$):} The intersection of all closed sets containing $A$. It is the smallest closed set containing $A$.
+    \item \textbf{Boundary ($\partial A$):} $\overline{A} \setminus A^\circ$. The set of points that can "see" both $A$ and $A^c$.
+\end{itemize}
+\end{definition}
+
+\textbf{Intuition:}
+Take $A = [0, 1) \subset \mathbb{R}$.
+\begin{itemize}
+    \item Interior: $(0, 1)$. (The "meat").
+    \item Closure: $[0, 1]$. (The set plus its skin).
+    \item Boundary: $\{0, 1\}$. (The skin itself).
+\end{itemize}
+
+\subsection{Limit Points and Density}
+A point $x$ is a \textbf{limit point} (or accumulation point) of $A$ if every open set containing $x$ intersects $A$ at some point other than $x$.
+\[ \forall U \in \tau, x \in U \implies (U \cap A) \setminus \{x\} \neq \emptyset \]
+\textbf{Theorem:} A set is closed if and only if it contains all its limit points.
+
+\textbf{Dense Sets:} A subset $A$ is \textbf{dense} in $X$ if $\overline{A} = X$.
+Example: The rationals $\mathbb{Q}$ are dense in $\mathbb{R}$. Any open interval, no matter how small, contains a rational number. This property (Separability) is vital in Functional Analysis.
+
+\section{Constructing New Spaces}
+
+Topology gives us a toolkit to build new spaces from old ones, much like LEGO.
+
+\subsection{Subspace Topology}
+If $Y \subset X$, how do we make $Y$ a space?
+\[ \tau_Y = \{ U \cap Y \mid U \in \tau_X \} \]
+"Open in $Y$" equals "Open in $X$" intersected with $Y$.
+\textbf{Inheritance:} Properties like "Second Countable" and "Hausdorff" are inherited by subspaces. Compactness is not necessarily inherited by arbitrary subspaces, but is by closed subspaces.
+
+\subsection{Product Topology}
+Given spaces $X$ and $Y$, the product $X \times Y$ needs a topology.
+The natural basis consists of generic "rectangles":
+\[ \mathcal{B} = \{ U \times V \mid U \in \tau_X, V \in \tau_Y \} \]
+This is the coarsest topology such that the projection maps $\pi_X: X \times Y \to X$ and $\pi_Y: X \times Y \to Y$ are continuous.
+For infinite products $\prod X_\alpha$, we use the \textbf{Tychonoff Product Topology}, where basis elements are restricted products where $U_\alpha = X_\alpha$ for all but finitely many indices. This subtlety is required to preserve Compactness (Tychonoff's Theorem).
+
+\subsection{Quotient Topology (Gluing)}
+This is the most geometric construction. It models "gluing" or "identifying" points.
+Let $X$ be a space and $\sim$ be an equivalence relation. Let $q: X \to X/\sim$ be the natural projection map identifying equivalent points.
+The \textbf{Quotient Topology} on $X/\sim$ is defined such that $U \subset X/\sim$ is open if and only if $q^{-1}(U)$ is open in $X$.
+
+\textbf{Examples of Gluing:}
+\begin{enumerate}
+    \item \textbf{Circle ($S^1$):} Take $[0, 1]$ and glue $0 \sim 1$.
+    \item \textbf{Cylinder:} Take $[0,1] \times [0,1]$ and glue $(0, y) \sim (1, y)$ (glue left edge to right edge).
+    \item \textbf{Möbius Strip:} Take $[0,1] \times [0,1]$ and glue $(0, y) \sim (1, 1-y)$ (glue with a twist).
+    \item \textbf{Torus ($T^2$):} Glue both pairs of opposite edges of a square.
+    \item \textbf{Klein Bottle:} Glue one pair normally, the other with a twist. (Cannot be embedded in $\mathbb{R}^3$).
+\end{enumerate}
+
+\section{Separation Axioms}
+
+In abstract spaces, points might be "too close" to separate. We introduce axioms to enforce "niceness."
+
+\begin{itemize}
+    \item \textbf{$T_0$ (Kolmogorov):} For any distinct $x, y$, at least one of them has a neighborhood not containing the other.
+    \item \textbf{$T_1$ (Fréchet):} For any distinct $x, y$, each has a neighborhood not containing the other. (Equivalently: Points are closed sets).
+    \item \textbf{$T_2$ (Hausdorff):} The gold standard. Any two distinct points $x, y$ have \textbf{disjoint} neighborhoods $U, V$.
+    \[ x \in U, y \in V, U \cap V = \emptyset \]
+\end{itemize}
+
+\textbf{Importance of Hausdorff:} In a Hausdorff space, limits of sequences are \textbf{unique}. In a non-Hausdorff space (like the Cofinite topology on an infinite set), a sequence can converge to multiple points simultaneously! Most spaces studied in analysis (Metric spaces, Manifolds) are Hausdorff.
+
+\section{Continuity And Homeomorphism}
+
+\subsection{Continuous Functions}
+In Calculus: $\lim_{x\to c} f(x) = f(c)$.
+In Metric Spaces: $\forall \epsilon, \exists \delta \dots$
+In Topology:
+\begin{definition}[Global Continuity]
+A function $f: X \to Y$ is continuous if for every open set $V \subseteq Y$, the preimage $f^{-1}(V)$ is open in $X$.
+\end{definition}
+This elegant definition eliminates $\epsilon$ and $\delta$ entirely. It captures the essence that "f does not tear the space." If $V$ is a coherent "puddle" in the target, its origin $f^{-1}(V)$ was also a coherent "puddle" (or puddles) in the domain, not a scattered dust of points.
+
+\subsection{Homeomorphisms}
+When are two topological spaces "structurally identical"?
+\begin{definition}[Homeomorphism]
+A map $f: X \to Y$ is a homeomorphism if:
+\begin{enumerate}
+    \item $f$ is a bijection (1-to-1 and onto).
+    \item $f$ is continuous.
+    \item $f^{-1}$ is continuous (f is an open map).
+\end{enumerate}
+\end{definition}
+If $X \cong Y$, they share all topological properties (connectedness, compactness, etc.).
+\textbf{Topological Invariants:} Properties preserved under homeomorphism.
+- Example: The number of "holes" (genus).
+- Example: The Euler characteristic.
+- Counter-example: Compactness is an invariant. $(0, 1)$ is homeomorphic to $\mathbb{R}$? No, because $(0, 1)$ is not compact (bounded but not closed in $\mathbb{R}$? careful, intrinsic compactness) -- actually $(0, 1)$ is homeomorphic to $\mathbb{R}$ via $\tan(x)$. Neither is compact. Usually we compare $[0, 1]$ (compact) and $\mathbb{R}$ (non-compact). They are not homeomorphic.
+
+\section{Connectedness}
+
+Connectedness formalizes the idea of an object being in "one piece."
+
+\subsection{Definitions}
+\begin{definition}[Disconnected]
+A space $X$ is \textbf{disconnected} if it can be written as $X = U \cup V$, where $U, V$ are \textbf{disjoint}, \textbf{non-empty}, \textbf{open} sets.
+\end{definition}
+Such a pair $(U, V)$ is called a separation.
+A space is \textbf{Connected} if no such separation exists.
+
+\subsection{Path Connectedness}
+A stronger, more intuitive notion.
+\begin{definition}[Path Connected]
+$X$ is path-connected if for every pair $x, y \in X$, there exists a continuous function (path) $\gamma: [0, 1] \to X$ such that $\gamma(0) = x$ and $\gamma(1) = y$.
+\end{definition}
+\textbf{Theorem:} Path connected $\implies$ Connected.
+The converse is false! (Example: The Topologist's Sine Curve).
+
+\subsection{Application: The Intermediate Value Theorem}
+The classical IVT is actually a topological theorem:
+"The continuous image of a connected set is connected."
+Since $[a, b]$ is connected, its image under a continuous $f$ must be a connected interval. If $f(a) < 0$ and $f(b) > 0$, the interval must contain 0.
+
+\section{Compactness}
+
+Compactness is perhaps the most subtle and powerful concept in analysis. It is the correct generalization of "finiteness."
+
+\subsection{Definition via Covers}
+\begin{definition}[Open Cover]
+An \textbf{open cover} of $X$ is a collection $\{U_\alpha\}$ of open sets such that $\bigcup U_\alpha = X$.
+\end{definition}
+
+\begin{definition}[Compact Space]
+A space $X$ is \textbf{compact} if \textbf{every} open cover of $X$ admits a \textbf{finite subcover}.
+\[ X = U_{\alpha_1} \cup U_{\alpha_2} \cup \dots \cup U_{\alpha_n} \]
+\end{definition}
+This definition (Heine-Borel property) seems abstract. Why do we care?
+It means that locally small properties can be patched together to hold globally with finite complexity.
+
+\subsection{Compactness in $\mathbb{R}^n$}
+\begin{theorem}[Heine-Borel]
+A subset of Euclidean space $\mathbb{R}^n$ is compact if and only if it is both \textbf{closed} and \textbf{bounded}.
+\end{theorem}
+This gives us a concrete way to check compactness in familiar spaces. Intervals $[a, b]$, spheres $S^n$, and tori $T^n$ are compact. The real line $\mathbb{R}$ is not compact (cover it with $(-n, n)$ -- you need infinitely many).
+
+\subsection{Extreme Value Theorem}
+\textbf{Theorem:} Let $f: X \to \mathbb{R}$ be continuous. If $X$ is compact, then $f$ is bounded and attains its maximum and minimum values.
+\textit{Proof Sketch:} The image $f(X)$ is a compact subset of $\mathbb{R}$, thus closed and bounded. A closed bounded set in $\mathbb{R}$ contains its supremum and infimum.
+
+This theorem underpins all of optimization theory. Without compactness, a function might approach a value but never reach it (like $1/x$ on $(1, \infty)$ goes to 0 but never hits 0), or go to infinity.
+
+The preceding exposition is confined to the foundational framework of \textbf{Point-Set Topology}, establishing the axiomatic structure $(X,\tau)$ and essential concepts of limits, continuity, and compactness, which form the prerequisite language for advanced mathematical analysis. This text does not delve into \textbf{Algebraic Topology} (e.g., fundamental group $\pi_1(X)$ or homology groups $H_k(X)$), \textbf{Differential Topology} (smooth structures on manifolds $M$), or \textbf{Geometric Topology} (knot theory, low-dimensional manifolds), as these represent a transition toward structural and categorical analysis beyond the introductory scope.
+
+\section*{Further Reading}
+To extend mastery beyond point-set foundations, several seminal texts are recommended. For axiomatic structures, Munkres' \textit{Topology} provides exhaustive treatments of Tychonoff Theorem and Urysohn Lemma. Willard's \textit{General Topology} offers a sophisticated perspective on convergence and function spaces. For algebraic and differential branches, consult Hatcher's \textit{Algebraic Topology} for $\pi_1(X)$ and homology, and Milnor's \textit{Topology from the Differentiable Viewpoint} for smooth manifolds. Rolfsen's \textit{Knots and Links} serves as an entry to geometric topology and knot classification.

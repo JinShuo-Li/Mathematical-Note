@@ -1,0 +1,234 @@
+\chapter{Complex Analysis}
+
+\emph{Complex Analysis is one of the most elegant branches of mathematics. While the functions it studies may appear similar to those in real analysis, they exhibit fundamentally different characteristics. In real analysis, the differentiability of a function is often merely a local smoothness property; however, in complex analysis, the complex differentiability (i.e., holomorphicity) of a function in a neighborhood of a point implies powerful global constraints.}
+
+\emph{Compared to real analysis, complex analysis possesses many remarkable strong properties. For instance, every holomorphic function is necessarily analytic, meaning that as long as it is differentiable at a point, it has derivatives of all orders and can be expanded into a power series. Furthermore, profound results such as Cauchy's Theorem, the Residue Theorem, and the Maximum Modulus Principle reveal the intimate connections between boundary values and interior values, as well as between local and global behavior of complex functions. This chapter will lead the reader from the basic geometric meaning of complex numbers into this field of harmony and symmetry.}
+
+\section{Historical Context and Representations of Complex Numbers}
+
+The story of complex numbers is one of the most fascinating chapters in the history of mathematics, illustrating how a conceptual "impossibility" can transform into a foundational pillar of modern science. This section explores the historical evolution of these numbers and the various ways we represent them today.
+
+\subsection{Historical Context: From "Imaginary" to Essential}
+
+For centuries, mathematicians viewed the square roots of negative numbers with deep suspicion, often dismissing them as "useless" or "impossible." The journey began in the 16th century during the quest to solve cubic and quartic equations.
+
+\textbf{The Italian Connection:} Girolamo Cardano, in his 1545 work \textit{Ars Magna}, encountered "manifestly impossible" solutions involving square roots of negative numbers while solving cubics. Although he found the calculations useful, he famously referred to them as "mental torture." It was Rafael Bombelli who, a few decades later, first formulated the rules for "adding and multiplying the imaginary," demonstrating that these entities could lead to real solutions for real equations.
+
+\textbf{The Philosophical Shift:} René Descartes coined the term "imaginary" in 1637 as a derogatory label, intending to mock the lack of geometric significance of such roots. However, the 18th century brought a shift in perspective. Leonhard Euler introduced the symbol $i$ for $\sqrt{-1}$ and explored its connections to the exponential and trigonometric functions, laying the groundwork for what we now call Complex Analysis.
+
+\textbf{Rigorous Foundation:} The final acceptance of complex numbers came in the early 19th century. Carl Friedrich Gauss and Jean-Robert Argand independently proposed the geometric interpretation of complex numbers as points in a two-dimensional plane. This "Argand plane" provided the visual and conceptual clarity needed to strip away the "imaginary" stigma, proving that complex numbers are just as "real" as the numbers we use for counting.
+
+\subsection{Representation: The Algebra of the Plane}
+
+A complex number $z$ is formally defined as an ordered pair of real numbers $(x, y)$, typically written in \textbf{rectangular form}:
+\begin{equation}
+    z = x + iy
+\end{equation}
+where $x = \text{Re}(z)$ is the real part, $y = \text{Im}(z)$ is the imaginary part, and $i$ satisfies $i^2 = -1$.
+
+\subsubsection{Geometric Interpretation}
+
+Geometrically, we visualize the set of complex numbers $\mathbb{C}$ as a 2D plane:
+\begin{itemize}
+    \item The \textbf{Real Axis} (horizontal) represents the real part $x$.
+    \item The \textbf{Imaginary Axis} (vertical) represents the imaginary part $y$.
+\end{itemize}
+Addition of complex numbers follows the parallelogram law of vector addition, while multiplication involves a sophisticated combination of scaling and rotation.
+
+Another powerful representation is the \textbf{polar form}, where a complex number is expressed in terms of its magnitude (modulus) and angle (argument):
+\begin{equation}
+    z = r(\cos \theta + i \sin \theta)
+\end{equation}
+where $r = |z|$ is the distance from the origin to the point $(x, y)$, and $\theta = \arg(z)$ is the angle formed with the positive real axis.
+
+Apart from these traditional forms, we can also use \textbf{Riemann Sphere} representation, which maps the complex plane onto a sphere, providing a compactification that allows us to include the point at infinity. How can we define the point at infinity? By using the concept of stereographic projection, we can project points from the complex plane onto a sphere. The north pole of the sphere corresponds to the point at infinity in the complex plane, while the south pole corresponds to the origin. This representation is particularly useful in understanding the behavior of complex functions at infinity and in visualizing conformal mappings. Anyway, the method is through the stereographic projection, which maps points from the complex plane onto a sphere. The north pole of the sphere corresponds to the point at infinity in the complex plane, while the south pole corresponds to the origin. This representation is particularly useful in understanding the behavior of complex functions at infinity and in visualizing conformal mappings.
+
+
+
+\subsection{Euler's Formula and the Exponential Form}
+
+The most elegant representation of complex numbers arises from the deep connection between rotation and the exponential function.
+
+\textbf{Euler's Formula:} For any real number $\theta$, Euler's formula states:
+\begin{equation}
+    e^{i\theta} = \cos \theta + i\sin \theta
+\end{equation}
+
+\subsubsection{Geometric Interpretation}
+
+Geometrically, Euler's formula provides a bridge between the unit circle and the complex exponential. In the complex plane, $e^{i\theta}$ represents a point on the unit circle at an angle $\theta$ (in radians) measured counter-clockwise from the positive real axis. 
+\begin{itemize}
+    \item As $\theta$ increases, the point $e^{i\theta}$ moves along the circumference of the unit circle.
+    \item Multiplying a complex number $z$ by $e^{i\phi}$ corresponds to a counter-clockwise rotation of $z$ by the angle $\phi$ around the origin, without changing its magnitude.
+\end{itemize}
+This interpretation reveals that the "imaginary" exponent $i\theta$ acts as a rotational operator, fundamentally different from real exponents which represent growth or decay.
+
+\subsubsection{A Sketch of Proof via Taylor Series}
+
+The most intuitive proof of Euler's formula utilizes the Taylor series expansions of $e^x, \cos x,$ and $\sin x$ about the origin. Recall the following power series definitions for real $x$:
+\begin{align}
+    e^{x} &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots
+\end{align}
+Assuming these series converge for complex values, we substitute $ix$ into the exponential series:
+\begin{equation}
+    e^{ix} = 1 + (ix) + \frac{(ix)^2}{2!} + \frac{(ix)^3}{3!} + \frac{(ix)^4}{4!} + \frac{(ix)^5}{5!} + \dots
+\end{equation}
+Using the property that powers of $i$ cycle through $\{i, -1, -i, 1\}$, we group the terms:
+\begin{align}
+    e^{ix} &= \left( 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots \right) + i \left( x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots \right) \\
+    e^{ix} &= \cos x + i \sin x
+\end{align}
+This algebraic manipulation confirms that the complex exponential is the natural extension of real calculus into the complex realm.
+
+\subsection{Representations: Polar and Exponential Forms}
+
+The formula allows us to express complex numbers in \textbf{polar form}:
+\begin{equation}
+    z = r(\cos \theta + i \sin \theta) = re^{i\theta}
+\end{equation}
+where:
+\begin{itemize}
+    \item $r = |z| = \sqrt{x^2 + y^2}$ is the \textbf{modulus} (magnitude or absolute value).
+    \item $\theta = \arg(z)$ is the \textbf{argument} (the angle from the positive real axis).
+\end{itemize}
+
+\subsubsection{The Power of the Exponential Form}
+
+The exponential form $re^{i\theta}$ is exceptionally powerful for multiplicative operations. Consider two complex numbers $z_1 = r_1 e^{i\theta_1}$ and $z_2 = r_2 e^{i\theta_2}$:
+\begin{itemize}
+    \item \textbf{Multiplication:} $z_1 z_2 = r_1 r_2 e^{i(\theta_1 + \theta_2)}$. The magnitudes multiply, and the angles add.
+    \item \textbf{Division:} $\frac{z_1}{z_2} = \frac{r_1}{r_2} e^{i(\theta_1 - \theta_2)}$.
+    \item \textbf{De Moivre's Formula:} For any integer $n$, $(re^{i\theta})^n = r^n e^{in\theta}$.
+\end{itemize}
+
+\subsection{The Beauty of Euler's Identity}
+
+A special case of Euler's formula occurs when $\theta = \pi$:
+\begin{equation}
+    e^{i\pi} = \cos \pi + i\sin \pi = -1 + 0i
+\end{equation}
+Rearranging gives the celebrated \textbf{Euler's Identity}:
+\begin{equation}
+    e^{i\pi} + 1 = 0
+\end{equation}
+This single equation elegantly links five fundamental mathematical constants:
+\begin{enumerate}
+    \item \textbf{$0$}: The additive identity.
+    \item \textbf{$1$}: The multiplicative identity.
+    \item \textbf{$e$}: The base of natural logarithms.
+    \item \textbf{$i$}: The imaginary unit.
+    \item \textbf{$\pi$}: The ratio of a circle's circumference to its diameter.
+\end{enumerate}
+The movement from the algebraic definition to this geometric and transcendental harmony sets the stage for the rest of complex analysis.
+
+\section{Complex Functions}
+
+In intuitive way, a complex function is a rule that assigns a complex number to each complex number in its domain. Formally, a function $f: \mathbb{C} \to \mathbb{C}$ maps an input $z = x + iy$ to an output $w = u + iv$, where $u$ and $v$ are real-valued functions of the real variables $x$ and $y$. We can express this as:
+\begin{equation}
+    f(z) = f(x + iy) = u(x, y) + iv(x, y)
+\end{equation}
+Here, $u(x, y)$ is called the \textbf{real part} of $f$, and $v(x, y)$ is the \textbf{imaginary part} of $f$. The behavior of complex functions can be remarkably different from their real counterparts, especially when it comes to differentiability and analyticity, which we will explore in the following sections.
+
+So how can we visualize complex functions? Unlike real functions, which can be easily graphed on a two-dimensional plane, complex functions require a four-dimensional representation (two dimensions for the input and two for the output). However, we can use various techniques to visualize them. One common method is to draw the functions in manner of a vector field, where each point in the complex plane is represented by an arrow indicating the direction and magnitude of the function's output at that point. Another approach is to draw the modulus and argument of the function separately, using color and contour lines to represent the magnitude and phase of the function across the complex plane. These visualizations can provide insights into the behavior of complex functions, such as identifying zeros, poles, and essential singularities.
+
+\subsection{Analytic Function}
+
+Just like in real analysis, we can define the derivative of a complex function. But because complex numbers have two dimensions, the definition and related theorems are slightly different. Below we present some of the fundamental definitions and theorems in complex analysis.
+
+\begin{definition}
+    A dot set $U \subseteq \mathbb{C}$ is called a field if: 
+    \begin{enumerate}
+        \item $U$ is open.
+        \item For any $z_1, z_2 \in U$, the line segment connecting $z_1$ and $z_2$ is entirely contained in $U$.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Jordan Theorem]
+    Let $C$ be a simple closed curve in the plane, and let $D$ be the region bounded by $C$. Then $C$ divides the plane into two regions: the interior of $C$, which is homeomorphic to an open disk, and the exterior of $C$, which is unbounded. Moreover, any continuous path connecting a point in the interior to a point in the exterior must intersect $C$.
+\end{theorem}
+
+\begin{theorem}[Bolzano-Weierstrass Theorem]
+    Every bounded sequence in $\mathbb{C}$ has a convergent subsequence.
+\end{theorem}
+
+Now we can define what is complex function in a much more rigorous way. The discussion above is just a preparation for the definition of complex function, which is the main object of study in complex analysis.
+
+\begin{definition}[Complex Function]
+    Let $U$ be an open subset of $\mathbb{C}$. A function $f: U \to \mathbb{C}$ is called a complex function if it assigns to each point $z \in U$ a complex number $f(z)$.
+\end{definition}
+
+From the point of view of real analysis, $f(x)$ is just a function of two real variables. However, the complex structure imposes additional constraints on the behavior of $f$, leading to the concept of holomorphicity and analyticity:
+
+\subsubsection{Differentiability and Holomorphicity}
+
+In complex analysis, the notion of differentiability is more restrictive than in real analysis. Let's take a review of the definition of differentiability for real functions.
+
+\begin{definition}
+    Let $f: \mathbb{R} \to \mathbb{R}$ be a function. We say that $f$ is differentiable at a point $x_0$ if the limit
+    \begin{equation}
+        f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+    \end{equation}
+    exists. If $f$ is differentiable at every point in an interval, we say that $f$ is differentiable on that interval.
+\end{definition}
+
+In real analysis, differentiability only requires the limit to exist along the real line, that is, as $h$ approaches zero from the left and right. However, in complex analysis, we need to consider the limit as $h$ approaches zero from any direction in the complex plane. This leads us to the definition of holomorphicity:
+
+\begin{definition}[Holomorphic Function]
+    Let $U$ be an open subset of $\mathbb{C}$, and let $f: U \to \mathbb{C}$ be a complex function. We say that $f$ is holomorphic at a point $z_0 \in U$ if the limit
+    \begin{equation}
+        f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}
+    \end{equation}
+    exists and is independent of the direction from which $h$ approaches zero. If $f$ is holomorphic at every point in $U$, we say that $f$ is holomorphic on $U$.
+\end{definition}
+
+And the limit of the difference quotient is called the \textbf{complex derivative} of $f$ at $z_0$. The requirement that the limit must exist and be independent of the direction of approach is a much stronger condition than in real analysis. It implies that holomorphic functions are infinitely differentiable and can be represented by power series, which is a remarkable property that sets complex analysis apart from real analysis.
+
+But, using the definition to decide whether a function is holomorphic can be quite difficult. Fortunately, there is a powerful criterion known as the Cauchy-Riemann equations that provides a necessary but insufficient condition (but enough in most cases) for holomorphicity:
+
+\begin{theorem}[Cauchy-Riemann Equations]
+    Let $f(z) = u(x, y) + iv(x, y)$ be a complex function defined on an open subset $U$ of $\mathbb{C}$, where $u$ and $v$ are real-valued functions of the real variables $x$ and $y$. If $f$ is holomorphic at a point $z_0 = x_0 + iy_0$, then the partial derivatives of $u$ and $v$ exist at $(x_0, y_0)$ and satisfy the Cauchy-Riemann equations:
+    \begin{equation}
+        \frac{\partial f}{\partial x}(x_0, y_0) = -i \frac{\partial f}{\partial y}(x_0, y_0)
+    \end{equation}
+    established for all points in $U$.
+\end{theorem}
+
+In other words, if $f$ is holomorphic at $z_0$, then the real and imaginary parts of $f$ must satisfy the equations:
+\begin{equation}
+    \frac{\partial u}{\partial x}(x_0, y_0) = \frac{\partial v}{\partial y}(x_0, y_0) \quad \text{and} \quad \frac{\partial u}{\partial y}(x_0, y_0) = -\frac{\partial v}{\partial x}(x_0, y_0)
+\end{equation}
+
+Sometimes we will also called the Cauchy-Riemann equations as the \textbf{CR equations} for short. The CR equations provide a powerful tool for determining whether a complex function is holomorphic, and they also reveal the deep connection between the real and imaginary parts of a holomorphic function. However, it is important to note that satisfying the CR equations is not sufficient for holomorphicity; the function must also be continuously differentiable in a neighborhood of the point in question. Here we will provide a counterexample to show that satisfying the CR equations alone does not guarantee holomorphicity. Consider the function defined by:
+\begin{equation}
+    f(z) = \begin{cases}
+        z^2 \sin\left(\frac{1}{|z|}\right) & \text{if } z \neq 0 \\
+        0 & \text{if } z = 0
+    \end{cases}
+\end{equation}
+This function satisfies the Cauchy-Riemann equations at $z = 0$, but it is not holomorphic at that point because the limit defining the complex derivative does not exist. The behavior of $f(z)$ as $z$ approaches zero is highly oscillatory due to the $\sin\left(\frac{1}{|z|}\right)$ term, which prevents the limit from converging to a single value. Therefore, while the CR equations are necessary for holomorphicity, they are not sufficient, and additional conditions must be met for a function to be considered holomorphic. Here we will give an necessary and sufficient condition for holomorphicity, which is the following theorem:
+
+\begin{theorem}
+    The function $f(z) = u(x, y) + iv(x, y)$ is holomorphic at $D \subseteq \mathbb{C}$ if and only if the partial derivatives of $u$ and $v$ exist and continuous throughout $D$ and satisfy the Cauchy-Riemann equations throughout $D$.
+\end{theorem}
+
+\begin{proof}
+    ($\Rightarrow$) If $f$ is holomorphic at $z \in D$, then $f'(z) = \lim_{\Delta z \to 0} \frac{f(z+\Delta z) - f(z)}{\Delta z}$ exists. 
+    Taking $\Delta z = \Delta x \to 0$:
+    \[ f'(z) = \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x} \]
+    Taking $\Delta z = i\Delta y \to 0$:
+    \[ f'(z) = \frac{1}{i} \left( \frac{\partial u}{\partial y} + i \frac{\partial v}{\partial y} \right) = \frac{\partial v}{\partial y} - i \frac{\partial u}{\partial y} \]
+    Equating real and imaginary parts gives the Cauchy-Riemann equations: $u_x = v_y$ and $u_y = -v_x$. The continuity of partial derivatives is a standard property of holomorphic functions.
+
+    ($\Leftarrow$) Suppose $u_x, u_y, v_x, v_y$ exist, are continuous, and satisfy the CR equations. For $\Delta z = \Delta x + i \Delta y$, the total increment of $u$ and $v$ can be written as:
+    \[ \Delta u = u_x \Delta x + u_y \Delta y + \varepsilon_1, \quad \Delta v = v_x \Delta x + v_y \Delta y + \varepsilon_2 \]
+    where $\frac{\varepsilon_1, \varepsilon_2}{|\Delta z|} \to 0$ as $\Delta z \to 0$. Then:
+    \begin{align*}
+        \Delta f &= \Delta u + i \Delta v = (u_x \Delta x + u_y \Delta y) + i(v_x \Delta x + v_y \Delta y) + \varepsilon \\
+        &= (u_x \Delta x - v_x \Delta y) + i(v_x \Delta x + u_x \Delta y) + \varepsilon \quad \text{(using CR equations)} \\
+        &= (u_x + i v_x)(\Delta x + i \Delta y) + \varepsilon = (u_x + i v_x) \Delta z + \varepsilon
+    \end{align*}
+    Thus, $\lim_{\Delta z \to 0} \frac{\Delta f}{\Delta z} = u_x + i v_x$, which exists and is independent of the direction.
+\end{proof}
+

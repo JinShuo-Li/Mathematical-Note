@@ -240,7 +240,7 @@ In the Dedekind cut construction, the supremum of a bounded set $S$ of real numb
 This pair forms a Dedekind cut and satisfies the definition of supremum.
 \end{proof}
 
-The completeness axiom is fundamental to analysis and distinguishes $\mathbb{R}$ from $\mathbb{Q}$. It ensures that limits of Cauchy sequences exist, continuous functions attain their maximum and minimum on closed intervals, and many other essential properties.
+The completeness axiom is fundamental to analysis and distinguishes $\mathbb{R}$ from $\mathbb{Q}$. It ensures that limits of Cauchy sequences exist, continuous functions attain their maximum and minimum on closed intervals, and many other essential properties. From now on we can claim that every convergent real sequence converges to a real number. This is what the \textbf{Completeness Axiom} means in analysis.
 
 \begin{definition}[Archimedean Property]
 The real numbers satisfy the \textbf{Archimedean property}: for any $x \in \mathbb{R}$, there exists a natural number $n$ such that $n > x$. Equivalently, for any $\epsilon > 0$, there exists $n \in \mathbb{N}$ such that $1/n < \epsilon$.
@@ -251,6 +251,12 @@ Between any two distinct real numbers, there exists a rational number. That is, 
 \end{theorem}
 
 While $\mathbb{R}$ solves the completeness problem of $\mathbb{Q}$, it is not \textbf{algebraically closed}. There are polynomial equations with real coefficients that have no real solutions, such as $x^2 + 1 = 0$. This motivates the extension to complex numbers.
+
+\newpage
+
+\paragraph{Construction of Complex Numbers}
+
+We now construct a new number field which is the biggest field we ever known in human history.
 
 \begin{definition}[Complex Numbers]
 The set of \textbf{complex numbers}, denoted $\mathbb{C}$, consists of all expressions of the form $a + bi$, where $a, b \in \mathbb{R}$ and $i$ is the \textbf{imaginary unit} satisfying $i^2 = -1$. For $z = a + bi \in \mathbb{C}$:
@@ -384,7 +390,7 @@ However, the contrapositive is not always true. A bounded sequence may not be co
 
 Consider $a_n = (-1)^n$, the sequence $\{a_n\}$ bounded from $-1$ to $1$, but the sequence won't converges to any value.
 
-In the future may be we can add a stronger condition to make the $\{a_n\}$ convergent. If you are interested, please move on to the content in 2.2.2.
+In the future may be we can add a stronger condition to make the $\{a_n\}$ convergent. We will introduce it in future content.
 \end{remark}
 
 \begin{proof}
@@ -414,8 +420,6 @@ According to the definition of limit, we take $\epsilon = \frac{a-b}{2}$, and we
 Thus we have: $x_n > (a+b)/2 >y_n$ , pick $N = max \{N_1,N_2\}$, then we have $\forall n > N, x_n>y_n$. Finally we can claim that the limits have the property of isotonicity.
 \end{proof}
 
-\newpage
-
 \begin{theorem}[the calculations' law of limits]
 
 Assume that there exist two limits:
@@ -430,7 +434,7 @@ And we have:
 \end{theorem}
 We recommend the readers finish the proof above themselves.
 
-After we finished the definition and some basic properties of the convergent sequence, we will now move on to define a kind of not-convergent sequence: \textbf{the infinity}.
+After we finished the definition and some basic properties of the convergent sequence, we will now move on to define a special kind of not-convergent sequence: \textbf{the infinity}.
 
 \subsubsection{Infinity}
 
@@ -468,12 +472,8 @@ Assume $\{x_n\}$ is infinity, $\lim_{n \to \infty} y_n = b \neq 0$, then $\{x_n 
 
 With the help of the definitions of the limit, we can calculate various kinds of limits using algebraic techniques and the definition of limit. But when we face certain forms of limit like $\frac{0}{0}$ and $\frac{\infty}{\infty}$, they are especially tricky to deal with. But with the help of \textbf{Stolz theorem} we are going to introduced now, it will be much easier to deal with them (in some occasions).
 
-\begin{definition}[Increasing Function]
-If a sequence $\{x_n\}$ satisfies: $x_n \leq x_{n+1}, n=1,2,3\cdots$, we will call it \textbf{the monotone increasing function}.
-\end{definition}
-
-\begin{definition}[Strict Monotone Increasing Function]
-If a sequence $\{x_n\}$ satisfies: $x_n < x_{n+1}, n=1,2,3\cdots$, we will call it the \textbf{strict monotone increasing function}.
+\begin{definition}[Increasing Sequence]
+If a sequence $\{x_n\}$ satisfies: $x_n \leq x_{n+1}, n=1,2,3\cdots$, we will call it \textbf{the monotone increasing Sequence}. Similarly, if $\forall n \in \mathbb{N}$, $x_n < x_{n+1}$, we call it the \textbf{strict monotone increasing sequence}.
 \end{definition}
 
 \begin{theorem}
@@ -519,6 +519,8 @@ For other conditions: if $a$ is a bounded value, and $a \neq 0$, let ${x_n}'=x_n
 When $a=+\infty$, We take the reciprocal of $\frac{x_n}{y_n}$. Similarly, it is not difficult to reach a conclusion.
 
 \end{proof}
+
+We will see something very similar to the \textbf{Stolz theorem}, that is the \textbf{L'Hospital law}. There are many similarity between functions and sequences. We will see more examples in future chapters.
 
 
 \subsection{Convergence Criteria and the Properties of the Real Number System}
@@ -588,7 +590,19 @@ A sequence $\{x_n\}$ is called a \textbf{Cauchy Sequence} if:
 Intuitively, a Cauchy sequence is one whose terms become arbitrarily close to each other in the "tail" of the sequence.
 \end{definition}
 
-Before proving the Cauchy Criterion, we need a key lemma, which is itself an important consequence of the Completeness Axiom.
+Before proving the Cauchy Criterion, we need a key lemma, which is itself an important consequence of the Completeness Axiom. And we also need to introduce a key concept called \textbf{subsequence} to introduced the Bolzano- Weierstrass Theorem.
+
+\begin{definition}[Subsequence]
+    Assume we have a strict increasing monotone sequence$\{k_n\}$ and a "mother" sequence $\{a_n\}$:
+    \[
+    k_1, k_2, \cdots, k_n, k_{n+1}, \cdots
+    \]
+    And $\forall i \in \mathbb{N}$, $k_i \in \mathbb{N}$, then we call the sequence:
+    \[
+    a_{k_1}, a_{k_2}, a_{k_3}, \cdots , a_{k_n}, a_{k_{n+1}}, \cdots
+    \]
+    a subsequence of the sequence $\{a_n\}$
+\end{definition}
 
 \begin{theorem}[Bolzano-Weierstrass Theorem]
 \label{thm:bw_en}
@@ -676,6 +690,8 @@ This direction relies critically on the completeness of $\mathbb{R}$.
 \end{enumerate}
 \end{proof}
 
+\newpage
+
 \section{Derivatives and Related Theorem}
 
 \subsection{Derivatives and Differentials}
@@ -758,28 +774,7 @@ We check the left-hand and right-hand limits:
 Since the left and right limits are not equal, the limit does not exist. $f(x) = |x|$ is not differentiable at $x=0$.
 \end{example}
 
-Using the definition to calculate the differentiation is complex. Here is a list for commonly used functions, showing their differentiation.
-
-\begin{align*}
-\frac{d}{dx} \, c &= 0 \\
-\frac{d}{dx} \, x^n &= n x^{n-1} \\
-\frac{d}{dx} \, e^x &= e^x \\
-\frac{d}{dx} \, a^x &= a^x \ln a \\
-\frac{d}{dx} \, \ln x &= \frac{1}{x} \\
-\frac{d}{dx} \, \log_a x &= \frac{1}{x \ln a} \\
-\frac{d}{dx} \, \sin x &= \cos x \\
-\frac{d}{dx} \, \cos x &= -\sin x \\
-\frac{d}{dx} \, \tan x &= \sec^2 x \\
-\frac{d}{dx} \, \cot x &= -\csc^2 x \\
-\frac{d}{dx} \, \sec x &= \sec x \tan x \\
-\frac{d}{dx} \, \csc x &= -\csc x \cot x \\
-\frac{d}{dx} \, \arcsin x &= \frac{1}{\sqrt{1-x^2}} \\
-\frac{d}{dx} \, \arccos x &= -\frac{1}{\sqrt{1-x^2}} \\
-\frac{d}{dx} \, \arctan x &= \frac{1}{1+x^2} \\
-\frac{d}{dx} \, \operatorname{arccot} x &= -\frac{1}{1+x^2} \\
-\frac{d}{dx} \, \sinh x &= \cosh x \\
-\frac{d}{dx} \, \cosh x &= \sinh x
-\end{align*}
+Using the definition to calculate the differentiation is complex. It's worth remembering the expression of the differenciation of some commonly used functions.
 
 \subsubsection{Differentiation Rules}
 
@@ -791,6 +786,7 @@ Here are some basic rules for differentiation:
     \item Composition: $f'[g(x)]=f'(u) \cdot g'(x), u = g(x)$.
 \end{itemize}
 
+\newpage
 
 We (omit here) the proofs for basic differentiation rules (sum, product, quotient), but we will provide a rigorous proof for the Chain Rule.
 
@@ -844,6 +840,8 @@ Likewise, if the differentiation of a function is differentiable, and we differe
 \end{definition}
 
 Similarly, we can define what is n-th derivative of the function $f(x)$, and we call the $f(x)$ n-th differentiable if the n-th derivative exists. The n-th derivative of $f(x)$ can be denoted as: $f^{(n)}(x)$ or $f^{(n)}$.
+
+\newpage
 
 \begin{theorem}[Leibniz theorem]
 If $u$ and $v$ are two functions that are differentiable up to $n$ times, the n-th derivative of their product can be expressed as:
@@ -1164,16 +1162,6 @@ We determine the coefficients $c_k$:
 \end{itemize}
 By induction, we find $P_n^{(k)}(x_0) = k! c_k$, which gives $c_k = \frac{f^{(k)}(x_0)}{k!}$.
 
-\begin{definition}[Taylor Polynomial]
-Let $f$ be a function with at least $n$ derivatives at $x_0$. The \textbf{$n$-th degree Taylor polynomial} of $f$ centered at $x_0$ is:
-\[
-P_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k
-\]
-\[
-P_n(x) = f(x_0) + f'(x_0)(x-x_0) + \frac{f''(x_0)}{2!}(x-x_0)^2 + \dots + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n
-\]
-\end{definition}
-
 \begin{definition}[Maclaurin Polynomial]
 When the center is $x_0 = 0$, the Taylor polynomial is called the \textbf{Maclaurin polynomial}.
 \end{definition}
@@ -1204,8 +1192,6 @@ where the \textbf{Lagrange form of the remainder} is
 R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-x_0)^{n+1}
 \]
 \end{theorem}
-
-\newpage
 
 \begin{proof}
 This proof is a clever application of Rolle's Theorem.
@@ -1363,6 +1349,8 @@ This is called the linear property of integration.
 
 However, since our primitive purpose is to find ways to figure out the antiderivative of a function, using the definition won't be enough to cover all the needs of figure out the antiderivative of a function. So we will introduce several methods to help us figure out the antiderivative.
 
+\newpage
+
 \subsubsection{Integration By Substitutions}
 Substitution is one of the most popular methods in analysis. When figuring out the antiderivative of the function $f(x)$, we can use this protocol.
 
@@ -1470,7 +1458,7 @@ Rearranging this gives the integration by parts formula. In the more compact dif
 \]
 \end{definition}
 
-The key to this method is to split the integrand into two parts, $u$ and $dv$, such that the new integral, $\int v \, du$, is simpler to solve than the original.
+The key to this method is to split the integrand into two parts, $u$ and $dv$, such that the new integral, $\int v \, du$, is simpler to solve than the original. The real magic of using integration by parts is to use the $u'$ to eliminate something.
 
 \paragraph*{Example:}
 Let's compute $\int x \cos(x) dx$.
@@ -1487,11 +1475,7 @@ Now we compute $du$ (by differentiating $u$) and $v$ (by integrating $dv$):
 \end{itemize}
 Applying the formula $\int u \, dv = uv - \int v \, du$:
 \[
-\int x \cos(x) dx = x \cdot \sin(x) - \int \sin(x) dx
-\]
-The new integral is straightforward:
-\[
-\int x \cos(x) dx = x\sin(x) - (-\cos(x)) + C = x\sin(x) + \cos(x) + C
+\int x \cos(x) dx = x \cdot \sin(x) - \int \sin(x) dx = x\sin(x) + \cos(x) + C
 \]
 
 \paragraph*{Tips for Choosing $u$ and $dv$:}
@@ -1559,7 +1543,7 @@ And it's easy to deduce that:
 \int \frac{mx+n}{x^2 + px + q} dx = \frac{m}{2} \ln |x^2 + px + q| + \frac{2n-mp}{2\sqrt{p^2 - 4q}} \ln \left| \frac{2x + p - \sqrt{p^2 - 4q}}{2x + p + \sqrt{p^2 - 4q}} \right| + C (q < \frac{p^2}{4})
 \]
 
-Although the forms of factorization is complex, but at least it is integrable. No we are going to introduce the integration methods of each parts.
+Although the forms of factorization is complex, but they are all integrable.
 
 \begin{itemize}
     \item $\int \frac{A}{(x-a)^n} dx = \frac{A}{1-n} (x-a)^{1-n} +C,(n \neq 1)$
@@ -1588,14 +1572,10 @@ Integration by substitutions and parts are vital when facing different kinds of 
 \int \csc^3 x \, dx = \frac{1}{2}(-\csc x \cot x + \ln|\csc x - \cot x|) + C & \int \arcsin x \, dx = x\arcsin x + \sqrt{1-x^2} + C \\ \\
 \int \arccos x \, dx = x\arccos x - \sqrt{1-x^2} + C & \int \arctan x \, dx = x\arctan x - \frac{1}{2}\ln(1+x^2) + C \\ \\
 \int \text{arcsec} x \, dx = x\text{arcsec} x - \ln|x + \sqrt{x^2 - 1}| + C & \int \text{arccot} x \, dx = x\text{arccot} x + \frac{1}{2}\ln(1+x^2) + C \\ \\
-\int \sinh x \, dx = \cosh x + C & \int \cosh x \, dx = \sinh x + C \\ \\
-\int \tanh x \, dx = \ln(\cosh x) + C & \int \coth x \, dx = \ln|\sinh x| + C \\ \\
-\int \text{sech}^2 x \, dx = \tanh x + C & \int \text{csch}^2 x \, dx = -\coth x + C \\ \\
-\int \text{sech} x \, dx = \arctan(\sinh x) + C & \int \text{csch} x \, dx = \ln\left|\tanh\left(\frac{x}{2}\right)\right| + C \\ \\
-\int \sinh^2 x \, dx = \frac{\sinh(2x)}{4} - \frac{x}{2} + C & \int \cosh^2 x \, dx = \frac{\sinh(2x)}{4} + \frac{x}{2} + C \\ \\
-\int e^{ax} \sin(bx) \, dx = \frac{e^{ax}}{a^2+b^2}(a\sin(bx) - b\cos(bx)) + C & \int e^{ax} \cos(bx) \, dx = \frac{e^{ax}}{a^2+b^2}(a\cos(bx) + b\sin(bx)) + C \\
 \end{array}
 \]
+
+\newpage
 
 \subsection{Definite Integration}
 
@@ -1625,13 +1605,9 @@ And we pick $\forall \xi_i \in [x_{i-1},x_i]$, define the length of each interva
 \[
 \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i)\Delta x_i
 \]
-exists, and the value is independent from the partition, then we claim that the function $f(x)$ is Riemann Integral on interval $[a,b]$. The expression of:
+exists, and the value is independent from the partition, then we claim that the function $f(x)$ is Riemann Integral on interval $[a,b]$. The limit is called the definite integration on $[a,b]$, denote as:
 \[
-S_n = \sum_{i=1}^{n} f(\xi_i)\Delta x_i
-\]
-is called the Riemann Sum. The limit is called the definite integration on $[a,b]$, denote as:
-\[
-I = \int_a^b f(x) dx
+I = \lim_{\lambda \to 0} \sum_{i=1}^{n}f(\xi_i) \Delta x_i = \int_a^b f(x) dx
 \]
 $a$ is called the lower limit of integral, and the $b$ is called the upper limit of integral.
 \end{definition}
@@ -2201,4 +2177,4 @@ In later chapters, we will move on to more advanced topics in analysis, such as 
 Mathematical Analysis (Third Edition), Chen, J., Higher Education Press \\
 The Real Numbers and Real Analysis, Ethan D. Bloch, Springer
 
-
+\cleardoublepage

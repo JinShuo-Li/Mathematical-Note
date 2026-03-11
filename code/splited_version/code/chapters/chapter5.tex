@@ -1,0 +1,720 @@
+\chapter{Mathematical Analysis II}
+
+Now we will move on to another part of the analysis, which is Mathematical Analysis II. In this chapter, we will study the properties of functions of several variables, including limits, continuity, differentiability, and integrability. We will also introduce the concept of vector-valued functions and study their properties. This chapter will provide a solid foundation for further studies in multivariable calculus, differential equations, and mathematical physics.
+
+\section{Series}
+
+Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
+
+\subsection{Numerical Series}
+
+The study of infinite series is the discrete analogue of improper integrals. It allows us to define sums of infinitely many terms, providing the foundation for representing functions as power series (Taylor series) in later analysis.
+
+\begin{definition}[Infinite Series]
+Given a sequence of real numbers $\{a_n\}_{n=1}^{\infty}$, the formal expression
+\[ \sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots \]
+is called an \textbf{infinite series}. The number $a_n$ is called the general term.
+\end{definition}
+
+To assign a value to this infinite sum, we look at finite sums.
+
+\subsection{Upper and Lower Limits}
+
+To study the convergence of series, it is often helpful to use the concept of upper and lower limits of sequences, especially when the sequence does not converge.
+
+\begin{definition}[Limit Point]
+Let $\{x_n\}$ be a sequence. A value $\xi \in \mathbb{R} \cup \{+\infty, -\infty\}$ is called a \textbf{limit point} of the sequence if there exists a subsequence $\{x_{n_k}\}$ such that $\lim_{k \to \infty} x_{n_k} = \xi$.
+\end{definition}
+
+\begin{definition}[Upper and Lower Limits]
+Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{upper limit} (limit superior) and \textbf{lower limit} (limit inferior) are defined as:
+\[ \limsup_{n \to \infty} x_n = \sup E, \quad \liminf_{n \to \infty} x_n = \inf E \]
+\end{definition}
+
+\begin{theorem}
+A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
+\end{theorem}
+
+\begin{property}
+For any two sequences $\{x_n\}$ and $\{y_n\}$:
+\begin{enumerate}
+    \item $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$
+    \item $\liminf (x_n + y_n) \ge \liminf x_n + \liminf y_n$
+\end{enumerate}
+Equality holds if at least one of the sequences converges.
+\end{property}
+
+\newpage
+
+\begin{definition}[Convergence]
+Let $S_n$ denote the $n$-th \textbf{partial sum} of the series:
+\[ S_n = \sum_{k=1}^{n} a_k = a_1 + \cdots + a_n \]
+If the sequence of partial sums $\{S_n\}$ converges to a limit $S$ (i.e., $\lim_{n \to \infty} S_n = S$), we say the series \textbf{converges} to $S$, and write $\sum_{n=1}^{\infty} a_n = S$.
+If $\{S_n\}$ does not converge, the series \textbf{diverges}.
+\end{definition}
+
+\begin{theorem}[Cauchy Criterion for Series]
+The series $\sum a_n$ converges if and only if for every $\epsilon > 0$, there exists an integer $N$ such that for all $n > N$ and any $p \ge 1$:
+\[ |S_{n+p} - S_n| = |a_{n+1} + a_{n+2} + \cdots + a_{n+p}| < \epsilon \]
+\end{theorem}
+
+\begin{theorem}[Necessary Condition for Convergence]
+If the series $\sum_{n=1}^{\infty} a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
+\end{theorem}
+\begin{remark}
+The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
+\end{remark}
+
+\begin{example}[Geometric Series]
+The series $\sum_{n=0}^{\infty} ar^n$ converges if and only if $|r| < 1$. In that case, the sum is $\frac{a}{1-r}$.
+\end{example}
+
+\begin{property}[Linearity]
+If $\sum a_n = A$ and $\sum b_n = B$, then for any constants $\alpha, \beta$:
+\[ \sum (\alpha a_n + \beta b_n) = \alpha A + \beta B \]
+\end{property}
+
+\subsubsection{Tests for Positive Series}
+
+A series $\sum a_n$ is called a \textbf{positive series} if $a_n \ge 0$ for all $n$.
+For such series, the partial sum sequence $\{S_n\}$ is monotonically increasing.
+\begin{theorem}
+A positive series converges if and only if its sequence of partial sums is bounded above.
+\end{theorem}
+
+\paragraph{Comparison Tests}
+\begin{theorem}[Direct Comparison Test]
+Let $0 \le a_n \le b_n$ for all $n$.
+\begin{enumerate}
+    \item If $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $\sum a_n$ diverges, then $\sum b_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Limit Comparison Test]
+Let $a_n > 0, b_n > 0$. Consider the limit $L = \lim_{n \to \infty} \frac{a_n}{b_n}$.
+\begin{enumerate}
+    \item If $0 < L < +\infty$, then $\sum a_n$ and $\sum b_n$ converge or diverge together.
+    \item If $L = 0$ and $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $L = +\infty$ and $\sum b_n$ diverges, then $\sum a_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\paragraph{Integral Test and $p$-Series}
+\begin{theorem}[Integral Test]
+Let $f(x)$ be a continuous, positive, and decreasing function on $[1, +\infty)$ such that $f(n) = a_n$. Then the series $\sum_{n=1}^{\infty} a_n$ converges if and only if the improper integral $\int_1^{+\infty} f(x) dx$ converges.
+\end{theorem}
+
+From this, we derive the convergence of the famous $p$-series:
+\begin{corollary}[$p$-Series]
+The series $\sum_{n=1}^{\infty} \frac{1}{n^p}$:
+\begin{itemize}
+    \item Converges if $p > 1$.
+    \item Diverges if $p \le 1$.
+\end{itemize}
+\end{corollary}
+
+More rigorous expressions of this theorem can be described as:
+
+\begin{theorem}
+    Assume $f(x)$ is continuous, positive and integrable on $[a,A]$ for any $A>a>0$. Pick an increasing sequence $\{x_n\}$ such that $x_n \to +\infty$ as $n \to +\infty$ and $a_1 = a$. Then the series $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ and the improper integral $\int_a^{+\infty} f(x) dx$ either both converge or both diverge. 
+    More specifically, if the function is decreasing, then we have:
+    \[\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx = \int_a^{+\infty} f(x) dx\].
+\end{theorem}
+
+\begin{remark}
+    \begin{enumerate}
+        \item The choice of the sequence $\{a_n\}$ is not unique. A common choice is $a_n = n$, which recovers the standard integral test. However, other choices can be made depending on the specific function $f(x)$ and the context of the problem.
+        \item If the function $f(x)$ is not positive, and $\int_a^{+\infty} f(x) dx$ converges, we can judge the convergence of $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ by considering the absolute values of the integrals. But if $\int_a^{+\infty} f(x) dx$ diverges, we cannot conclude anything about the series without additional information.
+    \end{enumerate}
+\end{remark}
+
+Here is some applications of the integral test:
+
+\newpage
+
+\begin{example}
+    Determine the convergence of the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$. \\
+    \textbf{Solution:} Consider the function $f(x) = \frac{1}{x \ln^q x}$ for $x \ge 2$. This function is continuous, positive, and decreasing for $x > e$ when $q > 0$. We apply the integral test:
+    \[\int_2^{+\infty} \frac{1}{x \ln^q x} dx \]
+    Let $t = \ln x$, then $dx = e^t dt$ and when $x = 2$, $t = \ln 2$. The integral becomes:
+    \[\int_{\ln 2}^{+\infty} \frac{1}{t^q} dt \]
+    This integral converges if and only if $q > 1$. Therefore, by the integral test, the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$ converges if and only if $q > 1$ and diverges otherwise.
+\end{example}
+
+Also, we can use the integral test to determine the convergence of improper integrals:
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$. \\
+    \textbf{Solution:} The key process is to find a suitable sequence $\{a_n\}$ to apply the integral test. We can choose $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t}
+    \]
+    As we can observe that:
+    \[
+    (n\pi + t)^2 \sin^2 t < (n+1)^2 \pi^2 t^2 < (n+1)^2 \pi^2 \cdot \frac{1}{(n+1)^2 \pi^2} = 1
+    \]
+    Thus, we have:
+    \[\int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{2} = \frac{1}{2(n+1)\pi}\]
+    Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
+\end{example}
+
+\newpage
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
+    \textbf{Solution:} We again choose the sequence $\{a_n\}$ as $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t}
+    = \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} + \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} = I_1 + I_2
+    \]
+    For $I_1$, we have:
+    \[I_1 > \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + \frac{\pi}{2})^4} = \frac{\pi/2}{1 + (n\pi + \frac{\pi}{2})^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    For $I_2$, we have:
+    \[I_2 > \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + \pi)^4} = \frac{\pi/2}{1 + (n\pi + \pi)^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    Therefore, $a_n = I_1 + I_2 > \frac{1}{2(n+1)^4 \pi^3}$. Since the series $\sum \frac{1}{n^4}$ converges, by the comparison test, the series $\sum a_n$ converges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$ converges.
+\end{example}
+
+\paragraph{Ratio and Root Tests}
+These are the most commonly used tests for computation.
+
+\begin{theorem}[D'Alembert's Ratio Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \lim_{n \to \infty} \frac{a_{n+1}}{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is \textbf{inconclusive} (e.g., $1/n$ diverges but $1/n^2$ converges, both have $\rho=1$).
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Cauchy's Root Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Raabe's Test}
+When the Ratio Test yields $\rho = 1$, Raabe's test provides a finer criterion.
+
+\begin{theorem}[Raabe's Test]
+Let $a_n > 0$. Consider the limit:
+\[ R = \lim_{n \to \infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) \]
+\begin{itemize}
+    \item If $R > 1$, the series converges.
+    \item If $R < 1$, the series diverges.
+    \item If $R = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\subsubsection{Alternating Series}
+An alternating series has the form $\sum_{n=1}^{\infty} (-1)^{n-1} a_n$ where $a_n > 0$.
+
+\begin{theorem}[Leibniz Test]
+If the sequence $\{a_n\}$ satisfies:
+\begin{enumerate}
+    \item Monotonicity: $a_{n+1} \le a_n$ for all $n$;
+    \item Limit zero: $\lim_{n \to \infty} a_n = 0$;
+\end{enumerate}
+then the alternating series $\sum (-1)^{n-1} a_n$ converges.
+Furthermore, the sum $S$ satisfies $|S - S_n| \le a_{n+1}$.
+\end{theorem}
+
+\subsubsection{Absolute and Conditional Convergence}
+For series with arbitrary signs, we distinguish two types of convergence.
+
+\begin{definition}
+A series $\sum a_n$ is called \textbf{absolutely convergent} if the series of absolute values $\sum |a_n|$ converges.
+If $\sum a_n$ converges but $\sum |a_n|$ diverges, the series is called \textbf{conditionally convergent}.
+\end{definition}
+
+\begin{theorem}
+Absolute convergence implies convergence.
+\[ \sum |a_n| < \infty \implies \sum a_n \text{ converges}. \]
+\end{theorem}
+
+\begin{example}
+The series $\sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \dots$ converges by Leibniz Test, but $\sum \frac{1}{n}$ diverges. Thus, it is \textbf{conditionally convergent}.
+\end{example}
+
+\subsubsection{Dirichlet's and Abel's Tests}
+For general series of the form $\sum_{n=1}^{\infty} a_n b_n$, where standard tests fail, these tests are powerful.
+
+\begin{theorem}[Dirichlet's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The partial sums of $\sum a_n$ are bounded (i.e., $|\sum_{k=1}^n a_k| \le M$).
+    \item The sequence $\{b_n\}$ is monotonic and $\lim_{n \to \infty} b_n = 0$.
+\end{enumerate}
+\end{theorem}
+\textit{Example Application:} Proving $\sum \frac{\sin n}{n}$ converges. Here $a_n = \sin n$ (bounded sums) and $b_n = 1/n$ (goes to 0).
+
+\begin{theorem}[Abel's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The series $\sum a_n$ converges.
+    \item The sequence $\{b_n\}$ is monotonic and bounded.
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{Properties of Series}
+
+\begin{theorem}[Associativity]
+If a series converges, we can group terms (insert parentheses) without changing the sum. However, removing parentheses from a grouped series may alter convergence (e.g., $(1-1)+(1-1)+\dots$ converges to 0, but $1-1+1-1\dots$ diverges).
+\end{theorem}
+
+\begin{theorem}[Riemann Rearrangement Theorem]
+\begin{itemize}
+    \item If a series is \textbf{absolutely convergent}, any rearrangement of its terms converges to the same sum.
+    \item If a series is \textbf{conditionally convergent}, for any real number $L$ (or $\pm \infty$), there exists a rearrangement of terms such that the series converges to $L$.
+\end{itemize}
+This highlights the dangerous nature of conditional convergence: the order of summation matters!
+\end{theorem}
+
+\subsubsection{Product of Series}
+Now we shall dive into the topic of multiplying two series together. We have following definition:
+
+\begin{definition}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n$ and $\sum_{n=0}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
+    \[\begin{pmatrix}
+        a_1 b_1 & a_1 b_2 & a_1 b_3 & a_1 b_4 & \cdots \\
+        a_2 b_1 & a_2 b_2 & a_2 b_3 & a_2 b_4 & \cdots \\
+        a_3 b_1 & a_3 b_2 & a_3 b_3 & a_3 b_4 & \cdots \\
+        a_4 b_1 & a_4 b_2 & a_4 b_3 & a_4 b_4 & \cdots \\
+    \vdots   & \vdots   & \vdots   & \vdots   & \ddots
+    \end{pmatrix}\]
+\end{definition}
+
+The reason we define the product of two series in this way is that, due to the properties of rearranged sequences, changing the order of summation may alter the sum of the series. For example, we have following two arrangements of the Cauchy product:
+
+\textbf{Cauchy arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=2}^{\infty} \sum_{k=1}^{n-1} a_k b_{n-k} = a_1 b_1 + (a_1 b_2 + a_2 b_1) + (a_1 b_3 + a_2 b_2 + a_3 b_1) + \cdots
+\]
+
+\textbf{Square arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=1}^{\infty} \left(\sum_{i=1}^{n}(a_i b_n+ a_n b_i) - a_n b_n \right)
+\]
+
+Under certain conditions, both arrangements converge to the same sum. This is formalized in the following theorem:
+
+\begin{theorem}
+    Assume we have two series $\sum_{n=0}^{\infty} a_n = A$ and $\sum_{n=0}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
+\end{theorem}
+
+The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
+
+\subsubsection{Infinite Product}
+\begin{definition}
+    Assume $\{a_n\}$ is a sequence such that $a_n \neq 0$ for all $n$. The \textbf{infinite product} $\prod_{n=1}^{\infty} a_n$ is defined as the limit of the partial products:
+    \[ P_N = \prod_{n=1}^{N} a_n \]
+    If the limit $\lim_{N \to \infty} P_N$ exists and is non-zero, we say the infinite product converges to that limit.
+    Else, the infinite product diverges.
+\end{definition}
+
+Just like series, we call $P_N$ the $N$-th partial product of the infinite product.
+
+Mind that if the infinite product "converges to zero", we still say it diverges. We will see why in the following theorem.
+
+Here are some properties of infinite products:
+
+\begin{theorem}
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{n \to \infty} a_n = 1$.
+    
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{m \to \infty} \prod_{n=m+1}^{\infty} a_n = 1$.
+\end{theorem}
+
+Sometimes, it is easier to study the convergence of infinite products by expressing it in terms of $p_n = 1 + a_n$:
+
+\[
+\prod_{n=1}^{\infty} p_n = \prod_{n=1}^{\infty} (1 + a_n)
+\]
+
+Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
+
+\begin{theorem}
+    The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
+    
+    Furthermore, if $a_n$ does not change sign, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+\end{theorem}
+
+Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, and $a_n$ does not change sign, then $\prod_{n=1}^{\infty} (1+a_n)$ converges in the absolute sense if and only if $\sum_{n=1}^{\infty} a_n$ converges.
+\end{corollary}
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, if $\sum a_n$ converges, then the infinite product $\prod (1+a_n)$ converges if and only if $\sum a_n^2$ converges.
+\end{corollary}
+
+Also, matheaticians use the infinite product deduce some famous formulas, for example:
+
+\textbf{Wallis Law}:
+\[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1} = \left(\frac{2 \cdot 2}{1 \cdot 3}\right) \left(\frac{4 \cdot 4}{3 \cdot 5}\right) \left(\frac{6 \cdot 6}{5 \cdot 7}\right) \cdots\]
+\textbf{Viete Law}:
+\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \cos \frac{\pi}{2^{n+1}} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
+\textbf{Stirling Formula}:
+When $n \to \infty$, we have the famous approximation:
+\[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
+
+\subsection{Function Series}
+
+Function series generalize numerical series by summing functions instead of numbers. They are crucial for representing functions as power series, Fourier series, etc.
+
+Now we will broaden our discussion to series of functions. Consider a sequence of functions $\{f_n(x)\}$ defined on a set $E \subseteq \mathbb{R}$. We define the series of functions as:
+
+\begin{definition}[Function Series]
+A \textbf{function series} is an expression of the form:
+\[ \sum_{n=1}^{\infty} u_n(x) = u_1(x) + u_2(x) + u_3(x) + \cdots \]
+where each $u_n(x)$ is a function defined on $E$.
+\end{definition}
+
+How can we determine whether such a series converges? We need to use the concept of convergence of series:
+
+\begin{definition}
+    Assume $u_n(x)$ is a function defined on a set $E$. For each fixed $x \in E$, we can consider the numerical series $\sum_{n=1}^{\infty} u_n(x)$. If this series converges to a limit $S(x)$, we say that the function series converges at the point $x$, and we call the point the \textbf{point of convergence}.
+\end{definition}
+
+For all the points of convergence, we call the set of them the \textbf{domain of convergence}. Then we can define the sum function of the series:
+
+\begin{definition}[Sum Function]
+If the function series $\sum_{n=1}^{\infty} u_n(x)$ converges at every point $x \in D$, we define the \textbf{sum function} $S(x)$ as:
+\[ S(x) = \sum_{n=1}^{\infty} u_n(x), \quad x \in D \].
+\end{definition}
+
+Likewise, we can define the sequence of partial sums:
+
+\newpage
+
+\begin{definition}[Partial Sums]
+The $N$-th \textbf{partial sum} of the function series $\sum_{n=1}^{\infty} u_n(x)$ is defined as:
+\[ S_N(x) = \sum_{n=1}^{N} u_n(x) \]
+for each $x \in E$.
+\end{definition}
+
+Which means, the function series and $\{S_n(x)\}$ are actually equivalent. To make things simpler, we will use the sequence of partial sums to study the convergence of function series.
+
+After all, how can we define the convergence of function series? There are two main types: pointwise convergence and uniform convergence. First, we have pointwise convergence:
+
+\begin{definition}[Pointwise Convergence]
+Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ \textbf{converges pointwise} to a function $f$ on $E$ if for every $x \in E$:
+\[ \lim_{n \to \infty} f_n(x) = f(x) \]
+Similarly, a series $\sum_{n=1}^{\infty} f_n(x)$ converges pointwise to $S(x)$ if the sequence of partial sums converges pointwise to $S(x)$.
+\end{definition}
+
+Pointwise convergence means that for each fixed $x$, the sequence $\{f_n(x)\}$ converges to $f(x)$.
+
+However, pointwise convergence is often too weak to preserve important properties of functions, such as continuity, differentiability, and integrability.
+
+\begin{example}[Failure of Pointwise Convergence]
+Consider $f_n(x) = x^n$ on the interval $[0, 1]$.
+For any $x \in [0, 1)$, $\lim_{n \to \infty} x^n = 0$. For $x = 1$, $\lim_{n \to \infty} 1^n = 1$.
+The limit function is:
+\[ f(x) = \begin{cases} 0 & 0 \le x < 1 \\ 1 & x = 1 \end{cases} \]
+Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
+\end{example}
+
+Not only continuity, but also integration and differentiation may fail under pointwise convergence. There are more examples illustrating these failures. Readers are encouraged to explore them independently.
+
+To fix this, we introduce a stronger form of convergence.
+
+\subsubsection{Uniform Convergence}
+
+\begin{definition}[Uniform Convergence]
+A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
+\[ |f_n(x) - f(x)| < \epsilon \]
+We write $f_n \xRightarrow{D} f$ on $E$.
+\end{definition}
+
+Geometrically, this means that for $n > N$, the graph of $f_n(x)$ lies entirely within a "tube" of width $2\epsilon$ centered around $f(x)$.
+
+\begin{theorem}[Uniform Convergence via Sup-norm]
+Let $\{f_n\}$ be a sequence of functions defined on $E$. $\{f_n\}$ converges uniformly to $f$ on $E$ if and only if
+\[ \lim_{n \to \infty} \left( \sup_{x \in E} |f_n(x) - f(x)| \right) = 0 \]
+\end{theorem}
+
+\begin{example}
+Consider $f_n(x) = (1-x)x^n$ on $[0,1]$. For any $x \in [0,1]$, $f(x) = \lim f_n(x) = 0$.
+The maximum of $f_n(x)$ occurs at $x = \frac{n}{n+1}$, where
+\[ f_n\left(\frac{n}{n+1}\right) = \frac{1}{n+1} \left(\frac{n}{n+1}\right)^n \to 0 \cdot e^{-1} = 0 \]
+Since the maximum approach zero, $f_n$ converges uniformly to $0$ on $[0,1]$.
+\end{example}
+
+From the concept of uniform convergence, we can derive the corollary for function series:
+
+\begin{corollary}
+    If a function series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $E$, then the function sequence $\{u_n(x)\}$ converges uniformly to $u(x) \equiv 0$ on $E$.
+\end{corollary}
+
+\begin{definition}[Compact Convergence]
+    The sequence of functions converges compactly on the open set.
+\end{definition}
+
+The compact convergence is weaker than uniform convergence on the whole set, but stronger than pointwise convergence. In many cases, it can still preserve properties like continuity.
+
+\begin{theorem}[Cauchy Criterion for Uniform Convergence]
+The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
+\[ |f_n(x) - f_m(x)| < \epsilon \]
+\end{theorem}
+
+For series $\sum u_n(x)$, the most practical tool for proving uniform convergence is the Weierstrass M-Test.
+
+\begin{theorem}[Weierstrass M-Test]
+Let $\{u_n(x)\}$ be a sequence of functions defined on $E$. Suppose there exists a sequence of positive constants $\{M_n\}$ such that:
+\begin{enumerate}
+    \item $|u_n(x)| \le M_n$ for all $x \in E$ and all $n \ge 1$.
+    \item The numerical series $\sum_{n=1}^{\infty} M_n$ converges.
+\end{enumerate}
+Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and absolutely on $E$.
+\end{theorem}
+
+\subsubsection{Properties of Uniformly Convergent Series}
+
+Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus.
+
+\begin{theorem}[Continuity]
+If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
+Consequently, for a series of continuous functions $\sum u_n(x)$, if the series converges uniformly to $S(x)$, then $S(x)$ is continuous:
+\[ \lim_{x \to x_0} \sum_{n=1}^{\infty} u_n(x) = \sum_{n=1}^{\infty} \lim_{x \to x_0} u_n(x) \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Integration]
+Let $\{u_n(x)\}$ be continuous on $[a, b]$ and suppose $\sum u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then:
+\[ \int_a^b S(x) \, dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) \, dx \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Differentiation]
+Suppose $\sum u_n(x)$ converges at some point $x_0 \in [a, b]$. If the series of derivatives $\sum u_n'(x)$ converges \textbf{uniformly} on $[a, b]$, then the original series converges uniformly to a differentiable function $S(x)$, and:
+\[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
+\end{theorem}
+
+\subsection{Power Series}
+
+A power series is a specific type of function series of the form:
+\[ \sum_{n=0}^{\infty} a_n (x - x_0)^n \]
+where $a_n$ are coefficients and $x_0$ is the center. For simplicity, we usually set $x_0 = 0$.
+
+\subsubsection{Radius of Convergence}
+
+Unlike general function series, power series have a very structured domain of convergence.
+
+\begin{theorem}[Cauchy-Hadamard]
+Given a power series $\sum a_n x^n$, let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{|a_n|} \]
+The \textbf{radius of convergence} $R$ is defined as:
+\[ R = \begin{cases} 0 & \text{if } \rho = +\infty \\ 1/\rho & \text{if } 0 < \rho < +\infty \\ +\infty & \text{if } \rho = 0 \end{cases} \]
+The series converges absolutely for $|x| < R$ and diverges for $|x| > R$. The behavior at endpoints $x = \pm R$ must be checked individually.
+\end{theorem}
+
+\begin{property}
+Inside the interval of convergence $(-R, R)$, the power series converges \textbf{uniformly} on any closed sub-interval $[-r, r]$ where $r < R$.
+This implies that power series define continuous, infinitely differentiable ($C^\infty$) functions inside their radius of convergence.
+\end{property}
+
+\subsubsection{Abel's Theorem}
+What happens if a series converges at an endpoint $x=R$?
+
+\begin{theorem}[Abel's Continuity Theorem]
+If the power series $\sum_{n=0}^{\infty} a_n x^n$ converges at $x = R$ (or $x = -R$), then the function $f(x) = \sum a_n x^n$ is continuous at $x = R$ from the left (or at $x = -R$ from the right).
+\[ \lim_{x \to R^-} \sum_{n=0}^{\infty} a_n x^n = \sum_{n=0}^{\infty} a_n R^n \]
+\end{theorem}
+
+This theorem is powerful for evaluating sums of numerical series. For example, using the expansion $\ln(1+x) = x - x^2/2 + x^3/3 - \dots$, which converges for $x=1$, Abel's theorem justifies $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
+
+\subsection{Taylor and Maclaurin Series}
+
+If a function $f(x)$ can be represented by a power series $\sum a_n (x-x_0)^n$, what must the coefficients $a_n$ be?
+
+\begin{theorem}[Taylor Series]
+If $f(x)$ is represented by a power series centered at $x_0$ with radius of convergence $R > 0$, then the coefficients are unique and given by:
+\[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
+The series is called the \textbf{Taylor Series} of $f$ at $x_0$. If $x_0=0$, it is called the \textbf{Maclaurin Series}.
+\end{theorem}
+
+\begin{remark}
+Even if a function $f(x)$ is $C^\infty$ (infinitely differentiable), its Taylor series does not necessarily converge to $f(x)$. It might converge to a different function or only at $x_0$.
+Functions for which the Taylor series converges to the function itself are called \textbf{analytic functions}.
+\end{remark}
+
+\begin{example}[Standard Expansions]
+The following expansions are essential:
+\begin{align*}
+    e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots & (R = \infty) \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \dots & (R = \infty) \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \dots & (R = \infty) \\
+    \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + \dots & (R = 1)
+\end{align*}
+\end{example}
+
+\section{Limits and Continuity in Euclidean Space}
+
+Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
+
+\subsection{The Structure of Euclidean Space $\mathbb{R}^n$}
+
+The space $\mathbb{R}^n$ is the set of all ordered $n$-tuples of real numbers. An element $\mathbf{x} \in \mathbb{R}^n$ is written as $\mathbf{x} = (x_1, x_2, \dots, x_n)$, where $x_i$ are the components.
+
+\begin{definition}[Inner Product and Norm]
+For $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$, the \textbf{Euclidean inner product} (or dot product) is defined as:
+\[ \mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^n x_i y_i \]
+The \textbf{Euclidean norm} (or length) of $\mathbf{x}$ is defined as:
+\[ \|\mathbf{x}\| = \sqrt{\mathbf{x} \cdot \mathbf{x}} = \sqrt{\sum_{i=1}^n x_i^2} \]
+The \textbf{distance} between two points $\mathbf{x}$ and $\mathbf{y}$ is $d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|$.
+\end{definition}
+
+The geometry of $\mathbb{R}^n$ is governed by two fundamental inequalities.
+
+\begin{theorem}[Cauchy-Schwarz Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ |\mathbf{x} \cdot \mathbf{y}| \le \|\mathbf{x}\| \|\mathbf{y}\| \]
+Equality holds if and only if $\mathbf{x}$ and $\mathbf{y}$ are linearly dependent.
+\end{theorem}
+
+\begin{theorem}[Triangle Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ \|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\| \]
+\end{theorem}
+
+\subsection{Basic Topology of $\mathbb{R}^n$}
+
+To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" in $\mathbb{R}^n$.
+
+\begin{definition}[Open Ball]
+Let $\mathbf{a} \in \mathbb{R}^n$ and $r > 0$. The \textbf{open ball} of radius $r$ centered at $\mathbf{a}$ is the set:
+\[ B_r(\mathbf{a}) = \{ \mathbf{x} \in \mathbb{R}^n : \|\mathbf{x} - \mathbf{a}\| < r \} \]
+\end{definition}
+
+\begin{definition}[Open and Closed Sets]
+A set $U \subseteq \mathbb{R}^n$ is called \textbf{open} if for every point $\mathbf{x} \in U$, there exists an $r > 0$ such that $B_r(\mathbf{x}) \subseteq U$.
+A set $F \subseteq \mathbb{R}^n$ is called \textbf{closed} if its complement $\mathbb{R}^n \setminus F$ is open.
+\end{definition}
+
+For limits, the concept of an accumulation point is crucial.
+
+\begin{definition}[Accumulation Point]
+A point $\mathbf{x}_0$ is an \textbf{accumulation point} (or limit point) of a set $E$ if every open ball $B_r(\mathbf{x}_0)$ contains at least one point of $E$ distinct from $\mathbf{x}_0$.
+\end{definition}
+
+\subsection{Limits of Functions of Several Variables}
+
+Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ be a function defined on a domain $D$. We are interested in the behavior of $f(\mathbf{x})$ as $\mathbf{x}$ approaches a point $\mathbf{a}$.
+
+\begin{definition}[Limit]
+Let $\mathbf{a}$ be an accumulation point of $D$. We say that the limit of $f(\mathbf{x})$ as $\mathbf{x}$ approaches $\mathbf{a}$ is $\mathbf{L}$, written as:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = \mathbf{L} \]
+if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $\mathbf{x} \in D$:
+\[ 0 < \|\mathbf{x} - \mathbf{a}\| < \delta \implies \|f(\mathbf{x}) - \mathbf{L}\| < \epsilon \]
+\end{definition}
+
+\subsubsection{Path Dependence and Non-existence of Limits}
+
+In single-variable calculus ($n=1$), $x$ can approach $a$ from only two directions (left or right). In $\mathbb{R}^n$ ($n \ge 2$), $\mathbf{x}$ can approach $\mathbf{a}$ from \textbf{infinitely many directions} along infinitely many different paths (lines, parabolas, spirals, etc.).
+
+\begin{theorem}
+If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous curve $\gamma(t)$ ending at $\mathbf{a}$, the limit along the curve must be $L$.
+Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
+\end{theorem}
+
+\begin{example}
+Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
+\begin{enumerate}
+    \item Approach along the $x$-axis ($y=0$):
+    \[ \lim_{x \to 0} f(x, 0) = \lim_{x \to 0} \frac{0}{x^2} = 0 \]
+    \item Approach along the line $y=x$:
+    \[ \lim_{x \to 0} f(x, x) = \lim_{x \to 0} \frac{x^2}{x^2 + x^2} = \frac{1}{2} \]
+\end{enumerate}
+Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
+\end{example}
+
+\begin{remark}
+It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
+\[ f(x, y) = \frac{x y^2}{x^2 + y^4} \]
+Along any line $y = mx$ (and $x=0$), the limit is $0$. However, along the parabola $x = y^2$, the limit is $1/2$. Thus, the limit does not exist.
+\end{remark}
+
+\subsubsection{Iterated Limits vs. Simultaneous Limits}
+
+For a function of two variables $f(x,y)$, we can define \textbf{iterated limits}:
+\[ L_{12} = \lim_{x \to a} \left( \lim_{y \to b} f(x, y) \right) \quad \text{and} \quad L_{21} = \lim_{y \to b} \left( \lim_{x \to a} f(x, y) \right) \]
+
+\begin{proposition}
+The existence of iterated limits does not imply the existence of the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$.
+Even if $L_{12} = L_{21}$, the simultaneous limit may not exist.
+Conversely, if the simultaneous limit exists, the iterated limits may not exist (because the inner limits might not be defined).
+However, if the simultaneous limit exists AND the inner limits exist, then they must all be equal.
+\end{proposition}
+
+\subsection{Continuity}
+
+The definition of continuity in $\mathbb{R}^n$ is formally identical to that in $\mathbb{R}$.
+
+\begin{definition}[Continuity]
+A function $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ is \textbf{continuous} at a point $\mathbf{a} \in D$ if:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = f(\mathbf{a}) \]
+If $f$ is continuous at every point in $D$, we say $f$ is continuous on $D$.
+\end{definition}
+
+Elementary operations preserve continuity:
+\begin{itemize}
+    \item The sum, difference, product, and quotient (denominator non-zero) of continuous functions are continuous.
+    \item The composition of continuous functions is continuous. That is, if $f$ is continuous at $\mathbf{a}$ and $g$ is continuous at $f(\mathbf{a})$, then $g \circ f$ is continuous at $\mathbf{a}$.
+\end{itemize}
+
+\subsection{Properties of Continuous Functions on Compact Sets}
+
+The notions of boundedness and extreme values rely on the domain being "compact".
+
+\begin{definition}[Compact Set]
+A set $K \subseteq \mathbb{R}^n$ is \textbf{compact} if it is both \textbf{closed} and \textbf{bounded}.
+(This is the Heine-Borel Theorem characterization for Euclidean spaces).
+\end{definition}
+
+\begin{theorem}[Weierstrass Extreme Value Theorem]
+Let $K \subseteq \mathbb{R}^n$ be a compact set and let $f: K \to \mathbb{R}$ be a continuous function. Then:
+\begin{enumerate}
+    \item $f$ is bounded on $K$.
+    \item $f$ attains its maximum and minimum values on $K$. That is, there exist points $\mathbf{x}_{\min}, \mathbf{x}_{\max} \in K$ such that for all $\mathbf{x} \in K$:
+    \[ f(\mathbf{x}_{\min}) \le f(\mathbf{x}) \le f(\mathbf{x}_{\max}) \]
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Uniform Continuity]
+Let $K \subseteq \mathbb{R}^n$ be a compact set. If $f: K \to \mathbb{R}^m$ is continuous on $K$, then $f$ is \textbf{uniformly continuous} on $K$.
+\end{theorem}
+
+\begin{definition}[Uniform Continuity]
+$f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that for all $\mathbf{x}, \mathbf{y} \in D$:
+\[ \|\mathbf{x} - \mathbf{y}\| < \delta \implies \|f(\mathbf{x}) - f(\mathbf{y})\| < \epsilon \]
+Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
+\end{definition}
+
+\begin{remark}
+If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
+For example, $f(x) = 1/x$ on $(0, 1)$ is continuous but unbounded and not uniformly continuous.
+\end{remark}
+
+\subsection{Connectedness and the Intermediate Value Theorem}
+
+To generalize the Intermediate Value Theorem, we need the concept of connectedness.
+
+\begin{definition}[Path-Connected Set]
+A set $D \subseteq \mathbb{R}^n$ is \textbf{path-connected} if for any two points $\mathbf{a}, \mathbf{b} \in D$, there exists a continuous curve $\gamma: [0, 1] \to D$ such that $\gamma(0) = \mathbf{a}$ and $\gamma(1) = \mathbf{b}$.
+\end{definition}
+
+\begin{theorem}[Generalized Intermediate Value Theorem]
+Let $D \subseteq \mathbb{R}^n$ be a path-connected set and let $f: D \to \mathbb{R}$ be continuous. If $\mathbf{a}, \mathbf{b} \in D$ and $f(\mathbf{a}) < c < f(\mathbf{b})$, then there exists a point $\mathbf{c} \in D$ such that $f(\mathbf{c}) = c$.
+\end{theorem}
+
+This ensures that the image of a path-connected set under a continuous real-valued function is an interval.

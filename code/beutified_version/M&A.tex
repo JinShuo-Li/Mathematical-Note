@@ -5640,6 +5640,32 @@ is called an \textbf{infinite series}. The number $a_n$ is called the general te
 
 To assign a value to this infinite sum, we look at finite sums.
 
+\subsection{Upper and Lower Limits}
+
+To study the convergence of series, it is often helpful to use the concept of upper and lower limits of sequences, especially when the sequence does not converge.
+
+\begin{definition}[Limit Point]
+Let $\{x_n\}$ be a sequence. A value $\xi \in \mathbb{R} \cup \{+\infty, -\infty\}$ is called a \textbf{limit point} of the sequence if there exists a subsequence $\{x_{n_k}\}$ such that $\lim_{k \to \infty} x_{n_k} = \xi$.
+\end{definition}
+
+\begin{definition}[Upper and Lower Limits]
+Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{upper limit} (limit superior) and \textbf{lower limit} (limit inferior) are defined as:
+\[ \limsup_{n \to \infty} x_n = \sup E, \quad \liminf_{n \to \infty} x_n = \inf E \]
+\end{definition}
+
+\begin{theorem}
+A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
+\end{theorem}
+
+\begin{property}
+For any two sequences $\{x_n\}$ and $\{y_n\}$:
+\begin{enumerate}
+    \item $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$
+    \item $\liminf (x_n + y_n) \ge \liminf x_n + \liminf y_n$
+\end{enumerate}
+Equality holds if at least one of the sequences converges.
+\end{property}
+
 \newpage
 
 \begin{definition}[Convergence]
@@ -5942,18 +5968,27 @@ Let's go back to the question of why we say the infinite product diverges if it 
 \begin{theorem}
     The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
     
-    Furthermore, if $a_n \to 0$, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+    Furthermore, if $a_n$ does not change sign, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
 \end{theorem}
 
 Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, and $a_n$ does not change sign, then $\prod_{n=1}^{\infty} (1+a_n)$ converges in the absolute sense if and only if $\sum_{n=1}^{\infty} a_n$ converges.
+\end{corollary}
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, if $\sum a_n$ converges, then the infinite product $\prod (1+a_n)$ converges if and only if $\sum a_n^2$ converges.
+\end{corollary}
 
 Also, matheaticians use the infinite product deduce some famous formulas, for example:
 
 \textbf{Wallis Law}:
 \[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1} = \left(\frac{2 \cdot 2}{1 \cdot 3}\right) \left(\frac{4 \cdot 4}{3 \cdot 5}\right) \left(\frac{6 \cdot 6}{5 \cdot 7}\right) \cdots\]
 \textbf{Viete Law}:
-\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \frac{\sqrt{2 + \sqrt{2 + \sqrt{2 + \cdots}}}}{2} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
-\textbf{Stirling Law}:
+\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \cos \frac{\pi}{2^{n+1}} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
+\textbf{Stirling Formula}:
+When $n \to \infty$, we have the famous approximation:
 \[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
 
 \subsection{Function Series}
@@ -6026,6 +6061,18 @@ We write $f_n \xRightarrow{D} f$ on $E$.
 \end{definition}
 
 Geometrically, this means that for $n > N$, the graph of $f_n(x)$ lies entirely within a "tube" of width $2\epsilon$ centered around $f(x)$.
+
+\begin{theorem}[Uniform Convergence via Sup-norm]
+Let $\{f_n\}$ be a sequence of functions defined on $E$. $\{f_n\}$ converges uniformly to $f$ on $E$ if and only if
+\[ \lim_{n \to \infty} \left( \sup_{x \in E} |f_n(x) - f(x)| \right) = 0 \]
+\end{theorem}
+
+\begin{example}
+Consider $f_n(x) = (1-x)x^n$ on $[0,1]$. For any $x \in [0,1]$, $f(x) = \lim f_n(x) = 0$.
+The maximum of $f_n(x)$ occurs at $x = \frac{n}{n+1}$, where
+\[ f_n\left(\frac{n}{n+1}\right) = \frac{1}{n+1} \left(\frac{n}{n+1}\right)^n \to 0 \cdot e^{-1} = 0 \]
+Since the maximum approach zero, $f_n$ converges uniformly to $0$ on $[0,1]$.
+\end{example}
 
 From the concept of uniform convergence, we can derive the corollary for function series:
 
@@ -6294,295 +6341,317 @@ Let $D \subseteq \mathbb{R}^n$ be a path-connected set and let $f: D \to \mathbb
 
 This ensures that the image of a path-connected set under a continuous real-valued function is an interval.
 
-
-\chapter{Mathematical Analysis III}
-
 \chapter{Topology}
 
-From this chapter onward, we will explore more abstract mathematical structures. Topology provides the foundational language for discussing continuity, convergence, and compactness in a general setting beyond Euclidean spaces. We will define topological spaces, continuous maps, and various topological properties, establishing a rigorous framework for further study in analysis and geometry.
+Topology is frequently characterized as "rubber-sheet geometry," a field of mathematics concerned with the properties of space that are preserved under continuous deformations including stretching, crumpling, and bending, but strictly excluding tearing or gluing. This chapter marks a profound conceptual shift in our mathematical journey: we transition from the rigid, distance-based measurements characteristic of Euclidean and Metric Spaces to a more flexible, qualitative understanding of "nearness," "connectivity," and "continuity."
 
-Honestly speaking, topology is a very abstract and theoretical subject. It may seem disconnected from practical applications at first glance. However, its concepts underpin many areas of modern mathematics, including analysis, geometry, and even fields like data science and physics. Understanding topology equips you with a powerful language to describe and analyze complex structures in a rigorous way.
+In Classical Analysis, concepts such as limits, continuity, and convergence are rigidly defined using a distance function (metric), typically $d(x, y) = |x - y|$. However, mathematicians in the late 19th and early 20th centuries realized that many fundamental analytical theorems---such as the Intermediate Value Theorem, the Extreme Value Theorem, and the Bolzano-Weierstrass Theorem---do not rely on the specific numerical values of distances. Instead, they depend on the structural organization of points, specifically how subsets of a space "hang together" or "accumulate." Topology distills these essential structural properties into a rigorous axiomatic system, keeping only what is necessary to define continuity.
 
-We shall begin with the basic definitions and gradually build up to more advanced topics, ensuring a solid foundation in topological concepts. Readers are encouraged to engage deeply with the material, as topology often requires a shift in thinking from concrete examples to abstract reasoning.
+We will begin by defining the most fundamental object: the Topological Space. From there, we will rebuild our understanding of continuity, limits, and convergence from the ground up, eventually reaching sophisticated concepts like Compactness and Connectedness.
 
-\section{Topological Space and Continuous Function}
+\section{Topological Spaces}
 
-The standard definition of a topological space and topology is evolved from some very intuitive concepts. In the Euclidean space $\mathbb{R}^n$, we have already defined open sets using open balls. This notion of "openness" can be abstracted to define a topology on any set.
+\subsection{Motivation: From Metric to Topology}
 
-\subsection{Topology and Topological Space}
+Consider the difference between a ceramic coffee mug and a donut. Geometrically, they are distinct shapes with different curvatures and surface areas. However, to a topologist, they are identical. If you were to make the mug out of highly pliable clay, you could continuously reshape it into a donut by thickening the bottom and shrinking the cup part, eventually smoothing it into a ring. No tearing (breaking the clay) or gluing (fusing distinct parts) is required.
 
-\begin{definition}[Topology]
+To formalize this, we look at the definition of continuity in metric spaces. A function $f$ is continuous if the inverse image of every open ball is "open" in some sense. In a metric space $(M, d)$, a set $U$ is called "open" if every point $x \in U$ has a safety buffer (an open ball $B_r(x)$) totally contained within $U$.
+\[ \forall x \in U, \exists r > 0 \text{ such that } B_r(x) \subseteq U \]
+This collection of open sets satisfies certain properties (unions of open sets are open, finite intersections of open sets are open). Topology takes these properties as \textit{axioms}, discarding the metric entirely.
+
+\subsection{Definition of a Topology}
+
+\begin{definition}[Topological Space]
 Let $X$ be a non-empty set. A collection $\tau$ of subsets of $X$ is called a \textbf{topology} on $X$ if it satisfies the following three axioms:
 \begin{enumerate}
-    \item The empty set $\emptyset$ and the entire set $X$ are in $\tau$.
-    \item The union of any collection of sets in $\tau$ is also in $\tau$.
-    \item The intersection of any finite number of sets in $\tau$ is also in $\tau$.
+    \item \textbf{(T1) Trivial Sets:} The empty set $\emptyset$ and the entire set $X$ are in $\tau$.
+    \item \textbf{(T2) Arbitrary Union:} The union of \textbf{any} collection of sets in $\tau$ is also in $\tau$. That is, if $\{U_\alpha\}_{\alpha \in I} \subseteq \tau$, then $\bigcup_{\alpha \in I} U_\alpha \in \tau$.
+    \item \textbf{(T3) Finite Intersection:} The intersection of any \textbf{finite} number of sets in $\tau$ is also in $\tau$. That is, if $U_1, \dots, U_n \in \tau$, then $\bigcap_{i=1}^n U_i \in \tau$.
 \end{enumerate}
-The pair $(X, \tau)$ is called a \textbf{topological space}, and the sets in $\tau$, which are the subsets of $X$, are called \textbf{open sets}.
+The pair $(X, \tau)$ is called a \textbf{topological space}. The elements of $\tau$ are referred to as \textbf{open sets}.
 \end{definition}
 
-Using the concept of open sets, we can restate the definition of topology in a more intuitive way. A topology on a set $X$ is a way of specifying which subsets of $X$ are considered "open" in a manner that generalizes the familiar notion of open sets in Euclidean spaces.
+\textbf{Remark on Axioms:}
+\begin{itemize}
+    \item \textbf{Why infinite unions?} In the real line $\mathbb{R}$, any open interval $(a, b)$ can be written as a union of smaller intervals. We want "arbitrary" unions so that shapes like an open disk can be formed by uniting infinitely many small rectangles.
+    \item \textbf{Why only finite intersections?} Consider the open intervals $U_n = (-1/n, 1/n)$ in $\mathbb{R}$. Each is an open set. However, their infinite intersection is:
+    \[ \bigcap_{n=1}^{\infty} \left(-\frac{1}{n}, \frac{1}{n}\right) = \{0\} \]
+    The singleton set $\{0\}$ is \textit{not} "open" in the standard sense (it contains no ball around 0). Thus, if we allowed infinite intersections, single points would become open sets, collapsing the structure of the space into something trivial (the discrete topology).
+\end{itemize}
 
-\begin{definition}[Special Class of Topology]
-For any non-empty set $X$, the \textbf{discrete topology} on $X$ is defined by taking $\tau$ to be the power set of $X$ (i.e., all subsets of $X$ are open). Conversely, the \textbf{trivial topology}, or \textbf{indiscrete topology}, on $X$ consists only of the empty set and the entire set $X$.
+\subsection{Fundamental Examples}
 
-Let $X$ be a non-empty set. The \textbf{finite complement topology} on $X$ is defined by taking $\tau$ to be the collection of all subsets $U \subseteq X$ such that either $U = \emptyset$ or the complement $X \setminus U$ is a finite set.
-\end{definition}
+To grasp the breadth of this definition, we examine several key examples.
 
-\begin{definition}[Finer and Coarser Topologies]
-Let $X$ be a set with two topologies $\tau_1$ and $\tau_2$. We say that $\tau_1$ is \textbf{finer} than $\tau_2$ (or $\tau_2$ is \textbf{coarser} than $\tau_1$) if $\tau_2 \subseteq \tau_1$. If $\tau_1 \ne \tau_2$, we say that $\tau_1$ is \textbf{strictly finer} than $\tau_2$.
-\end{definition}
+\begin{example}[Discrete Topology]
+Let $X$ be any non-empty set. Let $\tau_{disc} = \mathcal{P}(X)$, the power set of $X$.
+In this topology, \textbf{every} subset of $X$ is an open set.
+\begin{itemize}
+    \item \textit{Intuition:} Every point is "isolated" from every other point.
+    \item \textit{Sequence Convergence:} A sequence $\{x_n\}$ converges to $x$ if and only if the sequence is eventually constant (i.e., $x_n = x$ for all $n \ge N$).
+    \item \textit{Continuity:} Any function $f: X \to Y$ originating from a discrete space is continuous.
+\end{itemize}
+\end{example}
 
-The definition of \textbf{finer and coarser} might seems a bit contradicted at first glance. However, it is quite intuitive if we think in terms of open sets. A finer topology has more open sets, which means it allows for more "flexibility" in defining neighborhoods and continuity. Conversely, a coarser topology has fewer open sets, which can make it "stricter" in terms of continuity and convergence.
-
-We can think of the concept of topology space as a truck that carries pieces of stones, each stone representing an open set. Any collection of stones are still stones, so any union of stones is still a stone. Also, we can break a stone into finite pieces, so any finite intersection of stones is still a stone. Now we create a new truck which carries more stones than the previous truck. This new truck is finer than the previous one because it has more stones (open sets) to work with.
-
-Although using $\tau$ to describe topology is standard, but it will cause some inconvenience in later discussions. Therefore, we need to use a new concept to describe topology.
-
-\begin{definition}[Basis for a Topology]
-Let $X$ be a non-empty set. A collection $\mathcal{B}$ of subsets of $X$ is called a \textbf{basis} for a topology on $X$ if:
-\begin{enumerate}
-    \item For each $x \in X$, there is at least one basis element $B \in \mathcal{B}$ such that $x \in B$.
-    \item If $x$ belongs to the intersection of two basis elements $B_1$ and $B_2$, then there is a basis element $B_3$ such that $x \in B_3 \subseteq B_1 \cap B_2$.
-\end{enumerate}
-Given a basis $\mathcal{B}$, the topology $\tau$ generated by $\mathcal{B}$ is defined as the collection of all unions of basis elements. The pair $(X, \tau)$ is then a topological space. More explicitly,
-\[
-\tau = \left\{ \bigcup_{B \in \mathcal{B'}} B \mid \mathcal{B'} \subseteq \mathcal{B} \right\}
-\]
-\end{definition}
-
-Here we provide a proof for the fact that a basis indeed generates a topology.
-
-\begin{proof}
-To show that the collection $\tau$ generated by the basis $\mathcal{B}$ is a topology on $X$, we need to verify the three axioms of a topology:
-\begin{enumerate}
-    \item \textbf{The empty set and the entire set $X$ are in $\tau$.} 
-    The empty set can be expressed as the union of an empty collection of basis elements, so $\emptyset \in \tau$. For the entire set $X$, by the first condition of the basis, for each $x \in X$, there exists a basis element $B_x \in \mathcal{B}$ such that $x \in B_x$. Thus, we can express $X$ as the union of all these basis elements:
-    \[
-    X = \bigcup_{x \in X} B_x
-    \]
-    Since each $B_x$ is in $\mathcal{B}$, it follows that $X \in \tau$.
-
-    \item \textbf{The union of any collection of sets in $\tau$ is also in $\tau$.} 
-    Let $\{U_\alpha\}_{\alpha \in A}$ be a collection of sets in $\tau$. By definition of $\tau$, each $U_\alpha$ can be expressed as a union of basis elements:
-    \[
-    U_\alpha = \bigcup_{B \in \mathcal{B}_\alpha} B
-    \]
-    for some subcollection $\mathcal{B}_\alpha \subseteq \mathcal{B}$. Therefore, the union of all $U_\alpha$ is:
-    \[
-    \bigcup_{\alpha \in A} U_\alpha = \bigcup_{\alpha \in A} \left( \bigcup_{B \in \mathcal{B}_\alpha} B \right) = \bigcup_{B \in \bigcup_{\alpha \in A} \mathcal{B}_\alpha} B
-    \]
-    Since $\bigcup_{\alpha \in A} \mathcal{B}_\alpha$ is a subcollection of $\mathcal{B}$, it follows that $\bigcup_{\alpha \in A} U_\alpha$ is also in $\tau$.
-
-    \item \textbf{The intersection of any finite number of sets in $\tau$ is also in $\tau$.} 
-    Let $U_1, U_2, \ldots, U_n$ be sets in $\tau$. Each $U_i$ can be expressed as a union of basis elements:
-    \[
-    U_i = \bigcup_{B \in \mathcal{B}_i} B
-    \]
-    for some subcollection $\mathcal{B}_i \subseteq \mathcal{B}$. The intersection of these sets is:
-    \[
-    U_1 \cap U_2 \cap \ldots \cap U_n = \left( \bigcup_{B_1 \in \mathcal{B}_1} B_1 \right) \cap \left( \bigcup_{B_2 \in \mathcal{B}_2} B_2 \right) \cap \ldots \cap \left( \bigcup_{B_n \in \mathcal{B}_n} B_n \right)
-    \]
-    To show that this intersection is in $\tau$, we consider an arbitrary point $x$ in the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$. By definition, $x$ must belong to at least one basis element from each $U_i$. Let $B_i$ be a basis element such that $x \in B_i \subseteq U_i$ for each $i = 1, 2, \ldots, n$.
-
-    By the second condition of the basis, since $x$ belongs to the intersection $B_1 \cap B_2 \cap \ldots \cap B_n$, there exists a basis element $B_x$ such that:
-    \[x \in B_x \subseteq B_1 \cap B_2 \cap \ldots \cap B_n \]
-    Since $B_x$ is a basis element, it follows that $B_x \subseteq U_1 \cap U_2 \cap \ldots \cap U_n$. Therefore, every point in the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$ is contained in some basis element that is also contained in the intersection. This implies that the intersection can be expressed as a union of such basis elements:
-    \[
-    U_1 \cap U_2 \cap \ldots \cap U_n = \bigcup_{x \in U_1 \cap U_2 \cap \ldots \cap U_n} B_x
-    \]
-    Thus, the intersection $U_1 \cap U_2 \cap \ldots \cap U_n$ is in $\tau$.
-\end{enumerate}
-\end{proof}
-
-\begin{definition}[Subbasis for a Topology]
-Let $X$ be a non-empty set. A collection $\mathcal{S}$ of subsets of $X$ is called a \textbf{subbasis} for a topology on $X$ if the finite intersections of elements of $\mathcal{S}$ form a basis for a topology on $X$. The topology generated by the subbasis $\mathcal{S}$ is the collection of all unions of finite intersections of elements from $\mathcal{S}$.
-\[
-\tau = \left\{\bigcup_{B \in \mathcal{B'}} B \mid \mathcal{B'} \in \mathcal{B}\right\}, \quad \mathcal{B} = \left\{ \bigcap_{i=1}^n S_i \mid S_i \in \mathcal{S}, n \in \mathbb{N} \right\}
-\]
-\end{definition}
-
-Basis and subbasis provide convenient ways to define and work with topologies, especially in more complex settings where directly specifying all open sets would be impractical.
-
-As long as the set $X$ can be equipped with a partial order, we can define a special topology called the \textbf{order topology}.
-
-\begin{definition}[Order Topology]
-Let $(X, \leq)$ be a partially ordered set. The \textbf{order topology} on $X$ is generated by the basis consisting of all open intervals of the form:
-\begin{enumerate}
-    \item $(a, b) = \{ x \in X \mid a < x < b \}$ for all $a, b \in X$ with $a < b$,
-    \item $[a_0, b) = \{ x \in X \mid a \leq x < b \}$ for all $b \in X$ with $a_0$ is the minimum of $X$ (if it exists),
-    \item $(a, b_0] = \{ x \in X \mid a < x \leq b \}$ for all $a \in X$ with $b_0$ is the maximum of $X$ (if it exists),
-\end{enumerate}
-\end{definition}
-
-We can also define a special topology on product sets, which is widely used in various fields of mathematics.
-
-\begin{definition}[Product Topology]
-Let $\{(X_i, \tau_i)\}_{i \in I}$ be a family of topological spaces indexed by a set $I$. The \textbf{product topology} on the Cartesian product $X = \prod_{i \in I} X_i$ is defined as the topology generated by the basis consisting of all products of the form:
-\[\prod_{i \in I} U_i\]
-where $U_i \in \tau_i$ for each $i \in I$, and $U_i = X_i$ for all but finitely many $i \in I$.
-\end{definition}
-
-\begin{theorem}
-Assume $\mathcal{B}$ is a basis of a topology on $X$ and $\mathcal{C}$ is a basis of a topology on $Y$. Then the collection
-\[\mathcal{D} = \{ B \times C \mid B \in \mathcal{B}, C \in \mathcal{C} \} \]
-is a basis for the product topology on $X \times Y$.
-\end{theorem}
-
-\begin{proof}
-To show that $\mathcal{D}$ is a basis for the product topology on $X \times Y$, we need to verify the two conditions for a basis:
-\begin{enumerate}
-    \item \textbf{For each point $(x, y) \in X \times Y$, there is at least one basis element $D \in \mathcal{D}$ such that $(x, y) \in D$.} 
-    Since $\mathcal{B}$ is a basis for the topology on $X$, there exists a basis element $B \in \mathcal{B}$ such that $x \in B$. Similarly, since $\mathcal{C}$ is a basis for the topology on $Y$, there exists a basis element $C \in \mathcal{C}$ such that $y \in C$. Therefore, the product $B \times C$ is a basis element in $\mathcal{D}$, and we have:
-    \[
-    (x, y) \in B \times C
-    \]
-    
-    \item \textbf{If $(x, y)$ belongs to the intersection of two basis elements $D_1$ and $D_2$ in $\mathcal{D}$, then there is a basis element $D_3$ in $\mathcal{D}$ such that $(x, y) \in D_3 \subseteq D_1 \cap D_2$.} 
-    Let $D_1 = B_1 \times C_1$ and $D_2 = B_2 \times C_2$ be two basis elements in $\mathcal{D}$ such that $(x, y) \in D_1 \cap D_2$. This means that:
-    \[
-    x \in B_1 \cap B_2 \quad \text{and} \quad y \in C_1 \cap C_2
-    \]
-    Since $\mathcal{B}$ is a basis for the topology on $X$, there exists a basis element $B_3 \in \mathcal{B}$ such that:
-    \[
-    x \in B_3 \subseteq B_1 \cap B_2
-    \]
-    Similarly, since $\mathcal{C}$ is a basis for the topology on $Y$, there exists a basis element $C_3 \in \mathcal{C}$ such that:
-    \[
-    y \in C_3 \subseteq C_1 \cap C_2
-    \]
-    Therefore, the product $D_3 = B_3 \times C_3$ is a basis element in $\mathcal{D}$, and we have:
-    \[(x, y) \in D_3 \subseteq D_1 \cap D_2\]
-\end{enumerate}
-\end{proof}
-
-
-\begin{definition}[Subspace Topology]
-Let $(X, \tau)$ be a topological space and let $Y \subseteq X$ be a subset. The \textbf{subspace topology} on $Y$ is defined by:
-\[\tau_Y = \{ U \cap Y \mid U \in \tau \} \]
-The pair $(Y, \tau_Y)$ is called a \textbf{subspace} of $(X, \tau)$.
-\end{definition}
-
-From the definition of subspace topology, it is easy to see that the open sets in the subspace topology are precisely the intersections of open sets in the original topology with the subset $Y$. This means that the subspace topology inherits the "openness" properties from the larger space, but only within the context of the subset $Y$.
-
-Also, we can get the following theorem about basis for subspace topology.
-
-\begin{theorem}
-Let $(X, \tau)$ be a topological space with basis $\mathcal{B}$, and let $Y \subseteq X$ be a subset. Then the collection
-\[\mathcal{B}_Y = \{ B \cap Y \mid B \in \mathcal{B} \} \]
-is a basis for the subspace topology on $Y$.
-\end{theorem}
-
-We have now established the foundational concepts of topological spaces, including various ways to define topologies through bases and subbases, as well as special types of topologies like order and product topologies. With these tools in hand, we can explore further properties of topological spaces and continuous functions in subsequent sections.
-
-\subsection{Continuous Functions between Topological Spaces}
-
-Before we define continuous functions in the context of topological spaces, we still need to define some concepts. These concepts will help us understand the behavior of functions between topological spaces, and bridge the gap between abstract topology and more familiar notions of continuity.
-
-\begin{definition}[Closed Set in Topological Space]
-Let $(X, \tau)$ be a topological space. A subset $F \subseteq X$ is called \textbf{closed} if its complement $X \setminus F$ is an open set in $\tau$.
-\end{definition}
-
-\begin{remark}
-Mind that the concept of open set and closed set are not mutually exclusive. A set can be both open and closed (clopen set), or neither open nor closed, depending on the topology. For example, in the discrete topology, every set is both open and closed. In the trivial topology, only the empty set and the entire set are both open and closed.
-\end{remark}
-
-\begin{mythm}{Properties of Closed Sets}{}
-Let $(X, \tau)$ be a topological space. Then the following conditions hold:
-\begin{enumerate}
-    \item $\emptyset$ and $X$ are closed sets.
-    \item Arbitrary intersections of closed sets are closed.
-    \item Finite unions of closed sets are closed.
-\end{enumerate}
-\end{mythm}
+\begin{example}[Indiscrete / Trivial Topology]
+Let $X$ be any non-empty set. Let $\tau_{ind} = \{\emptyset, X\}$.
+Only the whole space and the empty set are open.
+\begin{itemize}
+    \item \textit{Intuition:} All points are "glued" together into a single lump.
+    \item \textit{Sequence Convergence:} Every sequence converges to \textbf{every} point in $X$. This chaos illustrates why we often need stronger axioms (like Hausdorff).
+\end{itemize}
+\end{example}
 
 \newpage
 
-\begin{proof}
-\begin{enumerate}
-    \item Since $X$ and $\emptyset$ are open sets, their complements $X \setminus X = \emptyset$ and $X \setminus \emptyset = X$ are closed sets.
-    \item Let $\{F_\alpha\}_{\alpha \in A}$ be a collection of closed sets. Then $X \setminus F_\alpha$ is open for each $\alpha$. By De Morgan's laws:
-    \[
-    X \setminus \left(\bigcap_{\alpha \in A} F_\alpha\right) = \bigcup_{\alpha \in A} (X \setminus F_\alpha)
-    \]
-    Since arbitrary unions of open sets are open, the complement of the intersection is open. Thus, $\bigcap_{\alpha \in A} F_\alpha$ is closed.
-    \item Let $F_1, \dots, F_n$ be closed sets. Then $X \setminus F_i$ is open for each $i$. By De Morgan's laws:
-    \[
-    X \setminus \left(\bigcup_{i=1}^n F_i\right) = \bigcap_{i=1}^n (X \setminus F_i)
-    \]
-    Since finite intersections of open sets are open, the complement of the union is open. Thus, $\bigcup_{i=1}^n F_i$ is closed.
-\end{enumerate}
-\end{proof}
+\begin{example}[Cofinite Topology]
+Let $X$ be an infinite set. Let $\tau_{cof} = \{ U \subseteq X \mid X \setminus U \text{ is finite} \} \cup \{ \emptyset \}$.
+Check the axioms:
+\begin{itemize}
+    \item The complement of $X$ is $\emptyset$ (finite), so $X \in \tau$.
+    \item Intersection: $(X \setminus U) \cup (X \setminus V) = X \setminus (U \cap V)$. If complements are finite, their union is finite, so the intersection $U \cap V$ has a finite complement.
+\end{itemize}
+This topology behaves like the Zariski topology in algebraic geometry and cannot be generated by a standard distance metric.
+\end{example}
 
-\begin{definition}[Interior and Closure]
-Let $(X, \tau)$ be a topological space and $S \subseteq X$ be a subset.
+\begin{example}[Sierpinski Space]
+Let $X = \{0, 1\}$. The possible topologies are:
+\begin{itemize}
+    \item Discrete: $\{\emptyset, \{0\}, \{1\}, \{0,1\}\}$
+    \item Indiscrete: $\{\emptyset, \{0,1\}\}$
+    \item \textbf{Sierpinski:} $\tau = \{\emptyset, \{1\}, \{0,1\}\}$. Here $\{1\}$ is open, but $\{0\}$ is not. This is a non-symmetric space used frequently in computer science (domain theory) and logic.
+\end{itemize}
+\end{example}
+
+\subsection{Comparing Topologies}
+
+On a single set $X$, we can define many different topologies. They effectively form a hierarchy.
+
+\begin{definition}[Finer and Coarser]
+Let $\tau_1$ and $\tau_2$ be two topologies on $X$.
+\begin{itemize}
+    \item If $\tau_2 \subseteq \tau_1$, we say $\tau_1$ is \textbf{finer} (or stronger) than $\tau_2$.
+    \item Conversely, $\tau_2$ is \textbf{coarser} (or weaker) than $\tau_1$.
+\end{itemize}
+\end{definition}
+
+\textbf{Visualization:} Think of the topology as a "resolution" or a "mesh size."
+\begin{itemize}
+    \item \textbf{Fine Topology:} Many open sets. Highly detailed. A "high-resolution" view of the space. The Discrete topology is the finest possible topology (maximum resolution).
+    \item \textbf{Coarse Topology:} Few open sets. Blurry. A "low-resolution" view. The Indiscrete topology is the coarsest possible topology (minimum resolution).
+\end{itemize}
+Continuity is harder to achieve with a finer domain topology (easy to map out of) but easier to achieve with a finer codomain topology (hard to map into).
+
+\section{Generating Topologies: Basis and Subbasis}
+
+Explicitly listing all open sets for spaces like $\mathbb{R}$ is impossible. Instead, we specify a smaller collection of "building blocks" that generate the entire topology.
+
+\subsection{Basis for a Topology}
+
+\begin{definition}[Basis]
+A collection $\mathcal{B}$ of subsets of $X$ is a \textbf{basis} for a topology if:
 \begin{enumerate}
-    \item The \textbf{interior} of $S$, denoted by $S^\circ$ or $\operatorname{Int}(S)$, is the union of all open sets contained in $S$.
-    \item The \textbf{closure} of $S$, denoted by $\overline{S}$ or $\operatorname{Cl}(S)$, is the intersection of all closed sets containing $S$.
+    \item \textbf{Covering:} $\bigcup_{B \in \mathcal{B}} B = X$. (Every point belongs to at least one basis element).
+    \item \textbf{Intersection compatibility:} For any $B_1, B_2 \in \mathcal{B}$ and any point $x \in B_1 \cap B_2$, there exists a third basis element $B_3 \in \mathcal{B}$ such that $x \in B_3 \subseteq B_1 \cap B_2$.
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Properties of Interior and Closure]
-Let $(X, \tau)$ be a topological space and $S \subseteq X$.
-\begin{enumerate}
-    \item $S^\circ$ is an open set and is the largest open set contained in $S$.
-    \item $\overline{S}$ is a closed set and is the smallest closed set containing $S$.
-\end{enumerate}
-\end{theorem}
+If $\mathcal{B}$ is a basis, the topology $\tau$ generated by $\mathcal{B}$ is defined as the collection of \textbf{all possible unions} of elements of $\mathcal{B}$.
+\[ U \text{ is open } \iff \forall x \in U, \exists B \in \mathcal{B} \text{ such that } x \in B \subseteq U \]
 
-\begin{proof}
-\begin{enumerate}
-    \item By definition, $S^\circ = \bigcup \{U \in \tau \mid U \subseteq S\}$. Since the union of any collection of open sets is open, $S^\circ$ is open. Furthermore, if $U$ is any open set contained in $S$, then $U$ is one of the sets in the union, so $U \subseteq S^\circ$. Thus $S^\circ$ is the largest open set contained in $S$.
-    \item By definition, $\overline{S} = \bigcap \{F \subseteq X \mid F \text{ is closed and } S \subseteq F\}$. Since the intersection of any collection of closed sets is closed (by the properties of closed sets), $\overline{S}$ is closed. Furthermore, if $F$ is any closed set containing $S$, then $F$ is one of the sets in the intersection, so $\overline{S} \subseteq F$. Thus $\overline{S}$ is the smallest closed set containing $S$.
-\end{enumerate}
-\end{proof}
+\textbf{Standard Basis for $\mathbb{R}$:} The collection of all open intervals $(a, b)$ with $a, b \in \mathbb{R}$.
+\textbf{Standard Basis for $\mathbb{R}^n$:} The collection of all open balls $B_r(x)$. Alternatively, the collection of all open "boxes" (rectangles) $(a_1, b_1) \times \dots \times (a_n, b_n)$. These two bases generate the \textit{same} topology (the Euclidean topology).
 
-\begin{definition}[Neighborhood and Limit Point]
-Let $(X, \tau)$ be a topological space.
-\begin{enumerate}
-    \item A subset $N \subseteq X$ is called a \textbf{neighborhood} of a point $x \in X$ if there exists an open set $U$ such that $x \in U \subseteq N$.
-    \item A point $x \in X$ is called a \textbf{limit point} (or accumulation point) of a subset $A \subseteq X$ if every open neighborhood $U$ of $x$ intersects $A$ in some point other than $x$, i.e., $U \cap (A \setminus \{x\}) \neq \emptyset$.
-\end{enumerate}
+\subsection{Subbasis}
+
+Sometimes verifying the intersection property of a basis is tedious. We can be even lazier using a subbasis.
+\begin{definition}[Subbasis]
+A collection $\mathcal{S}$ of subsets of $X$ is a \textbf{subbasis} if its union covers $X$. The topology generated by $\mathcal{S}$ is formed by taking \textbf{finite intersections} of elements in $\mathcal{S}$ (to form a basis) and then taking \textbf{arbitrary unions}.
 \end{definition}
 
-\begin{theorem}[Characterization of Closed Sets]
-A subset $A$ of a topological space $X$ is closed if and only if it contains all its limit points.
+Example: In $\mathbb{R}$, the collection of semi-infinite rays $(-\infty, a)$ and $(b, \infty)$ is a subbasis. Their intersection produces bounded open intervals $(b, a)$, which form the basis for the standard topology.
+
+\subsection{Countability Axioms}
+Topologists classify spaces based on the "size" of their bases.
+\begin{itemize}
+    \item \textbf{Second Countable:} The space has a \textit{countable} basis. (e.g., $\mathbb{R}^n$ is second countable because we can use balls with rational radii and rational centers).
+    \item \textbf{First Countable:} Every point has a countable "local basis" of neighborhoods. (e.g., Metric spaces).
+\end{itemize}
+Second countable implies First countable. These properties are crucial for proving equivalence between sequence convergence and topological accumulation.
+
+\section{Closed Sets and Limit Points}
+
+Just as light defines shadow, open sets define closed sets.
+
+\begin{definition}[Closed Set]
+A subset $F \subseteq X$ is \textbf{closed} if its complement $X \setminus F$ is open.
+\end{definition}
+
+\textbf{Essential Properties:}
+\begin{enumerate}
+    \item $\emptyset$ and $X$ are closed.
+    \item Finite unions of closed sets are closed. (Inverse of infinite intersections of open sets).
+    \item Arbitrary intersections of closed sets are closed.
+\end{enumerate}
+
+\newpage
+
+\subsection{Closure, Interior, and Boundary}
+Given an arbitrary subset $A \subseteq X$, we can define three related sets:
+
+\begin{definition}
+\begin{itemize}
+    \item \textbf{Interior ($\operatorname{Int}(A), A^\circ$):} The union of all open sets contained in $A$. It is the largest open set inside $A$.
+    \item \textbf{Closure ($\operatorname{Cl}(A), \overline{A}$):} The intersection of all closed sets containing $A$. It is the smallest closed set containing $A$.
+    \item \textbf{Boundary ($\partial A$):} $\overline{A} \setminus A^\circ$. The set of points that can "see" both $A$ and $A^c$.
+\end{itemize}
+\end{definition}
+
+\textbf{Intuition:}
+Take $A = [0, 1) \subset \mathbb{R}$.
+\begin{itemize}
+    \item Interior: $(0, 1)$. (The "meat").
+    \item Closure: $[0, 1]$. (The set plus its skin).
+    \item Boundary: $\{0, 1\}$. (The skin itself).
+\end{itemize}
+
+\subsection{Limit Points and Density}
+A point $x$ is a \textbf{limit point} (or accumulation point) of $A$ if every open set containing $x$ intersects $A$ at some point other than $x$.
+\[ \forall U \in \tau, x \in U \implies (U \cap A) \setminus \{x\} \neq \emptyset \]
+\textbf{Theorem:} A set is closed if and only if it contains all its limit points.
+
+\textbf{Dense Sets:} A subset $A$ is \textbf{dense} in $X$ if $\overline{A} = X$.
+Example: The rationals $\mathbb{Q}$ are dense in $\mathbb{R}$. Any open interval, no matter how small, contains a rational number. This property (Separability) is vital in Functional Analysis.
+
+\section{Constructing New Spaces}
+
+Topology gives us a toolkit to build new spaces from old ones, much like LEGO.
+
+\subsection{Subspace Topology}
+If $Y \subset X$, how do we make $Y$ a space?
+\[ \tau_Y = \{ U \cap Y \mid U \in \tau_X \} \]
+"Open in $Y$" equals "Open in $X$" intersected with $Y$.
+\textbf{Inheritance:} Properties like "Second Countable" and "Hausdorff" are inherited by subspaces. Compactness is not necessarily inherited by arbitrary subspaces, but is by closed subspaces.
+
+\subsection{Product Topology}
+Given spaces $X$ and $Y$, the product $X \times Y$ needs a topology.
+The natural basis consists of generic "rectangles":
+\[ \mathcal{B} = \{ U \times V \mid U \in \tau_X, V \in \tau_Y \} \]
+This is the coarsest topology such that the projection maps $\pi_X: X \times Y \to X$ and $\pi_Y: X \times Y \to Y$ are continuous.
+For infinite products $\prod X_\alpha$, we use the \textbf{Tychonoff Product Topology}, where basis elements are restricted products where $U_\alpha = X_\alpha$ for all but finitely many indices. This subtlety is required to preserve Compactness (Tychonoff's Theorem).
+
+\subsection{Quotient Topology (Gluing)}
+This is the most geometric construction. It models "gluing" or "identifying" points.
+Let $X$ be a space and $\sim$ be an equivalence relation. Let $q: X \to X/\sim$ be the natural projection map identifying equivalent points.
+The \textbf{Quotient Topology} on $X/\sim$ is defined such that $U \subset X/\sim$ is open if and only if $q^{-1}(U)$ is open in $X$.
+
+\textbf{Examples of Gluing:}
+\begin{enumerate}
+    \item \textbf{Circle ($S^1$):} Take $[0, 1]$ and glue $0 \sim 1$.
+    \item \textbf{Cylinder:} Take $[0,1] \times [0,1]$ and glue $(0, y) \sim (1, y)$ (glue left edge to right edge).
+    \item \textbf{Möbius Strip:} Take $[0,1] \times [0,1]$ and glue $(0, y) \sim (1, 1-y)$ (glue with a twist).
+    \item \textbf{Torus ($T^2$):} Glue both pairs of opposite edges of a square.
+    \item \textbf{Klein Bottle:} Glue one pair normally, the other with a twist. (Cannot be embedded in $\mathbb{R}^3$).
+\end{enumerate}
+
+\section{Separation Axioms}
+
+In abstract spaces, points might be "too close" to separate. We introduce axioms to enforce "niceness."
+
+\begin{itemize}
+    \item \textbf{$T_0$ (Kolmogorov):} For any distinct $x, y$, at least one of them has a neighborhood not containing the other.
+    \item \textbf{$T_1$ (Fréchet):} For any distinct $x, y$, each has a neighborhood not containing the other. (Equivalently: Points are closed sets).
+    \item \textbf{$T_2$ (Hausdorff):} The gold standard. Any two distinct points $x, y$ have \textbf{disjoint} neighborhoods $U, V$.
+    \[ x \in U, y \in V, U \cap V = \emptyset \]
+\end{itemize}
+
+\textbf{Importance of Hausdorff:} In a Hausdorff space, limits of sequences are \textbf{unique}. In a non-Hausdorff space (like the Cofinite topology on an infinite set), a sequence can converge to multiple points simultaneously! Most spaces studied in analysis (Metric spaces, Manifolds) are Hausdorff.
+
+\section{Continuity And Homeomorphism}
+
+\subsection{Continuous Functions}
+In Calculus: $\lim_{x\to c} f(x) = f(c)$.
+In Metric Spaces: $\forall \epsilon, \exists \delta \dots$
+In Topology:
+\begin{definition}[Global Continuity]
+A function $f: X \to Y$ is continuous if for every open set $V \subseteq Y$, the preimage $f^{-1}(V)$ is open in $X$.
+\end{definition}
+This elegant definition eliminates $\epsilon$ and $\delta$ entirely. It captures the essence that "f does not tear the space." If $V$ is a coherent "puddle" in the target, its origin $f^{-1}(V)$ was also a coherent "puddle" (or puddles) in the domain, not a scattered dust of points.
+
+\subsection{Homeomorphisms}
+When are two topological spaces "structurally identical"?
+\begin{definition}[Homeomorphism]
+A map $f: X \to Y$ is a homeomorphism if:
+\begin{enumerate}
+    \item $f$ is a bijection (1-to-1 and onto).
+    \item $f$ is continuous.
+    \item $f^{-1}$ is continuous (f is an open map).
+\end{enumerate}
+\end{definition}
+If $X \cong Y$, they share all topological properties (connectedness, compactness, etc.).
+\textbf{Topological Invariants:} Properties preserved under homeomorphism.
+- Example: The number of "holes" (genus).
+- Example: The Euler characteristic.
+- Counter-example: Compactness is an invariant. $(0, 1)$ is homeomorphic to $\mathbb{R}$? No, because $(0, 1)$ is not compact (bounded but not closed in $\mathbb{R}$? careful, intrinsic compactness) -- actually $(0, 1)$ is homeomorphic to $\mathbb{R}$ via $\tan(x)$. Neither is compact. Usually we compare $[0, 1]$ (compact) and $\mathbb{R}$ (non-compact). They are not homeomorphic.
+
+\section{Connectedness}
+
+Connectedness formalizes the idea of an object being in "one piece."
+
+\subsection{Definitions}
+\begin{definition}[Disconnected]
+A space $X$ is \textbf{disconnected} if it can be written as $X = U \cup V$, where $U, V$ are \textbf{disjoint}, \textbf{non-empty}, \textbf{open} sets.
+\end{definition}
+Such a pair $(U, V)$ is called a separation.
+A space is \textbf{Connected} if no such separation exists.
+
+\subsection{Path Connectedness}
+A stronger, more intuitive notion.
+\begin{definition}[Path Connected]
+$X$ is path-connected if for every pair $x, y \in X$, there exists a continuous function (path) $\gamma: [0, 1] \to X$ such that $\gamma(0) = x$ and $\gamma(1) = y$.
+\end{definition}
+\textbf{Theorem:} Path connected $\implies$ Connected.
+The converse is false! (Example: The Topologist's Sine Curve).
+
+\subsection{Application: The Intermediate Value Theorem}
+The classical IVT is actually a topological theorem:
+"The continuous image of a connected set is connected."
+Since $[a, b]$ is connected, its image under a continuous $f$ must be a connected interval. If $f(a) < 0$ and $f(b) > 0$, the interval must contain 0.
+
+\section{Compactness}
+
+Compactness is perhaps the most subtle and powerful concept in analysis. It is the correct generalization of "finiteness."
+
+\subsection{Definition via Covers}
+\begin{definition}[Open Cover]
+An \textbf{open cover} of $X$ is a collection $\{U_\alpha\}$ of open sets such that $\bigcup U_\alpha = X$.
+\end{definition}
+
+\begin{definition}[Compact Space]
+A space $X$ is \textbf{compact} if \textbf{every} open cover of $X$ admits a \textbf{finite subcover}.
+\[ X = U_{\alpha_1} \cup U_{\alpha_2} \cup \dots \cup U_{\alpha_n} \]
+\end{definition}
+This definition (Heine-Borel property) seems abstract. Why do we care?
+It means that locally small properties can be patched together to hold globally with finite complexity.
+
+\subsection{Compactness in $\mathbb{R}^n$}
+\begin{theorem}[Heine-Borel]
+A subset of Euclidean space $\mathbb{R}^n$ is compact if and only if it is both \textbf{closed} and \textbf{bounded}.
 \end{theorem}
+This gives us a concrete way to check compactness in familiar spaces. Intervals $[a, b]$, spheres $S^n$, and tori $T^n$ are compact. The real line $\mathbb{R}$ is not compact (cover it with $(-n, n)$ -- you need infinitely many).
 
-\begin{proof}
-Let $A'$ denote the set of all limit points of $A$. We want to show that $A$ is closed $\iff A' \subseteq A$.
+\subsection{Extreme Value Theorem}
+\textbf{Theorem:} Let $f: X \to \mathbb{R}$ be continuous. If $X$ is compact, then $f$ is bounded and attains its maximum and minimum values.
+\textit{Proof Sketch:} The image $f(X)$ is a compact subset of $\mathbb{R}$, thus closed and bounded. A closed bounded set in $\mathbb{R}$ contains its supremum and infimum.
 
-($\Rightarrow$) Suppose $A$ is closed. Let $x$ be a limit point of $A$. If $x \notin A$, then $x \in X \setminus A$. Since $A$ is closed, $U = X \setminus A$ is an open neighborhood of $x$. However, $U \cap A = \emptyset$, which contradicts the definition of a limit point (every neighborhood must intersect $A \setminus \{x\}$). Therefore, limit points cannot be outside $A$, so $A' \subseteq A$.
+This theorem underpins all of optimization theory. Without compactness, a function might approach a value but never reach it (like $1/x$ on $(1, \infty)$ goes to 0 but never hits 0), or go to infinity.
 
-($\Leftarrow$) Suppose $A$ contains all its limit points ($A' \subseteq A$). We want to show that $A$ is closed, or equivalently, that $X \setminus A$ is open.
-Let $x \in X \setminus A$. Since $x \notin A$ and $A' \subseteq A$, $x$ is not a limit point of $A$. By the definition of a limit point, there exists an open neighborhood $U_x$ of $x$ such that $U_x \cap (A \setminus \{x\}) = \emptyset$. Since $x \notin A$, this implies $U_x \cap A = \emptyset$, meaning $U_x \subseteq X \setminus A$.
-Thus, for every $x \in X \setminus A$, there exists an open set $U_x$ contained in $X \setminus A$. The union of these open sets is $X \setminus A$ itself:
-\[
-X \setminus A = \bigcup_{x \in X \setminus A} U_x
-\]
-Since a union of open sets is open, $X \setminus A$ is open. Therefore $A$ is closed.
-\end{proof}
+The preceding exposition is confined to the foundational framework of \textbf{Point-Set Topology}, establishing the axiomatic structure $(X,\tau)$ and essential concepts of limits, continuity, and compactness, which form the prerequisite language for advanced mathematical analysis. This text does not delve into \textbf{Algebraic Topology} (e.g., fundamental group $\pi_1(X)$ or homology groups $H_k(X)$), \textbf{Differential Topology} (smooth structures on manifolds $M$), or \textbf{Geometric Topology} (knot theory, low-dimensional manifolds), as these represent a transition toward structural and categorical analysis beyond the introductory scope.
 
+\section*{Further Reading}
+To extend mastery beyond point-set foundations, several seminal texts are recommended. For axiomatic structures, Munkres' \textit{Topology} provides exhaustive treatments of Tychonoff Theorem and Urysohn Lemma. Willard's \textit{General Topology} offers a sophisticated perspective on convergence and function spaces. For algebraic and differential branches, consult Hatcher's \textit{Algebraic Topology} for $\pi_1(X)$ and homology, and Milnor's \textit{Topology from the Differentiable Viewpoint} for smooth manifolds. Rolfsen's \textit{Knots and Links} serves as an entry to geometric topology and knot classification.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\chapter{Measure Theory}
-
-
+\chapter{Complex Analysis III}
 
 \chapter{Applied Mathematics: Graph Theory}
 
@@ -7060,7 +7129,7 @@ A rooted tree $G$ is binary if it is 2-ary.
 
 \begin{theorem}
 In a full m-ary tree with $n$ internal vertices, the number of leaves $L$ is given by:
-\[ L = mn + 1 \]
+\[ L = (m-1)n + 1 \]
 \end{theorem}
 
 \begin{theorem}
