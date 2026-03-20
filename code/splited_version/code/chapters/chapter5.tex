@@ -44,8 +44,6 @@ For any two sequences $\{x_n\}$ and $\{y_n\}$:
 Equality holds if at least one of the sequences converges.
 \end{property}
 
-\newpage
-
 \begin{definition}[Convergence]
 Let $S_n$ denote the $n$-th \textbf{partial sum} of the series:
 \[ S_n = \sum_{k=1}^{n} a_k = a_1 + \cdots + a_n \]
@@ -131,8 +129,6 @@ More rigorous expressions of this theorem can be described as:
 
 Here is some applications of the integral test:
 
-\newpage
-
 \begin{example}
     Determine the convergence of the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$. \\
     \textbf{Solution:} Consider the function $f(x) = \frac{1}{x \ln^q x}$ for $x \ge 2$. This function is continuous, positive, and decreasing for $x > e$ when $q > 0$. We apply the integral test:
@@ -143,6 +139,8 @@ Here is some applications of the integral test:
 \end{example}
 
 Also, we can use the integral test to determine the convergence of improper integrals:
+
+\newpage
 
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$. \\
@@ -161,8 +159,6 @@ Also, we can use the integral test to determine the convergence of improper inte
     Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
 \end{example}
 
-\newpage
-
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
     \textbf{Solution:} We again choose the sequence $\{a_n\}$ as $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
@@ -178,6 +174,10 @@ Also, we can use the integral test to determine the convergence of improper inte
     \[I_2 > \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + \pi)^4} = \frac{\pi/2}{1 + (n\pi + \pi)^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
     Therefore, $a_n = I_1 + I_2 > \frac{1}{2(n+1)^4 \pi^3}$. Since the series $\sum \frac{1}{n^4}$ converges, by the comparison test, the series $\sum a_n$ converges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$ converges.
 \end{example}
+
+\paragraph{A Quick Detour: Upper and Lower Limits ($\limsup$ and $\liminf$)}
+Sometimes sequences refuse to settle down and bounce around like a hyperactive kangaroo. When a classic limit doesn't exist, we track their extreme accumulation points instead. These are the \textbf{Limit Superior} ($\limsup_{n \to \infty} x_n$) and \textbf{Limit Inferior} ($\liminf_{n \to \infty} x_n$). 
+A quirky feature of these is their arithmetic—it's not your standard algebra! For example, $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$. They only strictly obey the equals sign when one of the sequences actually converges. Keep this in mind when Cauchy drops a $\limsup$ on you!
 
 \paragraph{Ratio and Root Tests}
 These are the most commonly used tests for computation.
@@ -283,7 +283,7 @@ This highlights the dangerous nature of conditional convergence: the order of su
 Now we shall dive into the topic of multiplying two series together. We have following definition:
 
 \begin{definition}
-    Assume we have two series $\sum_{n=0}^{\infty} a_n$ and $\sum_{n=0}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
+    Assume we have two series $\sum_{n=1}^{\infty} a_n$ and $\sum_{n=1}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
     \[\begin{pmatrix}
         a_1 b_1 & a_1 b_2 & a_1 b_3 & a_1 b_4 & \cdots \\
         a_2 b_1 & a_2 b_2 & a_2 b_3 & a_2 b_4 & \cdots \\
@@ -310,7 +310,7 @@ The reason we define the product of two series in this way is that, due to the p
 Under certain conditions, both arrangements converge to the same sum. This is formalized in the following theorem:
 
 \begin{theorem}
-    Assume we have two series $\sum_{n=0}^{\infty} a_n = A$ and $\sum_{n=0}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
+    Assume we have two series $\sum_{n=1}^{\infty} a_n = A$ and $\sum_{n=1}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
 \end{theorem}
 
 The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
@@ -344,9 +344,9 @@ Sometimes, it is easier to study the convergence of infinite products by express
 Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
 
 \begin{theorem}
-    The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
+    Assume $a_n > -1$ for all $n$. The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
     
-    Furthermore, if $a_n$ does not change sign, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+    Furthermore, if $a_n > -1$ does not change sign, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
 \end{theorem}
 
 Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
@@ -368,6 +368,8 @@ Also, matheaticians use the infinite product deduce some famous formulas, for ex
 \textbf{Stirling Formula}:
 When $n \to \infty$, we have the famous approximation:
 \[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
+
+\newpage
 
 \subsection{Function Series}
 
@@ -395,8 +397,6 @@ If the function series $\sum_{n=1}^{\infty} u_n(x)$ converges at every point $x 
 \end{definition}
 
 Likewise, we can define the sequence of partial sums:
-
-\newpage
 
 \begin{definition}[Partial Sums]
 The $N$-th \textbf{partial sum} of the function series $\sum_{n=1}^{\infty} u_n(x)$ is defined as:
@@ -426,9 +426,20 @@ The limit function is:
 Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
 \end{example}
 
-Not only continuity, but also integration and differentiation may fail under pointwise convergence. There are more examples illustrating these failures. Readers are encouraged to explore them independently.
+But wait, there's more! Let's look at more instances where pointwise convergence absolutely ruins our calculus dreams:
 
-To fix this, we introduce a stronger form of convergence.
+\begin{example}[Calculus Goes Bonkers]
+Consider the sequence $S_n(x) = nx(1-x^2)^n$ on $[0,1]$.
+For any $x \in [0, 1]$, the pointwise limit is clearly $S(x) = 0$. You would logically expect the integral to be $0$, right? But let's actually integrate the sequence:
+\[ \int _0^1 S_n(x) dx = \int_0^1 nx(1-x^2)^n dx = -\frac{n}{2} \int_0^1 (1-x^2)^n d(1-x^2) = \frac{n}{2(n+1)} \to \frac{1}{2} \]
+Pointwise convergence just watched the integral become $1/2$ and basically said "I'll pretend I didn't see that."
+\end{example}
+
+\begin{example}[Derivatives Jumping Out the Window]
+Take the series $\sum_{n=1}^{\infty} \frac{\sin(n^2 x)}{n^2}$. It converges pointwise (and even absolutely) to some nice continuous function. But if we try to naively take the derivative term-by-term, we get $\sum_{n=1}^{\infty} \cos(n^2 x)$, which diverges horribly. 
+\end{example}
+
+To fix this catastrophic failure of properties, we need to bring in the heavy artillery: a stronger form of convergence.
 
 \subsubsection{Uniform Convergence}
 
@@ -452,22 +463,35 @@ The maximum of $f_n(x)$ occurs at $x = \frac{n}{n+1}$, where
 Since the maximum approach zero, $f_n$ converges uniformly to $0$ on $[0,1]$.
 \end{example}
 
-From the concept of uniform convergence, we can derive the corollary for function series:
+What if we want to boldly destroy the illusion of uniform convergence? Instead of finding the exact supremum, we can evaluate the function at a \textit{moving target}!
 
-\begin{corollary}
-    If a function series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $E$, then the function sequence $\{u_n(x)\}$ converges uniformly to $u(x) \equiv 0$ on $E$.
-\end{corollary}
+\begin{theorem}[Sequence Criterion / Moving Target Trick]
+Let $\{f_n(x)\}$ converge pointwise to $f(x)$ on $E$. Then $\{f_n(x)\}$ \textbf{converges uniformly} to $f(x)$ on $E$ if and only if for \textbf{any} sequence $\{x_n\} \subset E$, we have:
+\[ \lim_{n \to \infty} \left| f_n(x_n) - f(x_n) \right| = 0 \]
+If you can find even one sequence $\{x_n\}$ where the limit is not zero, uniform convergence is dead in the water.
+\end{theorem}
 
-\begin{definition}[Compact Convergence]
-    The sequence of functions converges compactly on the open set.
+\begin{example}
+Consider $f_n(x) = \left(1+\frac{x}{n}\right)^n$ on $[0,+\infty)$. The pointwise limit is famously $f(x) = e^x$. 
+Does it converge uniformly? Let's pick a moving target sequence $x_n = n$. The distance becomes:
+\[ |f_n(x_n) - f(x_n)| = \left| \left(1+\frac{n}{n}\right)^n - e^n \right| = |2^n - e^n| \to +\infty \]
+Uniform convergence practically left the chat. (However, note that it does converge uniformly on any bounded interval $[0, t]$!)
+\end{example}
+
+\begin{definition}[Compact Convergence / Uniform Convergence on Compact Sets]
+    Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ converges \textbf{compactly} (or uniformly on compact subsets) to a function $f$ on $E$ if for every compact subset $K \subseteq E$, the sequence $\{f_n\}$ converges uniformly to $f$ on $K$.
 \end{definition}
 
-The compact convergence is weaker than uniform convergence on the whole set, but stronger than pointwise convergence. In many cases, it can still preserve properties like continuity.
+Compact convergence is weaker than uniform convergence on the entire set $E$, but stronger than pointwise convergence. For open sets or unbounded domains where global uniform convergence often fails, compact convergence serves as a natural and highly useful substitute. Importantly, since continuity is a local property, compact convergence is sufficient to ensure that the limit function remains continuous.
+
+Now let's return to the topic of uniform convergence. We have the following criterion for uniform convergence:
 
 \begin{theorem}[Cauchy Criterion for Uniform Convergence]
 The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
 \[ |f_n(x) - f_m(x)| < \epsilon \]
 \end{theorem}
+
+\textit{Seriously, is there any limit process Cauchy hasn't put his name on? Cauchy, you really won big time.} It is a fundamental tool for proving convergence without explicitly finding the limit. Its core idea is to show that the sequence becomes "eventually close" to itself, which implies convergence.
 
 For series $\sum u_n(x)$, the most practical tool for proving uniform convergence is the Weierstrass M-Test.
 
@@ -480,9 +504,20 @@ Let $\{u_n(x)\}$ be a sequence of functions defined on $E$. Suppose there exists
 Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and absolutely on $E$.
 \end{theorem}
 
+Just like numerical series, when absolute convergence (M-Test) isn't an option, we have to rely on the dynamic duo: Abel and Dirichlet.
+
+\begin{theorem}[A-D Tests for Uniform Convergence]
+Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$. It converges uniformly on $E$ if either of the following conditions hold:
+\begin{enumerate}
+    \item \textbf{Dirichlet's Test}: The partial sums of $\sum b_n(x)$ are \textbf{uniformly bounded} on $E$ (i.e., bounded evenly everywhere, all at once, by a single $M$), and the sequence $a_n(x)$ is monotonic with respect to $n$ for each $x$ and converges \textbf{uniformly} to $0$ on $E$.
+    \item \textbf{Abel's Test}: The series $\sum b_n(x)$ converges uniformly on $E$, and $a_n(x)$ is monotonic with respect to $n$ for each $x$ and is \textbf{uniformly bounded} across all $n$ and $x \in E$.
+\end{enumerate}
+\end{theorem}
+
+
 \subsubsection{Properties of Uniformly Convergent Series}
 
-Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus.
+Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus. In short: \textbf{The operation on the infinite sum equals the infinite sum of the operations.}
 
 \begin{theorem}[Continuity]
 If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
@@ -491,70 +526,80 @@ Consequently, for a series of continuous functions $\sum u_n(x)$, if the series 
 \end{theorem}
 
 \begin{theorem}[Term-by-Term Integration]
-Let $\{u_n(x)\}$ be continuous on $[a, b]$ and suppose $\sum u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then:
+Let each $\{u_n(x)\}$ be Riemann integrable on $[a, b]$, and suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then the limit function $S(x)$ is also Riemann integrable on $[a, b]$, and the integration and summation can be safely interchanged:
 \[ \int_a^b S(x) \, dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) \, dx \]
 \end{theorem}
 
 \begin{theorem}[Term-by-Term Differentiation]
-Suppose $\sum u_n(x)$ converges at some point $x_0 \in [a, b]$. If the series of derivatives $\sum u_n'(x)$ converges \textbf{uniformly} on $[a, b]$, then the original series converges uniformly to a differentiable function $S(x)$, and:
+Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, b]$ (meaning each $u_n'$ is continuous). Suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges at some point $x_0 \in [a, b]$. If the series of derivatives $\sum_{n=1}^{\infty} u_n'(x)$ converges \textbf{uniformly} on $[a, b]$, then the original series converges uniformly on $[a, b]$ to a continuously differentiable function $S(x)$, and:
 \[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
 \end{theorem}
 
 \subsection{Power Series}
 
 A power series is a specific type of function series of the form:
-\[ \sum_{n=0}^{\infty} a_n (x - x_0)^n \]
-where $a_n$ are coefficients and $x_0$ is the center. For simplicity, we usually set $x_0 = 0$.
+\[ \sum_{n=0}^{\infty} a_n (x - x_0)^n = a_0 + a_1(x - x_0) + a_2(x - x_0)^2 + \cdots \]
+where $a_n$ are the coefficients of the series, and $x_0$ is the center of convergence. For simplicity in notation and proofs, we often set $x_0 = 0$ by a simple change of variables $y = x - x_0$, transforming the series into $\sum_{n=0}^{\infty} a_n x^n$.
 
 \subsubsection{Radius of Convergence}
 
-Unlike general function series, power series have a very structured domain of convergence.
+Unlike general function series, which might converge on complicated sets, power series possess a highly structured domain of convergence. The set of points where a power series converges is always an interval centered at $x_0$.
 
-\begin{theorem}[Cauchy-Hadamard]
+\newpage
+
+\begin{theorem}[Cauchy-Hadamard Theorem]
 Given a power series $\sum a_n x^n$, let
 \[ \rho = \limsup_{n \to \infty} \sqrt[n]{|a_n|} \]
 The \textbf{radius of convergence} $R$ is defined as:
 \[ R = \begin{cases} 0 & \text{if } \rho = +\infty \\ 1/\rho & \text{if } 0 < \rho < +\infty \\ +\infty & \text{if } \rho = 0 \end{cases} \]
-The series converges absolutely for $|x| < R$ and diverges for $|x| > R$. The behavior at endpoints $x = \pm R$ must be checked individually.
+The series converges absolutely for every $x$ such that $|x| < R$ and diverges for every $x$ such that $|x| > R$. The interval $(-R, R)$ is called the interval of convergence. The behavior at the endpoints $x = \pm R$ must be investigated individually depending on the specific series.
 \end{theorem}
 
-\begin{property}
-Inside the interval of convergence $(-R, R)$, the power series converges \textbf{uniformly} on any closed sub-interval $[-r, r]$ where $r < R$.
-This implies that power series define continuous, infinitely differentiable ($C^\infty$) functions inside their radius of convergence.
+In practice, if the sequence of coefficients is well-behaved, the ratio test provides a simpler way to compute the radius of convergence:
+\[ R = \lim_{n \to \infty} \left| \frac{a_n}{a_{n+1}} \right| \]
+provided this limit exists or is $+\infty$.
+
+\begin{property}[Uniform Convergence and Smoothness]
+Inside the interval of convergence $(-R, R)$, the power series converges \textbf{uniformly} on any closed and bounded sub-interval $[-r, r]$ where $0 < r < R$.
+Because of this uniform convergence, the limit function $S(x) = \sum_{n=0}^{\infty} a_n x^n$ is continuous on $(-R, R)$. Even more impressively, a power series can be differentiated and integrated term-by-term inside its interval of convergence. The resulting series will have the exact same radius of convergence $R$, which implies that a power series defines an infinitely differentiable ($C^\infty$) function inside its radius of convergence.
 \end{property}
 
 \subsubsection{Abel's Theorem}
-What happens if a series converges at an endpoint $x=R$?
+
+We know that uniform convergence guarantees continuity. Since a power series converges uniformly on any compact subset of $(-R, R)$, the sum function is continuous on $(-R, R)$. But what happens if the series converges at an endpoint $x=R$? Does the continuity extend to the boundary?
 
 \begin{theorem}[Abel's Continuity Theorem]
-If the power series $\sum_{n=0}^{\infty} a_n x^n$ converges at $x = R$ (or $x = -R$), then the function $f(x) = \sum a_n x^n$ is continuous at $x = R$ from the left (or at $x = -R$ from the right).
+If the power series $\sum_{n=0}^{\infty} a_n x^n$ converges at $x = R$ (respectively, $x = -R$), then the sum function $f(x) = \sum_{n=0}^{\infty} a_n x^n$ is continuous at $x = R$ from the left (respectively, at $x = -R$ from the right). That is to say:
 \[ \lim_{x \to R^-} \sum_{n=0}^{\infty} a_n x^n = \sum_{n=0}^{\infty} a_n R^n \]
 \end{theorem}
 
-This theorem is powerful for evaluating sums of numerical series. For example, using the expansion $\ln(1+x) = x - x^2/2 + x^3/3 - \dots$, which converges for $x=1$, Abel's theorem justifies $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
+This theorem provides a powerful tool for formally evaluating sums of numerical series by defining an auxiliary power series and taking the limit. For example, consider the expansion:
+\[ \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \dots \]
+By the ratio test, this series has $R=1$. At $x=1$, the series is the alternating harmonic series $1 - 1/2 + 1/3 - \dots$, which converges by the Alternating Series Test. Therefore, by Abel's Theorem, we can take the limit as $x \to 1^-$ on the function $\ln(1+x)$ to deduce that $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
 
 \subsection{Taylor and Maclaurin Series}
 
-If a function $f(x)$ can be represented by a power series $\sum a_n (x-x_0)^n$, what must the coefficients $a_n$ be?
+We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
 
 \begin{theorem}[Taylor Series]
-If $f(x)$ is represented by a power series centered at $x_0$ with radius of convergence $R > 0$, then the coefficients are unique and given by:
+If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n (x-x_0)^n$ with a non-zero radius of convergence $R$, then by repeatedly differentiating and evaluating at $x=x_0$, we find that the coefficients are uniquely determined as:
 \[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
-The series is called the \textbf{Taylor Series} of $f$ at $x_0$. If $x_0=0$, it is called the \textbf{Maclaurin Series}.
+The resulting series $\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n$ is called the \textbf{Taylor Series} of $f$ centered at $x_0$. If $x_0=0$, it is specifically called the \textbf{Maclaurin Series}.
 \end{theorem}
 
-\begin{remark}
-Even if a function $f(x)$ is $C^\infty$ (infinitely differentiable), its Taylor series does not necessarily converge to $f(x)$. It might converge to a different function or only at $x_0$.
-Functions for which the Taylor series converges to the function itself are called \textbf{analytic functions}.
+\begin{remark}[Analyticity]
+It is crucial to note that simply being $C^\infty$ (having derivatives of all orders) is not enough to guarantee that the Taylor series of $f(x)$ actually converges to $f(x)$. The series might only converge at $x_0$, or it might converge to a completely different function. Functions that are equal to their Taylor series on an open interval are called \textbf{real analytic functions}. A famous example of a smooth but non-analytic function is $f(x) = e^{-1/x^2}$ for $x \neq 0$ and $f(0) = 0$, where all derivatives at $0$ vanish, making its Maclaurin series identically zero.
 \end{remark}
 
-\begin{example}[Standard Expansions]
-The following expansions are essential:
+\begin{example}[Standard Maclaurin Expansions]
+The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
 \begin{align*}
-    e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots & (R = \infty) \\
-    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \dots & (R = \infty) \\
-    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \dots & (R = \infty) \\
-    \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + \dots & (R = 1)
+    e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots & (R = \infty) \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots & (R = \infty) \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots & (R = \infty) \\
+    \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + x^3 + \dots & (R = 1) \\
+    \ln(1+x) &= \sum_{n=1}^{\infty} \frac{(-1)^{n-1} x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} - \dots & (R = 1) \\
+    (1+x)^\alpha &= 1 + \sum_{n=1}^{\infty} \frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!} x^n & (R = 1)
 \end{align*}
 \end{example}
 
@@ -637,6 +682,8 @@ Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit
 \end{enumerate}
 Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
 \end{example}
+
+\newpage
 
 \begin{remark}
 It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
