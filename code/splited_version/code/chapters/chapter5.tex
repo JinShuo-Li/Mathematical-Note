@@ -165,7 +165,7 @@ Also, we can use the integral test to determine the convergence of improper inte
     \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}\]
     Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}$. We have:
     \[
-    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t}
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}
     = \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} + \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} = I_1 + I_2
     \]
     For $I_1$, we have:
@@ -535,6 +535,17 @@ Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, 
 \[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
 \end{theorem}
 
+There is also a powerful theorem that guarantees uniform convergence under specific conditions:
+
+\begin{theorem}[Dini's Theorem]
+Let $\{S_n(x)\}$ be a sequence of continuous functions defined on a compact interval $[a, b]$. If:
+\begin{enumerate}
+    \item $S_n(x)$ converges pointwise to a continuous function $S(x)$ on $[a, b]$,
+    \item For each fixed $x \in [a, b]$, the sequence $\{S_n(x)\}$ is monotonic with respect to $n$,
+\end{enumerate}
+then the convergence is \textbf{uniform} on $[a, b]$.
+\end{theorem}
+
 \subsection{Power Series}
 
 A power series is a specific type of function series of the form:
@@ -577,6 +588,27 @@ This theorem provides a powerful tool for formally evaluating sums of numerical 
 \[ \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \dots \]
 By the ratio test, this series has $R=1$. At $x=1$, the series is the alternating harmonic series $1 - 1/2 + 1/3 - \dots$, which converges by the Alternating Series Test. Therefore, by Abel's Theorem, we can take the limit as $x \to 1^-$ on the function $\ln(1+x)$ to deduce that $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
 
+Here are some standard examples for calculating the sum function of a power series using term-by-term calculus:
+
+\begin{example}
+Find the sum function $S(x)$ of the power series $\sum_{n=1}^{\infty} \frac{x^n}{n!}$.
+\\ \textbf{Solution:} Using the ratio test, the radius of convergence is $R = +\infty$. For $x \in (-\infty, +\infty)$, we differentiate term-by-term:
+\[ S'(x) = \sum_{n=1}^{\infty} \frac{n x^{n-1}}{n!} = \sum_{n=1}^{\infty} \frac{x^{n-1}}{(n-1)!} = \sum_{k=0}^{\infty} \frac{x^k}{k!} = 1 + \sum_{k=1}^{\infty} \frac{x^k}{k!} = 1 + S(x) \]
+Thus, we obtain a first-order linear differential equation: $S'(x) - S(x) = 1$. The solution is $S(x) = C e^x - 1$.
+Since $S(0) = 0$, we have $C - 1 = 0 \implies C = 1$. Therefore, $S(x) = e^x - 1$.
+Consequently, the entire series including $n=0$ is $\sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + S(x) = e^x$.
+\end{example}
+
+\begin{example}
+Find the sum function $S(x)$ of the power series $\sum_{n=0}^{\infty} \frac{x^n}{n+1}$.
+\\ \textbf{Solution:} The radius of convergence is $R = 1$. The domain of convergence is $[-1, 1)$.
+For $x \neq 0$:
+\[ S(x) = \sum_{n=0}^{\infty} \frac{x^n}{n+1} = \frac{1}{x} \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} = \frac{1}{x} \sum_{n=0}^{\infty} \int_0^x t^n \, dt \]
+Since the power series converges uniformly within its interval of convergence, we can interchange the integral and the sum:
+\[ S(x) = \frac{1}{x} \int_0^x \left(\sum_{n=0}^{\infty} t^n\right) dt = \frac{1}{x} \int_0^x \frac{1}{1-t} \, dt = -\frac{1}{x} \ln(1-x) \]
+For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\ln(1-x)}{x} = 1$, so the function is continuous at $x = 0$.
+\end{example}
+
 \subsection{Taylor and Maclaurin Series}
 
 We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
@@ -590,6 +622,29 @@ The resulting series $\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n$ is 
 \begin{remark}[Analyticity]
 It is crucial to note that simply being $C^\infty$ (having derivatives of all orders) is not enough to guarantee that the Taylor series of $f(x)$ actually converges to $f(x)$. The series might only converge at $x_0$, or it might converge to a completely different function. Functions that are equal to their Taylor series on an open interval are called \textbf{real analytic functions}. A famous example of a smooth but non-analytic function is $f(x) = e^{-1/x^2}$ for $x \neq 0$ and $f(0) = 0$, where all derivatives at $0$ vanish, making its Maclaurin series identically zero.
 \end{remark}
+
+Thus, a function can be expanded as a Taylor series converging to the function itself if and only if the remainder $R_n(x)$ in Taylor's formula approaches zero as $n \to \infty$. Here, we present the integral form of the remainder, which can be explicitly derived using integration by parts.
+
+\begin{theorem}[Taylor's Theorem with Integral Remainder]
+If $f(x)$ has continuous derivatives up to order $n+1$ in a neighborhood $U(x_0, r)$, then for any $x \in U(x_0, r)$, we have:
+\[ f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k + r_n(x) \]
+where the remainder $r_n(x)$ is given by:
+\[ r_n(x) = \frac{1}{n!} \int_{x_0}^{x} f^{(n+1)}(t) (x-t)^n \, dt \]
+\end{theorem}
+\begin{proof}
+Let $r_n(x) = f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k$. By differentiating $r_n(x)$ with respect to $x$, most terms cancel out:
+\[ r_n'(x) = f'(x) - f'(x_0) - \sum_{k=2}^{n} \frac{f^{(k)}(x_0)}{(k-1)!} (x-x_0)^{k-1} = \frac{f^{(n+1)}(x)}{n!} (x-x)^{n} \]
+Wait, let's take a simpler approach by differentiating with respect to the continuous variable. Observe that $r_n(x_0) = r_n'(x_0) = \dots = r_n^{(n)}(x_0) = 0$, and we know $r_n^{(n+1)}(x) = f^{(n+1)}(x)$.
+We can express $r_n(x)$ through repeated integration from $x_0$ to $x$. Let's start with a single layer:
+\[ r_n(x) = r_n(x) - r_n(x_0) = \int_{x_0}^{x} r_n'(t) \, dt = \int_{x_0}^{x} r_n'(t) \, d(t-x) \]
+Applying integration by parts:
+\[ = r_n'(t)(t-x) \Big|_{x_0}^{x} - \int_{x_0}^{x} r_n''(t)(t-x) \, dt = \int_{x_0}^{x} r_n''(t)(x-t) \, dt \]
+Repeating this process $n-1$ more times gives:
+\[ r_n(x) = \frac{1}{n!} \int_{x_0}^{x} r_n^{(n+1)}(t) (x-t)^n \, dt = \frac{1}{n!} \int_{x_0}^{x} f^{(n+1)}(t) (x-t)^n \, dt \]
+This completes the proof.
+\end{proof}
+
+\newpage
 
 \begin{example}[Standard Maclaurin Expansions]
 The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
@@ -627,30 +682,92 @@ For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
 Equality holds if and only if $\mathbf{x}$ and $\mathbf{y}$ are linearly dependent.
 \end{theorem}
 
+\begin{proof}
+For any real number $\lambda$, consider the non-negative quantity:
+\[ \|\lambda \mathbf{x} + \mathbf{y}\|^2 = (\lambda \mathbf{x} + \mathbf{y}) \cdot (\lambda \mathbf{x} + \mathbf{y}) = \lambda^2 \|\mathbf{x}\|^2 + 2\lambda (\mathbf{x} \cdot \mathbf{y}) + \|\mathbf{y}\|^2 \ge 0 \]
+Since this quadratic in $\lambda$ is always non-negative, its discriminant must be less than or equal to zero:
+\[ \Delta = 4(\mathbf{x} \cdot \mathbf{y})^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 \le 0 \implies |\mathbf{x} \cdot \mathbf{y}| \le \|\mathbf{x}\| \|\mathbf{y}\| \]
+This completes the proof.
+\end{proof}
+
 \begin{theorem}[Triangle Inequality]
 For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
 \[ \|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\| \]
 \end{theorem}
 
+\begin{proof}
+By the Cauchy-Schwarz inequality:
+\[ \|\mathbf{x} + \mathbf{y}\|^2 = (\mathbf{x} + \mathbf{y}) \cdot (\mathbf{x} + \mathbf{y}) = \|\mathbf{x}\|^2 + 2(\mathbf{x} \cdot \mathbf{y}) + \|\mathbf{y}\|^2 \]
+\[ \le \|\mathbf{x}\|^2 + 2\|\mathbf{x}\| \|\mathbf{y}\| + \|\mathbf{y}\|^2 = (\|\mathbf{x}\| + \|\mathbf{y}\|)^2 \]
+Taking the square root of both sides gives the desired inequality.
+\end{proof}
+
 \subsection{Basic Topology of $\mathbb{R}^n$}
 
-To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" in $\mathbb{R}^n$.
+To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" (or neighborhood) in $\mathbb{R}^n$.
 
-\begin{definition}[Open Ball]
-Let $\mathbf{a} \in \mathbb{R}^n$ and $r > 0$. The \textbf{open ball} of radius $r$ centered at $\mathbf{a}$ is the set:
-\[ B_r(\mathbf{a}) = \{ \mathbf{x} \in \mathbb{R}^n : \|\mathbf{x} - \mathbf{a}\| < r \} \]
+\begin{definition}[Neighborhood and Punctured Neighborhood]
+Let $\mathbf{a} \in \mathbb{R}^n$ and $\delta > 0$. The \textbf{neighborhood} (open ball) of radius $\delta$ centered at $\mathbf{a}$ is the set:
+\[ U(\mathbf{a}, \delta) = \{ \mathbf{x} \in \mathbb{R}^n : \|\mathbf{x} - \mathbf{a}\| < \delta \} \]
+The \textbf{punctured neighborhood} (deleted neighborhood) is $\mathring{U}(\mathbf{a}, \delta) = U(\mathbf{a}, \delta) \setminus \{\mathbf{a}\}$.
 \end{definition}
+
+Given a point set $E \subseteq \mathbb{R}^n$ and a point $P \in \mathbb{R}^n$, we can classify $P$ relative to $E$:
+\begin{itemize}
+    \item \textbf{Interior point}: $P$ is an interior point of $E$ if there exists a neighborhood $U(P)$ such that $U(P) \subseteq E$.
+    \item \textbf{Exterior point}: $P$ is an exterior point of $E$ if there exists a neighborhood $U(P)$ such that $U(P) \cap E = \emptyset$.
+    \item \textbf{Boundary point}: $P$ is a boundary point of $E$ if every neighborhood $U(P)$ contains at least one point in $E$ and at least one point not in $E$.
+    \item \textbf{Accumulation point (Limit point)}: $P$ is an accumulation point of $E$ if every punctured neighborhood $\mathring{U}(P, \delta)$ contains at least one point of $E$ (implying it contains infinitely many points of $E$). The set of all accumulation points of $E$ is called the derived set, denoted as $E'$.
+    \item \textbf{Isolated point}: $P$ is an isolated point of $E$ if $P \in E$ but $P$ is not an accumulation point of $E$.
+\end{itemize}
 
 \begin{definition}[Open and Closed Sets]
-A set $U \subseteq \mathbb{R}^n$ is called \textbf{open} if for every point $\mathbf{x} \in U$, there exists an $r > 0$ such that $B_r(\mathbf{x}) \subseteq U$.
-A set $F \subseteq \mathbb{R}^n$ is called \textbf{closed} if its complement $\mathbb{R}^n \setminus F$ is open.
+A set $S \subseteq \mathbb{R}^n$ is called \textbf{open} if every point of $S$ is an interior point.
+A set $S \subseteq \mathbb{R}^n$ is called \textbf{closed} if it contains all of its accumulation points (i.e., $S' \subseteq S$).
+The \textbf{closure} of a set $E$, denoted $\overline{E}$, is defined as $\overline{E} = E \cup E'$. A set is closed if and only if $E = \overline{E}$.
 \end{definition}
 
-For limits, the concept of an accumulation point is crucial.
+\begin{theorem}
+A set $S \subseteq \mathbb{R}^n$ is closed if and only if its complement $S^c = \mathbb{R}^n \setminus S$ is open.
+\end{theorem}
+\begin{proof}
+$(\implies)$ Assume $S$ is closed. Let $\mathbf{x} \in S^c$. Since $\mathbf{x} \notin S$ and $S$ contains all its accumulation points, $\mathbf{x}$ is not an accumulation point of $S$. Thus, there exists a neighborhood $U(\mathbf{x}, \delta)$ such that $U(\mathbf{x}, \delta) \cap S = \emptyset$, meaning $U(\mathbf{x}, \delta) \subseteq S^c$. Hence, $S^c$ is open. \\
+$(\Longleftarrow)$ Assume $S^c$ is open. Let $\mathbf{x}$ be an accumulation point of $S$. If $\mathbf{x} \notin S$, then $\mathbf{x} \in S^c$. Since $S^c$ is open, there is a neighborhood $U(\mathbf{x}, \delta) \subseteq S^c$, which means $U(\mathbf{x}, \delta) \cap S = \emptyset$. This contradicts that $\mathbf{x}$ is an accumulation point of $S$. Thus, $\mathbf{x} \in S$, and $S$ is closed.
+\end{proof}
 
-\begin{definition}[Accumulation Point]
-A point $\mathbf{x}_0$ is an \textbf{accumulation point} (or limit point) of a set $E$ if every open ball $B_r(\mathbf{x}_0)$ contains at least one point of $E$ distinct from $\mathbf{x}_0$.
-\end{definition}
+\begin{theorem}[De Morgan's Laws]
+For any family of sets $\{S_\alpha\}$ in $\mathbb{R}^n$:
+\[ \left( \bigcup_\alpha S_\alpha \right)^c = \bigcap_\alpha S_\alpha^c, \quad \left( \bigcap_\alpha S_\alpha \right)^c = \bigcup_\alpha S_\alpha^c \]
+\end{theorem}
+\begin{proof}
+$\mathbf{x} \in (\bigcup_\alpha S_\alpha)^c \iff \forall \alpha, \mathbf{x} \notin S_\alpha \iff \forall \alpha, \mathbf{x} \in S_\alpha^c \iff \mathbf{x} \in \bigcap_\alpha S_\alpha^c$. This proves the first identity. The second is proved similarly.
+\end{proof}
+
+\begin{property}
+Any union of open sets is open. Any finite intersection of open sets is open.
+By De Morgan's laws, any intersection of closed sets is closed, and any finite union of closed sets is closed.
+\textbf{Counterexample for infinite intersection of open sets:} The sets $S_i = (-1 - 1/i, 1 + 1/i)$ are open, but their infinite intersection $\bigcap_{i=1}^{\infty} S_i = [-1, 1]$ is closed, not open.
+\end{property}
+
+\subsubsection{Fundamental Theorems of $\mathbb{R}^n$}
+
+The real numbers $\mathbb{R}$ rely on the completeness axiom. In $\mathbb{R}^n$, the equivalent completeness properties are formulated through the following equivalent theorems:
+
+\begin{theorem}[Nested Closed Rectangle Theorem]
+Let $\Delta_k = \prod_{i=1}^n [a_{ki}, b_{ki}]$ be a sequence of closed rectangles in $\mathbb{R}^n$ such that $\Delta_1 \supseteq \Delta_2 \supseteq \dots \supseteq \Delta_k \supseteq \dots$. If the diameter of $\Delta_k$ approaches $0$ as $k \to \infty$ (i.e., $\lim_{k \to \infty} \sqrt{\sum (b_{ki} - a_{ki})^2} = 0$), then there exists a unique point $\mathbf{\eta} \in \bigcap_{k=1}^{\infty} \Delta_k$.
+\end{theorem}
+
+\begin{theorem}[Cantor's Intersection Theorem]
+Let $\{S_k\}$ be a sequence of non-empty, closed, and bounded subsets of $\mathbb{R}^n$ such that $S_1 \supseteq S_2 \supseteq \dots \supseteq S_k \supseteq \dots$. If the diameter $\text{diam}(S_k) = \sup_{\mathbf{x}, \mathbf{y} \in S_k} \|\mathbf{x} - \mathbf{y}\| \to 0$ as $k \to \infty$, then there is a unique point belonging to $\bigcap_{k=1}^{\infty} S_k$.
+\end{theorem}
+
+\begin{theorem}[Bolzano-Weierstrass Theorem]
+Every bounded infinite sequence in $\mathbb{R}^n$ has a convergent subsequence.
+\end{theorem}
+
+\begin{theorem}[Cauchy Convergence Principle]
+A sequence $\{\mathbf{x}_k\}$ in $\mathbb{R}^n$ converges if and only if it is a Cauchy sequence, meaning that for any $\epsilon > 0$, there exists $N$ such that for all $j, k > N$, $\|\mathbf{x}_j - \mathbf{x}_k\| < \epsilon$.
+\end{theorem}
 
 \subsection{Limits of Functions of Several Variables}
 
@@ -723,10 +840,18 @@ Elementary operations preserve continuity:
 
 The notions of boundedness and extreme values rely on the domain being "compact".
 
-\begin{definition}[Compact Set]
-A set $K \subseteq \mathbb{R}^n$ is \textbf{compact} if it is both \textbf{closed} and \textbf{bounded}.
-(This is the Heine-Borel Theorem characterization for Euclidean spaces).
+\begin{definition}[Open Cover and Compact Set]
+Let $S$ be a set in $\mathbb{R}^n$. A collection of open sets $\{U_\alpha\}$ is called an \textbf{open cover} of $S$ if $S \subseteq \bigcup_\alpha U_\alpha$.
+A set $S$ is \textbf{compact} if every open cover of $S$ has a finite subcover. That is, there exist $U_{\alpha_1}, \dots, U_{\alpha_m}$ such that $S \subseteq \bigcup_{i=1}^m U_{\alpha_i}$.
 \end{definition}
+
+\begin{theorem}[Heine-Borel Theorem]
+A subset $S \subseteq \mathbb{R}^n$ is compact if and only if it is closed and bounded.
+\end{theorem}
+\begin{proof}[Outline of Proof for $\mathbb{R}^2$]
+$(\implies)$ If $S$ is compact, we can cover $S$ with open disks $U(0, k)$ for $k=1,2,\dots$. A finite subcover implies $S$ is bounded. To show $S$ is closed, assume $a \notin S$ is an accumulation point. We can construct an open cover of $S$ using sets $V_n = \{ \mathbf{x} : \|\mathbf{x} - a\| > 1/n \}$. Since $a \notin S$, $\bigcup_{n=1}^\infty V_n \supseteq S$. However, since $a$ is an accumulation point, any finite number of $V_n$'s will fail to cover some points in $S$ that are very close to $a$. This contradicts compactness, so $S$ must be closed. \\
+$(\Longleftarrow)$ If $S$ is closed and bounded, we can enclose it in a large closed rectangle. Using the Nested Closed Rectangle Theorem or Bolzano-Weierstrass, one can systematically show that any open cover must have a finite subcover by dividing the rectangle into smaller pieces repeatedly.
+\end{proof}
 
 \begin{theorem}[Weierstrass Extreme Value Theorem]
 Let $K \subseteq \mathbb{R}^n$ be a compact set and let $f: K \to \mathbb{R}$ be a continuous function. Then:

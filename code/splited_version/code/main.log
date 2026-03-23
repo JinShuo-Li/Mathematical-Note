@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  20 MAR 2026 14:47
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  23 MAR 2026 21:36
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1072,11 +1072,6 @@ Chapter 5.
 [116]
 
 [117]
-Overfull \hbox (32.46773pt too wide) detected at line 170
-[][] [] \OT1/cmr/m/n/10 = [][] [] = [][] [] + [][] [] = \OML/cmm/m/it/10 I[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 I[]
- []
-
-
 
 [118]
 
@@ -1105,61 +1100,61 @@ Overfull \hbox (32.46773pt too wide) detected at line 170
 [130]
 
 [131]
-Underfull \hbox (badness 2318) in paragraph at lines 700--704
+
+[132]
+
+[133]
+
+[134]
+Underfull \hbox (badness 2318) in paragraph at lines 817--821
 []\TU/lmr/m/n/10 The existence of iterated limits does not imply the existence of the simultaneous limit
  []
 
 
 
-[132]) (./chapters/chapter6.tex
+[135]
 
-[133]
+[136]) (./chapters/chapter6.tex
+
+[137]
 Chapter 6.
 
 
-[134
+[138
 
 ]
-
-[135]
-
-[136]
-
-[137]
-
-[138]
 
 [139]
 
-[140]) (./chapters/chapter7.tex
+[140]
 
 [141]
-Chapter 7.
 
-
-[142
-
-]
+[142]
 
 [143]
 
-[144]
+[144]) (./chapters/chapter7.tex
 
 [145]
-
-[146]
-
-[147]) (./chapters/chapter8.tex
-
-[148]
-Chapter 8.
+Chapter 7.
 
 
-[149
+[146
 
 ]
 
-[150]
+[147]
+
+[148]) (./chapters/chapter8.tex
+
+[149]
+Chapter 8.
+
+
+[150
+
+]
 
 [151]
 
@@ -1185,27 +1180,27 @@ Chapter 8.
 
 [162]
 
-[163] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+[163]
+
+[164] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-
-[164]
 
 [165]
 
 [166]
 
-[167]) (./chapters/chapter9.tex
+[167]
 
-[168]
+[168]) (./chapters/chapter9.tex
+
+[169]
 Chapter 9.
 
 
-[169
+[170
 
 ]
-
-[170]
 
 [171]
 
@@ -1217,19 +1212,21 @@ Chapter 9.
 
 [175]
 
-[176] (./main.aux)
+[176]
+
+[177] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) ) 
 Here is how much of TeX's memory you used:
- 31582 strings out of 473832
- 637917 string characters out of 5733157
- 1585524 words of memory out of 5000000
- 54107 multiletter control sequences out of 15000+600000
+ 31588 strings out of 473832
+ 638025 string characters out of 5733157
+ 1585429 words of memory out of 5000000
+ 54113 multiletter control sequences out of 15000+600000
  570816 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,15n,107p,1107b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (183 pages).
+Output written on main.pdf (184 pages).
