@@ -848,6 +848,11 @@ A set $S$ is \textbf{compact} if every open cover of $S$ has a finite subcover. 
 \begin{theorem}[Heine-Borel Theorem]
 A subset $S \subseteq \mathbb{R}^n$ is compact if and only if it is closed and bounded.
 \end{theorem}
+\begin{remark}
+Note that this theorem is uniquely true for $\mathbb{R}^n$ (more generally, for finite-dimensional normed spaces). In infinite-dimensional normed spaces, a closed and bounded set is not guaranteed to be compact (e.g., a closed unit ball).
+
+In addition, there is an equivalent definition based on accumulation points: $S$ is compact if and only if every infinite subset of $S$ has at least one accumulation point in $S$.
+\end{remark}
 \begin{proof}[Outline of Proof for $\mathbb{R}^2$]
 $(\implies)$ If $S$ is compact, we can cover $S$ with open disks $U(0, k)$ for $k=1,2,\dots$. A finite subcover implies $S$ is bounded. To show $S$ is closed, assume $a \notin S$ is an accumulation point. We can construct an open cover of $S$ using sets $V_n = \{ \mathbf{x} : \|\mathbf{x} - a\| > 1/n \}$. Since $a \notin S$, $\bigcup_{n=1}^\infty V_n \supseteq S$. However, since $a$ is an accumulation point, any finite number of $V_n$'s will fail to cover some points in $S$ that are very close to $a$. This contradicts compactness, so $S$ must be closed. \\
 $(\Longleftarrow)$ If $S$ is closed and bounded, we can enclose it in a large closed rectangle. Using the Nested Closed Rectangle Theorem or Bolzano-Weierstrass, one can systematically show that any open cover must have a finite subcover by dividing the rectangle into smaller pieces repeatedly.
@@ -862,6 +867,10 @@ Let $K \subseteq \mathbb{R}^n$ be a compact set and let $f: K \to \mathbb{R}$ be
 \end{enumerate}
 \end{theorem}
 
+\begin{theorem}[Compactness and Continuity]
+Continuous mappings map compact sets to compact sets. If $K \subseteq \mathbb{R}^n$ is compact and $f: K \to \mathbb{R}^m$ is continuous, then $f(K)$ is compact in $\mathbb{R}^m$.
+\end{theorem}
+
 \begin{theorem}[Uniform Continuity]
 Let $K \subseteq \mathbb{R}^n$ be a compact set. If $f: K \to \mathbb{R}^m$ is continuous on $K$, then $f$ is \textbf{uniformly continuous} on $K$.
 \end{theorem}
@@ -871,6 +880,8 @@ $f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\d
 \[ \|\mathbf{x} - \mathbf{y}\| < \delta \implies \|f(\mathbf{x}) - f(\mathbf{y})\| < \epsilon \]
 Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
 \end{definition}
+
+\newpage
 
 \begin{remark}
 If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
@@ -890,3 +901,27 @@ Let $D \subseteq \mathbb{R}^n$ be a path-connected set and let $f: D \to \mathbb
 \end{theorem}
 
 This ensures that the image of a path-connected set under a continuous real-valued function is an interval.
+
+\section{Differential Calculus of Multivariable Functions}
+
+From here, we formally transition into the differential calculus of multivariable functions. We will first introduce partial derivatives and then introduce the idea of directional derivatives.
+
+\subsection{Partial Derivatives}
+
+\begin{definition}[Partial Derivative]
+Let $f(x_1, x_2, \dots, x_n)$ be a function defined in a neighborhood of a point $\mathbf{x}_0 = (x_{0,1}, x_{0,2}, \dots, x_{0,n})$. If the following limit exists:
+\[ \lim_{x_i \to x_{0,i}} \frac{f(x_{0,1}, \dots, x_i, \dots, x_{0,n}) - f(x_{0,1}, \dots, x_{0,i}, \dots, x_{0,n})}{x_i - x_{0,i}} = A \]
+then we say that $f$ has a \textbf{partial derivative} with respect to its $i$-th variable at $\mathbf{x}_0$, and we denote it by $\frac{\partial f}{\partial x_i}(\mathbf{x}_0) = A$.
+\end{definition}
+
+The definition of a partial derivative is very similar to that of a single-variable derivative, except we restrict the change to only one specific coordinate direction, keeping all other variables constant.
+
+However, studying the rate of change only along the coordinate axes is often insufficient for a complete multidimensional analysis. This motivates the definition of the directional derivative.
+
+\newpage
+
+\begin{definition}[Directional Derivative]
+Let $f(\mathbf{x})$ be a function defined in a neighborhood of $\mathbf{x}_0$. For any given non-zero vector $\mathbf{u}$ (often taken as a unit vector), if the following limit exists:
+\[ \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{u}) - f(\mathbf{x}_0)}{t} = A \]
+then we say that $f$ has a \textbf{directional derivative} at $\mathbf{x}_0$ along the direction $\mathbf{u}$, denoted by $D_{\mathbf{u}} f(\mathbf{x}_0) = A$.
+\end{definition}

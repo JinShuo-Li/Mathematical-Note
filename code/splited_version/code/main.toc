@@ -217,106 +217,108 @@
 \contentsline {subsubsection}{Iterated Limits vs. Simultaneous Limits}{135}{section*.129}%
 \contentsline {subsection}{\numberline {5.2.4}Continuity}{135}{subsection.5.2.4}%
 \contentsline {subsection}{\numberline {5.2.5}Properties of Continuous Functions on Compact Sets}{135}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Connectedness and the Intermediate Value Theorem}{136}{subsection.5.2.6}%
-\contentsline {chapter}{\numberline {6}Topology}{138}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Topological Spaces}{138}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Motivation: From Metric to Topology}{138}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Definition of a Topology}{139}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Fundamental Examples}{139}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Comparing Topologies}{140}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Generating Topologies: Basis and Subbasis}{140}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Basis for a Topology}{140}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Subbasis}{141}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Countability Axioms}{141}{subsection.6.2.3}%
-\contentsline {section}{\numberline {6.3}Closed Sets and Limit Points}{141}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Closure, Interior, and Boundary}{142}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Limit Points and Density}{142}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Constructing New Spaces}{142}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Subspace Topology}{142}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Product Topology}{142}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Quotient Topology (Gluing)}{143}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Separation Axioms}{143}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Continuity And Homeomorphism}{143}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Continuous Functions}{143}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}Homeomorphisms}{143}{subsection.6.6.2}%
-\contentsline {section}{\numberline {6.7}Connectedness}{144}{section.6.7}%
-\contentsline {subsection}{\numberline {6.7.1}Definitions}{144}{subsection.6.7.1}%
-\contentsline {subsection}{\numberline {6.7.2}Path Connectedness}{144}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}Application: The Intermediate Value Theorem}{144}{subsection.6.7.3}%
-\contentsline {section}{\numberline {6.8}Compactness}{144}{section.6.8}%
-\contentsline {subsection}{\numberline {6.8.1}Definition via Covers}{145}{subsection.6.8.1}%
-\contentsline {subsection}{\numberline {6.8.2}Compactness in $\mathbb {R}^n$}{145}{subsection.6.8.2}%
-\contentsline {subsection}{\numberline {6.8.3}Extreme Value Theorem}{145}{subsection.6.8.3}%
-\contentsline {chapter}{\numberline {7}Complex Analysis}{146}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Historical Context and Representations of Complex Numbers}{146}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Historical Context: From "Imaginary" to Essential}{146}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Representation: The Algebra of the Plane}{147}{subsection.7.1.2}%
-\contentsline {subsubsection}{Geometric Interpretation}{147}{section*.131}%
-\contentsline {subsection}{\numberline {7.1.3}Euler's Formula and the Exponential Form}{147}{subsection.7.1.3}%
-\contentsline {subsubsection}{Geometric Interpretation}{147}{section*.132}%
-\contentsline {subsubsection}{A Sketch of Proof via Taylor Series}{148}{section*.133}%
-\contentsline {subsection}{\numberline {7.1.4}Representations: Polar and Exponential Forms}{148}{subsection.7.1.4}%
-\contentsline {subsubsection}{The Power of the Exponential Form}{148}{section*.134}%
-\contentsline {subsection}{\numberline {7.1.5}The Beauty of Euler's Identity}{149}{subsection.7.1.5}%
-\contentsline {section}{\numberline {7.2}Complex Functions}{149}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Analytic Function}{149}{subsection.7.2.1}%
-\contentsline {chapter}{\numberline {8}Applied Mathematics: Graph Theory}{150}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Introduction to Graph Theory}{150}{section.8.1}%
-\contentsline {subsection}{\numberline {8.1.1}Basic Concepts and Classification}{150}{subsection.8.1.1}%
-\contentsline {subsubsection}{Fundamental Definitions and Theorems}{150}{section*.135}%
-\contentsline {subsubsection}{Graph Operations and Isomorphism}{151}{section*.136}%
-\contentsline {subsubsection}{Degree Sequences and Realizability}{151}{section*.137}%
-\contentsline {subsubsection}{Graph Representations}{152}{section*.138}%
-\contentsline {subsubsection}{Connectivity}{152}{section*.139}%
-\contentsline {subsubsection}{Special Graph Classes}{154}{section*.140}%
-\contentsline {paragraph}{Complete Graphs}{154}{tcb@cnt@mydef.8.1.15}%
-\contentsline {paragraph}{Bipartite Graphs}{154}{section*.142}%
-\contentsline {paragraph}{Planar Graphs}{155}{section*.143}%
-\contentsline {section}{\numberline {8.2}Paths and Circuits}{157}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Eulerian Circuits}{157}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Hamiltonian Cycles}{158}{subsection.8.2.2}%
-\contentsline {section}{\numberline {8.3}Trees and Forests}{158}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Definitions and Characterization}{159}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Rooted Trees}{160}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Spanning Trees}{160}{subsection.8.3.3}%
-\contentsline {section}{\numberline {8.4}Random Graphs}{167}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Basic Properties of Random Graphs}{167}{subsection.8.4.1}%
-\contentsline {paragraph}{Degree Distribution}{167}{tcb@cnt@mythm.8.4.1}%
-\contentsline {paragraph}{Threshold Functions and Phase Transitions}{168}{section*.146}%
-\contentsline {paragraph}{Diameter and Average Distance}{168}{tcb@cnt@mythm.8.4.4}%
-\contentsline {paragraph}{Clustering Coefficient}{168}{equation.8.1}%
-\contentsline {subsection}{\numberline {8.4.2}Important Theorems in Random Graph Theory}{168}{subsection.8.4.2}%
-\contentsline {paragraph}{Zero-One Laws}{168}{tcb@cnt@mythm.8.4.6}%
-\contentsline {paragraph}{Subgraph Appearance}{169}{tcb@cnt@mythm.8.4.7}%
-\contentsline {paragraph}{Hamiltonicity}{169}{tcb@cnt@mythm.8.4.8}%
-\contentsline {subsection}{\numberline {8.4.3}Algorithmic Generation of Random Graphs}{169}{subsection.8.4.3}%
-\contentsline {subsection}{\numberline {8.4.4}Applications of Random Graphs}{169}{subsection.8.4.4}%
-\contentsline {paragraph}{Complex Network Modeling}{169}{section*.152}%
-\contentsline {paragraph}{Network Robustness}{169}{section*.153}%
-\contentsline {paragraph}{Epidemic Spread}{169}{section*.154}%
-\contentsline {subsection}{\numberline {8.4.5}Conclusion and Future Directions}{169}{subsection.8.4.5}%
-\contentsline {chapter}{\numberline {9}Applied Mathematics: Probability Theory}{170}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Classical Probability and Combinatorics}{170}{section.9.1}%
-\contentsline {subsection}{\numberline {9.1.1}The Classical Definition}{170}{subsection.9.1.1}%
-\contentsline {subsection}{\numberline {9.1.2}Conditional Probability and Independence}{171}{subsection.9.1.2}%
-\contentsline {subsection}{\numberline {9.1.3}Bayes' Theorem}{171}{subsection.9.1.3}%
-\contentsline {section}{\numberline {9.2}Discrete Random Variables}{171}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Common Discrete Distributions}{172}{subsection.9.2.1}%
-\contentsline {section}{\numberline {9.3}Transition to Modern Probability}{172}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Limitations of Classical Probability}{172}{subsection.9.3.1}%
-\contentsline {section}{\numberline {9.4}Axiomatic Foundations}{173}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}Probability Space}{173}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}Random Variables and Vectors}{173}{subsection.9.4.2}%
-\contentsline {section}{\numberline {9.5}Expectation and Integration}{174}{section.9.5}%
-\contentsline {subsection}{\numberline {9.5.1}Mathematical Expectation}{174}{subsection.9.5.1}%
-\contentsline {subsection}{\numberline {9.5.2}Fundamental Inequalities}{174}{subsection.9.5.2}%
-\contentsline {section}{\numberline {9.6}Independence and Conditioning}{175}{section.9.6}%
-\contentsline {subsection}{\numberline {9.6.1}Independence}{175}{subsection.9.6.1}%
-\contentsline {subsection}{\numberline {9.6.2}Conditional Expectation}{175}{subsection.9.6.2}%
-\contentsline {section}{\numberline {9.7}Characteristic Functions}{175}{section.9.7}%
-\contentsline {section}{\numberline {9.8}Convergence and Limit Theorems}{176}{section.9.8}%
-\contentsline {subsection}{\numberline {9.8.1}Modes of Convergence}{176}{subsection.9.8.1}%
-\contentsline {subsection}{\numberline {9.8.2}Law of Large Numbers (LLN)}{176}{subsection.9.8.2}%
-\contentsline {subsection}{\numberline {9.8.3}The Central Limit Theorem (CLT)}{177}{subsection.9.8.3}%
-\contentsline {section}{\numberline {9.9}Introduction to Stochastic Processes}{177}{section.9.9}%
-\contentsline {section}{\numberline {9.10}Conclusion}{177}{section.9.10}%
+\contentsline {subsection}{\numberline {5.2.6}Connectedness and the Intermediate Value Theorem}{137}{subsection.5.2.6}%
+\contentsline {section}{\numberline {5.3}Differential Calculus of Multivariable Functions}{137}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Partial Derivatives}{137}{subsection.5.3.1}%
+\contentsline {chapter}{\numberline {6}Topology}{139}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Topological Spaces}{139}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Motivation: From Metric to Topology}{139}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Definition of a Topology}{140}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Fundamental Examples}{140}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Comparing Topologies}{141}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Generating Topologies: Basis and Subbasis}{141}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Basis for a Topology}{141}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Subbasis}{142}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Countability Axioms}{142}{subsection.6.2.3}%
+\contentsline {section}{\numberline {6.3}Closed Sets and Limit Points}{142}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Closure, Interior, and Boundary}{143}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Limit Points and Density}{143}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Constructing New Spaces}{143}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Subspace Topology}{143}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Product Topology}{143}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Quotient Topology (Gluing)}{144}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Separation Axioms}{144}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Continuity And Homeomorphism}{144}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Continuous Functions}{144}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}Homeomorphisms}{144}{subsection.6.6.2}%
+\contentsline {section}{\numberline {6.7}Connectedness}{145}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Definitions}{145}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}Path Connectedness}{145}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}Application: The Intermediate Value Theorem}{145}{subsection.6.7.3}%
+\contentsline {section}{\numberline {6.8}Compactness}{145}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}Definition via Covers}{146}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}Compactness in $\mathbb {R}^n$}{146}{subsection.6.8.2}%
+\contentsline {subsection}{\numberline {6.8.3}Extreme Value Theorem}{146}{subsection.6.8.3}%
+\contentsline {chapter}{\numberline {7}Complex Analysis}{147}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Historical Context and Representations of Complex Numbers}{147}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Historical Context: From "Imaginary" to Essential}{147}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Representation: The Algebra of the Plane}{148}{subsection.7.1.2}%
+\contentsline {subsubsection}{Geometric Interpretation}{148}{section*.131}%
+\contentsline {subsection}{\numberline {7.1.3}Euler's Formula and the Exponential Form}{148}{subsection.7.1.3}%
+\contentsline {subsubsection}{Geometric Interpretation}{148}{section*.132}%
+\contentsline {subsubsection}{A Sketch of Proof via Taylor Series}{149}{section*.133}%
+\contentsline {subsection}{\numberline {7.1.4}Representations: Polar and Exponential Forms}{149}{subsection.7.1.4}%
+\contentsline {subsubsection}{The Power of the Exponential Form}{149}{section*.134}%
+\contentsline {subsection}{\numberline {7.1.5}The Beauty of Euler's Identity}{150}{subsection.7.1.5}%
+\contentsline {section}{\numberline {7.2}Complex Functions}{150}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Analytic Function}{150}{subsection.7.2.1}%
+\contentsline {chapter}{\numberline {8}Applied Mathematics: Graph Theory}{151}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Introduction to Graph Theory}{151}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Basic Concepts and Classification}{151}{subsection.8.1.1}%
+\contentsline {subsubsection}{Fundamental Definitions and Theorems}{151}{section*.135}%
+\contentsline {subsubsection}{Graph Operations and Isomorphism}{152}{section*.136}%
+\contentsline {subsubsection}{Degree Sequences and Realizability}{152}{section*.137}%
+\contentsline {subsubsection}{Graph Representations}{153}{section*.138}%
+\contentsline {subsubsection}{Connectivity}{153}{section*.139}%
+\contentsline {subsubsection}{Special Graph Classes}{155}{section*.140}%
+\contentsline {paragraph}{Complete Graphs}{155}{tcb@cnt@mydef.8.1.15}%
+\contentsline {paragraph}{Bipartite Graphs}{155}{section*.142}%
+\contentsline {paragraph}{Planar Graphs}{156}{section*.143}%
+\contentsline {section}{\numberline {8.2}Paths and Circuits}{158}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Eulerian Circuits}{158}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Hamiltonian Cycles}{159}{subsection.8.2.2}%
+\contentsline {section}{\numberline {8.3}Trees and Forests}{159}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Definitions and Characterization}{160}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Rooted Trees}{161}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Spanning Trees}{161}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Random Graphs}{168}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Basic Properties of Random Graphs}{168}{subsection.8.4.1}%
+\contentsline {paragraph}{Degree Distribution}{168}{tcb@cnt@mythm.8.4.1}%
+\contentsline {paragraph}{Threshold Functions and Phase Transitions}{169}{section*.146}%
+\contentsline {paragraph}{Diameter and Average Distance}{169}{tcb@cnt@mythm.8.4.4}%
+\contentsline {paragraph}{Clustering Coefficient}{169}{equation.8.1}%
+\contentsline {subsection}{\numberline {8.4.2}Important Theorems in Random Graph Theory}{169}{subsection.8.4.2}%
+\contentsline {paragraph}{Zero-One Laws}{169}{tcb@cnt@mythm.8.4.6}%
+\contentsline {paragraph}{Subgraph Appearance}{170}{tcb@cnt@mythm.8.4.7}%
+\contentsline {paragraph}{Hamiltonicity}{170}{tcb@cnt@mythm.8.4.8}%
+\contentsline {subsection}{\numberline {8.4.3}Algorithmic Generation of Random Graphs}{170}{subsection.8.4.3}%
+\contentsline {subsection}{\numberline {8.4.4}Applications of Random Graphs}{170}{subsection.8.4.4}%
+\contentsline {paragraph}{Complex Network Modeling}{170}{section*.152}%
+\contentsline {paragraph}{Network Robustness}{170}{section*.153}%
+\contentsline {paragraph}{Epidemic Spread}{170}{section*.154}%
+\contentsline {subsection}{\numberline {8.4.5}Conclusion and Future Directions}{170}{subsection.8.4.5}%
+\contentsline {chapter}{\numberline {9}Applied Mathematics: Probability Theory}{171}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Classical Probability and Combinatorics}{171}{section.9.1}%
+\contentsline {subsection}{\numberline {9.1.1}The Classical Definition}{171}{subsection.9.1.1}%
+\contentsline {subsection}{\numberline {9.1.2}Conditional Probability and Independence}{172}{subsection.9.1.2}%
+\contentsline {subsection}{\numberline {9.1.3}Bayes' Theorem}{172}{subsection.9.1.3}%
+\contentsline {section}{\numberline {9.2}Discrete Random Variables}{172}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Common Discrete Distributions}{173}{subsection.9.2.1}%
+\contentsline {section}{\numberline {9.3}Transition to Modern Probability}{173}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Limitations of Classical Probability}{173}{subsection.9.3.1}%
+\contentsline {section}{\numberline {9.4}Axiomatic Foundations}{174}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Probability Space}{174}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}Random Variables and Vectors}{174}{subsection.9.4.2}%
+\contentsline {section}{\numberline {9.5}Expectation and Integration}{175}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}Mathematical Expectation}{175}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}Fundamental Inequalities}{175}{subsection.9.5.2}%
+\contentsline {section}{\numberline {9.6}Independence and Conditioning}{176}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}Independence}{176}{subsection.9.6.1}%
+\contentsline {subsection}{\numberline {9.6.2}Conditional Expectation}{176}{subsection.9.6.2}%
+\contentsline {section}{\numberline {9.7}Characteristic Functions}{176}{section.9.7}%
+\contentsline {section}{\numberline {9.8}Convergence and Limit Theorems}{177}{section.9.8}%
+\contentsline {subsection}{\numberline {9.8.1}Modes of Convergence}{177}{subsection.9.8.1}%
+\contentsline {subsection}{\numberline {9.8.2}Law of Large Numbers (LLN)}{177}{subsection.9.8.2}%
+\contentsline {subsection}{\numberline {9.8.3}The Central Limit Theorem (CLT)}{178}{subsection.9.8.3}%
+\contentsline {section}{\numberline {9.9}Introduction to Stochastic Processes}{178}{section.9.9}%
+\contentsline {section}{\numberline {9.10}Conclusion}{178}{section.9.10}%

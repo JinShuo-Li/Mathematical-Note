@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  23 MAR 2026 21:36
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.11.27)  14 APR 2026 13:59
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -765,15 +765,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 
-[4] (./chapters/preface.tex
+[4]
 
-[5
+[5] (./chapters/preface.tex
+
+[6
 
 
 
 ]
 
-[6]) (./chapters/chapter0.tex
+[7]) (./chapters/chapter0.tex
 
 [1
 
@@ -1114,17 +1116,17 @@ Underfull \hbox (badness 2318) in paragraph at lines 817--821
 
 [135]
 
-[136]) (./chapters/chapter6.tex
+[136]
 
-[137]
+[137]) (./chapters/chapter6.tex
+
+[138]
 Chapter 6.
 
 
-[138
+[139
 
 ]
-
-[139]
 
 [140]
 
@@ -1134,29 +1136,29 @@ Chapter 6.
 
 [143]
 
-[144]) (./chapters/chapter7.tex
+[144]
 
-[145]
+[145]) (./chapters/chapter7.tex
+
+[146]
 Chapter 7.
 
 
-[146
+[147
 
 ]
 
-[147]
+[148]
 
-[148]) (./chapters/chapter8.tex
+[149]) (./chapters/chapter8.tex
 
-[149]
+[150]
 Chapter 8.
 
 
-[150
+[151
 
 ]
-
-[151]
 
 [152]
 
@@ -1182,27 +1184,27 @@ Chapter 8.
 
 [163]
 
-[164] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+[164]
+
+[165] (c:/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
-
-[165]
 
 [166]
 
 [167]
 
-[168]) (./chapters/chapter9.tex
+[168]
 
-[169]
+[169]) (./chapters/chapter9.tex
+
+[170]
 Chapter 9.
 
 
-[170
+[171
 
 ]
-
-[171]
 
 [172]
 
@@ -1214,19 +1216,21 @@ Chapter 9.
 
 [176]
 
-[177] (./main.aux)
+[177]
+
+[178] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) ) 
 Here is how much of TeX's memory you used:
- 31588 strings out of 473832
- 638025 string characters out of 5733157
+ 31596 strings out of 473832
+ 638169 string characters out of 5733157
  1585429 words of memory out of 5000000
- 54113 multiletter control sequences out of 15000+600000
+ 54121 multiletter control sequences out of 15000+600000
  570816 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,15n,107p,1107b,1772s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (184 pages).
+Output written on main.pdf (186 pages).
