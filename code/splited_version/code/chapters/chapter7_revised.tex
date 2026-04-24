@@ -1,0 +1,755 @@
+\chapter{Complex Analysis}
+
+Complex analysis studies functions of a complex variable. At first glance, it may look like ordinary calculus performed on the complex plane. However, this impression is misleading. Complex differentiability is far more rigid than real differentiability. A function that is differentiable once in the complex sense is automatically infinitely differentiable and locally represented by a power series. This is one of the most beautiful phenomena in mathematics.
+
+The central reason is that complex numbers contain both algebraic and geometric information. Multiplication by a complex number combines scaling and rotation. Therefore, a complex derivative is not merely a rate of change; it is a local similarity transformation. This geometric constraint forces complex differentiable functions to have strong structure.
+
+This chapter develops the basic route of complex analysis:
+\[
+    \text{complex numbers}\to\text{complex differentiability}\to\text{Cauchy theory}\to\text{power series}\to\text{residues}.
+\]
+
+\section{Complex Numbers and the Complex Plane}
+
+\subsection{Algebraic Definition}
+
+\begin{definition}[Complex Numbers]
+The set of complex numbers is
+\[
+    \mathbb{C}=\{a+bi:a,b\in\mathbb{R},\ i^2=-1\}.
+\]
+For $z=a+bi$, the real and imaginary parts are
+\[
+    \operatorname{Re}z=a,
+    \qquad
+    \operatorname{Im}z=b.
+\]
+\end{definition}
+
+Addition and multiplication are defined by the rules
+\[
+    (a+bi)+(c+di)=(a+c)+(b+d)i,
+\]
+and
+\[
+    (a+bi)(c+di)=(ac-bd)+(ad+bc)i.
+\]
+
+\begin{definition}[Complex Conjugate and Modulus]
+For $z=a+bi\in\mathbb{C}$, define its \textbf{complex conjugate} by
+\[
+    \overline{z}=a-bi,
+\]
+and its \textbf{modulus} by
+\[
+    |z|=\sqrt{a^2+b^2}.
+\]
+\end{definition}
+
+\begin{proposition}[Basic Identities]
+For $z,w\in\mathbb{C}$,
+\begin{enumerate}
+    \item $z\overline{z}=|z|^2$;
+    \item $\overline{z+w}=\overline{z}+\overline{w}$;
+    \item $\overline{zw}=\overline{z}\,\overline{w}$;
+    \item $|zw|=|z||w|$;
+    \item if $z\neq 0$, then $z^{-1}=\overline{z}/|z|^2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Each identity follows directly from writing $z=a+bi$ and $w=c+di$. For example,
+\[
+    z\overline{z}=(a+bi)(a-bi)=a^2+b^2=|z|^2.
+\]
+If $z\neq 0$, then
+\[
+    z\frac{\overline{z}}{|z|^2}=\frac{z\overline{z}}{|z|^2}=1.
+\]
+\end{proof}
+
+\subsection{Geometric Interpretation}
+
+A complex number $z=a+bi$ can be viewed as the point $(a,b)$ in the plane. Under this identification, addition of complex numbers is vector addition.
+
+Multiplication has a richer meaning. If $z$ has modulus $r$ and argument $\theta$, then multiplication by $z$ scales lengths by $r$ and rotates angles by $\theta$.
+
+\begin{definition}[Argument]
+For a non-zero complex number $z=a+bi$, an \textbf{argument} of $z$ is any real number $\theta$ such that
+\[
+    a=|z|\cos\theta,
+    \qquad
+    b=|z|\sin\theta.
+\]
+The set of all arguments differs by integer multiples of $2\pi$.
+\end{definition}
+
+\begin{definition}[Polar Form]
+Every non-zero complex number can be written as
+\[
+    z=r(\cos\theta+i\sin\theta),
+\]
+where $r=|z|>0$ and $\theta$ is an argument of $z$.
+\end{definition}
+
+\subsection{Euler's Formula}
+
+\begin{theorem}[Euler's Formula]
+For every real number $\theta$,
+\[
+    e^{i\theta}=\cos\theta+i\sin\theta.
+\]
+\end{theorem}
+
+\begin{proof}[Proof via Taylor Series]
+Using the Taylor series expansions,
+\[
+    e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},
+    \qquad
+    \cos x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!},
+    \qquad
+    \sin x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!},
+\]
+we substitute $x=i\theta$:
+\[
+    e^{i\theta}=1+i\theta-\frac{\theta^2}{2!}-i\frac{\theta^3}{3!}+\frac{\theta^4}{4!}+\cdots.
+\]
+Grouping real and imaginary parts gives
+\[
+    e^{i\theta}=\left(1-\frac{\theta^2}{2!}+\frac{\theta^4}{4!}-\cdots\right)
+    +i\left(\theta-\frac{\theta^3}{3!}+\frac{\theta^5}{5!}-\cdots\right),
+\]
+which equals $\cos\theta+i\sin\theta$.
+\end{proof}
+
+\begin{corollary}[Exponential Form]
+Every non-zero complex number can be written as
+\[
+    z=re^{i\theta},
+\]
+where $r=|z|$ and $\theta$ is an argument of $z$.
+\end{corollary}
+
+\begin{proposition}[Multiplication in Polar Form]
+If
+\[
+    z_1=r_1e^{i\theta_1},
+    \qquad
+    z_2=r_2e^{i\theta_2},
+\]
+then
+\[
+    z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)}.
+\]
+\end{proposition}
+
+\begin{proof}
+Using laws of exponentials,
+\[
+    z_1z_2=r_1r_2e^{i\theta_1}e^{i\theta_2}=r_1r_2e^{i(\theta_1+\theta_2)}.
+\]
+\end{proof}
+
+\begin{theorem}[De Moivre's Formula]
+For $n\in\mathbb{Z}$,
+\[
+    (\cos\theta+i\sin\theta)^n=\cos(n\theta)+i\sin(n\theta).
+\]
+\end{theorem}
+
+\begin{proof}
+Since $\cos\theta+i\sin\theta=e^{i\theta}$,
+\[
+    (\cos\theta+i\sin\theta)^n=(e^{i\theta})^n=e^{in\theta}=\cos(n\theta)+i\sin(n\theta).
+\]
+\end{proof}
+
+\begin{example}[Roots of Unity]
+The solutions of $z^n=1$ are
+\[
+    z_k=e^{2\pi i k/n},\qquad k=0,1,\dots,n-1.
+\]
+Geometrically, these are the vertices of a regular $n$-gon on the unit circle.
+\end{example}
+
+\section{Topology of the Complex Plane}
+
+Since $\mathbb{C}$ is identified with $\mathbb{R}^2$, it inherits the usual topology from the Euclidean plane.
+
+\begin{definition}[Open Disk]
+For $z_0\in\mathbb{C}$ and $r>0$, the open disk centered at $z_0$ with radius $r$ is
+\[
+    D(z_0,r)=\{z\in\mathbb{C}:|z-z_0|<r\}.
+\]
+\end{definition}
+
+\begin{definition}[Domain]
+A subset $\Omega\subseteq\mathbb{C}$ is called a \textbf{domain} if it is open and connected.
+\end{definition}
+
+\begin{definition}[Limit and Continuity]
+Let $f:\Omega\to\mathbb{C}$ and let $z_0$ be a limit point of $\Omega$. We say
+\[
+    \lim_{z\to z_0}f(z)=L
+\]
+if for every $\varepsilon>0$, there exists $\delta>0$ such that
+\[
+    0<|z-z_0|<\delta
+    \quad\Longrightarrow\quad
+    |f(z)-L|<\varepsilon.
+\]
+The function $f$ is continuous at $z_0$ if $\lim_{z\to z_0}f(z)=f(z_0)$.
+\end{definition}
+
+The definition is formally identical to the real-variable definition, but there is a crucial difference: $z$ can approach $z_0$ from infinitely many directions in the plane.
+
+\section{Complex Differentiability}
+
+\subsection{Definition of Complex Derivative}
+
+\begin{definition}[Complex Derivative]
+Let $\Omega\subseteq\mathbb{C}$ be open and let $f:\Omega\to\mathbb{C}$. We say $f$ is \textbf{complex differentiable} at $z_0\in\Omega$ if the limit
+\[
+    f'(z_0)=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}
+\]
+exists as a complex number.
+\end{definition}
+
+This looks like the usual derivative, but $h$ approaches $0$ through the complex plane. The quotient must approach the same limit along every direction.
+
+\begin{example}
+The function $f(z)=z^2$ is complex differentiable everywhere, and
+\[
+    f'(z)=2z.
+\]
+Indeed,
+\[
+    \frac{(z+h)^2-z^2}{h}=2z+h\to 2z.
+\]
+\end{example}
+
+\begin{example}[Complex Conjugation]
+The function $f(z)=\overline{z}$ is not complex differentiable at any point. At $z_0$,
+\[
+    \frac{\overline{z_0+h}-\overline{z_0}}{h}=\frac{\overline{h}}{h}.
+\]
+If $h$ is real, this quotient is $1$. If $h=it$ with $t\in\mathbb{R}$, then $\overline{h}/h=(-it)/(it)=-1$. The limit depends on direction, so it does not exist.
+\end{example}
+
+\subsection{Holomorphic Functions}
+
+\begin{definition}[Holomorphic Function]
+Let $\Omega\subseteq\mathbb{C}$ be open. A function $f:\Omega\to\mathbb{C}$ is \textbf{holomorphic} on $\Omega$ if it is complex differentiable at every point of $\Omega$.
+\end{definition}
+
+Some authors use the word \textbf{analytic} to mean locally representable by a power series. A major theorem of complex analysis states that holomorphic and analytic are equivalent.
+
+\begin{proposition}[Rules of Differentiation]
+If $f$ and $g$ are complex differentiable at $z_0$, then:
+\begin{enumerate}
+    \item $(f+g)'(z_0)=f'(z_0)+g'(z_0)$;
+    \item $(fg)'(z_0)=f'(z_0)g(z_0)+f(z_0)g'(z_0)$;
+    \item if $g(z_0)\neq 0$, then
+    \[
+        \left(\frac{f}{g}\right)'(z_0)=\frac{f'(z_0)g(z_0)-f(z_0)g'(z_0)}{g(z_0)^2};
+    \]
+    \item the chain rule holds: $(g\circ f)'(z_0)=g'(f(z_0))f'(z_0)$.
+\end{enumerate}
+\end{proposition}
+
+\section{Cauchy-Riemann Equations}
+
+Let
+\[
+    f(z)=u(x,y)+iv(x,y),
+    \qquad z=x+iy,
+\]
+where $u,v:\Omega\subseteq\mathbb{R}^2\to\mathbb{R}$.
+
+If $f$ is complex differentiable at $z_0=x_0+iy_0$, then the limit defining $f'(z_0)$ must be the same along the real and imaginary directions.
+
+Along the real direction, $h\in\mathbb{R}$:
+\[
+    f'(z_0)=u_x(x_0,y_0)+iv_x(x_0,y_0).
+\]
+Along the imaginary direction, $h=it$:
+\[
+    f'(z_0)=\frac{u(x_0,y_0+t)-u(x_0,y_0)+i(v(x_0,y_0+t)-v(x_0,y_0))}{it}.
+\]
+Since division by $i$ equals multiplication by $-i$, this gives
+\[
+    f'(z_0)=v_y(x_0,y_0)-iu_y(x_0,y_0).
+\]
+Equating real and imaginary parts yields the Cauchy-Riemann equations.
+
+\begin{theorem}[Cauchy-Riemann Equations]
+If $f=u+iv$ is complex differentiable at $z_0=x_0+iy_0$ and the relevant partial derivatives exist, then
+\[
+    u_x=v_y,
+    \qquad
+    u_y=-v_x
+\]
+at $(x_0,y_0)$.
+\end{theorem}
+
+\begin{theorem}[Sufficient Condition]
+Let $f=u+iv$ be defined on an open set $\Omega$. If $u$ and $v$ have continuous first partial derivatives and satisfy the Cauchy-Riemann equations on $\Omega$, then $f$ is holomorphic on $\Omega$.
+\end{theorem}
+
+\begin{example}
+For $f(z)=z^2$, we have
+\[
+    z^2=(x+iy)^2=x^2-y^2+i(2xy).
+\]
+Thus $u=x^2-y^2$ and $v=2xy$. Then
+\[
+    u_x=2x=v_y,
+    \qquad
+    u_y=-2y=-v_x.
+\]
+The Cauchy-Riemann equations hold everywhere.
+\end{example}
+
+\begin{example}
+For $f(z)=\overline{z}=x-iy$, we have $u=x$ and $v=-y$. Then
+\[
+    u_x=1,
+    \qquad
+    v_y=-1.
+\]
+The first Cauchy-Riemann equation fails everywhere, so $f$ is not holomorphic.
+\end{example}
+
+\subsection{Geometric Meaning}
+
+If $f'(z_0)\neq 0$, then near $z_0$,
+\[
+    f(z_0+h)\approx f(z_0)+f'(z_0)h.
+\]
+Multiplication by $f'(z_0)$ scales and rotates small vectors. Therefore holomorphic functions with non-zero derivative preserve angles locally. Such maps are called conformal.
+
+\begin{definition}[Conformal Map]
+A holomorphic function $f$ is \textbf{conformal} at $z_0$ if $f'(z_0)\neq 0$. It is conformal on a domain if it is conformal at every point of that domain.
+\end{definition}
+
+\section{Elementary Holomorphic Functions}
+
+\subsection{Exponential and Trigonometric Functions}
+
+\begin{definition}[Complex Exponential]
+For $z\in\mathbb{C}$, define
+\[
+    e^z=\sum_{n=0}^{\infty}\frac{z^n}{n!}.
+\]
+\end{definition}
+
+This series converges for all $z\in\mathbb{C}$ and defines an entire function.
+
+\begin{proposition}
+The complex exponential satisfies
+\[
+    (e^z)'=e^z,
+    \qquad
+    e^{z+w}=e^ze^w.
+\]
+\end{proposition}
+
+\begin{definition}[Complex Sine and Cosine]
+Define
+\[
+    \cos z=\frac{e^{iz}+e^{-iz}}{2},
+    \qquad
+    \sin z=\frac{e^{iz}-e^{-iz}}{2i}.
+\]
+\end{definition}
+
+\begin{proposition}
+For all $z\in\mathbb{C}$,
+\[
+    \frac{d}{dz}\sin z=\cos z,
+    \qquad
+    \frac{d}{dz}\cos z=-\sin z.
+\]
+\end{proposition}
+
+\subsection{Complex Logarithm}
+
+The logarithm is more subtle in complex analysis because the argument is multi-valued.
+
+If $z=re^{i\theta}$, then a logarithm of $z$ should satisfy
+\[
+    e^w=z.
+\]
+Writing $w=u+iv$, this gives $e^u=r$ and $v=\theta+2\pi k$.
+
+\begin{definition}[Multi-valued Logarithm]
+For $z\neq 0$, the complex logarithm is the multi-valued expression
+\[
+    \log z=\ln|z|+i(\arg z+2\pi k),\qquad k\in\mathbb{Z}.
+\]
+\end{definition}
+
+\begin{definition}[Principal Branch]
+The \textbf{principal argument} $\operatorname{Arg}z$ is chosen in $(-\pi,\pi]$. The corresponding principal logarithm is
+\[
+    \operatorname{Log}z=\ln|z|+i\operatorname{Arg}z.
+\]
+It is defined on $\mathbb{C}\setminus(-\infty,0]$ if one wants a continuous single-valued branch.
+\end{definition}
+
+\begin{remark}
+The impossibility of defining a continuous single-valued logarithm on all of $\mathbb{C}\setminus\{0\}$ is topological. Going once around the origin changes the argument by $2\pi$.
+\end{remark}
+
+\section{Complex Integration}
+
+\subsection{Curves and Contour Integrals}
+
+\begin{definition}[Path]
+A \textbf{path} in $\mathbb{C}$ is a continuous function
+\[
+    \gamma:[a,b]\to\mathbb{C}.
+\]
+If $\gamma$ is continuously differentiable except possibly at finitely many points, it is called a \textbf{piecewise smooth path}.
+\end{definition}
+
+\begin{definition}[Contour Integral]
+Let $f$ be continuous on a set containing the image of a piecewise smooth path $\gamma:[a,b]\to\mathbb{C}$. The \textbf{contour integral} of $f$ along $\gamma$ is
+\[
+    \int_\gamma f(z)\,dz=\int_a^b f(\gamma(t))\gamma'(t)\,dt.
+\]
+\end{definition}
+
+\begin{example}
+Let $\gamma(t)=e^{it}$, $0\leq t\leq 2\pi$, be the unit circle traversed counterclockwise. Then
+\[
+    \int_\gamma \frac{1}{z}\,dz
+    =\int_0^{2\pi}\frac{1}{e^{it}}ie^{it}\,dt
+    =\int_0^{2\pi} i\,dt
+    =2\pi i.
+\]
+This example is fundamental: $1/z$ has no global primitive on $\mathbb{C}\setminus\{0\}$.
+\end{example}
+
+\begin{proposition}[Estimation Lemma]
+If $|f(z)|\leq M$ on a path $\gamma$ of length $L$, then
+\[
+    \left|\int_\gamma f(z)\,dz\right|\leq ML.
+\]
+\end{proposition}
+
+\begin{proof}
+By the definition of contour integral,
+\[
+    \left|\int_\gamma f(z)\,dz\right|
+    \leq \int_a^b |f(\gamma(t))||\gamma'(t)|\,dt
+    \leq M\int_a^b|\gamma'(t)|\,dt=ML.
+\]
+\end{proof}
+
+\subsection{Primitives}
+
+\begin{definition}[Primitive]
+Let $f$ be holomorphic on a domain $\Omega$. A function $F$ is a \textbf{primitive} of $f$ on $\Omega$ if $F'=f$ on $\Omega$.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem for Complex Line Integrals]
+If $F'=f$ on a domain containing a path $\gamma$ from $a$ to $b$, then
+\[
+    \int_\gamma f(z)\,dz=F(b)-F(a).
+\]
+In particular, the integral of $f$ around any closed path is $0$.
+\end{theorem}
+
+\begin{proof}
+Using the definition of contour integral and the chain rule,
+\[
+    \int_\gamma f(z)\,dz=\int_\alpha^\beta f(\gamma(t))\gamma'(t)\,dt
+    =\int_\alpha^\beta (F\circ\gamma)'(t)\,dt=F(\gamma(\beta))-F(\gamma(\alpha)).
+\]
+\end{proof}
+
+\section{Cauchy's Theorem and Cauchy's Integral Formula}
+
+The Cauchy theory is the core of elementary complex analysis. It explains why holomorphic functions are rigid.
+
+\begin{theorem}[Cauchy's Theorem, Simple Form]
+Let $\Omega$ be a simply connected domain and let $f$ be holomorphic on $\Omega$. Then for every closed piecewise smooth path $\gamma$ in $\Omega$,
+\[
+    \int_\gamma f(z)\,dz=0.
+\]
+\end{theorem}
+
+\begin{remark}
+The condition that $\Omega$ is simply connected cannot be omitted. The function $1/z$ is holomorphic on $\mathbb{C}\setminus\{0\}$, but its integral around the unit circle is $2\pi i$.
+\end{remark}
+
+\begin{theorem}[Cauchy's Integral Formula]
+Let $f$ be holomorphic on an open set containing the closed disk $\overline{D(z_0,R)}$. If $0<r<R$, then
+\[
+    f(z_0)=\frac{1}{2\pi i}\int_{|z-z_0|=r}\frac{f(z)}{z-z_0}\,dz,
+\]
+where the circle is oriented counterclockwise.
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+The function
+\[
+    g(z)=\frac{f(z)-f(z_0)}{z-z_0}
+\]
+for $z\neq z_0$ has a removable singularity at $z_0$ because $f$ is complex differentiable. Therefore its integral around the circle is $0$ by Cauchy's theorem. Hence
+\[
+    \int\frac{f(z)}{z-z_0}\,dz
+    =f(z_0)\int\frac{1}{z-z_0}\,dz
+    =2\pi i f(z_0).
+\]
+\end{proof}
+
+\begin{theorem}[Cauchy's Integral Formula for Derivatives]
+Under the same assumptions,
+\[
+    f^{(n)}(z_0)=\frac{n!}{2\pi i}\int_{|z-z_0|=r}\frac{f(z)}{(z-z_0)^{n+1}}\,dz.
+\]
+\end{theorem}
+
+\begin{corollary}
+If $f$ is holomorphic on $\Omega$, then $f$ is infinitely complex differentiable on $\Omega$.
+\end{corollary}
+
+\begin{remark}
+This is a sharp contrast with real analysis. A real function may be differentiable once but not twice. In complex analysis, one derivative automatically gives infinitely many derivatives.
+\end{remark}
+
+\section{Power Series and Analyticity}
+
+\subsection{Power Series}
+
+\begin{definition}[Power Series]
+A \textbf{power series} centered at $z_0$ is a series of the form
+\[
+    \sum_{n=0}^{\infty}a_n(z-z_0)^n.
+\]
+\end{definition}
+
+\begin{theorem}[Radius of Convergence]
+For every power series $\sum a_n(z-z_0)^n$, there exists $R\in[0,\infty]$ such that the series converges absolutely for $|z-z_0|<R$ and diverges for $|z-z_0|>R$.
+\end{theorem}
+
+\begin{theorem}[Termwise Differentiation]
+A power series is holomorphic inside its disk of convergence, and it may be differentiated term by term:
+\[
+    \left(\sum_{n=0}^{\infty}a_n(z-z_0)^n\right)'
+    =\sum_{n=1}^{\infty}na_n(z-z_0)^{n-1}.
+\]
+The derivative has the same radius of convergence.
+\end{theorem}
+
+\subsection{Holomorphic Implies Analytic}
+
+\begin{theorem}[Taylor Expansion of Holomorphic Functions]
+Let $f$ be holomorphic on a disk $D(z_0,R)$. Then for $|z-z_0|<R$,
+\[
+    f(z)=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n.
+\]
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+Choose a circle $|\zeta-z_0|=r$ with $|z-z_0|<r<R$. By Cauchy's integral formula,
+\[
+    f(z)=\frac{1}{2\pi i}\int_{|\zeta-z_0|=r}\frac{f(\zeta)}{\zeta-z}\,d\zeta.
+\]
+We rewrite
+\[
+    \frac{1}{\zeta-z}=\frac{1}{\zeta-z_0}\cdot\frac{1}{1-\frac{z-z_0}{\zeta-z_0}}
+    =\sum_{n=0}^{\infty}\frac{(z-z_0)^n}{(\zeta-z_0)^{n+1}}.
+\]
+Substituting this into the integral and using Cauchy's formula for derivatives gives the Taylor series.
+\end{proof}
+
+\begin{theorem}[Identity Theorem]
+Let $f$ and $g$ be holomorphic on a domain $\Omega$. If the set
+\[
+    \{z\in\Omega:f(z)=g(z)\}
+\]
+has a limit point in $\Omega$, then $f=g$ on all of $\Omega$.
+\end{theorem}
+
+\begin{remark}
+The identity theorem is another sign of rigidity. A holomorphic function on a domain is determined by its values on any subset with a limit point.
+\end{remark}
+
+\section{Zeros and Singularities}
+
+\subsection{Zeros of Holomorphic Functions}
+
+\begin{definition}[Zero of Order $m$]
+Let $f$ be holomorphic near $z_0$. We say $z_0$ is a \textbf{zero of order $m$} if
+\[
+    f(z)=(z-z_0)^m g(z),
+\]
+where $g$ is holomorphic near $z_0$ and $g(z_0)\neq 0$.
+\end{definition}
+
+\begin{proposition}
+If $f$ is holomorphic and not identically zero on a domain, then the zeros of $f$ are isolated.
+\end{proposition}
+
+\subsection{Isolated Singularities}
+
+\begin{definition}[Isolated Singularity]
+Let $f$ be holomorphic on $0<|z-z_0|<R$. Then $z_0$ is called an \textbf{isolated singularity} of $f$.
+\end{definition}
+
+\begin{definition}[Types of Isolated Singularities]
+An isolated singularity $z_0$ is:
+\begin{enumerate}
+    \item \textbf{removable} if $f$ can be redefined at $z_0$ to become holomorphic;
+    \item a \textbf{pole} if $|f(z)|\to\infty$ as $z\to z_0$;
+    \item \textbf{essential} if it is neither removable nor a pole.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+The function $\sin z/z$ has a removable singularity at $0$, because
+\[
+    \frac{\sin z}{z}=1-\frac{z^2}{3!}+\frac{z^4}{5!}-\cdots.
+\]
+The function $1/z^m$ has a pole of order $m$ at $0$. The function $e^{1/z}$ has an essential singularity at $0$.
+\end{example}
+
+\section{Laurent Series and Residues}
+
+\subsection{Laurent Series}
+
+\begin{theorem}[Laurent Expansion]
+Let $f$ be holomorphic on an annulus
+\[
+    r<|z-z_0|<R.
+\]
+Then $f$ has a unique Laurent expansion
+\[
+    f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n
+\]
+valid in the annulus.
+\end{theorem}
+
+\begin{definition}[Principal Part]
+In the Laurent expansion
+\[
+    f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n,
+\]
+the terms with $n<0$ form the \textbf{principal part}.
+\end{definition}
+
+\begin{proposition}[Classification by Laurent Series]
+Let $z_0$ be an isolated singularity of $f$.
+\begin{enumerate}
+    \item $z_0$ is removable if the principal part is zero.
+    \item $z_0$ is a pole of order $m$ if the principal part has finitely many terms and the lowest power is $(z-z_0)^{-m}$.
+    \item $z_0$ is essential if the principal part has infinitely many non-zero terms.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Residues}
+
+\begin{definition}[Residue]
+Let $f$ have an isolated singularity at $z_0$ and Laurent expansion
+\[
+    f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n.
+\]
+The coefficient $a_{-1}$ is called the \textbf{residue} of $f$ at $z_0$, denoted
+\[
+    \operatorname{Res}(f,z_0)=a_{-1}.
+\]
+\end{definition}
+
+\begin{theorem}[Residue Theorem]
+Let $f$ be holomorphic on a domain $\Omega$ except for finitely many isolated singularities $z_1,\dots,z_n$. Let $\gamma$ be a positively oriented simple closed contour in $\Omega$ enclosing these singularities and no others. Then
+\[
+    \int_\gamma f(z)\,dz=2\pi i\sum_{k=1}^{n}\operatorname{Res}(f,z_k).
+\]
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+Around each singularity, write the Laurent expansion. All terms integrate to $0$ around a small circle except the $(z-z_k)^{-1}$ term, whose integral is $2\pi i$. Cauchy's theorem then deforms the original contour into the sum of small circles around the singularities.
+\end{proof}
+
+\begin{proposition}[Residue at a Simple Pole]
+If $f(z)=g(z)/h(z)$, where $g$ and $h$ are holomorphic near $z_0$, $g(z_0)\neq 0$, $h(z_0)=0$, and $h'(z_0)\neq 0$, then $z_0$ is a simple pole and
+\[
+    \operatorname{Res}(f,z_0)=\frac{g(z_0)}{h'(z_0)}.
+\]
+\end{proposition}
+
+\begin{example}
+Compute
+\[
+    \int_{|z|=2}\frac{1}{z^2+1}\,dz.
+\]
+The singularities are $z=i$ and $z=-i$, both inside the circle. Since
+\[
+    z^2+1=(z-i)(z+i),
+\]
+we have
+\[
+    \operatorname{Res}\left(\frac{1}{z^2+1},i\right)=\frac{1}{2i},
+    \qquad
+    \operatorname{Res}\left(\frac{1}{z^2+1},-i\right)=\frac{1}{-2i}.
+\]
+The sum of residues is $0$, so the integral is $0$.
+\end{example}
+
+\begin{example}
+For the unit circle,
+\[
+    \int_{|z|=1}\frac{e^z}{z^3}\,dz
+\]
+can be read from the Taylor expansion
+\[
+    e^z=1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\cdots.
+\]
+Thus
+\[
+    \frac{e^z}{z^3}=z^{-3}+z^{-2}+\frac{1}{2}z^{-1}+\frac{1}{6}+\cdots.
+\]
+The residue at $0$ is $1/2$, so the integral equals
+\[
+    2\pi i\cdot\frac{1}{2}=\pi i.
+\]
+\end{example}
+
+\section{Major Theorems and Consequences}
+
+\begin{theorem}[Liouville's Theorem]
+If $f$ is entire and bounded, then $f$ is constant.
+\end{theorem}
+
+\begin{proof}[Sketch]
+By Cauchy's estimate,
+\[
+    |f'(z_0)|\leq \frac{M}{R}
+\]
+for every $R>0$, where $M$ bounds $|f|$. Letting $R\to\infty$ gives $f'(z_0)=0$ for every $z_0$. Therefore $f$ is constant.
+\end{proof}
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+Every non-constant polynomial with complex coefficients has at least one complex root.
+\end{theorem}
+
+\begin{proof}[Proof via Liouville]
+Suppose $p(z)$ is a non-constant polynomial with no zeros. Then $1/p(z)$ is entire. Since $|p(z)|\to\infty$ as $|z|\to\infty$, the function $1/p(z)$ is bounded outside a large disk. It is also bounded on the closed disk by continuity. Hence $1/p$ is bounded entire, so it is constant by Liouville's theorem. Thus $p$ is constant, a contradiction.
+\end{proof}
+
+\begin{theorem}[Maximum Modulus Principle]
+Let $f$ be holomorphic on a domain $\Omega$. If $|f|$ attains a local maximum at an interior point and $f$ is not constant, then this is impossible. Therefore a non-constant holomorphic function cannot attain its maximum modulus in the interior of a domain.
+\end{theorem}
+
+\begin{remark}
+The maximum modulus principle is another expression of rigidity. Holomorphic functions cannot have arbitrary local behavior; their values inside a region are controlled by their boundary behavior.
+\end{remark}
+
+\section{Conclusion}
+
+Complex analysis begins with a small change in the definition of derivative: the increment $h$ is allowed to approach $0$ from every direction in the complex plane. This small change creates an extremely rigid theory. Holomorphic functions satisfy the Cauchy-Riemann equations, admit contour integral formulas, possess power series expansions, and have isolated singularities whose behavior is encoded by Laurent series.
+
+The residue theorem is the computational climax of the elementary theory. It converts difficult contour integrals into algebraic data: the coefficients of $(z-z_0)^{-1}$ in local Laurent expansions. Conceptually, complex analysis shows how algebra, geometry, topology, and analysis become inseparable once the real line is replaced by the complex plane.

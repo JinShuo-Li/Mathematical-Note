@@ -1,0 +1,1089 @@
+\chapter{Abstract Algebra}
+
+Abstract algebra studies mathematical structures by extracting the rules that govern operations. In elementary algebra, one usually starts from numbers and equations. In abstract algebra, the order is reversed: we first specify a set, then specify operations on that set, and finally ask what can be deduced from the axioms alone.
+
+This change of viewpoint is important. The same algebraic pattern appears in many places: integers under addition, non-zero real numbers under multiplication, rotations of a polygon, invertible matrices, permutations, polynomials, quotient arithmetic, and vector spaces. Abstract algebra is the language that recognizes these different objects as instances of the same structure.
+
+The central idea of this chapter is therefore:
+
+\begin{quote}
+    An algebraic structure is a set equipped with operations satisfying specified axioms. Once the axioms are fixed, every theorem proved from them is true for every model of those axioms.
+\end{quote}
+
+We will introduce four major structures: groups, rings, fields, and modules. The route is cumulative. Groups describe one operation and invertibility; rings describe addition and multiplication together; fields describe arithmetic with division; modules describe linear algebra when the scalars are no longer required to form a field.
+
+\section{Operations and Algebraic Structures}
+
+Before defining groups or rings, we clarify what it means to have an operation on a set.
+
+\begin{definition}[Binary Operation]
+Let $S$ be a set. A \textbf{binary operation} on $S$ is a function
+\[
+    *:S\times S\to S.
+\]
+For $a,b\in S$, we usually write $a*b$ instead of $*(a,b)$.
+\end{definition}
+
+The condition $*:S\times S\to S$ already includes \textbf{closure}: whenever we combine two elements of $S$, the result is still in $S$.
+
+\begin{example}[Operations and Non-operations]
+Addition is a binary operation on $\mathbb{Z}$, since $a+b\in\mathbb{Z}$ whenever $a,b\in\mathbb{Z}$. Subtraction is also a binary operation on $\mathbb{Z}$. However, division is not a binary operation on $\mathbb{Z}$, because $1/2\notin\mathbb{Z}$. It is also not a binary operation on $\mathbb{R}$ unless division by $0$ is excluded.
+\end{example}
+
+\begin{definition}[Associativity and Commutativity]
+Let $*$ be a binary operation on $S$.
+\begin{enumerate}
+    \item $*$ is \textbf{associative} if $(a*b)*c=a*(b*c)$ for all $a,b,c\in S$.
+    \item $*$ is \textbf{commutative} if $a*b=b*a$ for all $a,b\in S$.
+\end{enumerate}
+\end{definition}
+
+Associativity is not merely a technical condition. Without it, expressions like $a*b*c*d$ are ambiguous, because different placements of parentheses may give different answers.
+
+\begin{example}[A Non-associative Operation]
+On $\mathbb{R}$, define $a*b=a-b$. Then
+\[
+    (a*b)*c=(a-b)-c,
+    \qquad
+    a*(b*c)=a-(b-c)=a-b+c.
+\]
+These are usually different. Thus subtraction is not associative.
+\end{example}
+
+\begin{definition}[Identity Element and Inverse]
+Let $*$ be a binary operation on $S$.
+\begin{enumerate}
+    \item An element $e\in S$ is an \textbf{identity element} if $e*a=a*e=a$ for all $a\in S$.
+    \item If $e$ is an identity element, an element $b\in S$ is an \textbf{inverse} of $a\in S$ if $a*b=b*a=e$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Uniqueness of Identity]
+If a binary operation has an identity element, then the identity element is unique.
+\end{proposition}
+
+\begin{proof}
+Suppose $e$ and $e'$ are both identity elements. Since $e$ is an identity, $e*e'=e'$. Since $e'$ is an identity, $e*e'=e$. Hence $e=e'$.
+\end{proof}
+
+\section{Groups}
+
+Groups are the algebraic structures that formalize the idea of reversible transformations. A rotation can be undone by a rotation in the opposite direction. A permutation can be undone by the inverse permutation. Adding an integer can be undone by adding its negative. These examples look different, but they obey the same axioms.
+
+\subsection{Definition and Basic Examples}
+
+\begin{definition}[Group]
+A \textbf{group} is a pair $(G,*)$, where $G$ is a set and $*$ is a binary operation on $G$, satisfying the following axioms:
+\begin{enumerate}
+    \item \textbf{Associativity}: $(a*b)*c=a*(b*c)$ for all $a,b,c\in G$.
+    \item \textbf{Identity}: There exists $e\in G$ such that $e*a=a*e=a$ for all $a\in G$.
+    \item \textbf{Inverses}: For every $a\in G$, there exists $a^{-1}\in G$ such that $a*a^{-1}=a^{-1}*a=e$.
+\end{enumerate}
+If $a*b=b*a$ for all $a,b\in G$, the group is called \textbf{abelian}.
+\end{definition}
+
+When the operation is clear, we write $ab$ instead of $a*b$. For an additive group, we write the identity as $0$ and the inverse of $a$ as $-a$.
+
+\begin{example}[Standard Groups]
+\begin{enumerate}
+    \item $(\mathbb{Z},+)$, $(\mathbb{Q},+)$, $(\mathbb{R},+)$, and $(\mathbb{C},+)$ are abelian groups.
+    \item $(\mathbb{R}\setminus\{0\},\cdot)$ and $(\mathbb{C}\setminus\{0\},\cdot)$ are abelian groups.
+    \item $(\mathbb{N},+)$ is not a group, since positive natural numbers do not have additive inverses.
+    \item The set $GL_n(\mathbb{R})$ of invertible $n\times n$ real matrices is a group under matrix multiplication. It is non-abelian when $n\geq 2$.
+    \item The symmetric group $S_n$, consisting of all bijections from $\{1,\dots,n\}$ to itself, is a group under composition. It has $n!$ elements.
+\end{enumerate}
+\end{example}
+
+\begin{example}[Symmetry Group of a Triangle]
+An equilateral triangle has six rigid symmetries: three rotations and three reflections. These six transformations form a group under composition, usually denoted $D_6$ or $D_3$ depending on convention. The group is non-abelian because reflecting and then rotating need not equal rotating and then reflecting.
+\end{example}
+
+\begin{remark}
+The operation in a group does not have to be numerical multiplication. It may be addition, composition of functions, matrix multiplication, or a geometric transformation. The word ``multiplication'' in group theory is often only notation.
+\end{remark}
+
+\subsection{Elementary Consequences of the Axioms}
+
+The definition of a group is short, but its consequences are strong.
+
+\begin{proposition}[Uniqueness of Inverses]
+Let $G$ be a group. For every $a\in G$, the inverse of $a$ is unique.
+\end{proposition}
+
+\begin{proof}
+Suppose $b$ and $c$ are both inverses of $a$. Then $ab=e$ and $ca=e$. Hence
+\[
+    b=eb=(ca)b=c(ab)=ce=c.
+\]
+Therefore the inverse is unique.
+\end{proof}
+
+\begin{proposition}[Cancellation Laws]
+Let $G$ be a group and $a,b,c\in G$.
+\begin{enumerate}
+    \item If $ab=ac$, then $b=c$.
+    \item If $ba=ca$, then $b=c$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+If $ab=ac$, multiply both sides on the left by $a^{-1}$:
+\[
+    a^{-1}(ab)=a^{-1}(ac).
+\]
+By associativity, $(a^{-1}a)b=(a^{-1}a)c$, so $eb=ec$, and hence $b=c$. The right cancellation law is similar.
+\end{proof}
+
+\begin{proposition}[Inverse of a Product]
+For $a,b\in G$,
+\[
+    (ab)^{-1}=b^{-1}a^{-1}.
+\]
+\end{proposition}
+
+\begin{proof}
+We verify that $b^{-1}a^{-1}$ is the inverse of $ab$:
+\[
+    (ab)(b^{-1}a^{-1})=a(bb^{-1})a^{-1}=aea^{-1}=e,
+\]
+and similarly $(b^{-1}a^{-1})(ab)=e$.
+\end{proof}
+
+\begin{definition}[Powers and Order of an Element]
+Let $G$ be a group and $g\in G$.
+\begin{enumerate}
+    \item For $n\in\mathbb{N}$, define $g^n=g\cdots g$ ($n$ times), $g^0=e$, and $g^{-n}=(g^{-1})^n$.
+    \item The \textbf{order} of $g$, denoted $|g|$ or $\operatorname{ord}(g)$, is the smallest positive integer $n$ such that $g^n=e$. If no such integer exists, $g$ has infinite order.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+In $(\mathbb{Z}/6\mathbb{Z},+)$, the element $2$ has order $3$, because
+\[
+    2+2+2=6\equiv 0\pmod 6,
+\]
+and no smaller positive multiple of $2$ is congruent to $0$ modulo $6$.
+\end{example}
+
+\subsection{Subgroups and Generated Subgroups}
+
+A subgroup is a smaller group living inside a larger group.
+
+\begin{definition}[Subgroup]
+Let $G$ be a group. A subset $H\subseteq G$ is a \textbf{subgroup}, written $H\leq G$, if $H$ is itself a group under the operation inherited from $G$.
+\end{definition}
+
+\begin{lemma}[Subgroup Test]
+A non-empty subset $H\subseteq G$ is a subgroup of $G$ if and only if for all $x,y\in H$, we have $xy^{-1}\in H$.
+\end{lemma}
+
+\begin{proof}
+If $H$ is a subgroup, then $y^{-1}\in H$ and hence $xy^{-1}\in H$.
+
+Conversely, assume $H$ is non-empty and satisfies the stated condition. Choose $h\in H$. Taking $x=y=h$, we get $hh^{-1}=e\in H$. Taking $x=e$ and $y=h$, we get $eh^{-1}=h^{-1}\in H$. Finally, if $a,b\in H$, then $b^{-1}\in H$, and using the condition with $x=a$ and $y=b^{-1}$ gives $a(b^{-1})^{-1}=ab\in H$. Thus $H$ contains the identity, inverses, and products, so it is a subgroup.
+\end{proof}
+
+\begin{definition}[Generated Subgroup]
+Let $S\subseteq G$. The \textbf{subgroup generated by $S$}, denoted $\langle S\rangle$, is the smallest subgroup of $G$ containing $S$. Equivalently, it is the intersection of all subgroups of $G$ containing $S$.
+\end{definition}
+
+\begin{definition}[Cyclic Group]
+A group $G$ is \textbf{cyclic} if there exists $g\in G$ such that $G=\langle g\rangle$. Such an element $g$ is called a \textbf{generator} of $G$.
+\end{definition}
+
+\begin{theorem}[Classification of Cyclic Groups]
+Every cyclic group is isomorphic either to $(\mathbb{Z},+)$ or to $(\mathbb{Z}/n\mathbb{Z},+)$ for some positive integer $n$.
+\end{theorem}
+
+\begin{proof}
+Let $G=\langle g\rangle$. Define $\varphi:\mathbb{Z}\to G$ by $\varphi(k)=g^k$. This map is a group homomorphism and is surjective. If $g$ has infinite order, then $\ker\varphi=\{0\}$, so $\mathbb{Z}\cong G$. If $g$ has order $n$, then $\ker\varphi=n\mathbb{Z}$, and the induced map gives $\mathbb{Z}/n\mathbb{Z}\cong G$.
+\end{proof}
+
+\subsection{Cosets and Lagrange's Theorem}
+
+Subgroups do not merely sit inside groups; they divide groups into equal-sized pieces.
+
+\begin{definition}[Cosets]
+Let $H\leq G$ and $g\in G$.
+\begin{enumerate}
+    \item The \textbf{left coset} of $H$ determined by $g$ is $gH=\{gh:h\in H\}$.
+    \item The \textbf{right coset} of $H$ determined by $g$ is $Hg=\{hg:h\in H\}$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Cosets Partition the Group]
+The left cosets of $H$ in $G$ form a partition of $G$.
+\end{proposition}
+
+\begin{proof}
+Every $g\in G$ lies in $gH$, since $g=ge$ and $e\in H$. Now suppose two cosets $aH$ and $bH$ intersect. Then there exist $h_1,h_2\in H$ such that $ah_1=bh_2$. Hence
+\[
+    b^{-1}a=h_2h_1^{-1}\in H.
+\]
+For any $x\in aH$, write $x=ah$. Then
+\[
+    x=b(b^{-1}a)h\in bH.
+\]
+Thus $aH\subseteq bH$. Symmetrically, $bH\subseteq aH$. Therefore two left cosets are either disjoint or equal.
+\end{proof}
+
+\begin{theorem}[Lagrange's Theorem]
+Let $G$ be a finite group and $H\leq G$. Then
+\[
+    |G|=[G:H]|H|,
+\]
+where $[G:H]$ is the number of left cosets of $H$ in $G$. In particular, $|H|$ divides $|G|$.
+\end{theorem}
+
+\begin{proof}
+The left cosets partition $G$. For each $g\in G$, the map $H\to gH$ given by $h\mapsto gh$ is a bijection, so every coset has exactly $|H|$ elements. If there are $[G:H]$ cosets, then $|G|=[G:H]|H|$.
+\end{proof}
+
+\begin{corollary}
+If $G$ is finite and $g\in G$, then the order of $g$ divides $|G|$.
+\end{corollary}
+
+\begin{proof}
+The subgroup generated by $g$ has order $|g|$. Apply Lagrange's theorem to $\langle g\rangle\leq G$.
+\end{proof}
+
+\begin{corollary}
+Every group of prime order is cyclic.
+\end{corollary}
+
+\begin{proof}
+Let $|G|=p$ be prime and choose $g\neq e$. The order of $g$ divides $p$ and is not $1$, so it must be $p$. Thus $\langle g\rangle=G$.
+\end{proof}
+
+\subsection{Normal Subgroups and Quotient Groups}
+
+For a subgroup $H$, the set of cosets $G/H$ is always a set, but it is not always a group. To multiply cosets by $(aH)(bH)=abH$, we need the answer to be independent of representatives. This is exactly what normality guarantees.
+
+\begin{definition}[Normal Subgroup]
+A subgroup $N\leq G$ is \textbf{normal}, written $N\trianglelefteq G$, if
+\[
+    gNg^{-1}=N
+\]
+for all $g\in G$. Equivalently, $gng^{-1}\in N$ for all $g\in G$ and $n\in N$.
+\end{definition}
+
+\begin{proposition}[Equivalent Forms of Normality]
+Let $N\leq G$. The following are equivalent:
+\begin{enumerate}
+    \item $N\trianglelefteq G$.
+    \item $gN=Ng$ for every $g\in G$.
+    \item The operation $(aN)(bN)=abN$ is well-defined on the set of left cosets.
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Quotient Group]
+If $N\trianglelefteq G$, then the set of left cosets
+\[
+    G/N=\{gN:g\in G\}
+\]
+forms a group under
+\[
+    (aN)(bN)=abN.
+\]
+This group is called the \textbf{quotient group} of $G$ by $N$.
+\end{definition}
+
+\begin{example}[Integers Modulo $n$]
+The subgroup $n\mathbb{Z}\leq\mathbb{Z}$ is normal because $\mathbb{Z}$ is abelian. The quotient group
+\[
+    \mathbb{Z}/n\mathbb{Z}
+\]
+is precisely the group of residue classes modulo $n$.
+\end{example}
+
+\begin{remark}
+The quotient construction is one of the most important constructions in mathematics. It formalizes the idea that certain elements are to be regarded as equivalent. In $\mathbb{Z}/n\mathbb{Z}$, two integers are identified if their difference lies in $n\mathbb{Z}$.
+\end{remark}
+
+\subsection{Homomorphisms and Isomorphism Theorems}
+
+A homomorphism is a structure-preserving map. It does not merely send elements to elements; it sends algebraic relationships to algebraic relationships.
+
+\begin{definition}[Group Homomorphism]
+Let $G$ and $H$ be groups. A function $\varphi:G\to H$ is a \textbf{group homomorphism} if
+\[
+    \varphi(ab)=\varphi(a)\varphi(b)
+\]
+for all $a,b\in G$.
+\end{definition}
+
+\begin{definition}[Kernel and Image]
+Let $\varphi:G\to H$ be a group homomorphism.
+\begin{enumerate}
+    \item The \textbf{kernel} is $\ker\varphi=\{g\in G:\varphi(g)=e_H\}$.
+    \item The \textbf{image} is $\operatorname{im}\varphi=\{\varphi(g):g\in G\}$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+For a group homomorphism $\varphi:G\to H$, $\ker\varphi\trianglelefteq G$ and $\operatorname{im}\varphi\leq H$.
+\end{proposition}
+
+\begin{proof}
+The image is closed under products and inverses because $\varphi$ respects the operation. For the kernel, if $x,y\in\ker\varphi$, then
+\[
+    \varphi(xy^{-1})=\varphi(x)\varphi(y)^{-1}=e_He_H=e_H,
+\]
+so $xy^{-1}\in\ker\varphi$. Thus the kernel is a subgroup. For normality, if $k\in\ker\varphi$ and $g\in G$, then
+\[
+    \varphi(gkg^{-1})=\varphi(g)\varphi(k)\varphi(g)^{-1}=\varphi(g)e_H\varphi(g)^{-1}=e_H.
+\]
+Thus $gkg^{-1}\in\ker\varphi$.
+\end{proof}
+
+\begin{theorem}[First Isomorphism Theorem for Groups]
+Let $\varphi:G\to H$ be a group homomorphism. Then
+\[
+    G/\ker\varphi\cong \operatorname{im}\varphi.
+\]
+\end{theorem}
+
+\begin{proof}
+Define $\Phi:G/\ker\varphi\to\operatorname{im}\varphi$ by
+\[
+    \Phi(g\ker\varphi)=\varphi(g).
+\]
+If $g\ker\varphi=g'\ker\varphi$, then $g'^{-1}g\in\ker\varphi$, so $\varphi(g'^{-1}g)=e_H$, and hence $\varphi(g)=\varphi(g')$. Thus $\Phi$ is well-defined. It is plainly surjective. Its kernel is the identity coset, so it is injective. Therefore it is an isomorphism.
+\end{proof}
+
+\begin{remark}
+The first isomorphism theorem says that the only information lost by a homomorphism is exactly its kernel. Once the kernel is collapsed to the identity, the remaining quotient is the image.
+\end{remark}
+
+\subsection{Group Actions}
+
+Groups are not only objects; they also act on objects. This viewpoint explains why groups naturally describe symmetry.
+
+\begin{definition}[Group Action]
+Let $G$ be a group and $X$ a set. A \textbf{left action} of $G$ on $X$ is a map
+\[
+    G\times X\to X,\qquad (g,x)\mapsto g\cdot x,
+\]
+such that
+\begin{enumerate}
+    \item $e\cdot x=x$ for all $x\in X$;
+    \item $(gh)\cdot x=g\cdot(h\cdot x)$ for all $g,h\in G$ and $x\in X$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Orbit and Stabilizer]
+For a group action of $G$ on $X$ and $x\in X$, define
+\[
+    \operatorname{Orb}(x)=\{g\cdot x:g\in G\},
+\]
+and
+\[
+    \operatorname{Stab}(x)=\{g\in G:g\cdot x=x\}.
+\]
+\end{definition}
+
+\begin{theorem}[Orbit-Stabilizer Theorem]
+If $G$ is finite and acts on $X$, then
+\[
+    |\operatorname{Orb}(x)|=[G:\operatorname{Stab}(x)]
+\]
+for every $x\in X$. In particular,
+\[
+    |\operatorname{Orb}(x)|\,|\operatorname{Stab}(x)|=|G|.
+\]
+\end{theorem}
+
+\begin{proof}
+Define a map from left cosets of $\operatorname{Stab}(x)$ to $\operatorname{Orb}(x)$ by
+\[
+    g\operatorname{Stab}(x)\mapsto g\cdot x.
+\]
+This map is well-defined because if $g^{-1}h\in\operatorname{Stab}(x)$, then $h\cdot x=g\cdot x$. It is also bijective by definition of the orbit. Hence the number of orbit elements equals the number of cosets.
+\end{proof}
+
+\begin{definition}[Center and Centralizer]
+The \textbf{center} of a group $G$ is
+\[
+    Z(G)=\{z\in G:zg=gz\text{ for all }g\in G\}.
+\]
+The \textbf{centralizer} of $a\in G$ is
+\[
+    C_G(a)=\{g\in G:ga=ag\}.
+\]
+\end{definition}
+
+\begin{theorem}[Class Equation]
+Let $G$ be a finite group acting on itself by conjugation: $g\cdot x=gxg^{-1}$. Then
+\[
+    |G|=|Z(G)|+\sum_i [G:C_G(x_i)],
+\]
+where $x_i$ are representatives of the non-central conjugacy classes.
+\end{theorem}
+
+\begin{remark}
+The class equation is a typical example of algebraic counting. It turns the abstract action of conjugation into a numerical equation. Many structure theorems about finite groups begin from this idea.
+\end{remark}
+
+\subsection{Sylow Theorems}
+
+Lagrange's theorem tells us that the order of a subgroup must divide the order of the group. The converse is false in general: if $d$ divides $|G|$, there need not be a subgroup of order $d$. Sylow theory tells us that the converse is true for the largest powers of primes dividing $|G|$.
+
+\begin{definition}[Sylow $p$-subgroup]
+Let $G$ be a finite group and suppose
+\[
+    |G|=p^k m,
+\]
+where $p$ is prime and $p\nmid m$. A subgroup of $G$ of order $p^k$ is called a \textbf{Sylow $p$-subgroup}.
+\end{definition}
+
+\begin{theorem}[Sylow Theorems]
+Let $G$ be a finite group with $|G|=p^k m$, where $p$ is prime and $p\nmid m$. Then:
+\begin{enumerate}
+    \item $G$ has at least one Sylow $p$-subgroup.
+    \item Any two Sylow $p$-subgroups are conjugate.
+    \item If $n_p$ is the number of Sylow $p$-subgroups, then
+    \[
+        n_p\equiv 1\pmod p,
+        \qquad
+        n_p\mid m.
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[A Group of Order $15$]
+Let $|G|=15=3\cdot 5$. The number $n_5$ of Sylow $5$-subgroups satisfies $n_5\equiv 1\pmod 5$ and $n_5\mid 3$. Hence $n_5=1$. Thus the Sylow $5$-subgroup is normal. Similarly, $n_3\equiv 1\pmod 3$ and $n_3\mid 5$, so $n_3=1$ or $10$ is impossible because $10\nmid 5$; hence $n_3=1$. Both Sylow subgroups are normal. This strongly restricts the structure of $G$.
+\end{example}
+
+\section{Rings}
+
+Groups describe one operation. Rings describe two operations, traditionally called addition and multiplication. The guiding example is $\mathbb{Z}$: addition forms an abelian group, multiplication is associative, and multiplication distributes over addition.
+
+\subsection{Definition and Examples}
+
+\begin{definition}[Ring]
+A \textbf{ring} is a set $R$ with two binary operations $+$ and $\cdot$ satisfying:
+\begin{enumerate}
+    \item $(R,+)$ is an abelian group with identity $0$.
+    \item Multiplication is associative: $(ab)c=a(bc)$ for all $a,b,c\in R$.
+    \item Distributive laws hold:
+    \[
+        a(b+c)=ab+ac,
+        \qquad
+        (a+b)c=ac+bc.
+    \]
+\end{enumerate}
+If there is an element $1\in R$ with $1a=a1=a$ for all $a\in R$, then $R$ is a \textbf{ring with unity}. If $ab=ba$ for all $a,b\in R$, then $R$ is \textbf{commutative}.
+\end{definition}
+
+\begin{example}[Basic Rings]
+\begin{enumerate}
+    \item $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{R}$, and $\mathbb{C}$ are commutative rings with unity.
+    \item $M_n(\mathbb{R})$, the set of all $n\times n$ real matrices, is a ring with unity. It is non-commutative for $n\geq 2$.
+    \item $\mathbb{Z}/n\mathbb{Z}$ is a commutative ring with unity under modular addition and multiplication.
+    \item If $R$ is a ring, then $R[x]$, the set of polynomials with coefficients in $R$, is a ring.
+\end{enumerate}
+\end{example}
+
+\begin{proposition}[Elementary Ring Identities]
+For any ring $R$ and $a,b\in R$,
+\begin{enumerate}
+    \item $a0=0a=0$;
+    \item $a(-b)=-(ab)$ and $(-a)b=-(ab)$;
+    \item $(-a)(-b)=ab$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We prove the first identity. Since $0+0=0$,
+\[
+    a0=a(0+0)=a0+a0.
+\]
+Adding the additive inverse of $a0$ to both sides gives $0=a0$. The identity $0a=0$ is similar. The other statements follow from distributivity and uniqueness of additive inverses.
+\end{proof}
+
+\subsection{Units, Zero Divisors, and Domains}
+
+\begin{definition}[Units and Zero Divisors]
+Let $R$ be a ring with unity.
+\begin{enumerate}
+    \item An element $u\in R$ is a \textbf{unit} if there exists $v\in R$ such that $uv=vu=1$.
+    \item A non-zero element $a\in R$ is a \textbf{zero divisor} if there exists non-zero $b\in R$ such that $ab=0$ or $ba=0$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Integral Domain]
+An \textbf{integral domain} is a commutative ring with unity $1\neq 0$ and no zero divisors.
+\end{definition}
+
+\begin{example}
+The ring $\mathbb{Z}/6\mathbb{Z}$ is not an integral domain because
+\[
+    \overline{2}\cdot\overline{3}=\overline{6}=\overline{0},
+\]
+although $\overline{2}$ and $\overline{3}$ are non-zero. The ring $\mathbb{Z}/5\mathbb{Z}$ is a field, hence an integral domain.
+\end{example}
+
+\begin{proposition}[Cancellation in Domains]
+Let $R$ be an integral domain. If $a\neq 0$ and $ab=ac$, then $b=c$.
+\end{proposition}
+
+\begin{proof}
+From $ab=ac$, we get $a(b-c)=0$. Since $a\neq 0$ and $R$ has no zero divisors, $b-c=0$. Hence $b=c$.
+\end{proof}
+
+\subsection{Ideals and Quotient Rings}
+
+In group theory, normal subgroups are exactly the subgroups by which we can quotient. In ring theory, the corresponding objects are ideals.
+
+\begin{definition}[Ideal]
+Let $R$ be a ring. A subset $I\subseteq R$ is a \textbf{left ideal} if:
+\begin{enumerate}
+    \item $(I,+)$ is a subgroup of $(R,+)$;
+    \item for all $r\in R$ and $x\in I$, $rx\in I$.
+\end{enumerate}
+Right ideals are defined similarly. If $I$ is both a left and right ideal, it is called a \textbf{two-sided ideal}, or simply an \textbf{ideal} in the commutative case.
+\end{definition}
+
+\begin{example}[Ideals in $\mathbb{Z}$]
+For every integer $n$, the set
+\[
+    n\mathbb{Z}=\{nk:k\in\mathbb{Z}\}
+\]
+is an ideal of $\mathbb{Z}$. In fact, every ideal of $\mathbb{Z}$ has this form.
+\end{example}
+
+\begin{definition}[Principal Ideal]
+Let $R$ be a commutative ring and $a\in R$. The ideal generated by $a$ is
+\[
+    (a)=\{ra:r\in R\}.
+\]
+An ideal of this form is called a \textbf{principal ideal}.
+\end{definition}
+
+\begin{definition}[Quotient Ring]
+Let $I$ be an ideal of a ring $R$. The quotient abelian group $R/I$ becomes a ring under
+\[
+    (a+I)+(b+I)=(a+b)+I,
+    \qquad
+    (a+I)(b+I)=ab+I.
+\]
+This ring is called the \textbf{quotient ring} of $R$ by $I$.
+\end{definition}
+
+\begin{example}
+The ring $\mathbb{Z}/n\mathbb{Z}$ is the quotient ring of $\mathbb{Z}$ by the ideal $n\mathbb{Z}$.
+\end{example}
+
+\subsection{Ring Homomorphisms}
+
+\begin{definition}[Ring Homomorphism]
+Let $R$ and $S$ be rings. A map $\varphi:R\to S$ is a \textbf{ring homomorphism} if
+\[
+    \varphi(a+b)=\varphi(a)+\varphi(b),
+    \qquad
+    \varphi(ab)=\varphi(a)\varphi(b)
+\]
+for all $a,b\in R$. If the rings have unity, one often also requires $\varphi(1_R)=1_S$.
+\end{definition}
+
+\begin{definition}[Kernel and Image]
+For a ring homomorphism $\varphi:R\to S$,
+\[
+    \ker\varphi=\{r\in R:\varphi(r)=0\},
+    \qquad
+    \operatorname{im}\varphi=\{\varphi(r):r\in R\}.
+\]
+\end{definition}
+
+\begin{proposition}
+The kernel of a ring homomorphism is an ideal, and the image is a subring.
+\end{proposition}
+
+\begin{theorem}[First Isomorphism Theorem for Rings]
+Let $\varphi:R\to S$ be a ring homomorphism. Then
+\[
+    R/\ker\varphi\cong \operatorname{im}\varphi.
+\]
+\end{theorem}
+
+\begin{example}[Evaluation Homomorphism]
+Let $F$ be a field and $a\in F$. Define
+\[
+    \operatorname{ev}_a:F[x]\to F,
+    \qquad
+    f(x)\mapsto f(a).
+\]
+This is a ring homomorphism. Its kernel consists of all polynomials divisible by $x-a$. Hence
+\[
+    F[x]/(x-a)\cong F.
+\]
+\end{example}
+
+\subsection{Prime and Maximal Ideals}
+
+\begin{definition}[Prime and Maximal Ideals]
+Let $R$ be a commutative ring with unity.
+\begin{enumerate}
+    \item A proper ideal $P\subsetneq R$ is \textbf{prime} if $ab\in P$ implies $a\in P$ or $b\in P$.
+    \item A proper ideal $M\subsetneq R$ is \textbf{maximal} if there is no ideal $I$ such that $M\subsetneq I\subsetneq R$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Quotients by Prime and Maximal Ideals]
+Let $R$ be a commutative ring with unity.
+\begin{enumerate}
+    \item $R/P$ is an integral domain if and only if $P$ is prime.
+    \item $R/M$ is a field if and only if $M$ is maximal.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For the first statement, in $R/P$ we have
+\[
+    (a+P)(b+P)=P
+\]
+if and only if $ab\in P$. Thus $R/P$ has no zero divisors exactly when $ab\in P$ forces $a\in P$ or $b\in P$.
+
+For the second statement, suppose $R/M$ is a field. If $M\subsetneq I\subseteq R$, choose $a\in I\setminus M$. Then $a+M$ is non-zero in $R/M$, so it has an inverse $b+M$. Thus $ab-1\in M\subseteq I$, while $ab\in I$, hence $1\in I$ and $I=R$. Therefore $M$ is maximal. Conversely, if $M$ is maximal and $a\notin M$, then the ideal generated by $M$ and $a$ is all of $R$, so there exist $m\in M$ and $r\in R$ such that $m+ra=1$. Hence $(r+M)(a+M)=1+M$, so every non-zero element of $R/M$ is invertible.
+\end{proof}
+
+\subsection{Polynomial Rings and Divisibility}
+
+Polynomial rings are the bridge between abstract algebra and equation solving.
+
+\begin{definition}[Divisibility]
+Let $R$ be an integral domain and $a,b\in R$ with $a\neq 0$. We say $a$ \textbf{divides} $b$, written $a\mid b$, if there exists $c\in R$ such that $b=ac$.
+\end{definition}
+
+\begin{definition}[Irreducible and Prime Elements]
+Let $R$ be an integral domain and $p\in R$ be non-zero and not a unit.
+\begin{enumerate}
+    \item $p$ is \textbf{irreducible} if $p=ab$ implies that either $a$ or $b$ is a unit.
+    \item $p$ is \textbf{prime} if $p\mid ab$ implies $p\mid a$ or $p\mid b$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+In an integral domain, every prime element is irreducible.
+\end{proposition}
+
+\begin{proof}
+Suppose $p$ is prime and $p=ab$. Since $p\mid ab$, primality implies $p\mid a$ or $p\mid b$. Assume $p\mid a$. Then $a=pc$ for some $c$, so $p=ab=pcb$. Since $p\neq 0$ and the ring is a domain, cancellation gives $1=cb$, so $b$ is a unit. The other case is similar.
+\end{proof}
+
+\begin{definition}[Euclidean Domain, PID, and UFD]
+Let $R$ be an integral domain.
+\begin{enumerate}
+    \item $R$ is a \textbf{Euclidean domain} if it has a Euclidean function allowing division with remainder.
+    \item $R$ is a \textbf{principal ideal domain} (PID) if every ideal of $R$ is principal.
+    \item $R$ is a \textbf{unique factorization domain} (UFD) if every non-zero non-unit can be factored into irreducibles uniquely up to order and multiplication by units.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Hierarchy of Domains]
+\[
+    \text{Fields}\subseteq \text{Euclidean Domains}\subseteq \text{PIDs}\subseteq \text{UFDs}\subseteq \text{Integral Domains}.
+\]
+\end{theorem}
+
+\begin{remark}
+The inclusions above are not merely terminology. Each stronger condition gives more tools. In a Euclidean domain, we can run the Euclidean algorithm. In a PID, ideals are controlled by single generators. In a UFD, factorization behaves like integer factorization.
+\end{remark}
+
+\begin{theorem}[Division Algorithm in Polynomial Rings]
+Let $F$ be a field. If $f(x),g(x)\in F[x]$ and $g(x)\neq 0$, then there exist unique $q(x),r(x)\in F[x]$ such that
+\[
+    f(x)=q(x)g(x)+r(x),
+    \qquad
+    r(x)=0\text{ or }\deg r<\deg g.
+\]
+\end{theorem}
+
+\begin{corollary}
+If $F$ is a field, then $F[x]$ is a Euclidean domain, hence a PID and a UFD.
+\end{corollary}
+
+\begin{theorem}[Gauss's Lemma]
+If $R$ is a UFD, then $R[x]$ is a UFD.
+\end{theorem}
+
+\section{Fields}
+
+Fields are rings in which every non-zero element is invertible. They are the natural algebraic setting for solving linear equations, building vector spaces, and studying roots of polynomials.
+
+\subsection{Definitions and First Examples}
+
+\begin{definition}[Field]
+A \textbf{field} is a commutative ring $F$ with unity $1\neq 0$ such that every non-zero element of $F$ is a unit.
+\end{definition}
+
+\begin{example}
+$\mathbb{Q}$, $\mathbb{R}$, and $\mathbb{C}$ are fields. The ring $\mathbb{Z}$ is not a field because $2$ has no multiplicative inverse in $\mathbb{Z}$. The quotient ring $\mathbb{Z}/p\mathbb{Z}$ is a field if and only if $p$ is prime.
+\end{example}
+
+\begin{definition}[Characteristic]
+The \textbf{characteristic} of a field $F$ is the smallest positive integer $n$ such that
+\[
+    \underbrace{1+1+\cdots+1}_{n\text{ times}}=0.
+\]
+If no such $n$ exists, the characteristic is $0$.
+\end{definition}
+
+\begin{proposition}
+The characteristic of a field is either $0$ or a prime number.
+\end{proposition}
+
+\begin{proof}
+If $\operatorname{char}F=n>0$ and $n=ab$ with $1<a,b<n$, then
+\[
+    0=n\cdot 1=(a\cdot 1)(b\cdot 1).
+\]
+Since a field has no zero divisors, either $a\cdot 1=0$ or $b\cdot 1=0$, contradicting the minimality of $n$. Hence $n$ is prime.
+\end{proof}
+
+\subsection{Field Extensions}
+
+\begin{definition}[Field Extension]
+If $F\subseteq K$ are fields and the operations of $F$ are the restrictions of the operations of $K$, then $K$ is called a \textbf{field extension} of $F$, denoted $K/F$.
+\end{definition}
+
+Every field extension $K/F$ turns $K$ into a vector space over $F$.
+
+\begin{definition}[Degree of an Extension]
+The \textbf{degree} of $K/F$ is
+\[
+    [K:F]=\dim_F K.
+\]
+If this dimension is finite, $K/F$ is a \textbf{finite extension}.
+\end{definition}
+
+\begin{example}
+The field $\mathbb{C}$ is a degree $2$ extension of $\mathbb{R}$, because every complex number can be uniquely written as $a+bi$ with $a,b\in\mathbb{R}$. Thus $\{1,i\}$ is a basis of $\mathbb{C}$ over $\mathbb{R}$.
+\end{example}
+
+\begin{theorem}[Tower Law]
+If $F\subseteq E\subseteq K$ are fields, then
+\[
+    [K:F]=[K:E][E:F]
+\]
+whenever the degrees are finite.
+\end{theorem}
+
+\begin{proof}
+Let $\{u_1,\dots,u_m\}$ be a basis of $E$ over $F$, and let $\{v_1,\dots,v_n\}$ be a basis of $K$ over $E$. Then the products $u_i v_j$ form a basis of $K$ over $F$. Hence $[K:F]=mn$.
+\end{proof}
+
+\subsection{Algebraic Elements and Minimal Polynomials}
+
+\begin{definition}[Algebraic and Transcendental Elements]
+Let $K/F$ be a field extension and $\alpha\in K$.
+\begin{enumerate}
+    \item $\alpha$ is \textbf{algebraic} over $F$ if there exists a non-zero polynomial $f(x)\in F[x]$ such that $f(\alpha)=0$.
+    \item $\alpha$ is \textbf{transcendental} over $F$ if it is not algebraic over $F$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Minimal Polynomial]
+If $\alpha$ is algebraic over $F$, the \textbf{minimal polynomial} of $\alpha$ over $F$ is the unique monic irreducible polynomial $m_\alpha(x)\in F[x]$ such that $m_\alpha(\alpha)=0$.
+\end{definition}
+
+\begin{example}
+The element $\sqrt{2}\in\mathbb{R}$ is algebraic over $\mathbb{Q}$, and its minimal polynomial is $x^2-2$. The element $i\in\mathbb{C}$ is algebraic over $\mathbb{R}$, with minimal polynomial $x^2+1$.
+\end{example}
+
+\begin{theorem}[Simple Algebraic Extensions]
+Let $\alpha$ be algebraic over $F$ with minimal polynomial $m_\alpha(x)$. Then
+\[
+    F(\alpha)\cong F[x]/(m_\alpha(x)).
+\]
+In particular,
+\[
+    [F(\alpha):F]=\deg m_\alpha.
+\]
+\end{theorem}
+
+\begin{proof}
+Consider the evaluation homomorphism $\operatorname{ev}_\alpha:F[x]\to F(\alpha)$ given by $f(x)\mapsto f(\alpha)$. Its kernel is the ideal generated by $m_\alpha(x)$. By the first isomorphism theorem for rings,
+\[
+    F[x]/(m_\alpha(x))\cong \operatorname{im}(\operatorname{ev}_\alpha)=F[\alpha].
+\]
+Since $\alpha$ is algebraic, $F[\alpha]=F(\alpha)$. The quotient has basis $1,x,\dots,x^{n-1}$, where $n=\deg m_\alpha$.
+\end{proof}
+
+\subsection{Splitting Fields and Algebraic Closure}
+
+\begin{definition}[Splitting Field]
+Let $f(x)\in F[x]$. A field extension $K/F$ is a \textbf{splitting field} of $f$ over $F$ if:
+\begin{enumerate}
+    \item $f$ factors completely into linear factors in $K[x]$;
+    \item $K$ is generated over $F$ by the roots of $f$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+The polynomial $x^2-2\in\mathbb{Q}[x]$ has splitting field $\mathbb{Q}(\sqrt{2})$. The polynomial $x^3-2$ has one real root $\sqrt[3]{2}$ and two complex roots $\omega\sqrt[3]{2}$ and $\omega^2\sqrt[3]{2}$, where $\omega=e^{2\pi i/3}$. Its splitting field over $\mathbb{Q}$ is $\mathbb{Q}(\sqrt[3]{2},\omega)$.
+\end{example}
+
+\begin{definition}[Algebraically Closed Field]
+A field $K$ is \textbf{algebraically closed} if every non-constant polynomial in $K[x]$ has a root in $K$.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+The field $\mathbb{C}$ is algebraically closed.
+\end{theorem}
+
+\subsection{Finite Fields}
+
+\begin{theorem}[Classification of Finite Fields]
+Let $F$ be a finite field.
+\begin{enumerate}
+    \item The characteristic of $F$ is a prime $p$.
+    \item The number of elements of $F$ is $p^n$ for some $n\geq 1$.
+    \item For every prime $p$ and every integer $n\geq 1$, there exists a finite field with $p^n$ elements.
+    \item Any two finite fields with $p^n$ elements are isomorphic.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+A finite field with $q=p^n$ elements is denoted $\mathbb{F}_q$ or $GF(q)$. The multiplicative group $\mathbb{F}_q^\times$ is cyclic of order $q-1$.
+\end{remark}
+
+\section{Galois Theory}
+
+Galois theory is the meeting point of groups and fields. It translates questions about roots of polynomials into questions about symmetry groups. The roots of a polynomial may be permuted by field automorphisms, and these permutations encode deep information about the original equation.
+
+\subsection{Field Automorphisms}
+
+\begin{definition}[Field Automorphism]
+Let $K/F$ be a field extension. An \textbf{$F$-automorphism} of $K$ is a field isomorphism $\sigma:K\to K$ such that
+\[
+    \sigma(a)=a
+\]
+for every $a\in F$.
+\end{definition}
+
+\begin{definition}[Galois Group]
+The set of all $F$-automorphisms of $K$ is denoted
+\[
+    \operatorname{Gal}(K/F).
+\]
+Under composition, it forms a group called the \textbf{Galois group} of the extension $K/F$.
+\end{definition}
+
+\begin{example}
+For $K=\mathbb{Q}(\sqrt{2})$ and $F=\mathbb{Q}$, every $\mathbb{Q}$-automorphism must send $\sqrt{2}$ to another root of $x^2-2$. Thus it either fixes $\sqrt{2}$ or sends it to $-\sqrt{2}$. Therefore
+\[
+    \operatorname{Gal}(\mathbb{Q}(\sqrt{2})/\mathbb{Q})\cong \mathbb{Z}/2\mathbb{Z}.
+\]
+\end{example}
+
+\subsection{Normality and Separability}
+
+\begin{definition}[Normal Extension]
+An algebraic extension $K/F$ is \textbf{normal} if every irreducible polynomial in $F[x]$ having at least one root in $K$ splits completely over $K$.
+\end{definition}
+
+\begin{definition}[Separable Polynomial and Extension]
+A polynomial is \textbf{separable} if it has no repeated roots in an algebraic closure. An algebraic extension is \textbf{separable} if every element of the extension has a separable minimal polynomial over the base field.
+\end{definition}
+
+\begin{definition}[Galois Extension]
+A finite extension $K/F$ is called \textbf{Galois} if it is both normal and separable.
+\end{definition}
+
+\begin{remark}
+Over fields of characteristic $0$, every irreducible polynomial is separable. Thus for extensions of $\mathbb{Q}$, $\mathbb{R}$, or $\mathbb{C}$, separability usually causes no difficulty. Normality is often the more visible condition.
+\end{remark}
+
+\subsection{The Fundamental Theorem}
+
+\begin{definition}[Fixed Field]
+Let $K/F$ be a field extension and $H\leq\operatorname{Gal}(K/F)$. The \textbf{fixed field} of $H$ is
+\[
+    K^H=\{x\in K:\sigma(x)=x\text{ for all }\sigma\in H\}.
+\]
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem of Galois Theory]
+Let $K/F$ be a finite Galois extension and let $G=\operatorname{Gal}(K/F)$. There is a one-to-one inclusion-reversing correspondence
+\[
+    \{\text{subgroups }H\leq G\}
+    \longleftrightarrow
+    \{\text{intermediate fields }F\subseteq E\subseteq K\}
+\]
+given by
+\[
+    H\mapsto K^H,
+    \qquad
+    E\mapsto \operatorname{Gal}(K/E).
+\]
+Moreover, $E/F$ is Galois if and only if $\operatorname{Gal}(K/E)$ is a normal subgroup of $G$, and in that case
+\[
+    \operatorname{Gal}(E/F)\cong G/\operatorname{Gal}(K/E).
+\]
+\end{theorem}
+
+\begin{remark}
+The correspondence reverses inclusion: larger subgroups fix more elements, so they correspond to smaller intermediate fields. This reversal is the conceptual heart of Galois theory.
+\end{remark}
+
+\subsection{Solvability by Radicals}
+
+\begin{definition}[Solvable Group]
+A group $G$ is \textbf{solvable} if there is a chain of subgroups
+\[
+    \{e\}=G_0\trianglelefteq G_1\trianglelefteq\cdots\trianglelefteq G_n=G
+\]
+such that every quotient $G_{i+1}/G_i$ is abelian.
+\end{definition}
+
+\begin{theorem}[Galois Criterion for Solvability by Radicals]
+A polynomial over a field of characteristic $0$ is solvable by radicals if its Galois group is solvable. Conversely, under the standard hypotheses of classical Galois theory, solvability by radicals forces the corresponding Galois group to be solvable.
+\end{theorem}
+
+\begin{remark}
+The general polynomial of degree $n$ has Galois group $S_n$. The group $S_n$ is not solvable for $n\geq 5$. This is the structural reason why there is no general formula by radicals for polynomial equations of degree five and higher.
+\end{remark}
+
+\section{Modules}
+
+Vector spaces are built over fields. Modules are what remain when the scalars are allowed to come from a ring. This generalization is natural, but it also removes some convenient properties of vector spaces. In particular, modules need not have bases.
+
+\subsection{Definitions and Examples}
+
+\begin{definition}[$R$-Module]
+Let $R$ be a ring with unity. A \textbf{left $R$-module} is an abelian group $(M,+)$ together with a scalar multiplication
+\[
+    R\times M\to M,
+    \qquad
+    (r,m)\mapsto rm,
+\]
+satisfying, for all $r,s\in R$ and $m,n\in M$,
+\begin{enumerate}
+    \item $r(m+n)=rm+rn$;
+    \item $(r+s)m=rm+sm$;
+    \item $(rs)m=r(sm)$;
+    \item $1m=m$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}[Basic Modules]
+\begin{enumerate}
+    \item Every vector space over a field $F$ is an $F$-module.
+    \item Every abelian group is a $\mathbb{Z}$-module, where $n\cdot g$ means repeated addition.
+    \item A ring $R$ is a module over itself.
+    \item Every ideal of a commutative ring $R$ is an $R$-submodule of $R$.
+\end{enumerate}
+\end{example}
+
+\begin{definition}[Submodule]
+Let $M$ be an $R$-module. A subset $N\subseteq M$ is a \textbf{submodule} if $N$ is an additive subgroup of $M$ and $rn\in N$ for all $r\in R$, $n\in N$.
+\end{definition}
+
+\begin{definition}[Quotient Module]
+If $N$ is a submodule of $M$, then the quotient abelian group $M/N$ becomes an $R$-module by
+\[
+    r(m+N)=rm+N.
+\]
+\end{definition}
+
+\subsection{Module Homomorphisms and Exact Sequences}
+
+\begin{definition}[Module Homomorphism]
+Let $M$ and $N$ be $R$-modules. A map $f:M\to N$ is an \textbf{$R$-module homomorphism} if
+\[
+    f(m_1+m_2)=f(m_1)+f(m_2),
+    \qquad
+    f(rm)=rf(m)
+\]
+for all $m,m_1,m_2\in M$ and $r\in R$.
+\end{definition}
+
+\begin{theorem}[First Isomorphism Theorem for Modules]
+If $f:M\to N$ is an $R$-module homomorphism, then
+\[
+    M/\ker f\cong \operatorname{im}f.
+\]
+\end{theorem}
+
+\begin{definition}[Exact Sequence]
+A sequence of $R$-modules and homomorphisms
+\[
+    \cdots\to M_{i-1}\xrightarrow{f_{i-1}}M_i\xrightarrow{f_i}M_{i+1}\to\cdots
+\]
+is \textbf{exact at $M_i$} if
+\[
+    \operatorname{im}f_{i-1}=\ker f_i.
+\]
+The sequence is \textbf{exact} if it is exact at every module.
+\end{definition}
+
+\begin{remark}
+Exactness is a compact way of recording algebraic information. For example, a sequence
+\[
+    0\to A\xrightarrow{f}B\xrightarrow{g}C\to 0
+\]
+is exact if and only if $f$ is injective, $g$ is surjective, and $C\cong B/f(A)$.
+\end{remark}
+
+\subsection{Free Modules and Failure of Bases}
+
+\begin{definition}[Free Module]
+An $R$-module $M$ is \textbf{free} if it has a basis, meaning there exists a subset $B\subseteq M$ such that every element of $M$ can be written uniquely as a finite $R$-linear combination of elements of $B$.
+\end{definition}
+
+\begin{example}
+The module $R^n$ is free with standard basis $e_1,\dots,e_n$. However, not every module is free. For instance, $\mathbb{Z}/n\mathbb{Z}$ is a $\mathbb{Z}$-module, but it is not a free $\mathbb{Z}$-module because every element has finite additive order.
+\end{example}
+
+\begin{remark}
+This is a major difference between vector spaces and modules. Every vector space has a basis, but modules over general rings may have torsion, may fail to be free, and may have more complicated decompositions.
+\end{remark}
+
+\subsection{Finitely Generated Modules over PIDs}
+
+\begin{definition}[Finitely Generated Module]
+An $R$-module $M$ is \textbf{finitely generated} if there exist $m_1,\dots,m_n\in M$ such that every $m\in M$ can be written as
+\[
+    m=r_1m_1+\cdots+r_nm_n
+\]
+for some $r_1,\dots,r_n\in R$.
+\end{definition}
+
+\begin{definition}[Torsion Element]
+Let $M$ be an $R$-module over an integral domain $R$. An element $m\in M$ is a \textbf{torsion element} if there exists non-zero $r\in R$ such that $rm=0$.
+\end{definition}
+
+\begin{theorem}[Structure Theorem for Finitely Generated Modules over a PID]
+Let $R$ be a PID and let $M$ be a finitely generated $R$-module. Then
+\[
+    M\cong R^r\oplus R/(d_1)\oplus\cdots\oplus R/(d_k),
+\]
+where $r\geq 0$, each $d_i$ is a non-zero non-unit, and
+\[
+    d_1\mid d_2\mid\cdots\mid d_k.
+\]
+The integer $r$ and the invariant factors $d_i$ are unique up to multiplication by units.
+\end{theorem}
+
+\begin{example}[Finite Abelian Groups]
+Taking $R=\mathbb{Z}$, the structure theorem implies that every finitely generated abelian group is isomorphic to
+\[
+    \mathbb{Z}^r\oplus \mathbb{Z}/d_1\mathbb{Z}\oplus\cdots\oplus\mathbb{Z}/d_k\mathbb{Z},
+\]
+where $d_1\mid d_2\mid\cdots\mid d_k$.
+\end{example}
+
+\begin{example}[Linear Algebra Reinterpreted]
+Let $V$ be a finite-dimensional vector space over $F$ and let $T:V\to V$ be a linear transformation. We may turn $V$ into an $F[x]$-module by defining
+\[
+    f(x)\cdot v=f(T)(v).
+\]
+The structure theorem for finitely generated modules over the PID $F[x]$ is one route to rational canonical form and Jordan canonical form.
+\end{example}
+
+\section{Conclusion}
+
+Abstract algebra replaces computation with structure. Groups encode invertible operations and symmetry. Rings encode arithmetic with addition and multiplication. Fields provide the scalar systems needed for linear algebra and polynomial equations. Galois theory connects field extensions with groups of symmetries. Modules generalize vector spaces and reveal how linear algebra changes when the scalars are no longer a field.
+
+The common method is the same throughout: define a structure by axioms, construct maps that preserve the structure, identify kernels and quotients, and then classify objects up to isomorphism. This pattern is one of the central organizing principles of modern mathematics.
