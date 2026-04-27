@@ -75,26 +75,26 @@ The number of ways to arrange $k$ objects chosen from $n$ distinct objects, with
 \begin{definition}[Combination]
 The number of ways to choose $k$ objects from $n$ distinct objects, with order not mattering, is
 \[
-    {n\choose k}=\frac{n!}{k!(n-k)!}.
+    \binom{n}{k}=\frac{n!}{k!(n-k)!}.
 \]
 \end{definition}
 
 \begin{example}
 A five-card poker hand is a subset of size $5$ from a deck of $52$ cards. Since order does not matter, the number of possible hands is
 \[
-    {52\choose 5}.
+    \binom{52}{5}.
 \]
 \end{example}
 
 \begin{theorem}[Binomial Theorem]
 For $n\in\mathbb{N}$,
 \[
-    (x+y)^n=\sum_{k=0}^{n}{n\choose k}x^k y^{n-k}.
+    (x+y)^n=\sum_{k=0}^{n}\binom{n}{k}x^k y^{n-k}.
 \]
 \end{theorem}
 
 \begin{remark}
-The binomial coefficient ${n\choose k}$ appears because choosing which $k$ factors contribute $x$ uniquely determines a term $x^k y^{n-k}$ in the expansion.
+The binomial coefficient $\binom{n}{k}$ appears because choosing which $k$ factors contribute $x$ uniquely determines a term $x^k y^{n-k}$ in the expansion.
 \end{remark}
 
 \section{Conditional Probability and Independence}
@@ -295,7 +295,7 @@ Then
 \begin{definition}[Binomial Distribution]
 A random variable $X$ has a \textbf{binomial distribution} with parameters $n$ and $p$, written $X\sim\operatorname{Bin}(n,p)$, if
 \[
-    \mathbb{P}(X=k)={n\choose k}p^k(1-p)^{n-k},
+    \mathbb{P}(X=k)=\binom{n}{k}p^k(1-p)^{n-k},
     \qquad
     k=0,1,\dots,n.
 \]
@@ -882,6 +882,8 @@ if
 \]
 for every continuity point $x$ of $F_X$.
 \end{definition}
+
+\newpage
 
 \begin{theorem}[Relations Between Convergence Modes]
 \[

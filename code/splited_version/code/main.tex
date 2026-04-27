@@ -1,6 +1,7 @@
 \documentclass[oneside]{book}
 
 % Packages
+\usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -13,7 +14,7 @@
 \usepackage{caption}
 \usepackage[bookmarks=false, unicode]{hyperref}
 \usepackage{float}
-\usetikzlibrary{calc, decorations.pathreplacing}
+\usetikzlibrary{calc, decorations.pathreplacing, positioning}
 \usepackage{parskip}
 \usepackage{booktabs}
 \usepackage{geometry}
@@ -197,29 +198,52 @@
 \begin{document}
 
 \begin{titlepage}
-
-    \definecolor{elegantblue}{RGB}{0, 51, 102}
-
-    \vspace*{3cm}
-    {\color{elegantblue}\hrule height 3pt}
-    \vspace{1cm}
-
-    \noindent
-    {\Huge \bfseries \color{elegantblue} Mathematics And Axiomatization\par}
-
-    \vspace{1cm}
-    {\color{elegantblue}\hrule height 3pt}
-
-    \vfill
-    \begin{flushleft}
-        {\Large \textbf{Jinshuo Li}}\\[15pt]
-        {\large Shanghai Jiao Tong University}\\[8pt]
-        {\large \today}
-    \end{flushleft}
-    \vspace{2cm}
-\end{titlepage}
+\newgeometry{margin=0pt}
 \thispagestyle{empty}
 
+\definecolor{covercream}{RGB}{239,226,205}
+\definecolor{covermuted}{RGB}{196,204,216}
+\definecolor{covernight}{RGB}{12,24,43}
+\definecolor{covergold}{RGB}{255,214,153}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Background photograph: the supplied font.jpg, not an edited/generated image.
+    \node[inner sep=0pt] at (current page.center)
+        {\includegraphics[width=\paperwidth,height=\paperheight]{assets/font.jpg}};
+
+    % Subtle tint and reading panel, preserving the diagonal light trail.
+    \fill[covernight, opacity=0.48] (current page.south west) rectangle (current page.north east);
+    \fill[black, opacity=0.18]
+        (current page.south west) rectangle ($(current page.south east)+(0,0.32\paperheight)$);
+
+    % Main title block.
+    \node[anchor=north west, inner sep=0pt, text=covercream]
+        at ($(current page.north west)+(0.84in,-1.48in)$) {%
+        \begin{minipage}{0.56\paperwidth}
+            {\sffamily\fontsize{31}{44}\selectfont\bfseries Mathematics\\[0.10em]Axiomatization}\par
+            \vspace{0.42in}
+            {\color{covercream!70}\rule{0.44\paperwidth}{0.45pt}}\par
+            \vspace{0.22in}
+            {\sffamily\fontsize{8.5}{14}\selectfont\color{covermuted}
+            M\,A\,T\,H\,E\,M\,A\,T\,I\,C\,S\quad N\,O\,T\,E\,S}\par
+        \end{minipage}
+    };
+
+    % Author block and footer.
+    \node[anchor=south west, align=left, text=covercream!92, inner sep=0pt]
+        at ($(current page.south west)+(0.92in,0.82in)$)
+        {\sffamily\fontsize{10}{16}\selectfont
+        Jinshuo Li\\
+        \color{covermuted}Shanghai Jiao Tong University\\
+        \today};
+
+    \node[anchor=south, text=covercream!56, inner sep=0pt]
+        at ($(current page.south)+(0,0.55in)$)
+        {\sffamily\fontsize{7.2}{12}\selectfont E X P L O R E\quad -\quad T H I N K\quad -\quad U N D E R S T A N D};
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry
+\thispagestyle{empty}
 
 \cleardoublepage
 
@@ -244,7 +268,7 @@
 \input{chapters/chapter2.tex}
 \input{chapters/chapter3.tex}
 \input{chapters/chapter4_revised.tex}
-\input{chapters/chapter5.tex}
+\input{chapters/chapter5_revised.tex}
 \input{chapters/chapter6_revised.tex}
 \input{chapters/chapter7_revised.tex}
 \input{chapters/chapter8.tex}

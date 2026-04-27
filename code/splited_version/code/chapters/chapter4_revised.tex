@@ -26,6 +26,8 @@ For $a,b\in S$, we usually write $a*b$ instead of $*(a,b)$.
 
 The condition $*:S\times S\to S$ already includes \textbf{closure}: whenever we combine two elements of $S$, the result is still in $S$.
 
+\newpage
+
 \begin{example}[Operations and Non-operations]
 Addition is a binary operation on $\mathbb{Z}$, since $a+b\in\mathbb{Z}$ whenever $a,b\in\mathbb{Z}$. Subtraction is also a binary operation on $\mathbb{Z}$. However, division is not a binary operation on $\mathbb{Z}$, because $1/2\notin\mathbb{Z}$. It is also not a binary operation on $\mathbb{R}$ unless division by $0$ is excluded.
 \end{example}
@@ -72,6 +74,8 @@ Groups are the algebraic structures that formalize the idea of reversible transf
 
 \subsection{Definition and Basic Examples}
 
+\newpage
+
 \begin{definition}[Group]
 A \textbf{group} is a pair $(G,*)$, where $G$ is a set and $*$ is a binary operation on $G$, satisfying the following axioms:
 \begin{enumerate}
@@ -117,6 +121,8 @@ Suppose $b$ and $c$ are both inverses of $a$. Then $ab=e$ and $ca=e$. Hence
 \]
 Therefore the inverse is unique.
 \end{proof}
+
+\newpage
 
 \begin{proposition}[Cancellation Laws]
 Let $G$ be a group and $a,b,c\in G$.
@@ -227,6 +233,8 @@ For any $x\in aH$, write $x=ah$. Then
 Thus $aH\subseteq bH$. Symmetrically, $bH\subseteq aH$. Therefore two left cosets are either disjoint or equal.
 \end{proof}
 
+\newpage
+
 \begin{theorem}[Lagrange's Theorem]
 Let $G$ be a finite group and $H\leq G$. Then
 \[
@@ -276,6 +284,8 @@ Let $N\leq G$. The following are equivalent:
 \end{enumerate}
 \end{proposition}
 
+\newpage
+
 \begin{definition}[Quotient Group]
 If $N\trianglelefteq G$, then the set of left cosets
 \[
@@ -295,6 +305,7 @@ The subgroup $n\mathbb{Z}\leq\mathbb{Z}$ is normal because $\mathbb{Z}$ is abeli
 \]
 is precisely the group of residue classes modulo $n$.
 \end{example}
+
 
 \begin{remark}
 The quotient construction is one of the most important constructions in mathematics. It formalizes the idea that certain elements are to be regarded as equivalent. In $\mathbb{Z}/n\mathbb{Z}$, two integers are identified if their difference lies in $n\mathbb{Z}$.
@@ -449,6 +460,8 @@ Let $G$ be a finite group with $|G|=p^k m$, where $p$ is prime and $p\nmid m$. T
     \]
 \end{enumerate}
 \end{theorem}
+
+\newpage
 
 \begin{example}[A Group of Order $15$]
 Let $|G|=15=3\cdot 5$. The number $n_5$ of Sylow $5$-subgroups satisfies $n_5\equiv 1\pmod 5$ and $n_5\mid 3$. Hence $n_5=1$. Thus the Sylow $5$-subgroup is normal. Similarly, $n_3\equiv 1\pmod 3$ and $n_3\mid 5$, so $n_3=1$ or $10$ is impossible because $10\nmid 5$; hence $n_3=1$. Both Sylow subgroups are normal. This strongly restricts the structure of $G$.
@@ -670,6 +683,8 @@ In an integral domain, every prime element is irreducible.
 \begin{proof}
 Suppose $p$ is prime and $p=ab$. Since $p\mid ab$, primality implies $p\mid a$ or $p\mid b$. Assume $p\mid a$. Then $a=pc$ for some $c$, so $p=ab=pcb$. Since $p\neq 0$ and the ring is a domain, cancellation gives $1=cb$, so $b$ is a unit. The other case is similar.
 \end{proof}
+
+\newpage
 
 \begin{definition}[Euclidean Domain, PID, and UFD]
 Let $R$ be an integral domain.

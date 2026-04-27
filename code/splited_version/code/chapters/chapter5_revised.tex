@@ -1,0 +1,1629 @@
+\chapter{Mathematical Analysis II}
+
+Now we will move on to another part of the analysis, which is Mathematical Analysis II. In this chapter, we will study the properties of functions of several variables, including limits, continuity, differentiability, and integrability. We will also introduce the concept of vector-valued functions and study their properties. This chapter will provide a solid foundation for further studies in multivariable calculus, differential equations, and mathematical physics.
+
+\section{Series}
+
+Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
+
+\subsection{Numerical Series}
+
+The study of infinite series is the discrete analogue of improper integrals. It allows us to define sums of infinitely many terms, providing the foundation for representing functions as power series (Taylor series) in later analysis.
+
+\begin{definition}[Infinite Series]
+Given a sequence of real numbers $\{a_n\}_{n=1}^{\infty}$, the formal expression
+\[ \sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots \]
+is called an \textbf{infinite series}. The number $a_n$ is called the general term.
+\end{definition}
+
+To assign a value to this infinite sum, we look at finite sums.
+
+\subsection{Upper and Lower Limits}
+
+To study the convergence of series, it is often helpful to use the concept of upper and lower limits of sequences, especially when the sequence does not converge.
+
+\begin{definition}[Limit Point]
+Let $\{x_n\}$ be a sequence. A value $\xi \in \mathbb{R} \cup \{+\infty, -\infty\}$ is called a \textbf{limit point} of the sequence if there exists a subsequence $\{x_{n_k}\}$ such that $\lim_{k \to \infty} x_{n_k} = \xi$.
+\end{definition}
+
+\begin{definition}[Upper and Lower Limits]
+Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{upper limit} (limit superior) and \textbf{lower limit} (limit inferior) are defined as:
+\[ \limsup_{n \to \infty} x_n = \sup E, \quad \liminf_{n \to \infty} x_n = \inf E \]
+\end{definition}
+
+\begin{theorem}
+A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
+\end{theorem}
+
+\begin{property}
+For any two sequences $\{x_n\}$ and $\{y_n\}$:
+\begin{enumerate}
+    \item $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$
+    \item $\liminf (x_n + y_n) \ge \liminf x_n + \liminf y_n$
+\end{enumerate}
+Equality holds if at least one of the sequences converges.
+\end{property}
+
+\begin{definition}[Convergence]
+Let $S_n$ denote the $n$-th \textbf{partial sum} of the series:
+\[ S_n = \sum_{k=1}^{n} a_k = a_1 + \cdots + a_n \]
+If the sequence of partial sums $\{S_n\}$ converges to a limit $S$ (i.e., $\lim_{n \to \infty} S_n = S$), we say the series \textbf{converges} to $S$, and write $\sum_{n=1}^{\infty} a_n = S$.
+If $\{S_n\}$ does not converge, the series \textbf{diverges}.
+\end{definition}
+
+\begin{theorem}[Cauchy Criterion for Series]
+The series $\sum a_n$ converges if and only if for every $\epsilon > 0$, there exists an integer $N$ such that for all $n > N$ and any $p \ge 1$:
+\[ |S_{n+p} - S_n| = |a_{n+1} + a_{n+2} + \cdots + a_{n+p}| < \epsilon \]
+\end{theorem}
+
+\begin{theorem}[Necessary Condition for Convergence]
+If the series $\sum_{n=1}^{\infty} a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
+\end{theorem}
+\begin{remark}
+The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
+\end{remark}
+
+\begin{example}[Geometric Series]
+The series $\sum_{n=0}^{\infty} ar^n$ converges if and only if $|r| < 1$. In that case, the sum is $\frac{a}{1-r}$.
+\end{example}
+
+\begin{property}[Linearity]
+If $\sum a_n = A$ and $\sum b_n = B$, then for any constants $\alpha, \beta$:
+\[ \sum (\alpha a_n + \beta b_n) = \alpha A + \beta B \]
+\end{property}
+
+\subsubsection{Tests for Positive Series}
+
+A series $\sum a_n$ is called a \textbf{positive series} if $a_n \ge 0$ for all $n$.
+For such series, the partial sum sequence $\{S_n\}$ is monotonically increasing.
+\begin{theorem}
+A positive series converges if and only if its sequence of partial sums is bounded above.
+\end{theorem}
+
+\paragraph{Comparison Tests}
+\begin{theorem}[Direct Comparison Test]
+Let $0 \le a_n \le b_n$ for all $n$.
+\begin{enumerate}
+    \item If $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $\sum a_n$ diverges, then $\sum b_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Limit Comparison Test]
+Let $a_n > 0, b_n > 0$. Consider the limit $L = \lim_{n \to \infty} \frac{a_n}{b_n}$.
+\begin{enumerate}
+    \item If $0 < L < +\infty$, then $\sum a_n$ and $\sum b_n$ converge or diverge together.
+    \item If $L = 0$ and $\sum b_n$ converges, then $\sum a_n$ converges.
+    \item If $L = +\infty$ and $\sum b_n$ diverges, then $\sum a_n$ diverges.
+\end{enumerate}
+\end{theorem}
+
+\paragraph{Integral Test and $p$-Series}
+\begin{theorem}[Integral Test]
+Let $f(x)$ be a continuous, positive, and decreasing function on $[1, +\infty)$ such that $f(n) = a_n$. Then the series $\sum_{n=1}^{\infty} a_n$ converges if and only if the improper integral $\int_1^{+\infty} f(x) dx$ converges.
+\end{theorem}
+
+From this, we derive the convergence of the famous $p$-series:
+\begin{corollary}[$p$-Series]
+The series $\sum_{n=1}^{\infty} \frac{1}{n^p}$:
+\begin{itemize}
+    \item Converges if $p > 1$.
+    \item Diverges if $p \le 1$.
+\end{itemize}
+\end{corollary}
+
+More rigorous expressions of this theorem can be described as:
+
+\begin{theorem}
+    Assume $f(x)$ is continuous, positive and integrable on $[a,A]$ for any $A>a>0$. Pick an increasing sequence $\{x_n\}$ such that $x_n \to +\infty$ as $n \to +\infty$ and $a_1 = a$. Then the series $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ and the improper integral $\int_a^{+\infty} f(x) dx$ either both converge or both diverge. 
+    More specifically, if the function is decreasing, then we have:
+    \[\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx = \int_a^{+\infty} f(x) dx\].
+\end{theorem}
+
+\begin{remark}
+    \begin{enumerate}
+        \item The choice of the sequence $\{a_n\}$ is not unique. A common choice is $a_n = n$, which recovers the standard integral test. However, other choices can be made depending on the specific function $f(x)$ and the context of the problem.
+        \item If the function $f(x)$ is not positive, and $\int_a^{+\infty} f(x) dx$ converges, we can judge the convergence of $\sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) dx$ by considering the absolute values of the integrals. But if $\int_a^{+\infty} f(x) dx$ diverges, we cannot conclude anything about the series without additional information.
+    \end{enumerate}
+\end{remark}
+
+Here is some applications of the integral test:
+
+\begin{example}
+    Determine the convergence of the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$. \\
+    \textbf{Solution:} Consider the function $f(x) = \frac{1}{x \ln^q x}$ for $x \ge 2$. This function is continuous, positive, and decreasing for $x > e$ when $q > 0$. We apply the integral test:
+    \[\int_2^{+\infty} \frac{1}{x \ln^q x} dx \]
+    Let $t = \ln x$, then $dx = e^t dt$ and when $x = 2$, $t = \ln 2$. The integral becomes:
+    \[\int_{\ln 2}^{+\infty} \frac{1}{t^q} dt \]
+    This integral converges if and only if $q > 1$. Therefore, by the integral test, the series $\sum_{n=2}^{\infty} \frac{1}{n \ln^q n}$ converges if and only if $q > 1$ and diverges otherwise.
+\end{example}
+
+Also, we can use the integral test to determine the convergence of improper integrals:
+
+\newpage
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$. \\
+    \textbf{Solution:} The key process is to find a suitable sequence $\{a_n\}$ to apply the integral test. We can choose $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^2 \sin^2 x} = \int_{0}^{\pi} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t}
+    \]
+    As we can observe that:
+    \[
+    (n\pi + t)^2 \sin^2 t < (n+1)^2 \pi^2 t^2 < (n+1)^2 \pi^2 \cdot \frac{1}{(n+1)^2 \pi^2} = 1
+    \]
+    Thus, we have:
+    \[\int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{2} = \frac{1}{2(n+1)\pi}\]
+    Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
+\end{example}
+
+\begin{example}
+    Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
+    \textbf{Solution:} We again choose the sequence $\{a_n\}$ as $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
+    \[\sum_{n=0}^{\infty} \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}\]
+    Let $a_n = \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}$. We have:
+    \[
+    \int_{n\pi}^{(n+1)\pi} \frac{dx}{1 + x^4 \sin^2 x}
+    = \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} + \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + t)^4 \sin^2 t} = I_1 + I_2
+    \]
+    For $I_1$, we have:
+    \[I_1 > \int_{0}^{\frac{\pi}{2}} \frac{dt}{1 + (n\pi + \frac{\pi}{2})^4} = \frac{\pi/2}{1 + (n\pi + \frac{\pi}{2})^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    For $I_2$, we have:
+    \[I_2 > \int_{\frac{\pi}{2}}^{\pi} \frac{dt}{1 + (n\pi + \pi)^4} = \frac{\pi/2}{1 + (n\pi + \pi)^4} > \frac{\pi/2}{2(n+1)^4 \pi^4} = \frac{1}{4(n+1)^4 \pi^3}\]
+    Therefore, $a_n = I_1 + I_2 > \frac{1}{2(n+1)^4 \pi^3}$. Since the series $\sum \frac{1}{n^4}$ converges, by the comparison test, the series $\sum a_n$ converges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$ converges.
+\end{example}
+
+\paragraph{A Quick Detour: Upper and Lower Limits ($\limsup$ and $\liminf$)}
+Sometimes sequences refuse to settle down and bounce around like a hyperactive kangaroo. When a classic limit doesn't exist, we track their extreme accumulation points instead. These are the \textbf{Limit Superior} ($\limsup_{n \to \infty} x_n$) and \textbf{Limit Inferior} ($\liminf_{n \to \infty} x_n$). 
+A quirky feature of these is their arithmetic—it's not your standard algebra! For example, $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$. They only strictly obey the equals sign when one of the sequences actually converges. Keep this in mind when Cauchy drops a $\limsup$ on you!
+
+\paragraph{Ratio and Root Tests}
+These are the most commonly used tests for computation.
+
+\begin{theorem}[D'Alembert's Ratio Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \lim_{n \to \infty} \frac{a_{n+1}}{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is \textbf{inconclusive} (e.g., $1/n$ diverges but $1/n^2$ converges, both have $\rho=1$).
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Cauchy's Root Test]
+Let $\sum a_n$ be a positive series and let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{a_n} \]
+\begin{itemize}
+    \item If $\rho < 1$, the series converges.
+    \item If $\rho > 1$, the series diverges.
+    \item If $\rho = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Raabe's Test}
+When the Ratio Test yields $\rho = 1$, Raabe's test provides a finer criterion.
+
+\begin{theorem}[Raabe's Test]
+Let $a_n > 0$. Consider the limit:
+\[ R = \lim_{n \to \infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) \]
+\begin{itemize}
+    \item If $R > 1$, the series converges.
+    \item If $R < 1$, the series diverges.
+    \item If $R = 1$, the test is inconclusive.
+\end{itemize}
+\end{theorem}
+
+\subsubsection{Alternating Series}
+An alternating series has the form $\sum_{n=1}^{\infty} (-1)^{n-1} a_n$ where $a_n > 0$.
+
+\begin{theorem}[Leibniz Test]
+If the sequence $\{a_n\}$ satisfies:
+\begin{enumerate}
+    \item Monotonicity: $a_{n+1} \le a_n$ for all $n$;
+    \item Limit zero: $\lim_{n \to \infty} a_n = 0$;
+\end{enumerate}
+then the alternating series $\sum (-1)^{n-1} a_n$ converges.
+Furthermore, the sum $S$ satisfies $|S - S_n| \le a_{n+1}$.
+\end{theorem}
+
+\subsubsection{Absolute and Conditional Convergence}
+For series with arbitrary signs, we distinguish two types of convergence.
+
+\begin{definition}
+A series $\sum a_n$ is called \textbf{absolutely convergent} if the series of absolute values $\sum |a_n|$ converges.
+If $\sum a_n$ converges but $\sum |a_n|$ diverges, the series is called \textbf{conditionally convergent}.
+\end{definition}
+
+\begin{theorem}
+Absolute convergence implies convergence.
+\[ \sum |a_n| < \infty \implies \sum a_n \text{ converges}. \]
+\end{theorem}
+
+\begin{example}
+The series $\sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \dots$ converges by Leibniz Test, but $\sum \frac{1}{n}$ diverges. Thus, it is \textbf{conditionally convergent}.
+\end{example}
+
+\subsubsection{Dirichlet's and Abel's Tests}
+For general series of the form $\sum_{n=1}^{\infty} a_n b_n$, where standard tests fail, these tests are powerful.
+
+\begin{theorem}[Dirichlet's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The partial sums of $\sum a_n$ are bounded (i.e., $|\sum_{k=1}^n a_k| \le M$).
+    \item The sequence $\{b_n\}$ is monotonic and $\lim_{n \to \infty} b_n = 0$.
+\end{enumerate}
+\end{theorem}
+\textit{Example Application:} Proving $\sum \frac{\sin n}{n}$ converges. Here $a_n = \sin n$ (bounded sums) and $b_n = 1/n$ (goes to 0).
+
+\begin{theorem}[Abel's Test]
+The series $\sum_{n=1}^{\infty} a_n b_n$ converges if:
+\begin{enumerate}
+    \item The series $\sum a_n$ converges.
+    \item The sequence $\{b_n\}$ is monotonic and bounded.
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{Properties of Series}
+
+\begin{theorem}[Associativity]
+If a series converges, we can group terms (insert parentheses) without changing the sum. However, removing parentheses from a grouped series may alter convergence (e.g., $(1-1)+(1-1)+\dots$ converges to 0, but $1-1+1-1\dots$ diverges).
+\end{theorem}
+
+\begin{theorem}[Riemann Rearrangement Theorem]
+\begin{itemize}
+    \item If a series is \textbf{absolutely convergent}, any rearrangement of its terms converges to the same sum.
+    \item If a series is \textbf{conditionally convergent}, for any real number $L$ (or $\pm \infty$), there exists a rearrangement of terms such that the series converges to $L$.
+\end{itemize}
+This highlights the dangerous nature of conditional convergence: the order of summation matters!
+\end{theorem}
+
+\subsubsection{Product of Series}
+Now we shall dive into the topic of multiplying two series together. We have following definition:
+
+\begin{definition}
+    Assume we have two series $\sum_{n=1}^{\infty} a_n$ and $\sum_{n=1}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
+    \[\begin{pmatrix}
+        a_1 b_1 & a_1 b_2 & a_1 b_3 & a_1 b_4 & \cdots \\
+        a_2 b_1 & a_2 b_2 & a_2 b_3 & a_2 b_4 & \cdots \\
+        a_3 b_1 & a_3 b_2 & a_3 b_3 & a_3 b_4 & \cdots \\
+        a_4 b_1 & a_4 b_2 & a_4 b_3 & a_4 b_4 & \cdots \\
+    \vdots   & \vdots   & \vdots   & \vdots   & \ddots
+    \end{pmatrix}\]
+\end{definition}
+
+The reason we define the product of two series in this way is that, due to the properties of rearranged sequences, changing the order of summation may alter the sum of the series. For example, we have following two arrangements of the Cauchy product:
+
+\textbf{Cauchy arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=2}^{\infty} \sum_{k=1}^{n-1} a_k b_{n-k} = a_1 b_1 + (a_1 b_2 + a_2 b_1) + (a_1 b_3 + a_2 b_2 + a_3 b_1) + \cdots
+\]
+
+\textbf{Square arrangement}
+
+\[
+\sum_{i=1}^{\infty} a_i \cdot \sum_{j=1}^{\infty} b_j = \sum_{n=1}^{\infty} \left(\sum_{i=1}^{n}(a_i b_n+ a_n b_i) - a_n b_n \right)
+\]
+
+Under certain conditions, both arrangements converge to the same sum. This is formalized in the following theorem:
+
+\begin{theorem}
+    Assume we have two series $\sum_{n=1}^{\infty} a_n = A$ and $\sum_{n=1}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
+\end{theorem}
+
+The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
+
+\subsubsection{Infinite Product}
+\begin{definition}
+    Assume $\{a_n\}$ is a sequence such that $a_n \neq 0$ for all $n$. The \textbf{infinite product} $\prod_{n=1}^{\infty} a_n$ is defined as the limit of the partial products:
+    \[ P_N = \prod_{n=1}^{N} a_n \]
+    If the limit $\lim_{N \to \infty} P_N$ exists and is non-zero, we say the infinite product converges to that limit.
+    Else, the infinite product diverges.
+\end{definition}
+
+Just like series, we call $P_N$ the $N$-th partial product of the infinite product.
+
+Mind that if the infinite product "converges to zero", we still say it diverges. We will see why in the following theorem.
+
+Here are some properties of infinite products:
+
+\begin{theorem}
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{n \to \infty} a_n = 1$.
+    
+    If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{m \to \infty} \prod_{n=m+1}^{\infty} a_n = 1$.
+\end{theorem}
+
+Sometimes, it is easier to study the convergence of infinite products by expressing it in terms of $p_n = 1 + a_n$:
+
+\[
+\prod_{n=1}^{\infty} p_n = \prod_{n=1}^{\infty} (1 + a_n)
+\]
+
+Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
+
+\begin{theorem}
+    Assume $a_n > -1$ for all $n$. The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
+    
+    Furthermore, if $a_n > -1$ does not change sign, then the infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} a_n$ converges.
+\end{theorem}
+
+Using this theorem, we can see that if the infinite product converges to zero, then the series $\sum \ln(1 + a_n)$ diverges to $-\infty$. This means that the terms $a_n$ do not approach zero fast enough, leading to divergence. We can apply the properties of series to study the convergence of infinite products.
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, and $a_n$ does not change sign, then $\prod_{n=1}^{\infty} (1+a_n)$ converges in the absolute sense if and only if $\sum_{n=1}^{\infty} a_n$ converges.
+\end{corollary}
+
+\begin{corollary}
+    Assume $p_n = 1 + a_n$, if $\sum a_n$ converges, then the infinite product $\prod (1+a_n)$ converges if and only if $\sum a_n^2$ converges.
+\end{corollary}
+
+Also, matheaticians use the infinite product deduce some famous formulas, for example:
+
+\textbf{Wallis Law}:
+\[\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1} = \left(\frac{2 \cdot 2}{1 \cdot 3}\right) \left(\frac{4 \cdot 4}{3 \cdot 5}\right) \left(\frac{6 \cdot 6}{5 \cdot 7}\right) \cdots\]
+\textbf{Viete Law}:
+\[\frac{2}{\pi} = \prod_{n=1}^{\infty} \cos \frac{\pi}{2^{n+1}} = \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{2 + \sqrt{2}}}{2} \cdot \frac{\sqrt{2 + \sqrt{2 + \sqrt{2}}}}{2} \cdots\]
+\textbf{Stirling Formula}:
+When $n \to \infty$, we have the famous approximation:
+\[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
+
+\newpage
+
+\subsection{Function Series}
+
+Function series generalize numerical series by summing functions instead of numbers. They are crucial for representing functions as power series, Fourier series, etc.
+
+Now we will broaden our discussion to series of functions. Consider a sequence of functions $\{f_n(x)\}$ defined on a set $E \subseteq \mathbb{R}$. We define the series of functions as:
+
+\begin{definition}[Function Series]
+A \textbf{function series} is an expression of the form:
+\[ \sum_{n=1}^{\infty} u_n(x) = u_1(x) + u_2(x) + u_3(x) + \cdots \]
+where each $u_n(x)$ is a function defined on $E$.
+\end{definition}
+
+How can we determine whether such a series converges? We need to use the concept of convergence of series:
+
+\begin{definition}
+    Assume $u_n(x)$ is a function defined on a set $E$. For each fixed $x \in E$, we can consider the numerical series $\sum_{n=1}^{\infty} u_n(x)$. If this series converges to a limit $S(x)$, we say that the function series converges at the point $x$, and we call the point the \textbf{point of convergence}.
+\end{definition}
+
+For all the points of convergence, we call the set of them the \textbf{domain of convergence}. Then we can define the sum function of the series:
+
+\begin{definition}[Sum Function]
+If the function series $\sum_{n=1}^{\infty} u_n(x)$ converges at every point $x \in D$, we define the \textbf{sum function} $S(x)$ as:
+\[ S(x) = \sum_{n=1}^{\infty} u_n(x), \quad x \in D \].
+\end{definition}
+
+Likewise, we can define the sequence of partial sums:
+
+\begin{definition}[Partial Sums]
+The $N$-th \textbf{partial sum} of the function series $\sum_{n=1}^{\infty} u_n(x)$ is defined as:
+\[ S_N(x) = \sum_{n=1}^{N} u_n(x) \]
+for each $x \in E$.
+\end{definition}
+
+Which means, the function series and $\{S_n(x)\}$ are actually equivalent. To make things simpler, we will use the sequence of partial sums to study the convergence of function series.
+
+After all, how can we define the convergence of function series? There are two main types: pointwise convergence and uniform convergence. First, we have pointwise convergence:
+
+\begin{definition}[Pointwise Convergence]
+Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ \textbf{converges pointwise} to a function $f$ on $E$ if for every $x \in E$:
+\[ \lim_{n \to \infty} f_n(x) = f(x) \]
+Similarly, a series $\sum_{n=1}^{\infty} f_n(x)$ converges pointwise to $S(x)$ if the sequence of partial sums converges pointwise to $S(x)$.
+\end{definition}
+
+Pointwise convergence means that for each fixed $x$, the sequence $\{f_n(x)\}$ converges to $f(x)$.
+
+However, pointwise convergence is often too weak to preserve important properties of functions, such as continuity, differentiability, and integrability.
+
+\begin{example}[Failure of Pointwise Convergence]
+Consider $f_n(x) = x^n$ on the interval $[0, 1]$.
+For any $x \in [0, 1)$, $\lim_{n \to \infty} x^n = 0$. For $x = 1$, $\lim_{n \to \infty} 1^n = 1$.
+The limit function is:
+\[ f(x) = \begin{cases} 0 & 0 \le x < 1 \\ 1 & x = 1 \end{cases} \]
+Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
+\end{example}
+
+But wait, there's more! Let's look at more instances where pointwise convergence absolutely ruins our calculus dreams:
+
+\begin{example}[Calculus Goes Bonkers]
+Consider the sequence $S_n(x) = nx(1-x^2)^n$ on $[0,1]$.
+For any $x \in [0, 1]$, the pointwise limit is clearly $S(x) = 0$. You would logically expect the integral to be $0$, right? But let's actually integrate the sequence:
+\[ \int _0^1 S_n(x) dx = \int_0^1 nx(1-x^2)^n dx = -\frac{n}{2} \int_0^1 (1-x^2)^n d(1-x^2) = \frac{n}{2(n+1)} \to \frac{1}{2} \]
+Pointwise convergence just watched the integral become $1/2$ and basically said "I'll pretend I didn't see that."
+\end{example}
+
+\begin{example}[Derivatives Jumping Out the Window]
+Take the series $\sum_{n=1}^{\infty} \frac{\sin(n^2 x)}{n^2}$. It converges pointwise (and even absolutely) to some nice continuous function. But if we try to naively take the derivative term-by-term, we get $\sum_{n=1}^{\infty} \cos(n^2 x)$, which diverges horribly. 
+\end{example}
+
+To fix this catastrophic failure of properties, we need to bring in the heavy artillery: a stronger form of convergence.
+
+\subsubsection{Uniform Convergence}
+
+\begin{definition}[Uniform Convergence]
+A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
+\[ |f_n(x) - f(x)| < \epsilon \]
+We write $f_n \xRightarrow{D} f$ on $E$.
+\end{definition}
+
+Geometrically, this means that for $n > N$, the graph of $f_n(x)$ lies entirely within a "tube" of width $2\epsilon$ centered around $f(x)$.
+
+\begin{theorem}[Uniform Convergence via Sup-norm]
+Let $\{f_n\}$ be a sequence of functions defined on $E$. $\{f_n\}$ converges uniformly to $f$ on $E$ if and only if
+\[ \lim_{n \to \infty} \left( \sup_{x \in E} |f_n(x) - f(x)| \right) = 0 \]
+\end{theorem}
+
+\begin{example}
+Consider $f_n(x) = (1-x)x^n$ on $[0,1]$. For any $x \in [0,1]$, $f(x) = \lim f_n(x) = 0$.
+The maximum of $f_n(x)$ occurs at $x = \frac{n}{n+1}$, where
+\[ f_n\left(\frac{n}{n+1}\right) = \frac{1}{n+1} \left(\frac{n}{n+1}\right)^n \to 0 \cdot e^{-1} = 0 \]
+Since the maximum approach zero, $f_n$ converges uniformly to $0$ on $[0,1]$.
+\end{example}
+
+What if we want to boldly destroy the illusion of uniform convergence? Instead of finding the exact supremum, we can evaluate the function at a \textit{moving target}!
+
+\begin{theorem}[Sequence Criterion / Moving Target Trick]
+Let $\{f_n(x)\}$ converge pointwise to $f(x)$ on $E$. Then $\{f_n(x)\}$ \textbf{converges uniformly} to $f(x)$ on $E$ if and only if for \textbf{any} sequence $\{x_n\} \subset E$, we have:
+\[ \lim_{n \to \infty} \left| f_n(x_n) - f(x_n) \right| = 0 \]
+If you can find even one sequence $\{x_n\}$ where the limit is not zero, uniform convergence is dead in the water.
+\end{theorem}
+
+\begin{example}
+Consider $f_n(x) = \left(1+\frac{x}{n}\right)^n$ on $[0,+\infty)$. The pointwise limit is famously $f(x) = e^x$. 
+Does it converge uniformly? Let's pick a moving target sequence $x_n = n$. The distance becomes:
+\[ |f_n(x_n) - f(x_n)| = \left| \left(1+\frac{n}{n}\right)^n - e^n \right| = |2^n - e^n| \to +\infty \]
+Uniform convergence practically left the chat. (However, note that it does converge uniformly on any bounded interval $[0, t]$!)
+\end{example}
+
+\begin{definition}[Compact Convergence / Uniform Convergence on Compact Sets]
+    Let $\{f_n\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. We say that $\{f_n\}$ converges \textbf{compactly} (or uniformly on compact subsets) to a function $f$ on $E$ if for every compact subset $K \subseteq E$, the sequence $\{f_n\}$ converges uniformly to $f$ on $K$.
+\end{definition}
+
+Compact convergence is weaker than uniform convergence on the entire set $E$, but stronger than pointwise convergence. For open sets or unbounded domains where global uniform convergence often fails, compact convergence serves as a natural and highly useful substitute. Importantly, since continuity is a local property, compact convergence is sufficient to ensure that the limit function remains continuous.
+
+Now let's return to the topic of uniform convergence. We have the following criterion for uniform convergence:
+
+\begin{theorem}[Cauchy Criterion for Uniform Convergence]
+The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
+\[ |f_n(x) - f_m(x)| < \epsilon \]
+\end{theorem}
+
+\textit{Seriously, is there any limit process Cauchy hasn't put his name on? Cauchy, you really won big time.} It is a fundamental tool for proving convergence without explicitly finding the limit. Its core idea is to show that the sequence becomes "eventually close" to itself, which implies convergence.
+
+For series $\sum u_n(x)$, the most practical tool for proving uniform convergence is the Weierstrass M-Test.
+
+\begin{theorem}[Weierstrass M-Test]
+Let $\{u_n(x)\}$ be a sequence of functions defined on $E$. Suppose there exists a sequence of positive constants $\{M_n\}$ such that:
+\begin{enumerate}
+    \item $|u_n(x)| \le M_n$ for all $x \in E$ and all $n \ge 1$.
+    \item The numerical series $\sum_{n=1}^{\infty} M_n$ converges.
+\end{enumerate}
+Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and absolutely on $E$.
+\end{theorem}
+
+Just like numerical series, when absolute convergence (M-Test) isn't an option, we have to rely on the dynamic duo: Abel and Dirichlet.
+
+\begin{theorem}[A-D Tests for Uniform Convergence]
+Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$. It converges uniformly on $E$ if either of the following conditions hold:
+\begin{enumerate}
+    \item \textbf{Dirichlet's Test}: The partial sums of $\sum b_n(x)$ are \textbf{uniformly bounded} on $E$ (i.e., bounded evenly everywhere, all at once, by a single $M$), and the sequence $a_n(x)$ is monotonic with respect to $n$ for each $x$ and converges \textbf{uniformly} to $0$ on $E$.
+    \item \textbf{Abel's Test}: The series $\sum b_n(x)$ converges uniformly on $E$, and $a_n(x)$ is monotonic with respect to $n$ for each $x$ and is \textbf{uniformly bounded} across all $n$ and $x \in E$.
+\end{enumerate}
+\end{theorem}
+
+
+\subsubsection{Properties of Uniformly Convergent Series}
+
+Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus. In short: \textbf{The operation on the infinite sum equals the infinite sum of the operations.}
+
+\begin{theorem}[Continuity]
+If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
+Consequently, for a series of continuous functions $\sum u_n(x)$, if the series converges uniformly to $S(x)$, then $S(x)$ is continuous:
+\[ \lim_{x \to x_0} \sum_{n=1}^{\infty} u_n(x) = \sum_{n=1}^{\infty} \lim_{x \to x_0} u_n(x) \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Integration]
+Let each $\{u_n(x)\}$ be Riemann integrable on $[a, b]$, and suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then the limit function $S(x)$ is also Riemann integrable on $[a, b]$, and the integration and summation can be safely interchanged:
+\[ \int_a^b S(x) \, dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) \, dx \]
+\end{theorem}
+
+\begin{theorem}[Term-by-Term Differentiation]
+Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, b]$ (meaning each $u_n'$ is continuous). Suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges at some point $x_0 \in [a, b]$. If the series of derivatives $\sum_{n=1}^{\infty} u_n'(x)$ converges \textbf{uniformly} on $[a, b]$, then the original series converges uniformly on $[a, b]$ to a continuously differentiable function $S(x)$, and:
+\[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
+\end{theorem}
+
+There is also a powerful theorem that guarantees uniform convergence under specific conditions:
+
+\begin{theorem}[Dini's Theorem]
+Let $\{S_n(x)\}$ be a sequence of continuous functions defined on a compact interval $[a, b]$. If:
+\begin{enumerate}
+    \item $S_n(x)$ converges pointwise to a continuous function $S(x)$ on $[a, b]$,
+    \item For each fixed $x \in [a, b]$, the sequence $\{S_n(x)\}$ is monotonic with respect to $n$,
+\end{enumerate}
+then the convergence is \textbf{uniform} on $[a, b]$.
+\end{theorem}
+
+\subsection{Power Series}
+
+A power series is a specific type of function series of the form:
+\[ \sum_{n=0}^{\infty} a_n (x - x_0)^n = a_0 + a_1(x - x_0) + a_2(x - x_0)^2 + \cdots \]
+where $a_n$ are the coefficients of the series, and $x_0$ is the center of convergence. For simplicity in notation and proofs, we often set $x_0 = 0$ by a simple change of variables $y = x - x_0$, transforming the series into $\sum_{n=0}^{\infty} a_n x^n$.
+
+\subsubsection{Radius of Convergence}
+
+Unlike general function series, which might converge on complicated sets, power series possess a highly structured domain of convergence. The set of points where a power series converges is always an interval centered at $x_0$.
+
+\newpage
+
+\begin{theorem}[Cauchy-Hadamard Theorem]
+Given a power series $\sum a_n x^n$, let
+\[ \rho = \limsup_{n \to \infty} \sqrt[n]{|a_n|} \]
+The \textbf{radius of convergence} $R$ is defined as:
+\[ R = \begin{cases} 0 & \text{if } \rho = +\infty \\ 1/\rho & \text{if } 0 < \rho < +\infty \\ +\infty & \text{if } \rho = 0 \end{cases} \]
+The series converges absolutely for every $x$ such that $|x| < R$ and diverges for every $x$ such that $|x| > R$. The interval $(-R, R)$ is called the interval of convergence. The behavior at the endpoints $x = \pm R$ must be investigated individually depending on the specific series.
+\end{theorem}
+
+In practice, if the sequence of coefficients is well-behaved, the ratio test provides a simpler way to compute the radius of convergence:
+\[ R = \lim_{n \to \infty} \left| \frac{a_n}{a_{n+1}} \right| \]
+provided this limit exists or is $+\infty$.
+
+\begin{property}[Uniform Convergence and Smoothness]
+Inside the interval of convergence $(-R, R)$, the power series converges \textbf{uniformly} on any closed and bounded sub-interval $[-r, r]$ where $0 < r < R$.
+Because of this uniform convergence, the limit function $S(x) = \sum_{n=0}^{\infty} a_n x^n$ is continuous on $(-R, R)$. Even more impressively, a power series can be differentiated and integrated term-by-term inside its interval of convergence. The resulting series will have the exact same radius of convergence $R$, which implies that a power series defines an infinitely differentiable ($C^\infty$) function inside its radius of convergence.
+\end{property}
+
+\subsubsection{Abel's Theorem}
+
+We know that uniform convergence guarantees continuity. Since a power series converges uniformly on any compact subset of $(-R, R)$, the sum function is continuous on $(-R, R)$. But what happens if the series converges at an endpoint $x=R$? Does the continuity extend to the boundary?
+
+\begin{theorem}[Abel's Continuity Theorem]
+If the power series $\sum_{n=0}^{\infty} a_n x^n$ converges at $x = R$ (respectively, $x = -R$), then the sum function $f(x) = \sum_{n=0}^{\infty} a_n x^n$ is continuous at $x = R$ from the left (respectively, at $x = -R$ from the right). That is to say:
+\[ \lim_{x \to R^-} \sum_{n=0}^{\infty} a_n x^n = \sum_{n=0}^{\infty} a_n R^n \]
+\end{theorem}
+
+This theorem provides a powerful tool for formally evaluating sums of numerical series by defining an auxiliary power series and taking the limit. For example, consider the expansion:
+\[ \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \dots \]
+By the ratio test, this series has $R=1$. At $x=1$, the series is the alternating harmonic series $1 - 1/2 + 1/3 - \dots$, which converges by the Alternating Series Test. Therefore, by Abel's Theorem, we can take the limit as $x \to 1^-$ on the function $\ln(1+x)$ to deduce that $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
+
+Here are some standard examples for calculating the sum function of a power series using term-by-term calculus:
+
+\begin{example}
+Find the sum function $S(x)$ of the power series $\sum_{n=1}^{\infty} \frac{x^n}{n!}$.
+\\ \textbf{Solution:} Using the ratio test, the radius of convergence is $R = +\infty$. For $x \in (-\infty, +\infty)$, we differentiate term-by-term:
+\[ S'(x) = \sum_{n=1}^{\infty} \frac{n x^{n-1}}{n!} = \sum_{n=1}^{\infty} \frac{x^{n-1}}{(n-1)!} = \sum_{k=0}^{\infty} \frac{x^k}{k!} = 1 + \sum_{k=1}^{\infty} \frac{x^k}{k!} = 1 + S(x) \]
+Thus, we obtain a first-order linear differential equation: $S'(x) - S(x) = 1$. The solution is $S(x) = C e^x - 1$.
+Since $S(0) = 0$, we have $C - 1 = 0 \implies C = 1$. Therefore, $S(x) = e^x - 1$.
+Consequently, the entire series including $n=0$ is $\sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + S(x) = e^x$.
+\end{example}
+
+\begin{example}
+Find the sum function $S(x)$ of the power series $\sum_{n=0}^{\infty} \frac{x^n}{n+1}$.
+\\ \textbf{Solution:} The radius of convergence is $R = 1$. The domain of convergence is $[-1, 1)$.
+For $x \neq 0$:
+\[ S(x) = \sum_{n=0}^{\infty} \frac{x^n}{n+1} = \frac{1}{x} \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} = \frac{1}{x} \sum_{n=0}^{\infty} \int_0^x t^n \, dt \]
+Since the power series converges uniformly within its interval of convergence, we can interchange the integral and the sum:
+\[ S(x) = \frac{1}{x} \int_0^x \left(\sum_{n=0}^{\infty} t^n\right) dt = \frac{1}{x} \int_0^x \frac{1}{1-t} \, dt = -\frac{1}{x} \ln(1-x) \]
+For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\ln(1-x)}{x} = 1$, so the function is continuous at $x = 0$.
+\end{example}
+
+\subsection{Taylor and Maclaurin Series}
+
+We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
+
+\begin{theorem}[Taylor Series]
+If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n (x-x_0)^n$ with a non-zero radius of convergence $R$, then by repeatedly differentiating and evaluating at $x=x_0$, we find that the coefficients are uniquely determined as:
+\[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
+The resulting series $\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n$ is called the \textbf{Taylor Series} of $f$ centered at $x_0$. If $x_0=0$, it is specifically called the \textbf{Maclaurin Series}.
+\end{theorem}
+
+\begin{remark}[Analyticity]
+It is crucial to note that simply being $C^\infty$ (having derivatives of all orders) is not enough to guarantee that the Taylor series of $f(x)$ actually converges to $f(x)$. The series might only converge at $x_0$, or it might converge to a completely different function. Functions that are equal to their Taylor series on an open interval are called \textbf{real analytic functions}. A famous example of a smooth but non-analytic function is $f(x) = e^{-1/x^2}$ for $x \neq 0$ and $f(0) = 0$, where all derivatives at $0$ vanish, making its Maclaurin series identically zero.
+\end{remark}
+
+Thus, a function can be expanded as a Taylor series converging to the function itself if and only if the remainder $R_n(x)$ in Taylor's formula approaches zero as $n \to \infty$. Here, we present the integral form of the remainder, which can be explicitly derived using integration by parts.
+
+\begin{theorem}[Taylor's Theorem with Integral Remainder]
+If $f(x)$ has continuous derivatives up to order $n+1$ in a neighborhood $U(x_0, r)$, then for any $x \in U(x_0, r)$, we have:
+\[ f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k + r_n(x) \]
+where the remainder $r_n(x)$ is given by:
+\[ r_n(x) = \frac{1}{n!} \int_{x_0}^{x} f^{(n+1)}(t) (x-t)^n \, dt \]
+\end{theorem}
+\begin{proof}
+Let $r_n(x) = f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k$. By differentiating $r_n(x)$ with respect to $x$, most terms cancel out:
+\[ r_n'(x) = f'(x) - f'(x_0) - \sum_{k=2}^{n} \frac{f^{(k)}(x_0)}{(k-1)!} (x-x_0)^{k-1} = \frac{f^{(n+1)}(x)}{n!} (x-x)^{n} \]
+Wait, let's take a simpler approach by differentiating with respect to the continuous variable. Observe that $r_n(x_0) = r_n'(x_0) = \dots = r_n^{(n)}(x_0) = 0$, and we know $r_n^{(n+1)}(x) = f^{(n+1)}(x)$.
+We can express $r_n(x)$ through repeated integration from $x_0$ to $x$. Let's start with a single layer:
+\[ r_n(x) = r_n(x) - r_n(x_0) = \int_{x_0}^{x} r_n'(t) \, dt = \int_{x_0}^{x} r_n'(t) \, d(t-x) \]
+Applying integration by parts:
+\[ = r_n'(t)(t-x) \Big|_{x_0}^{x} - \int_{x_0}^{x} r_n''(t)(t-x) \, dt = \int_{x_0}^{x} r_n''(t)(x-t) \, dt \]
+Repeating this process $n-1$ more times gives:
+\[ r_n(x) = \frac{1}{n!} \int_{x_0}^{x} r_n^{(n+1)}(t) (x-t)^n \, dt = \frac{1}{n!} \int_{x_0}^{x} f^{(n+1)}(t) (x-t)^n \, dt \]
+This completes the proof.
+\end{proof}
+
+\newpage
+
+\begin{example}[Standard Maclaurin Expansions]
+The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
+\begin{align*}
+    e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots & (R = \infty) \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots & (R = \infty) \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots & (R = \infty) \\
+    \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + x^3 + \dots & (R = 1) \\
+    \ln(1+x) &= \sum_{n=1}^{\infty} \frac{(-1)^{n-1} x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} - \dots & (R = 1) \\
+    (1+x)^\alpha &= 1 + \sum_{n=1}^{\infty} \frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!} x^n & (R = 1)
+\end{align*}
+\end{example}
+
+\section{Limits and Continuity in Euclidean Space}
+
+Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
+
+\subsection{The Structure of Euclidean Space $\mathbb{R}^n$}
+
+The space $\mathbb{R}^n$ is the set of all ordered $n$-tuples of real numbers. An element $\mathbf{x} \in \mathbb{R}^n$ is written as $\mathbf{x} = (x_1, x_2, \dots, x_n)$, where $x_i$ are the components.
+
+\begin{definition}[Inner Product and Norm]
+For $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$, the \textbf{Euclidean inner product} (or dot product) is defined as:
+\[ \mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^n x_i y_i \]
+The \textbf{Euclidean norm} (or length) of $\mathbf{x}$ is defined as:
+\[ \|\mathbf{x}\| = \sqrt{\mathbf{x} \cdot \mathbf{x}} = \sqrt{\sum_{i=1}^n x_i^2} \]
+The \textbf{distance} between two points $\mathbf{x}$ and $\mathbf{y}$ is $d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|$.
+\end{definition}
+
+The geometry of $\mathbb{R}^n$ is governed by two fundamental inequalities.
+
+\begin{theorem}[Cauchy-Schwarz Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ |\mathbf{x} \cdot \mathbf{y}| \le \|\mathbf{x}\| \|\mathbf{y}\| \]
+Equality holds if and only if $\mathbf{x}$ and $\mathbf{y}$ are linearly dependent.
+\end{theorem}
+
+\begin{proof}
+For any real number $\lambda$, consider the non-negative quantity:
+\[ \|\lambda \mathbf{x} + \mathbf{y}\|^2 = (\lambda \mathbf{x} + \mathbf{y}) \cdot (\lambda \mathbf{x} + \mathbf{y}) = \lambda^2 \|\mathbf{x}\|^2 + 2\lambda (\mathbf{x} \cdot \mathbf{y}) + \|\mathbf{y}\|^2 \ge 0 \]
+Since this quadratic in $\lambda$ is always non-negative, its discriminant must be less than or equal to zero:
+\[ \Delta = 4(\mathbf{x} \cdot \mathbf{y})^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 \le 0 \implies |\mathbf{x} \cdot \mathbf{y}| \le \|\mathbf{x}\| \|\mathbf{y}\| \]
+This completes the proof.
+\end{proof}
+
+\begin{theorem}[Triangle Inequality]
+For any $\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$:
+\[ \|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\| \]
+\end{theorem}
+
+\begin{proof}
+By the Cauchy-Schwarz inequality:
+\[ \|\mathbf{x} + \mathbf{y}\|^2 = (\mathbf{x} + \mathbf{y}) \cdot (\mathbf{x} + \mathbf{y}) = \|\mathbf{x}\|^2 + 2(\mathbf{x} \cdot \mathbf{y}) + \|\mathbf{y}\|^2 \]
+\[ \le \|\mathbf{x}\|^2 + 2\|\mathbf{x}\| \|\mathbf{y}\| + \|\mathbf{y}\|^2 = (\|\mathbf{x}\| + \|\mathbf{y}\|)^2 \]
+Taking the square root of both sides gives the desired inequality.
+\end{proof}
+
+\subsection{Basic Topology of $\mathbb{R}^n$}
+
+To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" (or neighborhood) in $\mathbb{R}^n$.
+
+\begin{definition}[Neighborhood and Punctured Neighborhood]
+Let $\mathbf{a} \in \mathbb{R}^n$ and $\delta > 0$. The \textbf{neighborhood} (open ball) of radius $\delta$ centered at $\mathbf{a}$ is the set:
+\[ U(\mathbf{a}, \delta) = \{ \mathbf{x} \in \mathbb{R}^n : \|\mathbf{x} - \mathbf{a}\| < \delta \} \]
+The \textbf{punctured neighborhood} (deleted neighborhood) is $\mathring{U}(\mathbf{a}, \delta) = U(\mathbf{a}, \delta) \setminus \{\mathbf{a}\}$.
+\end{definition}
+
+Given a point set $E \subseteq \mathbb{R}^n$ and a point $P \in \mathbb{R}^n$, we can classify $P$ relative to $E$:
+\begin{itemize}
+    \item \textbf{Interior point}: $P$ is an interior point of $E$ if there exists a neighborhood $U(P)$ such that $U(P) \subseteq E$.
+    \item \textbf{Exterior point}: $P$ is an exterior point of $E$ if there exists a neighborhood $U(P)$ such that $U(P) \cap E = \emptyset$.
+    \item \textbf{Boundary point}: $P$ is a boundary point of $E$ if every neighborhood $U(P)$ contains at least one point in $E$ and at least one point not in $E$.
+    \item \textbf{Accumulation point (Limit point)}: $P$ is an accumulation point of $E$ if every punctured neighborhood $\mathring{U}(P, \delta)$ contains at least one point of $E$ (implying it contains infinitely many points of $E$). The set of all accumulation points of $E$ is called the derived set, denoted as $E'$.
+    \item \textbf{Isolated point}: $P$ is an isolated point of $E$ if $P \in E$ but $P$ is not an accumulation point of $E$.
+\end{itemize}
+
+\begin{definition}[Open and Closed Sets]
+A set $S \subseteq \mathbb{R}^n$ is called \textbf{open} if every point of $S$ is an interior point.
+A set $S \subseteq \mathbb{R}^n$ is called \textbf{closed} if it contains all of its accumulation points (i.e., $S' \subseteq S$).
+The \textbf{closure} of a set $E$, denoted $\overline{E}$, is defined as $\overline{E} = E \cup E'$. A set is closed if and only if $E = \overline{E}$.
+\end{definition}
+
+\begin{theorem}
+A set $S \subseteq \mathbb{R}^n$ is closed if and only if its complement $S^c = \mathbb{R}^n \setminus S$ is open.
+\end{theorem}
+\begin{proof}
+$(\implies)$ Assume $S$ is closed. Let $\mathbf{x} \in S^c$. Since $\mathbf{x} \notin S$ and $S$ contains all its accumulation points, $\mathbf{x}$ is not an accumulation point of $S$. Thus, there exists a neighborhood $U(\mathbf{x}, \delta)$ such that $U(\mathbf{x}, \delta) \cap S = \emptyset$, meaning $U(\mathbf{x}, \delta) \subseteq S^c$. Hence, $S^c$ is open. \\
+$(\Longleftarrow)$ Assume $S^c$ is open. Let $\mathbf{x}$ be an accumulation point of $S$. If $\mathbf{x} \notin S$, then $\mathbf{x} \in S^c$. Since $S^c$ is open, there is a neighborhood $U(\mathbf{x}, \delta) \subseteq S^c$, which means $U(\mathbf{x}, \delta) \cap S = \emptyset$. This contradicts that $\mathbf{x}$ is an accumulation point of $S$. Thus, $\mathbf{x} \in S$, and $S$ is closed.
+\end{proof}
+
+\begin{theorem}[De Morgan's Laws]
+For any family of sets $\{S_\alpha\}$ in $\mathbb{R}^n$:
+\[ \left( \bigcup_\alpha S_\alpha \right)^c = \bigcap_\alpha S_\alpha^c, \quad \left( \bigcap_\alpha S_\alpha \right)^c = \bigcup_\alpha S_\alpha^c \]
+\end{theorem}
+\begin{proof}
+$\mathbf{x} \in (\bigcup_\alpha S_\alpha)^c \iff \forall \alpha, \mathbf{x} \notin S_\alpha \iff \forall \alpha, \mathbf{x} \in S_\alpha^c \iff \mathbf{x} \in \bigcap_\alpha S_\alpha^c$. This proves the first identity. The second is proved similarly.
+\end{proof}
+
+\begin{property}
+Any union of open sets is open. Any finite intersection of open sets is open.
+By De Morgan's laws, any intersection of closed sets is closed, and any finite union of closed sets is closed.
+\textbf{Counterexample for infinite intersection of open sets:} The sets $S_i = (-1 - 1/i, 1 + 1/i)$ are open, but their infinite intersection $\bigcap_{i=1}^{\infty} S_i = [-1, 1]$ is closed, not open.
+\end{property}
+
+\subsubsection{Fundamental Theorems of $\mathbb{R}^n$}
+
+The real numbers $\mathbb{R}$ rely on the completeness axiom. In $\mathbb{R}^n$, the equivalent completeness properties are formulated through the following equivalent theorems:
+
+\begin{theorem}[Nested Closed Rectangle Theorem]
+Let $\Delta_k = \prod_{i=1}^n [a_{ki}, b_{ki}]$ be a sequence of closed rectangles in $\mathbb{R}^n$ such that $\Delta_1 \supseteq \Delta_2 \supseteq \dots \supseteq \Delta_k \supseteq \dots$. If the diameter of $\Delta_k$ approaches $0$ as $k \to \infty$ (i.e., $\lim_{k \to \infty} \sqrt{\sum (b_{ki} - a_{ki})^2} = 0$), then there exists a unique point $\mathbf{\eta} \in \bigcap_{k=1}^{\infty} \Delta_k$.
+\end{theorem}
+
+\begin{theorem}[Cantor's Intersection Theorem]
+Let $\{S_k\}$ be a sequence of non-empty, closed, and bounded subsets of $\mathbb{R}^n$ such that $S_1 \supseteq S_2 \supseteq \dots \supseteq S_k \supseteq \dots$. If the diameter $\text{diam}(S_k) = \sup_{\mathbf{x}, \mathbf{y} \in S_k} \|\mathbf{x} - \mathbf{y}\| \to 0$ as $k \to \infty$, then there is a unique point belonging to $\bigcap_{k=1}^{\infty} S_k$.
+\end{theorem}
+
+\begin{theorem}[Bolzano-Weierstrass Theorem]
+Every bounded infinite sequence in $\mathbb{R}^n$ has a convergent subsequence.
+\end{theorem}
+
+\begin{theorem}[Cauchy Convergence Principle]
+A sequence $\{\mathbf{x}_k\}$ in $\mathbb{R}^n$ converges if and only if it is a Cauchy sequence, meaning that for any $\epsilon > 0$, there exists $N$ such that for all $j, k > N$, $\|\mathbf{x}_j - \mathbf{x}_k\| < \epsilon$.
+\end{theorem}
+
+\subsection{Limits of Functions of Several Variables}
+
+Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ be a function defined on a domain $D$. We are interested in the behavior of $f(\mathbf{x})$ as $\mathbf{x}$ approaches a point $\mathbf{a}$.
+
+\begin{definition}[Limit]
+Let $\mathbf{a}$ be an accumulation point of $D$. We say that the limit of $f(\mathbf{x})$ as $\mathbf{x}$ approaches $\mathbf{a}$ is $\mathbf{L}$, written as:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = \mathbf{L} \]
+if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $\mathbf{x} \in D$:
+\[ 0 < \|\mathbf{x} - \mathbf{a}\| < \delta \implies \|f(\mathbf{x}) - \mathbf{L}\| < \epsilon \]
+\end{definition}
+
+\subsubsection{Path Dependence and Non-existence of Limits}
+
+In single-variable calculus ($n=1$), $x$ can approach $a$ from only two directions (left or right). In $\mathbb{R}^n$ ($n \ge 2$), $\mathbf{x}$ can approach $\mathbf{a}$ from \textbf{infinitely many directions} along infinitely many different paths (lines, parabolas, spirals, etc.).
+
+\begin{theorem}
+If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous curve $\gamma(t)$ ending at $\mathbf{a}$, the limit along the curve must be $L$.
+Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
+\end{theorem}
+
+\begin{example}
+Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
+\begin{enumerate}
+    \item Approach along the $x$-axis ($y=0$):
+    \[ \lim_{x \to 0} f(x, 0) = \lim_{x \to 0} \frac{0}{x^2} = 0 \]
+    \item Approach along the line $y=x$:
+    \[ \lim_{x \to 0} f(x, x) = \lim_{x \to 0} \frac{x^2}{x^2 + x^2} = \frac{1}{2} \]
+\end{enumerate}
+Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
+\end{example}
+
+\newpage
+
+\begin{remark}
+It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
+\[ f(x, y) = \frac{x y^2}{x^2 + y^4} \]
+Along any line $y = mx$ (and $x=0$), the limit is $0$. However, along the parabola $x = y^2$, the limit is $1/2$. Thus, the limit does not exist.
+\end{remark}
+
+\subsubsection{Iterated Limits vs. Simultaneous Limits}
+
+For a function of two variables $f(x,y)$, we can define \textbf{iterated limits}:
+\[ L_{12} = \lim_{x \to a} \left( \lim_{y \to b} f(x, y) \right) \quad \text{and} \quad L_{21} = \lim_{y \to b} \left( \lim_{x \to a} f(x, y) \right) \]
+
+\begin{proposition}
+The existence of iterated limits does not imply the existence of the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$.
+Even if $L_{12} = L_{21}$, the simultaneous limit may not exist.
+Conversely, if the simultaneous limit exists, the iterated limits may not exist (because the inner limits might not be defined).
+However, if the simultaneous limit exists AND the inner limits exist, then they must all be equal.
+\end{proposition}
+
+\subsection{Continuity}
+
+The definition of continuity in $\mathbb{R}^n$ is formally identical to that in $\mathbb{R}$.
+
+\begin{definition}[Continuity]
+A function $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ is \textbf{continuous} at a point $\mathbf{a} \in D$ if:
+\[ \lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = f(\mathbf{a}) \]
+If $f$ is continuous at every point in $D$, we say $f$ is continuous on $D$.
+\end{definition}
+
+Elementary operations preserve continuity:
+\begin{itemize}
+    \item The sum, difference, product, and quotient (denominator non-zero) of continuous functions are continuous.
+    \item The composition of continuous functions is continuous. That is, if $f$ is continuous at $\mathbf{a}$ and $g$ is continuous at $f(\mathbf{a})$, then $g \circ f$ is continuous at $\mathbf{a}$.
+\end{itemize}
+
+\subsection{Properties of Continuous Functions on Compact Sets}
+
+The notions of boundedness and extreme values rely on the domain being "compact".
+
+\begin{definition}[Open Cover and Compact Set]
+Let $S$ be a set in $\mathbb{R}^n$. A collection of open sets $\{U_\alpha\}$ is called an \textbf{open cover} of $S$ if $S \subseteq \bigcup_\alpha U_\alpha$.
+A set $S$ is \textbf{compact} if every open cover of $S$ has a finite subcover. That is, there exist $U_{\alpha_1}, \dots, U_{\alpha_m}$ such that $S \subseteq \bigcup_{i=1}^m U_{\alpha_i}$.
+\end{definition}
+
+\begin{theorem}[Heine-Borel Theorem]
+A subset $S \subseteq \mathbb{R}^n$ is compact if and only if it is closed and bounded.
+\end{theorem}
+\begin{remark}
+Note that this theorem is uniquely true for $\mathbb{R}^n$ (more generally, for finite-dimensional normed spaces). In infinite-dimensional normed spaces, a closed and bounded set is not guaranteed to be compact (e.g., a closed unit ball).
+
+In addition, there is an equivalent definition based on accumulation points: $S$ is compact if and only if every infinite subset of $S$ has at least one accumulation point in $S$.
+\end{remark}
+\begin{proof}[Outline of Proof for $\mathbb{R}^2$]
+$(\implies)$ If $S$ is compact, we can cover $S$ with open disks $U(0, k)$ for $k=1,2,\dots$. A finite subcover implies $S$ is bounded. To show $S$ is closed, assume $a \notin S$ is an accumulation point. We can construct an open cover of $S$ using sets $V_n = \{ \mathbf{x} : \|\mathbf{x} - a\| > 1/n \}$. Since $a \notin S$, $\bigcup_{n=1}^\infty V_n \supseteq S$. However, since $a$ is an accumulation point, any finite number of $V_n$'s will fail to cover some points in $S$ that are very close to $a$. This contradicts compactness, so $S$ must be closed. \\
+$(\Longleftarrow)$ If $S$ is closed and bounded, we can enclose it in a large closed rectangle. Using the Nested Closed Rectangle Theorem or Bolzano-Weierstrass, one can systematically show that any open cover must have a finite subcover by dividing the rectangle into smaller pieces repeatedly.
+\end{proof}
+
+\begin{theorem}[Weierstrass Extreme Value Theorem]
+Let $K \subseteq \mathbb{R}^n$ be a compact set and let $f: K \to \mathbb{R}$ be a continuous function. Then:
+\begin{enumerate}
+    \item $f$ is bounded on $K$.
+    \item $f$ attains its maximum and minimum values on $K$. That is, there exist points $\mathbf{x}_{\min}, \mathbf{x}_{\max} \in K$ such that for all $\mathbf{x} \in K$:
+    \[ f(\mathbf{x}_{\min}) \le f(\mathbf{x}) \le f(\mathbf{x}_{\max}) \]
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Compactness and Continuity]
+Continuous mappings map compact sets to compact sets. If $K \subseteq \mathbb{R}^n$ is compact and $f: K \to \mathbb{R}^m$ is continuous, then $f(K)$ is compact in $\mathbb{R}^m$.
+\end{theorem}
+
+\begin{theorem}[Uniform Continuity]
+Let $K \subseteq \mathbb{R}^n$ be a compact set. If $f: K \to \mathbb{R}^m$ is continuous on $K$, then $f$ is \textbf{uniformly continuous} on $K$.
+\end{theorem}
+
+\begin{definition}[Uniform Continuity]
+$f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\delta > 0$ such that for all $\mathbf{x}, \mathbf{y} \in D$:
+\[ \|\mathbf{x} - \mathbf{y}\| < \delta \implies \|f(\mathbf{x}) - f(\mathbf{y})\| < \epsilon \]
+Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
+\end{definition}
+
+\newpage
+
+\begin{remark}
+If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
+For example, $f(x) = 1/x$ on $(0, 1)$ is continuous but unbounded and not uniformly continuous.
+\end{remark}
+
+\subsection{Connectedness and the Intermediate Value Theorem}
+
+To generalize the Intermediate Value Theorem, we need the concept of connectedness.
+
+\begin{definition}[Path-Connected Set]
+A set $D \subseteq \mathbb{R}^n$ is \textbf{path-connected} if for any two points $\mathbf{a}, \mathbf{b} \in D$, there exists a continuous curve $\gamma: [0, 1] \to D$ such that $\gamma(0) = \mathbf{a}$ and $\gamma(1) = \mathbf{b}$.
+\end{definition}
+
+\begin{theorem}[Generalized Intermediate Value Theorem]
+Let $D \subseteq \mathbb{R}^n$ be a path-connected set and let $f: D \to \mathbb{R}$ be continuous. If $\mathbf{a}, \mathbf{b} \in D$ and $f(\mathbf{a}) < c < f(\mathbf{b})$, then there exists a point $\mathbf{c} \in D$ such that $f(\mathbf{c}) = c$.
+\end{theorem}
+
+This ensures that the image of a path-connected set under a continuous real-valued function is an interval.
+
+\section{Differential Calculus of Multivariable Functions}
+
+From here, we formally transition into the differential calculus of multivariable functions. We will first introduce partial derivatives and then introduce the idea of directional derivatives.
+
+\subsection{Partial Derivatives}
+
+\begin{definition}[Partial Derivative]
+Let $f(x_1, x_2, \dots, x_n)$ be a function defined in a neighborhood of a point $\mathbf{x}_0 = (x_{0,1}, x_{0,2}, \dots, x_{0,n})$. If the following limit exists:
+\[ \lim_{x_i \to x_{0,i}} \frac{f(x_{0,1}, \dots, x_i, \dots, x_{0,n}) - f(x_{0,1}, \dots, x_{0,i}, \dots, x_{0,n})}{x_i - x_{0,i}} = A \]
+then we say that $f$ has a \textbf{partial derivative} with respect to its $i$-th variable at $\mathbf{x}_0$, and we denote it by $\frac{\partial f}{\partial x_i}(\mathbf{x}_0) = A$.
+\end{definition}
+
+The definition of a partial derivative is very similar to that of a single-variable derivative, except we restrict the change to only one specific coordinate direction, keeping all other variables constant.
+
+However, studying the rate of change only along the coordinate axes is often insufficient for a complete multidimensional analysis. This motivates the definition of the directional derivative.
+
+\newpage
+
+\begin{definition}[Directional Derivative]
+Let $f(\mathbf{x})$ be a function defined in a neighborhood of $\mathbf{x}_0$. For any given non-zero vector $\mathbf{u}$ (often taken as a unit vector), if the following limit exists:
+\[ \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{u}) - f(\mathbf{x}_0)}{t} = A \]
+then we say that $f$ has a \textbf{directional derivative} at $\mathbf{x}_0$ along the direction $\mathbf{u}$, denoted by $D_{\mathbf{u}} f(\mathbf{x}_0) = A$.
+\end{definition}
+
+% -----------------------------------------------------------------------------
+% Augmented material based on midterm.md: multivariable differential calculus
+% and multiple integrals. This file is intended to be included by main.tex.
+% -----------------------------------------------------------------------------
+
+\subsubsection{Higher Partial Derivatives}
+
+Once first-order partial derivatives exist, they may themselves be differentiated. For a function $z=f(x,y)$, the second-order partial derivatives are denoted by
+\[
+    f_{xx}=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right),\qquad
+    f_{xy}=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right),
+\]
+\[
+    f_{yx}=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right),\qquad
+    f_{yy}=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial y}\right).
+\]
+The mixed derivatives $f_{xy}$ and $f_{yx}$ need not be equal merely because they exist. A reliable sufficient condition is continuity.
+
+\begin{theorem}[Schwarz--Clairaut Theorem]
+Let $f$ be defined in a neighborhood of $(x_0,y_0)$. If the mixed second-order partial derivatives $f_{xy}$ and $f_{yx}$ are continuous in a neighborhood of $(x_0,y_0)$, then
+\[
+    f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0).
+\]
+\end{theorem}
+
+\begin{proof}
+Consider the rectangular second difference
+\[
+I=\frac{f(x_0+h,y_0+k)-f(x_0+h,y_0)-f(x_0,y_0+k)+f(x_0,y_0)}{hk}.
+\]
+Define
+\[
+    \phi(x)=f(x,y_0+k)-f(x,y_0).
+\]
+Applying the one-variable mean value theorem first in $x$ and then in $y$ gives
+\[
+    I=f_{xy}(\xi_1,\eta_1),
+\]
+where $\xi_1$ lies between $x_0$ and $x_0+h$, and $\eta_1$ lies between $y_0$ and $y_0+k$. Similarly, defining
+\[
+    \psi(y)=f(x_0+h,y)-f(x_0,y)
+\]
+and applying the mean value theorem first in $y$ and then in $x$ gives
+\[
+    I=f_{yx}(\xi_2,\eta_2).
+\]
+Hence $f_{xy}(\xi_1,\eta_1)=f_{yx}(\xi_2,\eta_2)$. Letting $(h,k)\to(0,0)$ and using the continuity of the mixed derivatives yields the result.
+\end{proof}
+
+\begin{note}
+The theorem is often remembered as: continuous mixed second partial derivatives may be interchanged. Existence alone is not enough.
+\end{note}
+
+\subsection{Differentiability and the Total Differential}
+
+Partial derivatives measure change along coordinate axes. Differentiability is stronger: it requires the whole increment of the function to be approximated by one linear map, uniformly with respect to all directions.
+
+\begin{definition}[Differentiability]
+Let $f:D\subseteq \mathbb{R}^n\to\mathbb{R}$ be defined in a neighborhood of $\mathbf{x}_0$. We say that $f$ is \textbf{differentiable} at $\mathbf{x}_0$ if there exists a linear map $L:\mathbb{R}^n\to\mathbb{R}$ such that
+\[
+    f(\mathbf{x}_0+\Delta\mathbf{x})-f(\mathbf{x}_0)
+    =L(\Delta\mathbf{x})+o(\|\Delta\mathbf{x}\|),\qquad \Delta\mathbf{x}\to \mathbf{0}.
+\]
+Equivalently, there exist constants $A_1,\dots,A_n$ such that
+\[
+    \Delta f=A_1\Delta x_1+\cdots+A_n\Delta x_n+o\left(\sqrt{\Delta x_1^2+\cdots+\Delta x_n^2}\right).
+\]
+\end{definition}
+
+\begin{theorem}[Coefficients of the Differential]
+If $f$ is differentiable at $\mathbf{x}_0$, then all partial derivatives $\partial f/\partial x_i$ exist at $\mathbf{x}_0$, and
+\[
+    A_i=\frac{\partial f}{\partial x_i}(\mathbf{x}_0).
+\]
+Thus the total differential is
+\[
+    df=\frac{\partial f}{\partial x_1}\,dx_1+\frac{\partial f}{\partial x_2}\,dx_2+\cdots+\frac{\partial f}{\partial x_n}\,dx_n.
+\]
+\end{theorem}
+
+\begin{proof}
+In the definition of differentiability, set all increments equal to $0$ except $\Delta x_i$. Then
+\[
+    f(\mathbf{x}_0+\Delta x_i\mathbf{e}_i)-f(\mathbf{x}_0)
+    =A_i\Delta x_i+o(|\Delta x_i|).
+\]
+Dividing by $\Delta x_i$ and letting $\Delta x_i\to0$ gives the $i$-th partial derivative and shows that it equals $A_i$.
+\end{proof}
+
+\begin{theorem}[Differentiability Implies Continuity]
+If $f$ is differentiable at $\mathbf{x}_0$, then $f$ is continuous at $\mathbf{x}_0$.
+\end{theorem}
+
+\begin{proof}
+Since
+\[
+    \Delta f=L(\Delta\mathbf{x})+o(\|\Delta\mathbf{x}\|),
+\]
+and every linear map in finite-dimensional Euclidean space is bounded, $L(\Delta\mathbf{x})\to0$ as $\Delta\mathbf{x}\to0$. The remainder also tends to $0$. Hence $\Delta f\to0$.
+\end{proof}
+
+\begin{theorem}[A Practical Sufficient Condition]
+If all first-order partial derivatives of $f$ exist in a neighborhood of $\mathbf{x}_0$ and are continuous at $\mathbf{x}_0$, then $f$ is differentiable at $\mathbf{x}_0$.
+\end{theorem}
+
+\begin{proof}[Proof for two variables]
+Let $\Delta x=h$ and $\Delta y=k$. Write
+\[
+\begin{aligned}
+\Delta f={}&f(x_0+h,y_0+k)-f(x_0,y_0)\\
+={}&\bigl[f(x_0+h,y_0+k)-f(x_0,y_0+k)\bigr]
++\bigl[f(x_0,y_0+k)-f(x_0,y_0)\bigr].
+\end{aligned}
+\]
+By the one-variable mean value theorem,
+\[
+    \Delta f=f_x(x_0+\theta_1 h,y_0+k)h+f_y(x_0,y_0+\theta_2 k)k,
+\]
+where $\theta_1,\theta_2\in(0,1)$. Subtracting $f_x(x_0,y_0)h+f_y(x_0,y_0)k$ and using the continuity of $f_x$ and $f_y$ shows that the remainder is $o(\sqrt{h^2+k^2})$.
+\end{proof}
+
+\begin{note}
+The logical implications worth remembering are
+\[
+    C^1 \Longrightarrow \text{differentiable} \Longrightarrow \text{continuous and all partial derivatives exist}.
+\]
+The reverse implications are generally false.
+\end{note}
+
+\begin{example}[Partial Derivatives Do Not Guarantee Differentiability]
+Define
+\[
+    f(x,y)=
+    \begin{cases}
+    \dfrac{x^2y}{x^4+y^2}, & (x,y)\ne(0,0),\\[6pt]
+    0, & (x,y)=(0,0).
+    \end{cases}
+\]
+Along the coordinate axes, the function is identically $0$, so $f_x(0,0)=f_y(0,0)=0$. However, along $y=x^2$,
+\[
+    f(x,x^2)=\frac{x^4}{2x^4}=\frac12,
+\]
+so $f$ is not continuous at the origin. Therefore it is not differentiable there.
+\end{example}
+
+\subsubsection{Higher Differentials}
+
+For a $C^2$ function $f(x,y)$, the second differential is
+\[
+    d^2f=f_{xx}\,dx^2+2f_{xy}\,dx\,dy+f_{yy}\,dy^2.
+\]
+More generally, one may formally write
+\[
+    d^k f=\left(dx\frac{\partial}{\partial x}+dy\frac{\partial}{\partial y}\right)^k f
+\]
+whenever the required partial derivatives exist and are sufficiently regular. The binomial form is especially useful in Taylor expansions.
+
+\subsection{Vector-Valued Functions and Jacobian Matrices}
+
+Although scalar-valued functions are the main object in elementary multivariable calculus, the cleanest formulation of the chain rule uses vector-valued functions.
+
+\begin{definition}[Vector-Valued Function]
+A function $\mathbf{f}:D\subseteq\mathbb{R}^n\to\mathbb{R}^m$ can be written componentwise as
+\[
+    \mathbf{f}(\mathbf{x})=
+    \begin{pmatrix}
+    f_1(x_1,\dots,x_n)\\
+    f_2(x_1,\dots,x_n)\\
+    \vdots\\
+    f_m(x_1,\dots,x_n)
+    \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{definition}[Jacobian Matrix]
+If the component functions have first-order partial derivatives, the Jacobian matrix of $\mathbf{f}$ at $\mathbf{x}$ is
+\[
+    J_{\mathbf{f}}(\mathbf{x})=
+    \begin{pmatrix}
+    \dfrac{\partial f_1}{\partial x_1} & \dfrac{\partial f_1}{\partial x_2} & \cdots & \dfrac{\partial f_1}{\partial x_n}\\[6pt]
+    \dfrac{\partial f_2}{\partial x_1} & \dfrac{\partial f_2}{\partial x_2} & \cdots & \dfrac{\partial f_2}{\partial x_n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \dfrac{\partial f_m}{\partial x_1} & \dfrac{\partial f_m}{\partial x_2} & \cdots & \dfrac{\partial f_m}{\partial x_n}
+    \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{definition}[Differentiability for Vector-Valued Functions]
+The map $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ is differentiable at $\mathbf{x}_0$ if there exists an $m\times n$ matrix $A$ such that
+\[
+    \mathbf{f}(\mathbf{x}_0+\Delta\mathbf{x})-\mathbf{f}(\mathbf{x}_0)
+    =A\Delta\mathbf{x}+o(\|\Delta\mathbf{x}\|).
+\]
+When differentiability holds, $A=J_{\mathbf{f}}(\mathbf{x}_0)$.
+\end{definition}
+
+\begin{theorem}[Matrix Chain Rule]
+Let $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ be differentiable at $\mathbf{x}_0$, and let $\mathbf{g}:\mathbb{R}^m\to\mathbb{R}^p$ be differentiable at $\mathbf{y}_0=\mathbf{f}(\mathbf{x}_0)$. Then $\mathbf{g}\circ\mathbf{f}$ is differentiable at $\mathbf{x}_0$, and
+\[
+    J_{\mathbf{g}\circ\mathbf{f}}(\mathbf{x}_0)=J_{\mathbf{g}}(\mathbf{y}_0)J_{\mathbf{f}}(\mathbf{x}_0).
+\]
+\end{theorem}
+
+\subsection{The Gradient and Directional Derivatives}
+
+For a scalar-valued function $f:D\subseteq\mathbb{R}^n\to\mathbb{R}$, the gradient collects all first-order partial derivatives into one vector:
+\[
+    \nabla f(\mathbf{x})=
+    \left(\frac{\partial f}{\partial x_1}(\mathbf{x}),\dots,
+    \frac{\partial f}{\partial x_n}(\mathbf{x})\right).
+\]
+In two variables,
+\[
+    \nabla f(x,y)=f_x(x,y)\mathbf{i}+f_y(x,y)\mathbf{j}.
+\]
+
+\begin{theorem}[Directional Derivative Formula]
+If $f$ is differentiable at $\mathbf{x}_0$ and $\mathbf{u}$ is a unit vector, then
+\[
+    D_{\mathbf{u}}f(\mathbf{x}_0)=\nabla f(\mathbf{x}_0)\cdot\mathbf{u}.
+\]
+Consequently, the largest directional derivative is $\|\nabla f(\mathbf{x}_0)\|$, attained in the direction of $\nabla f(\mathbf{x}_0)$ if the gradient is nonzero.
+\end{theorem}
+
+\begin{proof}
+Using differentiability,
+\[
+    f(\mathbf{x}_0+t\mathbf{u})-f(\mathbf{x}_0)=\nabla f(\mathbf{x}_0)\cdot(t\mathbf{u})+o(|t|).
+\]
+Divide by $t$ and let $t\to0$.
+\end{proof}
+
+The gradient obeys the familiar differentiation rules:
+\[
+    \nabla(af+bg)=a\nabla f+b\nabla g,
+\]
+\[
+    \nabla(fg)=f\nabla g+g\nabla f,
+\]
+\[
+    \nabla\left(\frac{f}{g}\right)=\frac{g\nabla f-f\nabla g}{g^2},\qquad g\ne0.
+\]
+
+\subsection{Chain Rules for Multivariable Functions}
+
+Let
+\[
+    z=f(x,y),\qquad x=x(u,v),\qquad y=y(u,v).
+\]
+If $f$ is differentiable at $(x(u_0,v_0),y(u_0,v_0))$ and $x,y$ are differentiable at $(u_0,v_0)$, then
+\[
+\frac{\partial z}{\partial u}=\frac{\partial f}{\partial x}\frac{\partial x}{\partial u}+\frac{\partial f}{\partial y}\frac{\partial y}{\partial u},
+\qquad
+\frac{\partial z}{\partial v}=\frac{\partial f}{\partial x}\frac{\partial x}{\partial v}+\frac{\partial f}{\partial y}\frac{\partial y}{\partial v}.
+\]
+This is simply the matrix chain rule written component by component.
+
+\subsubsection{Invariance of the First Differential}
+
+The first differential has the same formal expression under a change of variables:
+\[
+\begin{aligned}
+    dz&=f_x\,dx+f_y\,dy\\
+      &=f_x(x_u\,du+x_v\,dv)+f_y(y_u\,du+y_v\,dv)\\
+      &=z_u\,du+z_v\,dv.
+\end{aligned}
+\]
+This is called the \textbf{invariance of the first differential}. It is a compact way to remember the multivariable chain rule.
+
+\subsection{Taylor Formula for Functions of Two Variables}
+
+Taylor's formula is the local polynomial approximation produced by repeatedly applying the differential operator
+\[
+    h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}.
+\]
+
+\newpage
+
+\begin{theorem}[Taylor Formula]
+Suppose $f$ has continuous partial derivatives up to order $r+1$ in a neighborhood of $(x_0,y_0)$. For $(x,y)=(x_0+h,y_0+k)$,
+\[
+    f(x_0+h,y_0+k)
+    =f(x_0,y_0)+\sum_{j=1}^{r}\frac{1}{j!}
+    \left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^j f(x_0,y_0)+R_r,
+\]
+where
+\[
+    R_r=o\left((h^2+k^2)^{r/2}\right)
+\]
+for the Peano form of the remainder. A Lagrange-type form is
+\[
+    R_r=\frac{1}{(r+1)!}
+    \left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{r+1}
+    f(x_0+\theta h,y_0+\theta k),\qquad 0<\theta<1.
+\]
+\end{theorem}
+
+The second-order expansion is especially important:
+\[
+\begin{aligned}
+    f(x_0+h,y_0+k)=&f(x_0,y_0)+f_x(x_0,y_0)h+f_y(x_0,y_0)k\\
+    &+\frac12\left(f_{xx}(x_0,y_0)h^2+2f_{xy}(x_0,y_0)hk+f_{yy}(x_0,y_0)k^2\right)\\
+    &+o(h^2+k^2).
+\end{aligned}
+\]
+
+\begin{theorem}[Mean Value Formula]
+If $f$ has continuous first-order partial derivatives on a convex domain containing $(x_0,y_0)$ and $(x_0+h,y_0+k)$, then for some $\theta\in(0,1)$,
+\[
+\begin{aligned}
+&f(x_0+h,y_0+k)-f(x_0,y_0)\\
+&\quad=f_x(x_0+\theta h,y_0+\theta k)h+f_y(x_0+\theta h,y_0+\theta k)k.
+\end{aligned}
+\]
+\end{theorem}
+
+\subsection{Implicit Functions}
+
+Many relations are naturally written as equations rather than explicit formulas. The basic form is
+\[
+    F(x,y)=0.
+\]
+The central question is when this equation locally determines $y$ as a function of $x$.
+
+\begin{theorem}[Implicit Function Theorem: One Equation]
+Let $F(x,y)$ have continuous first-order partial derivatives in a neighborhood of $(x_0,y_0)$. If
+\[
+    F(x_0,y_0)=0,
+    \qquad F_y(x_0,y_0)\ne0,
+\]
+then there exists a neighborhood of $x_0$ on which the equation $F(x,y)=0$ uniquely determines a $C^1$ function $y=f(x)$ with $f(x_0)=y_0$. Moreover,
+\[
+    \frac{dy}{dx}=-\frac{F_x(x,y)}{F_y(x,y)}.
+\]
+\end{theorem}
+
+\begin{theorem}[Implicit Function Theorem: One Dependent Variable]
+Let $F(x_1,\dots,x_n,y)$ have continuous first-order partial derivatives near $(x_1^0,\dots,x_n^0,y_0)$. If
+\[
+    F(x_1^0,\dots,x_n^0,y_0)=0,
+    \qquad F_y(x_1^0,\dots,x_n^0,y_0)\ne0,
+\]
+then the equation $F(x_1,\dots,x_n,y)=0$ locally determines a unique $C^1$ function
+\[
+    y=f(x_1,\dots,x_n),
+\]
+and
+\[
+    \frac{\partial y}{\partial x_i}=-\frac{F_{x_i}}{F_y},\qquad i=1,\dots,n.
+\]
+\end{theorem}
+
+\subsubsection{Systems of Implicit Equations}
+
+For two equations
+\[
+\begin{cases}
+    F(x,y,u,v)=0,\\
+    G(x,y,u,v)=0,
+\end{cases}
+\]
+one wants to solve locally for $u$ and $v$ as functions of $x$ and $y$.
+
+\begin{theorem}[Implicit Function Theorem for a System]
+Suppose $F$ and $G$ have continuous first-order partial derivatives near $(x_0,y_0,u_0,v_0)$ and
+\[
+    F(x_0,y_0,u_0,v_0)=G(x_0,y_0,u_0,v_0)=0.
+\]
+If
+\[
+    \frac{\partial(F,G)}{\partial(u,v)}
+    =\begin{vmatrix}F_u&F_v\\G_u&G_v\end{vmatrix}_{(x_0,y_0,u_0,v_0)}\ne0,
+\]
+then the system locally determines unique $C^1$ functions
+\[
+    u=u(x,y),\qquad v=v(x,y).
+\]
+Their derivatives satisfy
+\[
+    \begin{pmatrix}
+    u_x&u_y\\
+    v_x&v_y
+    \end{pmatrix}
+    =-
+    \begin{pmatrix}
+    F_u&F_v\\
+    G_u&G_v
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+    F_x&F_y\\
+    G_x&G_y
+    \end{pmatrix}.
+\]
+\end{theorem}
+
+\begin{note}
+In computations, it is often simpler to differentiate the two equations directly with respect to $x$ or $y$, then solve the resulting linear system for $u_x,v_x$ or $u_y,v_y$.
+\end{note}
+
+\subsection{Geometric Applications}
+
+\subsubsection{Space Curves: Tangent Lines and Normal Planes}
+
+Let a space curve be given by
+\[
+    \mathbf{r}(t)=x(t)\mathbf{i}+y(t)\mathbf{j}+z(t)\mathbf{k}.
+\]
+If $\mathbf{r}'(t_0)\ne\mathbf{0}$, then $\mathbf{r}'(t_0)$ is a tangent vector to the curve at $\mathbf{r}(t_0)$.
+
+The tangent line is
+\[
+    \frac{x-x(t_0)}{x'(t_0)}=\frac{y-y(t_0)}{y'(t_0)}=\frac{z-z(t_0)}{z'(t_0)},
+\]
+with the usual convention that a zero denominator means the corresponding coordinate is constant. The normal plane is
+\[
+    x'(t_0)(x-x(t_0))+y'(t_0)(y-y(t_0))+z'(t_0)(z-z(t_0))=0.
+\]
+
+If the curve is instead given as the intersection of two surfaces
+\[
+\begin{cases}
+    F(x,y,z)=0,\\
+    G(x,y,z)=0,
+\end{cases}
+\]
+and $\nabla F$ and $\nabla G$ are not parallel, then a tangent vector is
+\[
+    \nabla F\times \nabla G
+    =\begin{vmatrix}
+    \mathbf{i}&\mathbf{j}&\mathbf{k}\\
+    F_x&F_y&F_z\\
+    G_x&G_y&G_z
+    \end{vmatrix}.
+\]
+Equivalently,
+\[
+    \nabla F\times\nabla G
+    =\frac{\partial(F,G)}{\partial(y,z)}\mathbf{i}
+    +\frac{\partial(F,G)}{\partial(z,x)}\mathbf{j}
+    +\frac{\partial(F,G)}{\partial(x,y)}\mathbf{k}.
+\]
+
+\subsubsection{Surfaces: Tangent Planes and Normal Lines}
+
+For a surface given implicitly by
+\[
+    F(x,y,z)=0,
+\]
+the gradient is normal to the surface. If $P_0=(x_0,y_0,z_0)$ is on the surface and $\nabla F(P_0)\ne\mathbf{0}$, then the tangent plane is
+\[
+    F_x(P_0)(x-x_0)+F_y(P_0)(y-y_0)+F_z(P_0)(z-z_0)=0.
+\]
+The normal line is
+\[
+    \frac{x-x_0}{F_x(P_0)}=\frac{y-y_0}{F_y(P_0)}=\frac{z-z_0}{F_z(P_0)}.
+\]
+For an explicit surface $z=f(x,y)$, the same formula follows from $F(x,y,z)=f(x,y)-z$:
+\[
+    z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0).
+\]
+
+\subsection{Extrema of Multivariable Functions}
+
+\subsubsection{Unconstrained Extrema}
+
+\begin{definition}[Critical Point]
+Let $f(x,y)$ have first-order partial derivatives. A point $(x_0,y_0)$ is called a critical point if
+\[
+    f_x(x_0,y_0)=0,
+    \qquad
+    f_y(x_0,y_0)=0.
+\]
+\end{definition}
+
+\begin{theorem}[Necessary Condition for an Interior Extremum]
+If $f$ has first-order partial derivatives at an interior point $(x_0,y_0)$ and has a local maximum or local minimum there, then
+\[
+    f_x(x_0,y_0)=f_y(x_0,y_0)=0.
+\]
+\end{theorem}
+
+\newpage
+
+\begin{theorem}[Second Derivative Test]
+Suppose $f$ has continuous second-order partial derivatives near a critical point $(x_0,y_0)$. Put
+\[
+    A=f_{xx}(x_0,y_0),\qquad B=f_{xy}(x_0,y_0),\qquad C=f_{yy}(x_0,y_0),
+\]
+and
+\[
+    \Delta=AC-B^2.
+\]
+Then:
+\begin{enumerate}
+    \item If $\Delta>0$ and $A>0$, $f$ has a local minimum at $(x_0,y_0)$.
+    \item If $\Delta>0$ and $A<0$, $f$ has a local maximum at $(x_0,y_0)$.
+    \item If $\Delta<0$, $f$ has no local extremum at $(x_0,y_0)$; the point is a saddle point.
+    \item If $\Delta=0$, the test is inconclusive.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Idea]
+At a critical point, the first-order terms in Taylor's formula vanish. The local behavior is governed by the quadratic form
+\[
+    \frac12\left(Ah^2+2Bhk+Ck^2\right).
+\]
+The sign definiteness of this quadratic form is determined by $\Delta=AC-B^2$ and $A$.
+\end{proof}
+
+\subsubsection{Constrained Extrema and Lagrange Multipliers}
+
+The geometric idea behind Lagrange multipliers is tangency. On the constraint curve or surface, an extremum occurs where the level set of the objective can no longer be moved to a higher or lower value without leaving the constraint. Therefore the relevant normal vectors must be linearly dependent.
+
+\begin{theorem}[Lagrange Multiplier Method: One Constraint]
+To find extrema of $f(x,y,z)$ subject to
+\[
+    g(x,y,z)=0,
+\]
+look for solutions of
+\[
+    \nabla f+\lambda\nabla g=\mathbf{0},
+    \qquad
+    g=0.
+\]
+Equivalently, define
+\[
+    L(x,y,z,\lambda)=f(x,y,z)+\lambda g(x,y,z)
+\]
+and solve
+\[
+\begin{cases}
+    L_x=f_x+\lambda g_x=0,\\
+    L_y=f_y+\lambda g_y=0,\\
+    L_z=f_z+\lambda g_z=0,\\
+    L_\lambda=g(x,y,z)=0.
+\end{cases}
+\]
+\end{theorem}
+
+\begin{theorem}[Multiple Constraints]
+For constraints
+\[
+    g(x,y,z)=0,
+    \qquad
+    h(x,y,z)=0,
+\]
+possible constrained extrema satisfy
+\[
+    \nabla f+\lambda\nabla g+\mu\nabla h=\mathbf{0},
+    \qquad
+    g=0,
+    \qquad
+    h=0.
+\]
+Equivalently, use
+\[
+    L=f+\lambda g+\mu h.
+\]
+\end{theorem}
+
+\begin{note}
+Lagrange multiplier equations give candidate points. Boundary points, singular points of the constraint, and points where the rank condition fails must still be checked separately when they occur.
+\end{note}
+
+\section{Multiple Integrals}
+
+The construction of multiple integrals begins with the geometric question of area. For double integrals, the domain must have a well-defined area in the Jordan sense.
+
+\subsection{Jordan Area and Double Integrals}
+
+Let $D\subseteq\mathbb{R}^2$ be bounded and contained in a rectangle
+\[
+    U=[a,b]\times[c,d].
+\]
+Partition $U$ into small rectangles
+\[
+    R_{ij}=[x_{i-1},x_i]\times[y_{j-1},y_j].
+\]
+The inner area is obtained from rectangles completely contained in $D$, while the outer area is obtained from rectangles that intersect $D$. If the supremum of all inner sums equals the infimum of all outer sums, then $D$ has area, denoted $m(D)$.
+
+\begin{theorem}[Jordan Measurability Criterion]
+A bounded plane region $D$ has Jordan area if and only if its boundary $\partial D$ has area zero.
+\end{theorem}
+
+\begin{definition}[Double Integral]
+Let $f$ be defined on a bounded Jordan measurable region $D$. Divide $D$ into subregions $\Delta D_i$ with areas $\Delta\sigma_i$, choose a sample point $P_i\in\Delta D_i$, and let
+\[
+    \lambda=\max_i\operatorname{diam}(\Delta D_i).
+\]
+If the limit
+\[
+    \lim_{\lambda\to0}\sum_{i=1}^n f(P_i)\Delta\sigma_i
+\]
+exists and is independent of the subdivision and the sample points, then $f$ is integrable on $D$, and
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\lim_{\lambda\to0}\sum_{i=1}^n f(P_i)\Delta\sigma_i.
+\]
+\end{definition}
+
+\subsubsection{Darboux Sums and Integrability}
+
+For each subregion $\Delta D_i$, set
+\[
+    M_i=\sup_{(x,y)\in\Delta D_i} f(x,y),
+    \qquad
+    m_i=\inf_{(x,y)\in\Delta D_i} f(x,y).
+\]
+The upper and lower Darboux sums are
+\[
+    U=\sum_{i=1}^n M_i\Delta\sigma_i,
+    \qquad
+    L=\sum_{i=1}^n m_i\Delta\sigma_i.
+\]
+The function $f$ is integrable if and only if
+\[
+    \lim_{\lambda\to0}(U-L)=0.
+\]
+Equivalently, if $\omega_i=M_i-m_i$ is the oscillation of $f$ on $\Delta D_i$, then
+\[
+    \lim_{\lambda\to0}\sum_{i=1}^n \omega_i\Delta\sigma_i=0.
+\]
+
+\begin{theorem}[Continuity Implies Integrability]
+If $D$ is a bounded closed Jordan measurable region and $f$ is continuous on $D$, then $f$ is integrable on $D$.
+\end{theorem}
+
+\subsection{Multiple Integrals}
+
+The definition extends directly to $\mathbb{R}^n$: area elements $\Delta\sigma_i$ are replaced by volume elements $\Delta V_i$, and double integrals are replaced by $n$-fold integrals.
+
+For a three-dimensional body $D$ with density $\rho(x,y,z)$, the mass is
+\[
+    M=\iiint_D \rho(x,y,z)\,dV,
+\]
+and the center of mass is
+\[
+    \bar{x}=\frac{1}{M}\iiint_D x\rho(x,y,z)\,dV,
+    \qquad
+    \bar{y}=\frac{1}{M}\iiint_D y\rho(x,y,z)\,dV,
+    \qquad
+    \bar{z}=\frac{1}{M}\iiint_D z\rho(x,y,z)\,dV.
+\]
+For a plane lamina with density $\rho(x,y)$,
+\[
+    M=\iint_D \rho(x,y)\,d\sigma,
+\]
+\[
+    \bar{x}=\frac{1}{M}\iint_D x\rho(x,y)\,d\sigma,
+    \qquad
+    \bar{y}=\frac{1}{M}\iint_D y\rho(x,y)\,d\sigma.
+\]
+
+\subsection{Basic Properties of Double Integrals}
+
+Assume all functions involved are integrable on the relevant Jordan measurable domains.
+
+\begin{property}[Linearity]
+For constants $a,b$,
+\[
+    \iint_D (af+bg)\,d\sigma
+    =a\iint_D f\,d\sigma+b\iint_D g\,d\sigma.
+\]
+\end{property}
+
+\begin{property}[Additivity over Regions]
+If $D=D_1\cup D_2$ and the interiors of $D_1$ and $D_2$ do not overlap, then
+\[
+    \iint_D f\,d\sigma=\iint_{D_1} f\,d\sigma+\iint_{D_2} f\,d\sigma.
+\]
+\end{property}
+
+\begin{property}[Order Preservation]
+If $f(x,y)\le g(x,y)$ for all $(x,y)\in D$, then
+\[
+    \iint_D f\,d\sigma\le \iint_D g\,d\sigma.
+\]
+\end{property}
+
+\begin{property}[Absolute Integrability Estimate]
+If $f$ is integrable on $D$, then $|f|$ is integrable on $D$, and
+\[
+    \left|\iint_D f\,d\sigma\right|\le \iint_D |f|\,d\sigma.
+\]
+\end{property}
+
+\begin{theorem}[Mean Value Theorem for Double Integrals]
+If $f$ and $g$ are integrable on $D$, and $g$ does not change sign, then there exists
+\[
+    \xi\in\left[\inf_D f,\sup_D f\right]
+\]
+such that
+\[
+    \iint_D fg\,d\sigma=\xi\iint_D g\,d\sigma.
+\]
+If $f$ is continuous on a connected compact region $D$, then there exists $(x_0,y_0)\in D$ such that
+\[
+    \iint_D fg\,d\sigma=f(x_0,y_0)\iint_D g\,d\sigma.
+\]
+\end{theorem}
+
