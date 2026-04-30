@@ -14,42 +14,93 @@ The goal of this project is to build a cohesive mathematical framework starting 
 
 The notes are organized into the following chapters:
 
-* **Chapter 0: Basic Knowledge & Notations**
+* **Preface**
+* **Chapter 0: Basic Knowledge and Notations**
     * Propositional Logic
     * Predicate Logic
 * **Chapter 1: The Axioms of ALL**
-    * Naïve Set Theory
-    * ZFC Axioms
-    * Relations, Functions, and Cardinality
-* **Chapter 2: Mathematical Analysis I**
-    * Construction of Number Systems
-    * Limits, Continuity, and Differentiation
-    * Riemann Integration
+    * The Naive Set Theory
+    * The Axiomatic Set Theory (ZFC)
+    * Extensions of Axiomatic Set Theory
+* **Chapter 2: Mathematical Analysis: Part I**
+    * Extension of the Number System
+    * Sequence Limit and the Properties of Real Numbers
+    * Derivatives and Related Theorem
+    * Integration and Improper Integrals
 * **Chapter 3: Linear Algebra**
-    * Vector Spaces & Matrices
-    * Spectral Theory & SVD
+    * Linear Equations and Matrices
+    * Determinants
+    * Vectors in $\mathbb{R}^n$
+    * Linear Transformations
+    * Abstract Linear Spaces and Subspaces
 * **Chapter 4: Abstract Algebra**
+    * Operations and Algebraic Structures
     * Groups, Rings, and Fields
     * Galois Theory
-* **More**: More content will be comming soon.
-* **The author is currently updating the content of Topology and Mathematical Analysis II**
+    * Modules
+* **Chapter 5: Mathematical Analysis II**
+    * Series
+    * Limits and Continuity in Euclidean Space
+    * Differential Calculus of Multivariable Functions
+    * Multiple Integrals
+* **Chapter 6: Topology**
+    * From Metric Spaces to Topological Spaces
+    * Topological Spaces, Bases, and Subbases
+    * Closed Sets, Connectedness, and Compactness
+* **Chapter 7: Complex Analysis**
+    * Complex Numbers and the Complex Plane
+    * Complex Differentiability and Cauchy-Riemann Equations
+    * Complex Integration and Cauchy's Theorem
+    * Power Series, Singularities, and Residues
+* **Chapter 8: Applied Mathematics: Graph Theory**
+    * Introduction to Graph Theory
+    * Paths and Circuits
+    * Trees and Forests
+    * Random Graphs
+* **Chapter 9: Applied Mathematics: Probability Theory**
+    * Classical Probability and Counting
+    * Conditional Probability and Independence
+    * Discrete and Continuous Random Variables
+    * The Measure-Theoretic Foundation
+    * Limit Theorems and Stochastic Processes
+* **More**: More content will be coming soon.
+
+## 📦 Versions & Layout
+
+This repository keeps multiple versions of the notes:
+
+- `code/splited_version/code/` is the main working directory (split files).
+- `code/original_vertion/` stores the archived single-file source.
+- `code/beutified_version/` stores the archived beautified build.
+- `code/Mathematics and Axiomatization.docx` is a Word export.
 
 ## 🛠️ Usage & Compilation
 
-This project has been split into multiple files for faster compilation. The main entry point is `main.tex`.
+This project has been split into multiple files for faster compilation. The main entry point is located at `code/splited_version/code/main.tex`.
 
 ### File Structure
 ```text
 .
-├── main.tex            # The primary file to compile
-├── M&A.tex             # (Archive) The original single file
-├── chapters/           # Folder containing individual chapters
-│   ├── preface.tex
-│   ├── chapter0.tex
-│   ├── chapter1.tex
-│   └── ...
+├── code/
+│   ├── beutified_version/
+│   │   ├── M&A.tex
+│   │   └── M&A.pdf
+│   ├── original_vertion/
+│   │   ├── code_of_Mathematics_and_Axiomatization.tex
+│   │   └── code_of_Mathematics_and_Axiomatization.pdf
+│   ├── splited_version/
+│   │   └── code/
+│   │       ├── main.tex
+│   │       ├── main.pdf
+│   │       ├── assets/
+│   │       └── chapters/
+│   │           ├── preface.tex
+│   │           ├── chapter0.tex
+│   │           ├── chapter1.tex
+│   │           └── ...
+│   └── Mathematics and Axiomatization.docx
+├── LICENSE
 └── README.md
-
 ```
 
 ### How to Compile
@@ -58,15 +109,13 @@ You need a standard TeX distribution (TeX Live, MiKTeX, or MacTeX).
 
 1. Clone the repository:
 ```bash
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-
+git clone https://github.com/JinShuo-Li/Mathematical-Note
 ```
-
-
-2. Compile using `latexmk` (recommended) or `pdflatex`:
+2. Compile using `xelatex` (run twice to update the TOC):
 ```bash
-latexmk -pdf main.tex
-
+cd code/splited_version/code
+xelatex main.tex
+xelatex main.tex
 ```
 
 
