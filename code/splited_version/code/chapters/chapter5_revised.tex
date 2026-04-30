@@ -4,6 +4,11 @@ Now we will move on to another part of the analysis, which is Mathematical Analy
 
 \section{Series}
 
+
+The key idea of this section is that an infinite series is not an infinite act of addition performed all at once. It is a limit process. We add finitely many terms, obtain a sequence of partial sums, and then ask whether that sequence stabilizes. This distinction is essential: the behavior of the terms $a_n$ alone is not enough; what matters is the accumulated behavior of the partial sums.
+
+Many convergence tests can be understood as methods for comparing partial sums with simpler objects. Positive series are controlled by monotonicity and boundedness. Alternating series are controlled by cancellation. Dirichlet and Abel tests are controlled by bounded oscillation multiplied by monotone decay. Uniform convergence of function series adds one more layer: the stabilization must occur at the same speed for every point in the domain.
+
 Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
 
 \subsection{Numerical Series}
@@ -19,6 +24,11 @@ is called an \textbf{infinite series}. The number $a_n$ is called the general te
 To assign a value to this infinite sum, we look at finite sums.
 
 \subsection{Upper and Lower Limits}
+
+
+Upper and lower limits are especially useful because they preserve information about eventual upper and lower behavior even when an ordinary limit does not exist. Instead of asking where the whole sequence goes, we ask where its subsequences can accumulate. This is why $\limsup$ and $\liminf$ are natural tools in convergence tests involving roots, ratios, and oscillatory expressions.
+
+A practical way to remember them is this: $\limsup x_n$ is the limiting ceiling seen from far out in the sequence, while $\liminf x_n$ is the limiting floor. If these two quantities coincide, the ceiling and the floor squeeze the sequence into a genuine limit. If they differ, the sequence has persistent oscillation or multiple asymptotic behaviors.
 
 To study the convergence of series, it is often helpful to use the concept of upper and lower limits of sequences, especially when the sequence does not converge.
 
@@ -158,6 +168,8 @@ Also, we can use the integral test to determine the convergence of improper inte
     \[\int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{1 + (n\pi + t)^2 \sin^2 t} > \int_{0}^{\frac{1}{(n+1)\pi}} \frac{dt}{2} = \frac{1}{2(n+1)\pi}\]
     Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
 \end{example}
+
+\newpage
 
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
@@ -369,7 +381,6 @@ Also, matheaticians use the infinite product deduce some famous formulas, for ex
 When $n \to \infty$, we have the famous approximation:
 \[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
 
-\newpage
 
 \subsection{Function Series}
 
@@ -442,6 +453,11 @@ Take the series $\sum_{n=1}^{\infty} \frac{\sin(n^2 x)}{n^2}$. It converges poin
 To fix this catastrophic failure of properties, we need to bring in the heavy artillery: a stronger form of convergence.
 
 \subsubsection{Uniform Convergence}
+
+
+Uniform convergence is a strengthening of pointwise convergence. In pointwise convergence, for each fixed $x$ we may choose a different threshold $N$ after which the approximation is good. In uniform convergence, one threshold $N$ must work for all $x$ in the domain. This change is small in notation but large in meaning: it prevents convergence from becoming slower and slower as $x$ moves through the domain.
+
+This is the reason uniform convergence preserves many analytic properties. Continuity, integration, and sometimes differentiation involve neighborhoods or limiting processes that depend on $x$. If convergence is only pointwise, these operations may fail to commute with the limit. Uniform convergence supplies the global control needed to exchange limits with other operations.
 
 \begin{definition}[Uniform Convergence]
 A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
@@ -519,11 +535,13 @@ Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$.
 
 Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus. In short: \textbf{The operation on the infinite sum equals the infinite sum of the operations.}
 
+\newpage
 \begin{theorem}[Continuity]
 If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
 Consequently, for a series of continuous functions $\sum u_n(x)$, if the series converges uniformly to $S(x)$, then $S(x)$ is continuous:
 \[ \lim_{x \to x_0} \sum_{n=1}^{\infty} u_n(x) = \sum_{n=1}^{\infty} \lim_{x \to x_0} u_n(x) \]
 \end{theorem}
+
 
 \begin{theorem}[Term-by-Term Integration]
 Let each $\{u_n(x)\}$ be Riemann integrable on $[a, b]$, and suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then the limit function $S(x)$ is also Riemann integrable on $[a, b]$, and the integration and summation can be safely interchanged:
@@ -548,6 +566,11 @@ then the convergence is \textbf{uniform} on $[a, b]$.
 
 \subsection{Power Series}
 
+
+Power series form the most well-behaved class of function series. Inside their interval or disk of convergence, they behave almost like polynomials: they may be added, multiplied, integrated, and differentiated term by term. The radius of convergence is the boundary between this stable polynomial-like behavior and possible divergence.
+
+However, the boundary itself requires separate attention. The root or ratio test usually determines convergence strictly inside and strictly outside the radius, but it says nothing decisive at endpoints. Endpoint analysis must return to ordinary series tests. This is why power series problems naturally split into three parts: find the radius, test the interior, and examine the boundary.
+
 A power series is a specific type of function series of the form:
 \[ \sum_{n=0}^{\infty} a_n (x - x_0)^n = a_0 + a_1(x - x_0) + a_2(x - x_0)^2 + \cdots \]
 where $a_n$ are the coefficients of the series, and $x_0$ is the center of convergence. For simplicity in notation and proofs, we often set $x_0 = 0$ by a simple change of variables $y = x - x_0$, transforming the series into $\sum_{n=0}^{\infty} a_n x^n$.
@@ -556,7 +579,6 @@ where $a_n$ are the coefficients of the series, and $x_0$ is the center of conve
 
 Unlike general function series, which might converge on complicated sets, power series possess a highly structured domain of convergence. The set of points where a power series converges is always an interval centered at $x_0$.
 
-\newpage
 
 \begin{theorem}[Cauchy-Hadamard Theorem]
 Given a power series $\sum a_n x^n$, let
@@ -613,6 +635,8 @@ For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\l
 
 We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
 
+\newpage
+
 \begin{theorem}[Taylor Series]
 If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n (x-x_0)^n$ with a non-zero radius of convergence $R$, then by repeatedly differentiating and evaluating at $x=x_0$, we find that the coefficients are uniquely determined as:
 \[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
@@ -644,8 +668,6 @@ Repeating this process $n-1$ more times gives:
 This completes the proof.
 \end{proof}
 
-\newpage
-
 \begin{example}[Standard Maclaurin Expansions]
 The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
 \begin{align*}
@@ -659,6 +681,11 @@ The following cornerstone expansions appear frequently throughout analysis and p
 \end{example}
 
 \section{Limits and Continuity in Euclidean Space}
+
+
+The passage from one-variable analysis to several-variable analysis is not merely a change of notation. In one variable, a point can approach another point only from the left or from the right. In $\mathbb{R}^n$, there are infinitely many paths of approach. As a result, limits and continuity become more geometric: we must control behavior in every direction simultaneously.
+
+The norm, inner product, open balls, closed sets, compactness, and connectedness provide the language for this control. They allow us to state multivariable versions of familiar theorems without relying on pictures. For example, compactness replaces the closed bounded interval, and connectedness replaces the intuitive idea of an interval having no gaps.
 
 Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
 
@@ -771,6 +798,11 @@ A sequence $\{\mathbf{x}_k\}$ in $\mathbb{R}^n$ converges if and only if it is a
 
 \subsection{Limits of Functions of Several Variables}
 
+
+When testing a multivariable limit, path checking is a diagnostic tool rather than a complete proof method. If two paths lead to different limiting values, the limit cannot exist. But if several convenient paths give the same answer, this only gives evidence, not proof. A proof must bound $|f(x)-L|$ in terms of the distance from $x$ to the limiting point, or otherwise reduce the expression to a known theorem.
+
+This distinction explains many standard examples. Along straight lines a function may appear to have one limit, while along a curve such as $y=x^2$ it may behave differently. The hidden problem is that multivariable functions can concentrate their irregular behavior along thin curves that are invisible to a small finite list of test paths.
+
 Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ be a function defined on a domain $D$. We are interested in the behavior of $f(\mathbf{x})$ as $\mathbf{x}$ approaches a point $\mathbf{a}$.
 
 \begin{definition}[Limit]
@@ -789,6 +821,8 @@ If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous
 Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
 \end{theorem}
 
+\newpage
+
 \begin{example}
 Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
 \begin{enumerate}
@@ -799,8 +833,6 @@ Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit
 \end{enumerate}
 Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
 \end{example}
-
-\newpage
 
 \begin{remark}
 It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
@@ -814,7 +846,7 @@ For a function of two variables $f(x,y)$, we can define \textbf{iterated limits}
 \[ L_{12} = \lim_{x \to a} \left( \lim_{y \to b} f(x, y) \right) \quad \text{and} \quad L_{21} = \lim_{y \to b} \left( \lim_{x \to a} f(x, y) \right) \]
 
 \begin{proposition}
-The existence of iterated limits does not imply the existence of the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$.
+The existence of iterated limits does not guarantee that the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$ exists.
 Even if $L_{12} = L_{21}$, the simultaneous limit may not exist.
 Conversely, if the simultaneous limit exists, the iterated limits may not exist (because the inner limits might not be defined).
 However, if the simultaneous limit exists AND the inner limits exist, then they must all be equal.
@@ -881,8 +913,6 @@ $f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\d
 Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
 \end{definition}
 
-\newpage
-
 \begin{remark}
 If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
 For example, $f(x) = 1/x$ on $(0, 1)$ is continuous but unbounded and not uniformly continuous.
@@ -904,6 +934,11 @@ This ensures that the image of a path-connected set under a continuous real-valu
 
 \section{Differential Calculus of Multivariable Functions}
 
+
+Partial derivatives measure change along coordinate axes, but differentiability asks for something stronger: the function must be well approximated by one linear map in all directions at once. Thus differentiability is a statement about the existence of a good tangent plane, not merely about the existence of directional slopes. This is why partial derivatives alone do not guarantee differentiability.
+
+The total differential is the linear part of the best local approximation. When $f$ is differentiable at a point, the error after subtracting this linear part is small compared with the distance to the point. In symbols, the remainder is $o(\|h\|)$. This little-$o$ condition is the precise analytic form of the phrase ``locally linear.''
+
 From here, we formally transition into the differential calculus of multivariable functions. We will first introduce partial derivatives and then introduce the idea of directional derivatives.
 
 \subsection{Partial Derivatives}
@@ -918,18 +953,11 @@ The definition of a partial derivative is very similar to that of a single-varia
 
 However, studying the rate of change only along the coordinate axes is often insufficient for a complete multidimensional analysis. This motivates the definition of the directional derivative.
 
-\newpage
-
 \begin{definition}[Directional Derivative]
 Let $f(\mathbf{x})$ be a function defined in a neighborhood of $\mathbf{x}_0$. For any given non-zero vector $\mathbf{u}$ (often taken as a unit vector), if the following limit exists:
 \[ \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{u}) - f(\mathbf{x}_0)}{t} = A \]
 then we say that $f$ has a \textbf{directional derivative} at $\mathbf{x}_0$ along the direction $\mathbf{u}$, denoted by $D_{\mathbf{u}} f(\mathbf{x}_0) = A$.
 \end{definition}
-
-% -----------------------------------------------------------------------------
-% Augmented material based on midterm.md: multivariable differential calculus
-% and multiple integrals. This file is intended to be included by main.tex.
-% -----------------------------------------------------------------------------
 
 \subsubsection{Higher Partial Derivatives}
 
@@ -1202,8 +1230,6 @@ Taylor's formula is the local polynomial approximation produced by repeatedly ap
     h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}.
 \]
 
-\newpage
-
 \begin{theorem}[Taylor Formula]
 Suppose $f$ has continuous partial derivatives up to order $r+1$ in a neighborhood of $(x_0,y_0)$. For $(x,y)=(x_0+h,y_0+k)$,
 \[
@@ -1243,6 +1269,11 @@ If $f$ has continuous first-order partial derivatives on a convex domain contain
 \end{theorem}
 
 \subsection{Implicit Functions}
+
+
+The implicit function theorem explains when an equation can be solved locally for some variables in terms of others. Its core idea is linearization. If the relevant derivative with respect to the variables to be solved for is invertible, then near the point the nonlinear equation behaves like an invertible linear equation. The invertibility condition prevents the solution set from folding vertically or losing dimension.
+
+Geometrically, an equation $F(x,y)=0$ often defines a curve. If $F_y\neq 0$, the curve is locally the graph of a function $y=f(x)$. If $F_y=0$, this graph representation may fail: the curve may have a vertical tangent, a crossing, or a singularity. Thus the derivative condition is not a technical decoration but the mechanism that selects a stable local coordinate system.
 
 Many relations are naturally written as equations rather than explicit formulas. The basic form is
 \[
@@ -1288,6 +1319,8 @@ For two equations
 \end{cases}
 \]
 one wants to solve locally for $u$ and $v$ as functions of $x$ and $y$.
+
+\newpage
 
 \begin{theorem}[Implicit Function Theorem for a System]
 Suppose $F$ and $G$ have continuous first-order partial derivatives near $(x_0,y_0,u_0,v_0)$ and
@@ -1407,8 +1440,6 @@ If $f$ has first-order partial derivatives at an interior point $(x_0,y_0)$ and 
 \]
 \end{theorem}
 
-\newpage
-
 \begin{theorem}[Second Derivative Test]
 Suppose $f$ has continuous second-order partial derivatives near a critical point $(x_0,y_0)$. Put
 \[
@@ -1491,6 +1522,11 @@ Lagrange multiplier equations give candidate points. Boundary points, singular p
 \end{note}
 
 \section{Multiple Integrals}
+
+
+Multiple integrals should be read in two complementary ways. Analytically, they are limits of sums over small pieces of a region. Geometrically, they compute accumulated quantities: area, volume, mass, charge, probability, or average value. The integrand gives local density, and the integral adds these densities over the region.
+
+The main difficulty is often not the integration itself but the description of the domain. Changing the order of integration or changing variables is essentially a way of choosing better coordinates for the same region. A good coordinate system makes the boundary simple and the integrand manageable; a poor coordinate system can turn a simple problem into a long computation.
 
 The construction of multiple integrals begins with the geometric question of area. For double integrals, the domain must have a well-defined area in the Jordan sense.
 
@@ -1583,34 +1619,30 @@ For a plane lamina with density $\rho(x,y)$,
 
 Assume all functions involved are integrable on the relevant Jordan measurable domains.
 
-\begin{property}[Linearity]
-For constants $a,b$,
+\begin{property}[]
+1. For constants $a,b$,
 \[
     \iint_D (af+bg)\,d\sigma
     =a\iint_D f\,d\sigma+b\iint_D g\,d\sigma.
 \]
-\end{property}
 
-\begin{property}[Additivity over Regions]
-If $D=D_1\cup D_2$ and the interiors of $D_1$ and $D_2$ do not overlap, then
+2. If $D=D_1\cup D_2$ and the interiors of $D_1$ and $D_2$ do not overlap, then
 \[
     \iint_D f\,d\sigma=\iint_{D_1} f\,d\sigma+\iint_{D_2} f\,d\sigma.
 \]
-\end{property}
 
-\begin{property}[Order Preservation]
-If $f(x,y)\le g(x,y)$ for all $(x,y)\in D$, then
+3. If $f(x,y)\le g(x,y)$ for all $(x,y)\in D$, then
 \[
     \iint_D f\,d\sigma\le \iint_D g\,d\sigma.
 \]
-\end{property}
 
-\begin{property}[Absolute Integrability Estimate]
-If $f$ is integrable on $D$, then $|f|$ is integrable on $D$, and
+4. If $f$ is integrable on $D$, then $|f|$ is integrable on $D$, and
 \[
     \left|\iint_D f\,d\sigma\right|\le \iint_D |f|\,d\sigma.
 \]
 \end{property}
+
+\newpage
 
 \begin{theorem}[Mean Value Theorem for Double Integrals]
 If $f$ and $g$ are integrable on $D$, and $g$ does not change sign, then there exists

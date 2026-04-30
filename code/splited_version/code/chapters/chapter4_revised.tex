@@ -14,6 +14,11 @@ We will introduce four major structures: groups, rings, fields, and modules. The
 
 \section{Operations and Algebraic Structures}
 
+
+At this point it is useful to slow down and separate two levels of thought. The first level is the concrete level: we compute with integers, matrices, permutations, or polynomials. The second level is the structural level: we ask which formal laws are actually being used. Abstract algebra becomes powerful precisely when we learn to move between these two levels. A calculation may take place in one familiar model, but the reason it works may depend only on associativity, identity, inverses, or distributivity. Once we identify the relevant laws, the same argument can be transported to every structure satisfying those laws.
+
+A common beginner's mistake is to think that the operation symbol determines the structure. This is not true. The same symbol may hide very different operations, and the same operation may be written with different symbols. In group theory, for example, multiplication may mean ordinary multiplication, matrix multiplication, composition of functions, or addition written multiplicatively. Therefore one should always ask: what is the underlying set, what is the operation, and which axioms are valid?
+
 Before defining groups or rings, we clarify what it means to have an operation on a set.
 
 \begin{definition}[Binary Operation]
@@ -25,8 +30,6 @@ For $a,b\in S$, we usually write $a*b$ instead of $*(a,b)$.
 \end{definition}
 
 The condition $*:S\times S\to S$ already includes \textbf{closure}: whenever we combine two elements of $S$, the result is still in $S$.
-
-\newpage
 
 \begin{example}[Operations and Non-operations]
 Addition is a binary operation on $\mathbb{Z}$, since $a+b\in\mathbb{Z}$ whenever $a,b\in\mathbb{Z}$. Subtraction is also a binary operation on $\mathbb{Z}$. However, division is not a binary operation on $\mathbb{Z}$, because $1/2\notin\mathbb{Z}$. It is also not a binary operation on $\mathbb{R}$ unless division by $0$ is excluded.
@@ -70,11 +73,14 @@ Suppose $e$ and $e'$ are both identity elements. Since $e$ is an identity, $e*e'
 
 \section{Groups}
 
+
+The guiding intuition is that a group is a universe in which every permitted move can be reversed. The associativity axiom says that a sequence of moves can be performed without worrying about the placement of parentheses. The identity axiom says that there is a move which changes nothing. The inverse axiom says that every move has an undo operation. These three requirements are exactly what is needed to treat algebraic manipulation as a reliable calculus of transformations.
+
+This viewpoint also explains why many groups are non-commutative. If operations are thought of as actions performed in time, then order usually matters: rotating and then reflecting a figure is not necessarily the same as reflecting and then rotating it. Non-commutativity is therefore not an exotic defect but the normal behavior of transformations. Abelian groups are the special case in which the order of operations happens not to matter.
+
 Groups are the algebraic structures that formalize the idea of reversible transformations. A rotation can be undone by a rotation in the opposite direction. A permutation can be undone by the inverse permutation. Adding an integer can be undone by adding its negative. These examples look different, but they obey the same axioms.
 
 \subsection{Definition and Basic Examples}
-
-\newpage
 
 \begin{definition}[Group]
 A \textbf{group} is a pair $(G,*)$, where $G$ is a set and $*$ is a binary operation on $G$, satisfying the following axioms:
@@ -121,8 +127,6 @@ Suppose $b$ and $c$ are both inverses of $a$. Then $ab=e$ and $ca=e$. Hence
 \]
 Therefore the inverse is unique.
 \end{proof}
-
-\newpage
 
 \begin{proposition}[Cancellation Laws]
 Let $G$ be a group and $a,b,c\in G$.
@@ -173,6 +177,11 @@ and no smaller positive multiple of $2$ is congruent to $0$ modulo $6$.
 
 \subsection{Subgroups and Generated Subgroups}
 
+
+Subgroups are the first mechanism by which we analyze a complicated group through smaller pieces. The important point is that a subgroup is not just any subset; it must be closed under the same algebraic life as the ambient group. Once we enter the subset, multiplication, identity, and inverses must keep us inside it. In this sense, a subgroup is a self-contained algebraic world embedded in a larger one.
+
+The generated subgroup $\langle S\rangle$ should be understood as the algebraic closure of the chosen elements $S$. Starting with $S$, we are forced to include products, inverses, products of inverses, and so on. The result is the smallest environment in which all expressions built from elements of $S$ make sense. This idea is analogous to the span of vectors in linear algebra: a small set of generators may determine a large structure.
+
 A subgroup is a smaller group living inside a larger group.
 
 \begin{definition}[Subgroup]
@@ -207,6 +216,11 @@ Let $G=\langle g\rangle$. Define $\varphi:\mathbb{Z}\to G$ by $\varphi(k)=g^k$. 
 
 \subsection{Cosets and Lagrange's Theorem}
 
+
+Cosets are best understood as translated copies of a subgroup. If $H$ records all moves that are considered internally invisible, then $gH$ records all elements that differ from $g$ by such an invisible move. This is why cosets naturally lead to equivalence classes. Two elements are in the same left coset precisely when one can be transformed into the other by multiplying by an element of $H$.
+
+Lagrange's theorem is the first major counting theorem in group theory. Its content is not merely that $|H|$ divides $|G|$; it says that the group can be partitioned into disjoint blocks of equal size. This equal-size partition is the structural reason behind many divisibility results, including the fact that the order of an element in a finite group divides the order of the group.
+
 Subgroups do not merely sit inside groups; they divide groups into equal-sized pieces.
 
 \begin{definition}[Cosets]
@@ -232,8 +246,6 @@ For any $x\in aH$, write $x=ah$. Then
 \]
 Thus $aH\subseteq bH$. Symmetrically, $bH\subseteq aH$. Therefore two left cosets are either disjoint or equal.
 \end{proof}
-
-\newpage
 
 \begin{theorem}[Lagrange's Theorem]
 Let $G$ be a finite group and $H\leq G$. Then
@@ -264,6 +276,11 @@ Let $|G|=p$ be prime and choose $g\neq e$. The order of $g$ divides $p$ and is n
 \end{proof}
 
 \subsection{Normal Subgroups and Quotient Groups}
+
+
+The need for normality appears when we try to make cosets into a group. For an arbitrary subgroup $H$, the product of two left cosets may depend on the chosen representatives, so the operation is not well-defined. Normality is exactly the condition that removes this ambiguity. It ensures that multiplying representatives and then passing to cosets gives a result independent of representative choices.
+
+Thus quotient groups are not obtained by simply deleting elements. They are obtained by declaring all elements of $H$ to be equivalent to the identity and then asking what algebraic structure remains. This is the group-theoretic version of reducing modulo an integer, where all multiples of $n$ are treated as zero and the remaining arithmetic takes place among residue classes.
 
 For a subgroup $H$, the set of cosets $G/H$ is always a set, but it is not always a group. To multiply cosets by $(aH)(bH)=abH$, we need the answer to be independent of representatives. This is exactly what normality guarantees.
 
@@ -312,6 +329,11 @@ The quotient construction is one of the most important constructions in mathemat
 \end{remark}
 
 \subsection{Homomorphisms and Isomorphism Theorems}
+
+
+Homomorphisms are structure-preserving maps. They are more important than arbitrary functions because they respect the operation: applying the map after multiplying is the same as multiplying after applying the map. In this sense, a homomorphism translates one group language into another without breaking algebraic sentences.
+
+The kernel measures the information lost by a homomorphism. Elements in the kernel become indistinguishable from the identity after mapping. The image measures the part of the target actually reached. The isomorphism theorems formalize the idea that every homomorphism factors into two conceptual steps: first collapse the kernel, then identify the resulting quotient with the image.
 
 A homomorphism is a structure-preserving map. It does not merely send elements to elements; it sends algebraic relationships to algebraic relationships.
 
@@ -367,6 +389,11 @@ The first isomorphism theorem says that the only information lost by a homomorph
 \end{remark}
 
 \subsection{Group Actions}
+
+
+A group action is a way for an abstract group to reveal itself through motion. Instead of studying group elements only as symbols, we let them act on a set and observe the resulting symmetries. This is why group actions connect algebra with geometry, combinatorics, and number theory. The same group may act on many different sets, and each action exposes different information.
+
+The orbit-stabilizer principle is the basic bookkeeping law of group actions. The orbit counts where a point can go; the stabilizer counts the group elements that keep it fixed. Their sizes multiply to the size of the group in the finite case. This theorem is one of the clearest examples of a general theme: symmetry can be measured by decomposing movement into freedom and constraint.
 
 Groups are not only objects; they also act on objects. This viewpoint explains why groups naturally describe symmetry.
 
@@ -461,13 +488,17 @@ Let $G$ be a finite group with $|G|=p^k m$, where $p$ is prime and $p\nmid m$. T
 \end{enumerate}
 \end{theorem}
 
-\newpage
 
 \begin{example}[A Group of Order $15$]
 Let $|G|=15=3\cdot 5$. The number $n_5$ of Sylow $5$-subgroups satisfies $n_5\equiv 1\pmod 5$ and $n_5\mid 3$. Hence $n_5=1$. Thus the Sylow $5$-subgroup is normal. Similarly, $n_3\equiv 1\pmod 3$ and $n_3\mid 5$, so $n_3=1$ or $10$ is impossible because $10\nmid 5$; hence $n_3=1$. Both Sylow subgroups are normal. This strongly restricts the structure of $G$.
 \end{example}
 
 \section{Rings}
+
+
+Rings are introduced when one operation is no longer enough. Addition gives an abelian group structure, while multiplication gives a second operation that interacts with addition through distributivity. This mirrors the arithmetic of integers and polynomials: addition organizes terms, multiplication combines them, and distributivity allows expansion and factorization.
+
+The main conceptual difference between rings and fields is that division is no longer guaranteed. This absence of universal division is not a weakness; it is precisely what allows rings to model arithmetic phenomena such as divisibility, congruences, ideals, factorization, and zero divisors. Much of ring theory asks how much of familiar arithmetic survives when division is unavailable.
 
 Groups describe one operation. Rings describe two operations, traditionally called addition and multiplication. The guiding example is $\mathbb{Z}$: addition forms an abelian group, multiplication is associative, and multiplication distributes over addition.
 
@@ -545,6 +576,11 @@ From $ab=ac$, we get $a(b-c)=0$. Since $a\neq 0$ and $R$ has no zero divisors, $
 \end{proof}
 
 \subsection{Ideals and Quotient Rings}
+
+
+Ideals play for rings the role that normal subgroups play for groups. They are exactly the subsets by which one may quotient while preserving the ring operations. The condition $ra\in I$ and $ar\in I$ says that once an element is declared to be zero modulo $I$, all of its ring multiples must also become zero. This is why ideals are the correct algebraic language for modular arithmetic.
+
+For example, the ideal $n\mathbb{Z}$ records all integers that should vanish modulo $n$. The quotient ring $\mathbb{Z}/n\mathbb{Z}$ is obtained by identifying integers whose difference lies in $n\mathbb{Z}$. This example is the prototype for quotient rings in general: ideals encode the relations we impose, and quotients describe the arithmetic after those relations are imposed.
 
 In group theory, normal subgroups are exactly the subgroups by which we can quotient. In ring theory, the corresponding objects are ideals.
 
@@ -684,8 +720,6 @@ In an integral domain, every prime element is irreducible.
 Suppose $p$ is prime and $p=ab$. Since $p\mid ab$, primality implies $p\mid a$ or $p\mid b$. Assume $p\mid a$. Then $a=pc$ for some $c$, so $p=ab=pcb$. Since $p\neq 0$ and the ring is a domain, cancellation gives $1=cb$, so $b$ is a unit. The other case is similar.
 \end{proof}
 
-\newpage
-
 \begin{definition}[Euclidean Domain, PID, and UFD]
 Let $R$ be an integral domain.
 \begin{enumerate}
@@ -723,6 +757,11 @@ If $R$ is a UFD, then $R[x]$ is a UFD.
 \end{theorem}
 
 \section{Fields}
+
+
+Fields are the algebraic setting in which the four elementary arithmetic operations behave as expected, except for division by zero. Because every non-zero element has a multiplicative inverse, linear equations over a field can be solved using the familiar methods of Gaussian elimination. This is why vector spaces are defined over fields in ordinary linear algebra.
+
+Field extensions arise when a field is too small to contain the solutions we want. The passage from $\mathbb{Q}$ to $\mathbb{Q}(\sqrt{2})$ adds a root of $x^2-2$; the passage from $\mathbb{R}$ to $\mathbb{C}$ adds a root of $x^2+1$. The basic idea is to enlarge the number system just enough to make certain polynomial equations solvable while preserving field arithmetic.
 
 Fields are rings in which every non-zero element is invertible. They are the natural algebraic setting for solving linear equations, building vector spaces, and studying roots of polynomials.
 
@@ -865,6 +904,11 @@ A finite field with $q=p^n$ elements is denoted $\mathbb{F}_q$ or $GF(q)$. The m
 
 \section{Galois Theory}
 
+
+Galois theory is the point where the preceding structures meet. A polynomial gives a field extension by adjoining its roots, and the symmetries of that extension form a group of field automorphisms. The striking discovery is that algebraic information about intermediate fields corresponds to group-theoretic information about subgroups.
+
+This correspondence turns questions about equations into questions about symmetry. To understand why an equation is solvable by radicals, one studies the structure of its Galois group. The philosophical lesson is that the difficulty of solving an equation is not located only in its coefficients; it is encoded in the way its roots can be permuted without violating algebraic relations.
+
 Galois theory is the meeting point of groups and fields. It translates questions about roots of polynomials into questions about symmetry groups. The roots of a polynomial may be permuted by field automorphisms, and these permutations encode deep information about the original equation.
 
 \subsection{Field Automorphisms}
@@ -919,6 +963,7 @@ Let $K/F$ be a field extension and $H\leq\operatorname{Gal}(K/F)$. The \textbf{f
 \]
 \end{definition}
 
+
 \begin{theorem}[Fundamental Theorem of Galois Theory]
 Let $K/F$ be a finite Galois extension and let $G=\operatorname{Gal}(K/F)$. There is a one-to-one inclusion-reversing correspondence
 \[
@@ -961,6 +1006,11 @@ The general polynomial of degree $n$ has Galois group $S_n$. The group $S_n$ is 
 \end{remark}
 
 \section{Modules}
+
+
+Modules generalize vector spaces by allowing the scalars to come from a ring rather than a field. This single change has large consequences. In a vector space, every non-zero scalar is invertible, so bases behave cleanly and dimension is well-defined. In a module, scalars may fail to be invertible or may even be zero divisors, so linear algebra becomes more delicate.
+
+This is exactly why modules are useful. They retain the language of addition and scalar multiplication while being flexible enough to encode abelian groups, ideals, quotient structures, and solutions of linear equations over rings. One should read module theory as linear algebra after removing the simplifying assumption that scalars can always be divided.
 
 Vector spaces are built over fields. Modules are what remain when the scalars are allowed to come from a ring. This generalization is natural, but it also removes some convenient properties of vector spaces. In particular, modules need not have bases.
 

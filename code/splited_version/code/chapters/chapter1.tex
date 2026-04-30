@@ -55,13 +55,15 @@ The \textbf{power set} $\mathcal{P}(x)$ (aka $2^{x}$): the set consisting of all
 
 According to the definition above, we can easily find several conclusions below:
 \begin{inference}
-$\emptyset \subseteq A$ for any set $A$.
-\end{inference}
-\begin{inference}
-Assume that the number of elements in the finite set $x$ is $\text{card}(x)$, then $\text{card}(\mathcal{P}(x)) = 2^{\text{card}(x)}$.
-\end{inference}
-\begin{inference}
-If the set $x$ is empty, then $\text{card}(\mathcal{P}(\emptyset)) = 1$. (This inference can be seen as an extension of the inference 1.1.2).
+\begin{enumerate}
+
+\item $\emptyset \subseteq A$ for any set $A$.
+
+\item Assume that the number of elements in the finite set $x$ is $\text{card}(x)$, then $\text{card}(\mathcal{P}(x)) = 2^{\text{card}(x)}$.
+
+\item If the set $x$ is empty, then $\text{card}(\mathcal{P}(\emptyset)) = 1$. (This inference can be seen as an extension of the inference 1.1.2).
+
+\end{enumerate}
 \end{inference}
 
 \subsection*{Russell’s Paradox}
@@ -150,10 +152,11 @@ $\{a\} \in \{\{a\}, \{a,b\}\}$ guarantees the order of the pair $(a,b)$.
 \end{definition}
 
 \begin{inference}
-$(a,b) = (c,d)$ if and only if $a=c$ and $b=d$.
-\end{inference}
-\begin{inference}
-$(a,a) = \{\{a\}, \{a,a\}\} = \{\{a\}\}$.
+\begin{enumerate}
+\item $(a,b) = (c,d)$ if and only if $a=c$ and $b=d$.
+
+\item $(a,a) = \{\{a\}, \{a,a\}\} = \{\{a\}\}$.
+\end{enumerate}
 \end{inference}
 
 \subsubsection{Cartesian Product}
@@ -400,8 +403,6 @@ Therefore, our assumption that \( V \) is measurable must be false. The Vitali s
 \begin{remark}
 The existence of non-measurable sets like the Vitali set demonstrates that the Lebesgue measure cannot be extended to all subsets of \(\mathbb{R}^n\) while preserving translation invariance and countable additivity. This result relies on the Axiom of Choice, and indeed, it can be shown that in models of set theory without the Axiom of Choice, all subsets of \(\mathbb{R}\) can be Lebesgue measurable.
 \end{remark}
-
-\newpage
 
 \subsection{Another Example: Closure of Relation}
 Having defined the fundamental properties of relations, we now address a natural question: if a relation $R$ on a set $A$ lacks a certain property, what is the \emph{smallest} relation containing $R$ that \emph{does} possess that property? This leads to the concept of the \textbf{closure} of a relation.

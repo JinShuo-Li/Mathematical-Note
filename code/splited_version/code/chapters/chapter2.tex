@@ -420,6 +420,8 @@ According to the definition of limit, we take $\epsilon = \frac{a-b}{2}$, and we
 Thus we have: $x_n > (a+b)/2 >y_n$ , pick $N = max \{N_1,N_2\}$, then we have $\forall n > N, x_n>y_n$. Finally we can claim that the limits have the property of isotonicity.
 \end{proof}
 
+\newpage
+
 \begin{theorem}[the calculations' law of limits]
 
 Assume that there exist two limits:
@@ -665,8 +667,10 @@ This direction relies critically on the completeness of $\mathbb{R}$.
     Therefore, the entire sequence $\{x_n\}$ is bounded.
     
     \item \textbf{Step 2: Apply the Bolzano-Weierstrass Theorem.}
-    Since $\{x_n\}$ is bounded (by Step 1), the Bolzano-Weierstrass Theorem guarantees that it has a convergent subsequence, say $\{x_{n_k}\}$.
-    Let $\lim_{k \to \infty} x_{n_k} = L$.
+    Since $\{x_n\}$ is bounded, it has a convergent subsequence $\{x_{n_k}\}$ by Bolzano-Weierstrass.
+    Let:
+    
+    $$\lim_{k \to \infty} x_{n_k} = L$$
     
     \item \textbf{Step 3: Prove the entire sequence $\{x_n\}$ converges to $L$.}
     We must show $\lim_{n \to \infty} x_n = L$.
@@ -689,8 +693,6 @@ This direction relies critically on the completeness of $\mathbb{R}$.
     This proves $\lim_{n \to \infty} x_n = L$.
 \end{enumerate}
 \end{proof}
-
-\newpage
 
 \section{Derivatives and Related Theorem}
 
@@ -743,7 +745,7 @@ Since $f$ is differentiable at $x_0$, the first limit exists and is equal to $f'
 Thus $\lim_{x \to x_0} f(x) = f(x_0)$, so $f$ is continuous at $x_0$.
 \end{proof}
 \subsubsection{Uniform Continuity}
-The concept of continuity defined earlier is "pointwise" continuity. A stronger and often more useful concept is uniform continuity.
+A stronger and often more useful concept is uniform continuity.
 
 \begin{definition}[Uniform Continuity]
 A function $f: D \to \mathbb{R}$ is \textbf{uniformly continuous} on $D$ if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for \textbf{all} $x, y \in D$:
@@ -759,6 +761,8 @@ If a function $f$ is continuous on a \textbf{closed and bounded} interval $[a, b
 \begin{example}
 $f(x) = x^2$ is uniformly continuous on $[0, 1]$ but \emph{not} uniformly continuous on $[0, \infty)$. As $x$ gets larger, we need a smaller and smaller $\delta$ to keep the change in $f(x)$ bounded, so no single $\delta$ works for the whole infinite domain.
 \end{example}
+
+\newpage
 
 \begin{example}[Continuous but not Differentiable]
 The converse is false. The function $f(x) = |x|$ is continuous at $x=0$, but not differentiable.
@@ -785,8 +789,6 @@ Here are some basic rules for differentiation:
     \item Quotient: $(\frac{u}{v})'=\frac{u'v-uv'}{v^2}$.
     \item Composition: $f'[g(x)]=f'(u) \cdot g'(x), u = g(x)$.
 \end{itemize}
-
-\newpage
 
 We (omit here) the proofs for basic differentiation rules (sum, product, quotient), but we will provide a rigorous proof for the Chain Rule.
 
@@ -840,8 +842,6 @@ Likewise, if the differentiation of a function is differentiable, and we differe
 \end{definition}
 
 Similarly, we can define what is n-th derivative of the function $f(x)$, and we call the $f(x)$ n-th differentiable if the n-th derivative exists. The n-th derivative of $f(x)$ can be denoted as: $f^{(n)}(x)$ or $f^{(n)}$.
-
-\newpage
 
 \begin{theorem}[Leibniz theorem]
 If $u$ and $v$ are two functions that are differentiable up to $n$ times, the n-th derivative of their product can be expressed as:
@@ -1079,6 +1079,8 @@ Therefore,
 The proofs for $x \to c^-$ and $x \to \infty$ are similar.
 \end{proof}
 
+\newpage
+
 \begin{theorem}[L'Hôpital's Rule ($\frac{\infty}{\infty}$ form)]
 \label{thm:lhopital_inf_en}
 Let $c$ be a real number (or $\pm\infty$). Let $f, g$ be differentiable on a (punctured) neighborhood of $c$, with $g'(x) \neq 0$.
@@ -1179,6 +1181,8 @@ Thus, $f(x) = P_n(x) + R_n(x)$.
 \end{definition}
 
 Taylor's Theorem gives us a precise formula for this remainder.
+
+\newpage
 
 \begin{theorem}[Taylor's Theorem with Lagrange Remainder]
 \label{thm:taylor_en}
@@ -1349,8 +1353,6 @@ This is called the linear property of integration.
 
 However, since our primitive purpose is to find ways to figure out the antiderivative of a function, using the definition won't be enough to cover all the needs of figure out the antiderivative of a function. So we will introduce several methods to help us figure out the antiderivative.
 
-\newpage
-
 \subsubsection{Integration By Substitutions}
 Substitution is one of the most popular methods in analysis. When figuring out the antiderivative of the function $f(x)$, we can use this protocol.
 
@@ -1359,13 +1361,12 @@ If the integrant can be transformed into the form: $f(x) = g(h(x))\cdot h'(x)$, 
 \[
 \int f(x)dx = \int g(h(x))\cdot h'(x)\cdot dx = \int g(h(x)) \cdot d(h(x)) = G(h(x)) +C
 \]
-(We denote the integration of the function $g(x)$ as $G(x)$) \\
-\\
+(We denote the integration of the function $g(x)$ as $G(x)$)
 \end{definition}
 
 \begin{definition}[Integration by Substitution (Second Part)]
 We can also perform substitution in a different manner. To evaluate $\int f(x) dx$, we can introduce a new variable $t$ by setting $x = \phi(t)$, where $\phi(t)$ is a function with a continuous derivative and an inverse $t = \phi^{-1}(x)$.
-\\
+
 If we substitute $x = \phi(t)$, then $dx = \phi'(t) dt$. The integration becomes:
 \[
 \int f(x) dx = \int f(\phi(t)) \cdot \phi'(t) dt
@@ -1434,8 +1435,6 @@ In trigonometric substitution, there are some commonly used equations:
 \[1 + \tan^2 x = \sec^2 x\]
 \[1 + \cot^2 x = \csc^2 x\]
 \end{remark}
-
-\newpage
 
 \subsubsection{Integration By Parts}
 Integration by Parts is another fundamental technique, derived from the product rule for differentiation.
@@ -1568,14 +1567,10 @@ Integration by substitutions and parts are vital when facing different kinds of 
 \int \sqrt{x^2 + a^2} \, dx = \frac{x}{2}\sqrt{x^2 + a^2} + \frac{a^2}{2}\ln|x + \sqrt{x^2 + a^2}| + C & \int \frac{1}{x\sqrt{a^2 + x^2}} \, dx = -\frac{1}{a}\ln\left|\frac{a + \sqrt{a^2 + x^2}}{x}\right| + C \\ \\
 \int \sqrt{x^2 - a^2} \, dx = \frac{x}{2}\sqrt{x^2 - a^2} - \frac{a^2}{2}\ln|x + \sqrt{x^2 - a^2}| + C & \int \sin^2 x \, dx = \frac{x}{2} - \frac{\sin(2x)}{4} + C \\ \\
 \int \cos^2 x \, dx = \frac{x}{2} + \frac{\sin(2x)}{4} + C & \int \tan^2 x \, dx = \tan x - x + C \\ \\
-\int \cot^2 x \, dx = -\cot x - x + C & \int \sec^3 x \, dx = \frac{1}{2}(\sec x \tan x + \ln|\sec x + \tan x|) + C \\ \\
-\int \csc^3 x \, dx = \frac{1}{2}(-\csc x \cot x + \ln|\csc x - \cot x|) + C & \int \arcsin x \, dx = x\arcsin x + \sqrt{1-x^2} + C \\ \\
 \int \arccos x \, dx = x\arccos x - \sqrt{1-x^2} + C & \int \arctan x \, dx = x\arctan x - \frac{1}{2}\ln(1+x^2) + C \\ \\
 \int \text{arcsec} x \, dx = x\text{arcsec} x - \ln|x + \sqrt{x^2 - 1}| + C & \int \text{arccot} x \, dx = x\text{arccot} x + \frac{1}{2}\ln(1+x^2) + C \\ \\
 \end{array}
 \]
-
-\newpage
 
 \subsection{Definite Integration}
 
@@ -1619,34 +1614,13 @@ If $a=b$, we define the integral equals to $0$.
 When no confusion is likely to arise, a function that is Riemann integrable is generally simply referred to as integrable.
 
 \begin{example}
-Discuss the integrable of the Dirichlet function on $[0,1]$:
-\[D(x)=
-\begin{cases}
-    1,x \in \mathbb{Q} \\
-    0,x \notin \mathbb{Q}
-\end{cases}\]
-
+Discuss the integrability of the Dirichlet function $D(x)$ on $[0,1]$.
 \begin{proof}
-Because the set of rational number and the set of real number is dense, so whatever how you divide the interval $[0,1]$, each small interval $[x_{i-1},x_i]$ must include at least one rational number and real number.
-
-So for the limit:
-
-\[I=\lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i)\Delta x_i\]
-
-If we take $\xi_i$ as a rational number, then we have:
-
-\[I = \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i)\Delta x_i = \lim_{\lambda \to 0} \sum_{i=1}^{n} 1 \cdot \Delta x_i = 1\]
-
-Likewise: if we take $\xi_i$ as a irrational number, then we have:
-
-\[I = \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i)\Delta x_i = \lim_{\lambda \to 0} \sum_{i=1}^{n} 0 \cdot \Delta x_i = 0\]
-
-Because the limits is reletaed with the value of $\xi_i$, the the limit $I=\lim_{\lambda \to 0} \sum_{i=1}^{n} f(\xi_i)\Delta x_i$ does not exists.
-
-Which means the Dirichlet function cannot be integrated (from the perspective of Riemann integration).
-
+Due to the density of $\mathbb{Q}$ and $\mathbb{R}\setminus\mathbb{Q}$, any partition subinterval $[x_{i-1},x_i]$ contains both rational and irrational numbers. 
+Choosing rational $\xi_i$ yields the Riemann sum $\sum D(\xi_i)\Delta x_i = 1$. 
+Alternatively, choosing irrational $\xi_i$ yields $\sum D(\xi_i)\Delta x_i = 0$. 
+Since the limit $\lim_{\lambda \to 0} \sum D(\xi_i)\Delta x_i$ depends on the choice of $\xi_i$, it does not exist. Thus, $D(x)$ is not Riemann integrable.
 \end{proof}
-
 \end{example}
 
 \subsubsection{Equivalent Integration Conditions}
@@ -1769,8 +1743,6 @@ So after all, we conclude:
 \end{proof}
 
 Now we have the necessary and sufficient condition of the integrable.
-
-\newpage
 
 \begin{theorem}
 The necessary and sufficient condition of bounded function $f(x)$ on interval $[a,b]$ is that: for every partition $P$, when $\lambda = \max_{1 \leq i \leq n} \to 0$, and we have:

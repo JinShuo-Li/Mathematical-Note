@@ -6,10 +6,18 @@ At the intuitive level, probability measures how likely an event is. At the rigo
 
 The route of this chapter is:
 \[
-    \text{classical probability}\to\text{random variables}\to\text{measure-theoretic probability}\to\text{expectation}\to\text{conditioning}\to\text{limit theorems}.
+    \begin{aligned}
+        &\text{classical probability} \to \text{random variables} \to \text{measure-theoretic probability} \\
+        &\to \text{expectation} \to \text{conditioning} \to \text{limit theorems}.
+    \end{aligned}
 \]
 
 \section{Classical Probability and Counting}
+
+
+Probability theory begins with uncertainty, but it becomes mathematics only after the uncertain outcomes are organized into a sample space. In finite classical problems, this organization is often hidden because the sample space is small and symmetric. We count favorable outcomes, count all equally likely outcomes, and take a ratio. This is the earliest and most concrete form of probability.
+
+The limitation of the classical definition is equally important. It depends on a finite collection of equally likely outcomes. Many real probabilistic models do not have this form: a dart may land anywhere in a continuum, a lifetime may take any positive real value, and a stochastic process may produce an infinite path. The later measure-theoretic framework is designed to keep the successful parts of classical probability while removing this finite symmetry restriction.
 
 \subsection{Random Experiments and Sample Spaces}
 
@@ -20,6 +28,8 @@ A \textbf{random experiment} is a procedure whose outcome is uncertain before it
 \begin{definition}[Sample Space and Event]
 The \textbf{sample space}, denoted $\Omega$, is the set of all possible outcomes of a random experiment. An \textbf{event} is a subset of $\Omega$.
 \end{definition}
+
+\newpage
 
 \begin{example}
 If a fair coin is tossed once, then
@@ -56,6 +66,11 @@ The probability of rolling an even number is
 Classical probability is simple and useful, but it depends on two strong assumptions: the sample space must be finite, and all outcomes must be equally likely. Many real problems violate at least one of these assumptions.
 
 \subsection{Basic Counting Principles}
+
+
+Counting is not a separate topic from probability; it is the computational engine behind finite probability models. The multiplication principle counts ordered choices made in stages. Permutations count arrangements where order matters. Combinations count selections where order is ignored. Many probability errors come from mixing these cases.
+
+A useful habit is to describe explicitly what an outcome is before counting. Are we counting ordered tuples, unordered subsets, sequences with repetition, or sequences without repetition? Once the sample space is correctly specified, the probability calculation usually becomes straightforward.
 
 \begin{proposition}[Addition Principle]
 If a task can be completed in either one of $m$ ways or one of $n$ ways, and these two collections of ways do not overlap, then the task can be completed in $m+n$ ways.
@@ -98,6 +113,11 @@ The binomial coefficient $\binom{n}{k}$ appears because choosing which $k$ facto
 \end{remark}
 
 \section{Conditional Probability and Independence}
+
+
+Conditional probability changes the universe of discourse. When we condition on $B$, we restrict attention to the part of the sample space where $B$ has occurred and then renormalize probabilities inside that smaller universe. The formula $P(A\mid B)=P(A\cap B)/P(B)$ is therefore not just an algebraic rule; it is a rule for updating the reference population.
+
+Independence is often misunderstood as mutual exclusiveness. They are nearly opposite ideas. If two events are mutually exclusive and both have positive probability, the occurrence of one rules out the other, so they cannot be independent. Independence means that learning one event occurred does not change the probability of the other. In symbols, conditioning on $B$ leaves the probability of $A$ unchanged.
 
 \subsection{Conditional Probability}
 
@@ -200,6 +220,11 @@ Bayes' theorem converts a forward probability $\mathbb{P}(A\mid B)$ into an inve
 
 \section{Discrete Random Variables}
 
+
+A random variable is not a variable that is random in isolation; it is a function that assigns a numerical value to each outcome. This functional viewpoint is important because it separates the underlying randomness from the numerical quantity we choose to observe. The same experiment may produce many random variables: from a dice roll we may record the face value, its parity, or whether it exceeds four.
+
+Distributions allow us to forget irrelevant details of the sample space and focus on the probabilities of numerical values. Two different experiments can produce random variables with the same distribution. This is why probability theory often studies distributions directly: the distribution contains all information needed to compute probabilities and expectations involving that random variable alone.
+
 \subsection{Definition}
 
 \begin{definition}[Discrete Random Variable]
@@ -232,6 +257,11 @@ The \textbf{cumulative distribution function} (CDF) of a random variable $X$ is
 \end{definition}
 
 \subsection{Expectation and Variance in the Discrete Case}
+
+
+Expectation is best understood as a weighted average, not as the value one necessarily expects to see in a single trial. A die roll has expectation $3.5$, even though no face labeled $3.5$ exists. The expectation describes long-run average behavior under repeated independent trials and gives a linear summary of the distribution.
+
+Variance measures spread around the expectation. The use of squared deviation has two advantages: it prevents positive and negative deviations from canceling, and it interacts well with algebra. Standard deviation returns the scale to the original units, while variance is often easier to manipulate in proofs.
 
 \begin{definition}[Expectation]
 If $X$ is a discrete random variable, its \textbf{expectation} is
@@ -276,6 +306,11 @@ Linearity of expectation does not require independence. This is one of the most 
 \end{remark}
 
 \subsection{Common Discrete Distributions}
+
+
+The common discrete distributions are templates for recurring mechanisms. The Bernoulli distribution models one yes-or-no trial. The binomial distribution counts successes in a fixed number of independent Bernoulli trials. The geometric distribution records waiting time until the first success. The Poisson distribution often appears as an approximation for rare events occurring in a large number of opportunities.
+
+Remembering the mechanism is more reliable than memorizing formulas alone. Once the story is clear, the probability mass function usually follows from independence, counting, or limiting approximation. This also helps decide which distribution is appropriate in an applied problem.
 
 \begin{definition}[Bernoulli Distribution]
 A random variable $X$ has a \textbf{Bernoulli distribution} with parameter $p$, written $X\sim\operatorname{Bernoulli}(p)$, if
@@ -342,6 +377,11 @@ The Poisson distribution often appears as an approximation to rare-event counts.
 
 \section{Continuous Random Variables}
 
+
+For continuous random variables, probabilities are assigned to intervals rather than individual points. A density function is not itself a probability; it is probability per unit length. The probability of an interval is obtained by integrating the density over that interval. This is why a density may exceed $1$ at some points without contradiction, provided its total integral is $1$.
+
+The statement $P(X=a)=0$ for a continuous random variable does not mean the value $a$ is impossible in an informal physical sense. It means that single points carry no probability mass. Probability accumulates over sets with positive length, area, or more generally positive measure.
+
 \subsection{Density Functions}
 
 Classical finite probability cannot describe choosing a random point from an interval. If we choose uniformly from $[0,1]$, the probability of any single point should be $0$, yet the total probability of the interval should be $1$. This requires a new language.
@@ -379,6 +419,11 @@ provided the integral of $|x|f_X(x)$ is finite.
 \end{definition}
 
 \subsection{Common Continuous Distributions}
+
+
+The standard continuous distributions also encode common mechanisms. The uniform distribution represents constant density over an interval. The exponential distribution models memoryless waiting time. The normal distribution arises as the universal limit shape for sums of many small independent effects. The gamma and beta distributions extend these ideas to waiting-time and proportion models.
+
+In applications, choosing a distribution is a modeling decision. One asks which qualitative features are required: bounded support, symmetry, skewness, memorylessness, heavy tails, or additivity. The formula is then interpreted as a compact expression of those modeling assumptions.
 
 \begin{definition}[Uniform Distribution]
 A random variable $X$ has a \textbf{uniform distribution} on $[a,b]$, written $X\sim U[a,b]$, if
@@ -427,6 +472,11 @@ The normal distribution is central because sums of many small independent random
 \end{remark}
 
 \section{The Measure-Theoretic Foundation}
+
+
+The measure-theoretic foundation is introduced because probability needs a precise language for events in infinite spaces. In a finite sample space, every subset can be assigned a probability. In uncountable spaces, assigning probabilities consistently to all subsets is impossible in general. Sigma-algebras specify which subsets are legitimate events.
+
+A probability measure then assigns numbers to those events while respecting countable additivity. Countable additivity is the bridge between finite intuition and limiting processes. It allows probabilities of increasing unions, decreasing intersections, and infinite decompositions to be handled rigorously.
 
 \subsection{Why Classical Probability Is Not Enough}
 
@@ -519,6 +569,11 @@ Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space.
 
 \section{Random Variables as Measurable Functions}
 
+
+The definition of a random variable as a measurable function ensures that events of the form $\{X\in B\}$ are actually measurable events in the original probability space. Without this condition, the expression $P(X\in B)$ might not be well-defined. Thus measurability is the technical requirement that makes probability statements about $X$ legitimate.
+
+From this perspective, a distribution is the pushforward of the original probability measure through $X$. Instead of measuring subsets of the original outcome space directly, we measure their images on the real line by pulling them back through $X$. This is the conceptual link between abstract probability spaces and familiar probability distributions.
+
 \subsection{Measurability}
 
 In modern probability, a random variable is not fundamentally a variable. It is a measurable function from the sample space to a numerical space.
@@ -582,6 +637,11 @@ If $X$ is discrete, then
 \end{theorem}
 
 \section{Joint Distributions and Independence}
+
+
+Joint distributions describe several random variables at once. They contain not only the marginal behavior of each variable but also the dependence structure between them. Knowing the marginal distributions of $X$ and $Y$ separately is usually not enough to determine probabilities involving both variables, such as $P(X<Y)$ or $P(X+Y\leq 1)$.
+
+Independence of random variables is stronger than pairwise intuition about individual events. It requires that events determined by one variable do not affect events determined by the other. In the discrete case this appears as factorization of joint probabilities; in the continuous case it appears as factorization of joint densities, when densities exist.
 
 \subsection{Joint Distributions}
 
@@ -665,6 +725,11 @@ This follows from the Cauchy-Schwarz inequality applied to $X-\mathbb{E}[X]$ and
 
 \section{Conditional Expectation}
 
+
+Conditional expectation is the projection-like operation of probability theory. When conditioning on partial information, we replace a random variable by the best prediction that is measurable with respect to that information. The result is no longer necessarily a number; it may be another random variable depending on the information retained.
+
+This viewpoint is essential in stochastic processes and martingales. As information grows over time, conditional expectations describe how predictions evolve. Many advanced probability theorems are built around the idea that fair games are processes whose future conditional expectation equals their present value.
+
 \subsection{Conditioning on Events}
 
 For an event $B$ with $\mathbb{P}(B)>0$, conditional expectation is defined by
@@ -723,6 +788,11 @@ Conditional expectation is best understood as the best prediction of $X$ using o
 
 \section{Inequalities in Probability}
 
+
+Probability inequalities are tools for converting moment information into tail bounds. Often we cannot compute an exact probability, but we can bound it using expectation, variance, or higher moments. Markov's inequality uses only non-negativity and expectation; Chebyshev's inequality uses variance; sharper inequalities use stronger structural assumptions.
+
+These inequalities explain why moments matter. The expectation controls average size, while variance controls typical deviation from the mean. Even when a distribution is unknown, moment bounds can still guarantee that large deviations are rare in a quantitative sense.
+
 Inequalities are essential because probability theory often studies estimates rather than exact values.
 
 \begin{theorem}[Markov's Inequality]
@@ -747,14 +817,7 @@ If $X$ has finite mean $\mu$ and variance $\sigma^2$, then for every $\varepsilo
 \]
 \end{theorem}
 
-\begin{proof}
-Apply Markov's inequality to the non-negative random variable $(X-\mu)^2$:
-\[
-    \mathbb{P}(|X-\mu|\geq\varepsilon)
-    =\mathbb{P}((X-\mu)^2\geq\varepsilon^2)
-    \leq\frac{\mathbb{E}[(X-\mu)^2]}{\varepsilon^2}.
-\]
-\end{proof}
+\newpage
 
 \begin{theorem}[Jensen's Inequality]
 If $\varphi$ is convex and $X$ is integrable, then
@@ -772,6 +835,11 @@ If $X,Y\in L^2$, then
 \end{theorem}
 
 \section{Generating Functions and Characteristic Functions}
+
+
+Generating functions convert probability questions into algebraic questions about functions. Instead of working directly with a sequence of probabilities or moments, we package that sequence into a single function. Operations on random variables then often become operations on generating functions.
+
+Characteristic functions are especially important because they always exist and uniquely determine distributions. They turn sums of independent random variables into products, which is the same structural simplification provided by logarithms in multiplication problems. This is why characteristic functions are central in proofs of limit theorems.
 
 \subsection{Probability Generating Functions}
 
@@ -836,6 +904,11 @@ If $\varphi_X(t)=\varphi_Y(t)$ for every $t\in\mathbb{R}$, then $X$ and $Y$ have
 
 \section{Modes of Convergence}
 
+
+Different modes of convergence express different levels of probabilistic stability. Almost sure convergence follows individual outcomes except on a null set. Convergence in probability allows exceptional outcomes to occur but requires their probability to vanish. Convergence in distribution is weaker still: it only requires the distribution functions to converge at continuity points.
+
+The hierarchy matters because limit theorems often naturally produce one mode rather than another. The law of large numbers is usually a statement about convergence in probability or almost surely. The central limit theorem is a statement about convergence in distribution after centering and scaling. Confusing these modes can lead to incorrect conclusions about sample paths or numerical approximations.
+
 Probability theory has several notions of convergence. They are not interchangeable, because random variables carry both numerical and probabilistic structure.
 
 \begin{definition}[Almost Sure Convergence]
@@ -883,7 +956,6 @@ if
 for every continuity point $x$ of $F_X$.
 \end{definition}
 
-\newpage
 
 \begin{theorem}[Relations Between Convergence Modes]
 \[
@@ -910,6 +982,11 @@ Convergence in distribution is the weakest among the common modes above. It desc
 \end{remark}
 
 \section{Limit Theorems}
+
+
+The law of large numbers formalizes the stabilization of averages. Under suitable assumptions, repeated independent observations average out randomness and converge toward the expected value. This theorem explains why empirical frequencies and sample means are meaningful estimators in statistics.
+
+The central limit theorem describes the shape of fluctuations around that average. After subtracting the mean and scaling by the square root of the sample size, sums of many independent contributions often approach a normal distribution. The theorem is powerful because the limiting normal shape appears under broad conditions, even when the original variables are not normally distributed.
 
 \subsection{Law of Large Numbers}
 
@@ -994,6 +1071,11 @@ The Law of Large Numbers describes the first-order behavior of sums: averages ap
 
 \section{Borel-Cantelli Lemmas}
 
+
+The Borel-Cantelli lemmas answer a repeated-event question: if events $A_1,A_2,\dots$ occur over time, what can be said about the probability that infinitely many of them occur? The sum $\sum P(A_n)$ measures the total expected frequency of occurrence. If this sum is finite, infinitely many occurrences are impossible with probability one.
+
+With independence, the converse direction becomes available: if the total probability mass diverges, then infinitely many of the independent events occur almost surely. These lemmas are powerful because they transform an infinite qualitative statement into a summability condition.
+
 The Borel-Cantelli lemmas describe whether events happen infinitely often.
 
 \begin{definition}[Limit Superior of Events]
@@ -1039,6 +1121,11 @@ then
 \end{theorem}
 
 \section{Introduction to Stochastic Processes}
+
+
+A stochastic process is a family of random variables indexed by time or another parameter. Instead of modeling one uncertain quantity, we model an evolving random system. Examples include random walks, stock prices, queues, branching populations, Brownian motion, and Markov chains.
+
+The main new feature is dependence across time. One must describe not only the distribution at each time but also how values at different times are related. This is why filtrations, transition probabilities, covariance functions, and sample paths become central objects in the study of stochastic processes.
 
 A stochastic process is a family of random variables indexed by time or space.
 

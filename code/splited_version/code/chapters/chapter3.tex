@@ -138,7 +138,8 @@ and the augmented matrix
     \item \textbf{Square Matrix:} A matrix is \textbf{square} if its number of rows equals its number of columns ($m=n$).
     \item \textbf{Equality:} Two matrices $A = [a_{ij}]$ and $B = [b_{ij}]$ are \textbf{equal} if and only if they have the same size ($m \times n$) and all their corresponding entries are equal ($a_{ij} = b_{ij}$ for all $i, j$).
     \item \textbf{Principal Diagonal:} In a square matrix, the entries $a_{11}, a_{22}, \ldots, a_{nn}$ form the \textbf{principal diagonal} (or main diagonal).
-    \item \textbf{Auxiliary Diagonal:} In a square matrix, the diagonal from the upper right to the lower left ($a_{1n}, a_{2,n-1}, \ldots, a_{n1}$) is the \textbf{auxiliary diagonal}.
+    \item \textbf{Auxiliary Diagonal:} In a square matrix, the diagonal from the upper right to the lower left:
+    $$a_{1n}, a_{2,n-1}, \ldots, a_{n1}$$ is the \textbf{auxiliary diagonal}.
 \end{itemize}
 
 There are several special types of matrices:
@@ -900,6 +901,8 @@ If $A$ is a triangular matrix (upper or lower), its determinant is the product o
 Expand cofactors along the first row (if lower triangular) or first column (if upper triangular) repeatedly.
 \end{proof}
 
+\newpage
+
 \begin{example}[Calculating $\det$ with EROs]
 \[ A = \begin{pmatrix} 0 & 1 & 5 \\ 3 & -6 & 9 \\ 2 & 6 & 1 \end{pmatrix} \]
 \[ \det(A) = - \begin{vmatrix} 3 & -6 & 9 \\ 0 & 1 & 5 \\ 2 & 6 & 1 \end{vmatrix} \quad (R_1 \leftrightarrow R_2) \]
@@ -967,8 +970,6 @@ Adjoint Matrix $\operatorname{adj}(A) = C^T = \begin{pmatrix} d & -b \\ -c & a \
 $A^{-1} = \frac{1}{ad-bc} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$.
 \end{remark}
 
-\newpage
-
 \subsection{The Invertible Matrix Theorem (IMT)}
 This is one of the most important theorems in linear algebra. It links all the major concepts we have seen so far for a \textbf{square} $n \times n$ matrix $A$.
 
@@ -977,7 +978,6 @@ Let $A$ be a square $n \times n$ matrix. The following statements are equivalent
 \begin{enumerate}
     \item $A$ is an invertible matrix.
     \item $A$ is row equivalent to the identity matrix $I_n$.
-    \item $A$ has $n$ pivot positions.
     \item The equation $A\mathbf{x} = \mathbf{0}$ has only the trivial solution ($\mathbf{x} = \mathbf{0}$).
     \item The columns of $A$ form a linearly independent set.
     \item The linear transformation $T(\mathbf{x}) = A\mathbf{x}$ is one-to-one.
@@ -986,7 +986,6 @@ Let $A$ be a square $n \times n$ matrix. The following statements are equivalent
     \item The linear transformation $T(\mathbf{x}) = A\mathbf{x}$ maps $\mathbb{R}^n$ \emph{onto} $\mathbb{R}^n$.
     \item There is an $n \times n$ matrix $C$ such that $CA = I_n$.
     \item There is an $n \times n$ matrix $D$ such that $AD = I_n$.
-    \item $A^T$ is an invertible matrix.
     \item $\det(A) \neq 0$.
     \item $\operatorname{rank}(A) = n$.
     \item $\operatorname{Nul}(A) = \{\mathbf{0}\}$ (The null space is the zero vector).
@@ -1218,7 +1217,8 @@ The set is \textbf{linearly dependent}.
 \end{property}
 \begin{proof}[Proof of $p > n$ implies dependent]
 Let the set be $\{\mathbf{v}_1, \ldots, \mathbf{v}_p\}$ in $\mathbb{R}^n$.
-Form the $n \times p$ matrix $A = \begin{pmatrix} \mathbf{v}_1 & \cdots & \mathbf{v}_p \end{pmatrix}$.
+Form the $n \times p$ matrix 
+$$A = \begin{pmatrix} \mathbf{v}_1 & \cdots & \mathbf{v}_p \end{pmatrix}$$
 We want to solve $A\mathbf{x} = \mathbf{0}$.
 This is a homogeneous system with $n$ equations and $p$ variables.
 Since $p > n$ (more variables than equations), there must be at least $p - n > 0$ free variables.
@@ -1278,9 +1278,6 @@ Every matrix transformation $T(\mathbf{x}) = A\mathbf{x}$ is a linear transforma
 \end{theorem}
 The more powerful fact is that the reverse is also true.
 
-\newpage
-
-\subsection{The Standard Matrix}
 \begin{theorem}
 Let $T: \mathbb{R}^n \to \mathbb{R}^m$ be a linear transformation. Then there exists a \textbf{unique} $m \times n$ matrix $A$ such that
 \[ T(\mathbf{x}) = A\mathbf{x} \quad \text{for all } \mathbf{x} \in \mathbb{R}^n \]
@@ -1466,8 +1463,6 @@ All bases for a vector space $V$ have the same number of vectors.
 The \textbf{dimension} of a non-zero vector space $V$, denoted $\dim(V)$, is the number of vectors in any basis for $V$. The dimension of the zero subspace $\{\mathbf{0}\}$ is defined to be 0.
 \end{definition}
 
-\newpage
-
 \textbf{Examples of Dimension:}
 \begin{itemize}
     \item $\dim(\mathbb{R}^n) = n$.
@@ -1592,25 +1587,10 @@ For an eigenvalue $\lambda$, the corresponding \textbf{eigenspace} is the soluti
 \end{definition}
 
 \begin{example}
-Find the eigenvalues and eigenvectors of $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$.
-
-The characteristic polynomial is:
-\[
-p(\lambda) = \det \begin{pmatrix} 2-\lambda & 1 \\ 1 & 2-\lambda \end{pmatrix} = (2-\lambda)^2 - 1 = \lambda^2 - 4\lambda + 3 = (\lambda-1)(\lambda-3)
-\]
-The eigenvalues are $\lambda_1 = 1$ and $\lambda_2 = 3$.
-
-For $\lambda_1 = 1$, solve $(A - I)\mathbf{v} = \mathbf{0}$:
-\[
-\begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies v_1 + v_2 = 0
-\]
-Thus the eigenvectors are $\mathbf{v}_1 = t \begin{pmatrix} 1 \\ -1 \end{pmatrix}$, $t \neq 0$.
-
-For $\lambda_2 = 3$, solve $(A - 3I)\mathbf{v} = \mathbf{0}$:
-\[
-\begin{pmatrix} -1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} v_1 \\ v_2 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \implies -v_1 + v_2 = 0
-\]
-Thus the eigenvectors are $\mathbf{v}_2 = s \begin{pmatrix} 1 \\ 1 \end{pmatrix}$, $s \neq 0$.
+For $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$, the characteristic polynomial is $p(\lambda) = (\lambda-1)(\lambda-3) = 0$. 
+The eigenvalues are $\lambda_1=1, \lambda_2=3$. 
+Solving $(A - \lambda I)\mathbf{v} = \mathbf{0}$ yields the corresponding eigenvectors: 
+$\mathbf{v}_1 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}$ for $\lambda_1=1$, and $\mathbf{v}_2 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ for $\lambda_2=3$.
 \end{example}
 
 \subsection{Diagonalization}
@@ -1743,7 +1723,6 @@ Quadratic forms are classified based on the signs of their eigenvalues:
 
 This classification has important applications in optimization and the study of critical points in multivariable calculus.
 
-\newpage
 
 \subsection{Singular Value Decomposition (SVD)}
 The Diagonalization Theorem ($A = PDP^{-1}$) applies only to square, diagonalizable matrices. The Spectral Theorem applies only to symmetric matrices. The SVD is the ultimate generalization: it applies to \textbf{any} $m \times n$ matrix.

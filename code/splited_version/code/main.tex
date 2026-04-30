@@ -21,6 +21,7 @@
 \geometry{margin=1in}
 \usepackage[most]{tcolorbox}
 \usepackage{xparse}
+\usepackage{microtype}
 
 % Code Listings Configuration
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -157,9 +158,8 @@
 }
 
 % Environment Mappings
-\ProvideDocumentEnvironment{definition}{o}
-  {\IfValueTF{#1}{\begin{mydef}{#1}{}}{\begin{mydef}{}{}}}
-  {\end{mydef}}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 
 \ProvideDocumentEnvironment{theorem}{o}
   {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
@@ -197,6 +197,7 @@
 
 \begin{document}
 
+\setlength{\hfuzz}{4pt}
 \begin{titlepage}
 \newgeometry{margin=0pt}
 \thispagestyle{empty}
