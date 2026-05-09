@@ -45,6 +45,8 @@ Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{uppe
 A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
 \end{theorem}
 
+This theorem is really obvious: if the sequence converges, then all its subsequences converge to the same limit, so the set of limit points is just $\{L\}$, and both $\limsup$ and $\liminf$ equal $L$. Conversely, if $\limsup$ and $\liminf$ coincide at $L$, then all limit points are $L$, which means every subsequence has a further subsequence converging to $L$, forcing the whole sequence to converge to $L$.
+
 \begin{property}
 For any two sequences $\{x_n\}$ and $\{y_n\}$:
 \begin{enumerate}
@@ -69,13 +71,9 @@ The series $\sum a_n$ converges if and only if for every $\epsilon > 0$, there e
 \begin{theorem}[Necessary Condition for Convergence]
 If the series $\sum_{n=1}^{\infty} a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
 \end{theorem}
-\begin{remark}
-The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
-\end{remark}
 
-\begin{example}[Geometric Series]
-The series $\sum_{n=0}^{\infty} ar^n$ converges if and only if $|r| < 1$. In that case, the sum is $\frac{a}{1-r}$.
-\end{example}
+The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
+
 
 \begin{property}[Linearity]
 If $\sum a_n = A$ and $\sum b_n = B$, then for any constants $\alpha, \beta$:
@@ -203,6 +201,14 @@ Let $\sum a_n$ be a positive series and let
     \item If $\rho = 1$, the test is \textbf{inconclusive} (e.g., $1/n$ diverges but $1/n^2$ converges, both have $\rho=1$).
 \end{itemize}
 \end{theorem}
+
+The proof of this theorem relies on:
+
+\[
+\liminf_{n \to \infty} \frac{x_{n+1}}{x_n} \leq \liminf_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \frac{x_{n+1}}{x_n}
+\]
+
+\newpage
 
 \begin{theorem}[Cauchy's Root Test]
 Let $\sum a_n$ be a positive series and let
@@ -535,7 +541,6 @@ Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$.
 
 Uniform convergence allows us to interchange the order of limit operations, which is rigorous justification for "term-by-term" calculus. In short: \textbf{The operation on the infinite sum equals the infinite sum of the operations.}
 
-\newpage
 \begin{theorem}[Continuity]
 If a sequence of continuous functions $\{f_n\}$ converges uniformly to $f$ on an interval $E$, then the limit function $f$ is continuous on $E$.
 Consequently, for a series of continuous functions $\sum u_n(x)$, if the series converges uniformly to $S(x)$, then $S(x)$ is continuous:
@@ -635,7 +640,6 @@ For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\l
 
 We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
 
-\newpage
 
 \begin{theorem}[Taylor Series]
 If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n (x-x_0)^n$ with a non-zero radius of convergence $R$, then by repeatedly differentiating and evaluating at $x=x_0$, we find that the coefficients are uniquely determined as:
