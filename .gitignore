@@ -1,0 +1,79 @@
+# ====================
+# Core LaTeX Files
+# ====================
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.dvi
+*.xdv
+*-converted-to.*
+
+# ====================
+# Build Tools & Scripts
+# ====================
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+# Uncomment if you use arara:
+# *.yaml
+
+# ====================
+# Bibliography
+# ====================
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+# ====================
+# Packages (e.g., glossaries, beamer, etc.)
+# ====================
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
+*.lol
+*.loe
+*.lzo
+*.lzs
+*.nav
+*.nlo
+*.nls
+*.out.ps
+*.snm
+*.vrb
+*.mw
+*.upa
+*.upb
+_minted*
+
+# ====================
+# The Final PDF (modify the name if yours is different)
+# ====================
+main.pdf
+
+# ====================
+# Editor and OS Files
+# ====================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
