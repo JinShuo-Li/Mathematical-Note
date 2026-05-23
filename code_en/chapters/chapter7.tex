@@ -1,0 +1,137 @@
+\chapter{Complex Analysis}
+
+\emph{Complex Analysis is one of the most elegant branches of mathematics. While the functions it studies may appear similar to those in real analysis, they exhibit fundamentally different characteristics. In real analysis, the differentiability of a function is often merely a local smoothness property; however, in complex analysis, the complex differentiability (i.e., holomorphicity) of a function in a neighborhood of a point implies powerful global constraints.}
+
+\emph{Compared to real analysis, complex analysis possesses many remarkable strong properties. For instance, every holomorphic function is necessarily analytic, meaning that as long as it is differentiable at a point, it has derivatives of all orders and can be expanded into a power series. Furthermore, profound results such as Cauchy's Theorem, the Residue Theorem, and the Maximum Modulus Principle reveal the intimate connections between boundary values and interior values, as well as between local and global behavior of complex functions. This chapter will lead the reader from the basic geometric meaning of complex numbers into this field of harmony and symmetry.}
+
+\section{Historical Context and Representations of Complex Numbers}
+
+The story of complex numbers is one of the most fascinating chapters in the history of mathematics, illustrating how a conceptual "impossibility" can transform into a foundational pillar of modern science. This section explores the historical evolution of these numbers and the various ways we represent them today.
+
+\subsection{Historical Context: From "Imaginary" to Essential}
+
+For centuries, mathematicians viewed the square roots of negative numbers with deep suspicion, often dismissing them as "useless" or "impossible." The journey began in the 16th century during the quest to solve cubic and quartic equations.
+
+\textbf{The Italian Connection:} Girolamo Cardano, in his 1545 work \textit{Ars Magna}, encountered "manifestly impossible" solutions involving square roots of negative numbers while solving cubics. Although he found the calculations useful, he famously referred to them as "mental torture." It was Rafael Bombelli who, a few decades later, first formulated the rules for "adding and multiplying the imaginary," demonstrating that these entities could lead to real solutions for real equations.
+
+\textbf{The Philosophical Shift:} René Descartes coined the term "imaginary" in 1637 as a derogatory label, intending to mock the lack of geometric significance of such roots. However, the 18th century brought a shift in perspective. Leonhard Euler introduced the symbol $i$ for $\sqrt{-1}$ and explored its connections to the exponential and trigonometric functions, laying the groundwork for what we now call Complex Analysis.
+
+\textbf{Rigorous Foundation:} The final acceptance of complex numbers came in the early 19th century. Carl Friedrich Gauss and Jean-Robert Argand independently proposed the geometric interpretation of complex numbers as points in a two-dimensional plane. This "Argand plane" provided the visual and conceptual clarity needed to strip away the "imaginary" stigma, proving that complex numbers are just as "real" as the numbers we use for counting.
+
+\subsection{Representation: The Algebra of the Plane}
+
+A complex number $z$ is formally defined as an ordered pair of real numbers $(x, y)$, typically written in \textbf{rectangular form}:
+\begin{equation}
+    z = x + iy
+\end{equation}
+where $x = \text{Re}(z)$ is the real part, $y = \text{Im}(z)$ is the imaginary part, and $i$ satisfies $i^2 = -1$.
+
+\subsubsection{Geometric Interpretation}
+
+Geometrically, we visualize the set of complex numbers $\mathbb{C}$ as a 2D plane:
+\begin{itemize}
+    \item The \textbf{Real Axis} (horizontal) represents the real part $x$.
+    \item The \textbf{Imaginary Axis} (vertical) represents the imaginary part $y$.
+\end{itemize}
+Addition of complex numbers follows the parallelogram law of vector addition, while multiplication involves a sophisticated combination of scaling and rotation.
+
+Another powerful representation is the \textbf{polar form}, where a complex number is expressed in terms of its magnitude (modulus) and angle (argument):
+\begin{equation}
+    z = r(\cos \theta + i \sin \theta)
+\end{equation}
+where $r = |z|$ is the distance from the origin to the point $(x, y)$, and $\theta = \arg(z)$ is the angle formed with the positive real axis.
+
+Apart from these traditional forms, we can also use \textbf{Riemann Sphere} representation, which maps the complex plane onto a sphere, providing a compactification that allows us to include the point at infinity. How can we define the point at infinity? By using the concept of stereographic projection, we can project points from the complex plane onto a sphere. The north pole of the sphere corresponds to the point at infinity in the complex plane, while the south pole corresponds to the origin. This representation is particularly useful in understanding the behavior of complex functions at infinity and in visualizing conformal mappings. Anyway, the method is through the stereographic projection, which maps points from the complex plane onto a sphere. The north pole of the sphere corresponds to the point at infinity in the complex plane, while the south pole corresponds to the origin. This representation is particularly useful in understanding the behavior of complex functions at infinity and in visualizing conformal mappings.
+
+
+
+\subsection{Euler's Formula and the Exponential Form}
+
+The most elegant representation of complex numbers arises from the deep connection between rotation and the exponential function.
+
+\textbf{Euler's Formula:} For any real number $\theta$, Euler's formula states:
+\begin{equation}
+    e^{i\theta} = \cos \theta + i\sin \theta
+\end{equation}
+
+\subsubsection{Geometric Interpretation}
+
+Geometrically, Euler's formula provides a bridge between the unit circle and the complex exponential. In the complex plane, $e^{i\theta}$ represents a point on the unit circle at an angle $\theta$ (in radians) measured counter-clockwise from the positive real axis. 
+\begin{itemize}
+    \item As $\theta$ increases, the point $e^{i\theta}$ moves along the circumference of the unit circle.
+    \item Multiplying a complex number $z$ by $e^{i\phi}$ corresponds to a counter-clockwise rotation of $z$ by the angle $\phi$ around the origin, without changing its magnitude.
+\end{itemize}
+This interpretation reveals that the "imaginary" exponent $i\theta$ acts as a rotational operator, fundamentally different from real exponents which represent growth or decay.
+
+\subsubsection{A Sketch of Proof via Taylor Series}
+
+The most intuitive proof of Euler's formula utilizes the Taylor series expansions of $e^x, \cos x,$ and $\sin x$ about the origin. Recall the following power series definitions for real $x$:
+\begin{align}
+    e^{x} &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots \\
+    \cos x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots \\
+    \sin x &= \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots
+\end{align}
+Assuming these series converge for complex values, we substitute $ix$ into the exponential series:
+\begin{equation}
+    e^{ix} = 1 + (ix) + \frac{(ix)^2}{2!} + \frac{(ix)^3}{3!} + \frac{(ix)^4}{4!} + \frac{(ix)^5}{5!} + \dots
+\end{equation}
+Using the property that powers of $i$ cycle through $\{i, -1, -i, 1\}$, we group the terms:
+\begin{align}
+    e^{ix} &= \left( 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots \right) + i \left( x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots \right) \\
+    e^{ix} &= \cos x + i \sin x
+\end{align}
+This algebraic manipulation confirms that the complex exponential is the natural extension of real calculus into the complex realm.
+
+\subsection{Representations: Polar and Exponential Forms}
+
+The formula allows us to express complex numbers in \textbf{polar form}:
+\begin{equation}
+    z = r(\cos \theta + i \sin \theta) = re^{i\theta}
+\end{equation}
+where:
+\begin{itemize}
+    \item $r = |z| = \sqrt{x^2 + y^2}$ is the \textbf{modulus} (magnitude or absolute value).
+    \item $\theta = \arg(z)$ is the \textbf{argument} (the angle from the positive real axis).
+\end{itemize}
+
+\subsubsection{The Power of the Exponential Form}
+
+The exponential form $re^{i\theta}$ is exceptionally powerful for multiplicative operations. Consider two complex numbers $z_1 = r_1 e^{i\theta_1}$ and $z_2 = r_2 e^{i\theta_2}$:
+\begin{itemize}
+    \item \textbf{Multiplication:} $z_1 z_2 = r_1 r_2 e^{i(\theta_1 + \theta_2)}$. The magnitudes multiply, and the angles add.
+    \item \textbf{Division:} $\frac{z_1}{z_2} = \frac{r_1}{r_2} e^{i(\theta_1 - \theta_2)}$.
+    \item \textbf{De Moivre's Formula:} For any integer $n$, $(re^{i\theta})^n = r^n e^{in\theta}$.
+\end{itemize}
+
+\subsection{The Beauty of Euler's Identity}
+
+A special case of Euler's formula occurs when $\theta = \pi$:
+\begin{equation}
+    e^{i\pi} = \cos \pi + i\sin \pi = -1 + 0i
+\end{equation}
+Rearranging gives the celebrated \textbf{Euler's Identity}:
+\begin{equation}
+    e^{i\pi} + 1 = 0
+\end{equation}
+This single equation elegantly links five fundamental mathematical constants:
+\begin{enumerate}
+    \item \textbf{$0$}: The additive identity.
+    \item \textbf{$1$}: The multiplicative identity.
+    \item \textbf{$e$}: The base of natural logarithms.
+    \item \textbf{$i$}: The imaginary unit.
+    \item \textbf{$\pi$}: The ratio of a circle's circumference to its diameter.
+\end{enumerate}
+The movement from the algebraic definition to this geometric and transcendental harmony sets the stage for the rest of complex analysis.
+
+\section{Complex Functions}
+
+In intuitive way, a complex function is a rule that assigns a complex number to each complex number in its domain. Formally, a function $f: \mathbb{C} \to \mathbb{C}$ maps an input $z = x + iy$ to an output $w = u + iv$, where $u$ and $v$ are real-valued functions of the real variables $x$ and $y$. We can express this as:
+\begin{equation}
+    f(z) = f(x + iy) = u(x, y) + iv(x, y)
+\end{equation}
+Here, $u(x, y)$ is called the \textbf{real part} of $f$, and $v(x, y)$ is the \textbf{imaginary part} of $f$. The behavior of complex functions can be remarkably different from their real counterparts, especially when it comes to differentiability and analyticity, which we will explore in the following sections.
+
+So how can we visualize complex functions? Unlike real functions, which can be easily graphed on a two-dimensional plane, complex functions require a four-dimensional representation (two dimensions for the input and two for the output). However, we can use various techniques to visualize them. One common method is to draw the functions in manner of a vector field, where each point in the complex plane is represented by an arrow indicating the direction and magnitude of the function's output at that point. Another approach is to draw the modulus and argument of the function separately, using color and contour lines to represent the magnitude and phase of the function across the complex plane. These visualizations can provide insights into the behavior of complex functions, such as identifying zeros, poles, and essential singularities.
+
+\subsection{Analytic Function}
+

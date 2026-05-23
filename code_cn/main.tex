@@ -1,0 +1,307 @@
+\documentclass[UTF8,oneside,fontset=none]{ctexbook}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage[unicode,bookmarks=false]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc, decorations.pathreplacing, positioning}
+\usepackage{microtype}
+\usepackage[most]{tcolorbox}
+\usepackage{xparse}
+\allowdisplaybreaks
+
+% CJK font settings with fallbacks.
+% This avoids hard failure when a specific Noto/Source Han font is not installed.
+% Compile with XeLaTeX.
+\IfFontExistsTF{Source Han Serif SC}{
+  \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Source Han Serif SC}
+  \setCJKmonofont{Source Han Serif SC}
+}{
+  \IfFontExistsTF{SimSun}{
+    \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}
+    \setCJKmonofont{SimSun}
+  }{
+    \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolSong-Regular}
+    \setCJKmonofont{FandolSong-Regular}
+  }
+}
+
+\IfFontExistsTF{Source Han Sans SC}{
+  \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Source Han Sans SC}
+}{
+  \IfFontExistsTF{SimHei}{
+    \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}
+  }{
+    \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolHei-Regular}
+  }
+}
+
+% Latin font fallbacks for XeLaTeX when fontset=none.
+\IfFontExistsTF{TeX Gyre Termes}{
+  \setmainfont{TeX Gyre Termes}
+}{
+  \IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+  }{
+    \setmainfont{Latin Modern Roman}
+  }
+}
+
+\IfFontExistsTF{TeX Gyre Heros}{
+  \setsansfont{TeX Gyre Heros}
+}{
+  \IfFontExistsTF{Arial}{
+    \setsansfont{Arial}
+  }{
+    \setsansfont{Latin Modern Sans}
+  }
+}
+
+\IfFontExistsTF{Latin Modern Mono}{
+  \setmonofont{Latin Modern Mono}
+}{
+  \IfFontExistsTF{Consolas}{
+    \setmonofont{Consolas}
+  }{
+    \setmonofont{Courier New}
+  }
+}
+
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arctanh}{arctanh}
+
+% Colorful Environments for Theorems, Definitions, etc.
+\newtcbtheorem[number within=section]{mydef}{定义}{
+        enhanced,
+        breakable,
+        colback=blue!5!white,
+        colframe=blue!75!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=blue!75!black, colframe=blue!75!black}
+}{def}
+
+\newtcbtheorem[number within=section]{mythm}{定理}{
+        enhanced,
+        breakable,
+        colback=red!5!white,
+        colframe=red!75!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=red!75!black, colframe=red!75!black}
+}{thm}
+
+\newtcbtheorem[number within=section]{myproposition}{命题}{
+        enhanced,
+        breakable,
+        colback=orange!5!white,
+        colframe=orange!80!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=orange!80!black, colframe=orange!80!black}
+}{prp}
+
+\newtcbtheorem[number within=section]{myprop}{性质}{
+        enhanced,
+        breakable,
+        colback=green!5!white,
+        colframe=green!60!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=green!60!black, colframe=green!60!black}
+}{prop}
+
+\newtcbtheorem[number within=section]{mycor}{推论}{
+        enhanced,
+        breakable,
+        colback=violet!5!white,
+        colframe=violet!75!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=violet!75!black, colframe=violet!75!black}
+}{cor}
+
+\newtcbtheorem[number within=section]{myex}{例}{
+        enhanced,
+        breakable,
+        colback=teal!5!white,
+        colframe=teal!75!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=teal!75!black, colframe=teal!75!black}
+}{ex}
+
+\newtcbtheorem[number within=section]{myrem}{注记}{
+        enhanced,
+        breakable,
+        colback=gray!5!white,
+        colframe=gray!75!black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        fonttitle=\bfseries,
+        boxed title style={colback=gray!75!black, colframe=gray!75!black}
+}{rem}
+
+\newtcolorbox{mynote}{
+        enhanced,
+        breakable,
+        colback=yellow!10!white,
+        colframe=orange!85!black,
+        title={\textbf{注}},
+        coltitle=black,
+        attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
+        boxed title style={colback=orange!50!yellow, colframe=orange!85!black},
+        sharp corners=south,
+}
+
+% Environment Mappings
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+
+\ProvideDocumentEnvironment{theorem}{o}
+    {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+    {\end{mythm}}
+
+\ProvideDocumentEnvironment{proposition}{o}
+    {\IfValueTF{#1}{\begin{myproposition}{#1}{}}{\begin{myproposition}{}{}}}
+    {\end{myproposition}}
+
+\ProvideDocumentEnvironment{property}{o}
+    {\IfValueTF{#1}{\begin{myprop}{#1}{}}{\begin{myprop}{}{}}}
+    {\end{myprop}}
+
+\ProvideDocumentEnvironment{corollary}{o}
+    {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+    {\end{mycor}}
+
+\ProvideDocumentEnvironment{inference}{o}
+    {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+    {\end{mycor}}
+
+\ProvideDocumentEnvironment{example}{o}
+    {\IfValueTF{#1}{\begin{myex}{#1}{}}{\begin{myex}{}{}}}
+    {\end{myex}}
+
+\ProvideDocumentEnvironment{remark}{o}
+    {\IfValueTF{#1}{\begin{myrem}{#1}{}}{\begin{myrem}{}{}}}
+    {\end{myrem}}
+
+\ProvideDocumentEnvironment{note}{}{\begin{mynote}}{\end{mynote}}
+
+\ProvideDocumentEnvironment{lemma}{o}
+    {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+    {\end{mythm}}
+
+\newcommand{\prefacechapter}{%
+  \cleardoublepage
+  \chapter*{序言}
+  \addcontentsline{toc}{chapter}{序言}
+}
+
+\newcommand{\chapterzero}{%
+  \cleardoublepage
+  \chapter*{第 0 章：基础知识与记号}
+  \addcontentsline{toc}{chapter}{第 0 章：基础知识与记号}
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{0.\arabic{section}}
+}
+
+\begin{document}
+
+
+\begin{titlepage}
+\newgeometry{margin=0pt}
+\thispagestyle{empty}
+
+\definecolor{covercream}{RGB}{239,226,205}
+\definecolor{covermuted}{RGB}{205,211,220}
+\definecolor{covernight}{RGB}{9,22,39}
+\definecolor{covergold}{RGB}{232,196,143}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Full-bleed cover image. The image is the new photo supplied by the user.
+    \node[inner sep=0pt] at (current page.center)
+        {\includegraphics[width=\paperwidth,height=\paperheight]{assets/cover_sky.jpg}};
+
+    % Quiet editorial overlays: keep the sky visible but give the type enough contrast.
+    \fill[covernight, opacity=0.50] (current page.south west) rectangle (current page.north east);
+
+    % Main Chinese title: serif-first, restrained, with generous negative space.
+    \node[anchor=north west, inner sep=0pt, text=covercream]
+        at ($(current page.north west)+(0.82in,-1.35in)$) {%
+        \begin{minipage}{0.72\paperwidth}
+            {\rmfamily\fontsize{34}{46}\selectfont\bfseries 数学与公理化}\par
+            \vspace{0.33in}
+            {\color{covercream!74}\rule{0.46\paperwidth}{0.45pt}}\par
+            \vspace{0.20in}
+            {\rmfamily\fontsize{14.5}{24}\selectfont\color{covercream!95} 数\quad 学\quad 笔\quad 记}\par
+            \vspace{0.06in}
+            {\rmfamily\fontsize{7.3}{12}\selectfont\color{covermuted!88}
+            M\,A\,T\,H\,E\,M\,A\,T\,I\,C\,S\quad N\,O\,T\,E\,S}\par
+        \end{minipage}
+    };
+
+    % Author block.
+    \draw[covercream!72, line width=0.7pt]
+        ($(current page.south west)+(0.83in,1.02in)$) -- ++(0,0.56in);
+    \node[anchor=south west, align=left, text=covercream!94, inner sep=0pt]
+        at ($(current page.south west)+(1.02in,0.86in)$)
+        {\rmfamily\fontsize{13.5}{21}\selectfont\bfseries 李谨硕\\[0.13in]
+        \rmfamily\fontsize{9.6}{15}\selectfont\color{covermuted!93}上海交通大学\\[0.08in]
+        \rmfamily\fontsize{8.8}{14}\selectfont\color{covercream!86}2026.5.23，于上海};
+
+    % Bottom motto in Chinese to make the cover feel native rather than translated.
+    \node[anchor=south, text=covercream!62, inner sep=0pt]
+        at ($(current page.south)+(0,0.52in)$)
+        {\rmfamily\fontsize{7.8}{13}\selectfont 探\,索\quad ·\quad 思\,考\quad ·\quad 理\,解};
+\end{tikzpicture}
+\end{titlepage}
+\restoregeometry
+\thispagestyle{empty}
+
+\cleardoublepage
+\pagenumbering{gobble}
+\tableofcontents
+\thispagestyle{empty}
+
+\input{chapters/perface.tex}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/chapter0_cn.tex}
+
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\input{chapters/chapter1_cn.tex}
+
+\input{chapters/chapter2_cn.tex}
+
+\input{chapters/chapter3_cn.tex}
+
+\input{chapters/chapter4_cn.tex}
+
+\input{chapters/chapter5_cn.tex}
+
+\input{chapters/chapter6_cn.tex}
+
+\input{chapters/chapter7_cn.tex}
+
+\input{chapters/chapter8_cn.tex}
+
+\input{chapters/chapter9_cn.tex}
+
+\end{document}

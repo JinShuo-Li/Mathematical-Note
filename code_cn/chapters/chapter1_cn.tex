@@ -1,0 +1,657 @@
+% chapter1_cn.tex
+% 第 1 章中文译稿。
+\chapter{一切分支的公理}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+
+在现代数学中，是否存在某一个单一的公理系统，可以称为“所有数学分支的公理”？这是一个相当微妙的问题，因为不同领域的研究者对此会给出不同答案。不过，如果取多数答案的交集，我们大概只会在这个集合中发现一个元素：集合论。
+
+\section{朴素集合论}
+
+实际上，如果你是工程类或应用数学方向的学生，学习朴素集合论通常已经足够覆盖学习和工作中需要的大部分数学内容。不过需要知道，朴素集合论本质上是一种直观定义，它并不是现代公理化集合论的一部分。虽然朴素集合论对于“集合”这个概念给出了非常清楚且实用的描述，但仍然必须说明，朴素集合论是不完备的，因为它本身无法解决 Russell 悖论。后文会向读者介绍这个引发第三次数学危机的悖论。
+
+\begin{definition}[集合]
+\textbf{集合}是由互不相同的对象组成的无序汇集，这些对象称为集合的\textbf{元素}或\textbf{成员}。我们说一个集合\emph{包含}它的元素。记号 $a \in A$ 表示 $a$ 是集合 $A$ 的一个元素；记号 $a \notin A$ 表示 $a$ 不是该集合的元素。
+\end{definition}
+
+集合的概念相当简单。集合可以作为任何对象的容器，比如数字、点、其他集合，甚至一个苹果也可以被看作集合。唯一的要求是，集合中的元素必须互不相同。例如，集合 $\{1,2,2,3\}$ 实际上等于集合 $\{1,2,3\}$，因为元素 $2$ 被重复写出了。
+
+\begin{note}
+一个对象只能处于两种状态之一：要么“属于 $A$”，要么“不属于 $A$”。它不能同时处于这两种状态，也不能两种状态都不处于。
+\end{note}
+
+\begin{definition}[子集]
+如果集合 $A$ 的每一个元素都是集合 $B$ 的元素，那么称 $A$ 是 $B$ 的\textbf{子集}，记作 $A \subseteq B$。此外，如果 $A \subseteq B$ 且 $A \ne B$，那么称 $A$ 是 $B$ 的\textbf{真子集}，记作 $A \subset B$。
+\end{definition}
+
+子集的概念也很直观。如果集合 $A$ 中的所有元素都能在集合 $B$ 中找到，那么 $A$ 就是 $B$ 的子集。例如，$\{1,2\}\subseteq \{1,2,3\}$，并且 $\{1,2\}\subset \{1,2,3\}$。不过，在后续学习中我们会看到，子集这一概念在朴素集合论中会造成矛盾，而这正是 Russell 悖论的根源。
+
+\begin{definition}[相等]
+如果两个集合 $A$ 和 $B$ 包含完全相同的成员，那么称它们\textbf{相等}，也就是说它们是同一个集合，记作 $A=B$。
+\end{definition}
+
+集合相等可以通过子集的定义来判定。如果 $A \subseteq B$ 且 $B \subseteq A$，那么 $A=B$。这就是集合相等的形式化定义。
+
+下面列出几个常见的集合运算。
+
+\begin{definition}[集合并]
+集合 $A$ 与 $B$ 的\textbf{并集}记作 $A\cup B$，它包含 $A$ 的所有元素以及 $B$ 的所有元素。
+\end{definition}
+
+\begin{definition}[集合交]
+集合 $A$ 与 $B$ 的\textbf{交集}记作 $A\cap B$，它包含那些同时属于 $A$ 和 $B$ 的元素。
+\end{definition}
+
+\begin{definition}[集合差]
+集合 $A$ 关于 $B$ 的\textbf{差集}记作 $A-B$，也可写作 $A\setminus B$。它由那些属于 $A$ 但不属于 $B$ 的元素组成。
+\end{definition}
+
+\begin{definition}[空集]
+\textbf{空集}记作 $\emptyset$，是一个不包含任何元素的集合。
+\end{definition}
+
+注意，空集是任意集合的子集。而且，在整个集合宇宙中只有一个空集。这意味着，如果两个集合都没有元素，那么它们相等。
+
+\begin{definition}[幂集]
+集合 $x$ 的\textbf{幂集} $\mathcal{P}(x)$，也记作 $2^x$，是由 $x$ 的所有子集构成的集合。
+\end{definition}
+
+根据以上定义，我们很容易得到下面几个结论：
+
+\begin{inference}
+\begin{enumerate}
+\item 对任意集合 $A$，都有 $\emptyset \subseteq A$。
+
+\item 如果有限集合 $x$ 的元素个数为 $\text{card}(x)$，那么
+$\text{card}(\mathcal{P}(x))=2^{\text{card}(x)}$。
+
+\item 如果集合 $x$ 为空集，那么 $\text{card}(\mathcal{P}(\emptyset))=1$。这一推论可以看作推论 1.1.2 的延伸。
+\end{enumerate}
+\end{inference}
+
+\subsection*{Russell 悖论}
+
+Russell 悖论说明了朴素集合论的不完备性。Russell 假设存在一个集合 $X$，它包含所有“不包含自身的集合”：
+\[
+X=\{x\mid x\notin x\}.
+\]
+随后他发现，$X$ 既不能属于集合 $X$，也不能不属于集合 $X$。具体来说，
+\begin{align*}
+    X\in X &\implies X\notin X,\\
+    X\notin X &\implies X\in X.
+\end{align*}
+
+那么，$X$ 到底是否属于 $X$ 呢？这就造成了矛盾。因为按照朴素集合论自身的性质，$X$ 要么属于 $X$，要么不属于 $X$。然而，朴素集合论的性质又允许集合 $X$ 的存在，于是矛盾就出现了。
+
+为了修补朴素集合论中的这一缺陷，无数数学家投入了大量努力，并提出了 ZFC 公理系统。这个系统最终成为现代集合论的核心。
+
+\section{公理化集合论}
+
+\subsection{ZFC 公理系统}
+
+ZFC 是 \textbf{Zermelo--Fraenkel Set Theory with the Axiom of Choice} 的缩写，即“带选择公理的 Zermelo--Fraenkel 集合论”。它包含九条不同的公理，编号为 ZF1 到 ZF8，以及 AC。下面逐一介绍。
+
+\paragraph{基本原则：}
+\begin{itemize}
+    \item 要么 $a\in A$，要么 $a\notin A$，二者不能同时成立。
+    \item 要构造有意义的陈述，必须有一套形式语言。
+    \item 每一个对象都是集合，每一个集合也是对象。
+\end{itemize}
+
+\paragraph{ZF1（外延公理）}
+如果 $X$ 和 $Y$ 拥有相同的元素，那么 $X=Y$。
+\[
+\forall X\forall Y\bigl(\forall u(u\in X\leftrightarrow u\in Y)\to X=Y\bigr).
+\]
+ZF1 定义了集合论中的“$=$”。
+
+\paragraph{ZF2（无序对公理）}
+对任意 $a$ 和 $b$，存在一个集合 $\{a,b\}$，它恰好包含 $a$ 和 $b$。这一公理也称为配对公理。
+\[
+\forall a\forall b\exists Z\forall u\bigl(u\in Z\leftrightarrow (u=a\vee u=b)\bigr).
+\]
+ZF2 构造了无序对，并允许我们进一步构造有序对。
+
+\paragraph{ZF3（子集公理）}
+设 $\phi$ 是一个带参数 $p$ 的性质。对任意 $X$ 和 $p$，存在一个集合
+$Y=\{u\in X\mid \phi(u,p)\}$，它包含所有属于 $X$ 且满足性质 $\phi$ 的元素 $u$。这一公理也称为分离公理或概括公理。
+\[
+\forall X\forall p\exists Y\forall u\bigl(u\in Y\leftrightarrow (u\in X\wedge \phi(u,p))\bigr).
+\]
+ZF3 是防止 Russell 悖论中那种情形出现的关键公理。假设
+$X=\{x\in C\mid x\notin x\}$。根据子集公理，$X$ 必须从某个已经存在的集合 $C$ 中构造出来。这样的定义形式自动排除了 $X$ 成为“所有集合的集合”的可能性。
+
+\paragraph{ZF4（并集公理）}
+对任意 $X$，存在一个集合 $Y=\bigcup X$，也就是 $X$ 中所有元素的并集。这一公理也称为并集公理。
+\[
+\forall X\exists Y\forall u\bigl(u\in Y\leftrightarrow \exists Z(Z\in X\wedge u\in Z)\bigr).
+\]
+ZF4 允许构造并集，使数学家能够构造更大的集合，并形成更复杂的数学结构。
+
+\paragraph{ZF5（幂集公理）}
+对任意 $X$，存在一个集合 $Y=\mathcal{P}(X)$，即 $X$ 的所有子集组成的集合。
+\[
+\forall X\exists Y\forall u\bigl(u\in Y\leftrightarrow u\subseteq X\bigr).
+\]
+ZF5 定义了幂集的概念。
+
+\paragraph{ZF6（无穷公理）}
+存在一个无穷集合。
+\[
+\exists S\bigl(\emptyset\in S\wedge \forall x(x\in S\to x\cup\{x\}\in S)\bigr).
+\]
+ZF6 允许无穷集合存在，而这正是集合 $\mathbb{N}$ 的基础。
+
+\paragraph{ZF7（替换公理）}
+如果 $F$ 是一个函数，那么对任意 $X$，存在集合
+$Y=F[X]=\{F(x)\mid x\in X\}$。
+\[
+\forall X\bigl[(\forall x\in X\,\exists!y\,\phi(x,y))\to \exists Y\forall y(y\in Y\leftrightarrow \exists x\in X\,\phi(x,y))\bigr].
+\]
+ZF7 允许数学家利用已有集合和一个函数来构造新集合。它可以推出 ZF3。
+
+\paragraph{ZF8（基础公理）}
+每一个非空集合 $A$ 都含有一个与 $A$ 不相交的成员。
+\[
+\forall A\bigl(A\ne\emptyset\to \exists x(x\in A\wedge x\cap A=\emptyset)\bigr).
+\]
+ZF8 避免了集合的无限嵌套，例如 $A\in A$，并且在反驳 Russell 悖论时是 ZF3 的有力补充。如果 $A\in A$，构造 $B=\{A\}$。那么 $A$ 是 $B$ 中唯一的元素。根据 ZF8，有 $A\cap B=\emptyset$。但是 $A\in B$ 且 $A\in A$，所以 $A\in A\cap B$，这意味着 $A\cap B\ne\emptyset$，矛盾。
+
+\paragraph{AC（选择公理）}
+每一族非空集合都有一个选择函数。
+\[
+\forall \mathcal{F}\bigl[(\emptyset\notin \mathcal{F})\to \exists f:\mathcal{F}\to \bigcup\mathcal{F}\, (\forall A\in \mathcal{F}(f(A)\in A))\bigr].
+\]
+AC 非常基础，因为它保证我们能够同时做出无穷多个非构造性的选择。这一点对于证明数学中不同领域的大量关键定理都是不可或缺的。
+
+虽然 Gödel 不完备定理告诉我们，ZFC 公理系统无法在自身内部证明其一致性，但大多数数学家仍然相信 ZFC 是一致的，因为它至今还没有产生威胁数学整体完整性的根本矛盾。因此，它可以被看作现代数学的一个可靠基础。
+
+当然，也存在其他公理系统，例如 NBG（von Neumann--Bernays--Gödel）公理系统。但从实际使用角度看，ZFC 已经足够。根据 ZFC 公理系统，我们知道不存在一个包含一切的集合。
+
+\section{公理化集合论的扩展}
+
+\subsection{有序对与笛卡尔积}
+
+\subsubsection{有序对}
+
+现在借助 ZFC 公理化集合论，我们可以定义有序对。
+
+\begin{definition}[有序对]
+我们把有序对 $(a,b)$ 定义为
+\[
+(a,b):=\{\{a\},\{a,b\}\}.
+\]
+其中 $\{a\}\in \{\{a\},\{a,b\}\}$ 保证了有序对 $(a,b)$ 的顺序。
+\end{definition}
+
+\begin{inference}
+\begin{enumerate}
+\item $(a,b)=(c,d)$ 当且仅当 $a=c$ 且 $b=d$。
+
+\item $(a,a)=\{\{a\},\{a,a\}\}=\{\{a\}\}$。
+\end{enumerate}
+\end{inference}
+
+\subsubsection{笛卡尔积}
+
+\begin{definition}[笛卡尔积]
+两个集合 $A$ 和 $B$ 的笛卡尔积定义为
+\[
+A\times B:=\{(a,b)\in 2^{2^{x\cup y}}\mid a\in A\wedge b\in B\}.
+\]
+\end{definition}
+
+进一步地，可以如下定义 $n$ 元笛卡尔积：
+\[
+X_1\times X_2\times\cdots\times X_n:=\{(x_1,x_2,\dots,x_n)\mid x_i\in X_i\text{ for }i=1,\dots,n\}.
+\]
+笛卡尔积广泛用于数学分析、解析几何、群论等领域。
+
+\subsection{关系及其特殊类型}
+
+\subsubsection{关系}
+
+现在，基于笛卡尔积的概念，我们可以定义关系。
+
+\begin{definition}[关系]
+设给定两个集合 $X$ 和 $Y$。从 $X$ 到 $Y$ 的一个\textbf{关系} $R$ 是笛卡尔积 $X\times Y$ 的一个子集：
+\[
+R\subseteq X\times Y.
+\]
+如果 $X=Y$，则称 $R$ 是 $A$ 上的一个关系。对于 $(x,y)\in R$，我们也写作 $xRy$。
+\end{definition}
+
+对所有关系而言，都存在某种属于它自身的描述，我们把它记为 $P(x,y)$。于是一个关系可以写成
+\[
+R=\{(x,y)\in X\times Y\mid P(x,y)\}.
+\]
+
+\begin{remark}
+需要注意的是，$Y$ 是关系的值域，$X$ 是关系的定义域。这一点可能与我们对“关系”的日常直觉不完全一致。
+\[
+\text{dom}R:=\{x\in \cup\cup R\mid \exists y\,(x,y)\in R\},
+\]
+\[
+\text{ran}R:=\{y\in \cup\cup R\mid \exists x\,(x,y)\in R\}.
+\]
+\end{remark}
+
+\subsubsection{若干特殊类型的关系}
+
+下面列出几种性质，它们可以用来分类集合 $A$ 上的不同关系。
+
+\begin{description}
+    \item[自反性] $R$ 是自反的，当且仅当 $\forall a\in A((a,a)\in R)$。
+    \item[反自反性（或非自反性）] $R$ 是反自反的，当且仅当 $\forall a\in A((a,a)\notin R)$。
+    \item[对称性] $R$ 是对称的，当且仅当 $\forall a,b\in A((a,b)\in R\to (b,a)\in R)$。
+    \item[反对称性] $R$ 是反对称的，当且仅当 $\forall a,b\in A[((a,b)\in R\wedge (b,a)\in R)\to a=b]$。
+    \item[传递性] $R$ 是传递的，当且仅当 $\forall a,b,c\in A[((a,b)\in R\wedge (b,c)\in R)\to (a,c)\in R]$。
+\end{description}
+
+利用这些性质，我们可以定义数学中一个非常重要的概念：等价关系。
+
+\begin{definition}[等价关系]
+设 $R$ 是 $A$ 上的一个关系。如果 $R$ 同时具有自反性、对称性和传递性，那么称 $R$ 是 $A$ 上的一个\textbf{等价关系}。
+\end{definition}
+
+我们可以用等价关系来对集合进行分类。
+
+\begin{definition}[等价类]
+对元素 $a\in A$，它的\textbf{等价类} $[a]$ 定义为
+\[
+[a]=\{x\in A\mid xRa\}.
+\]
+\end{definition}
+
+借助等价类，我们可以完整地分类一个集合。例如，在 SJTU，可以按照国籍对所有学生进行分类。这个关系满足自反性、对称性和传递性，因此它是一个等价关系。
+
+类似地，我们也可以定义序关系。
+
+\begin{definition}[偏序]
+设 $R$ 是 $A$ 上的一个关系。如果 $R$ 同时具有自反性、反对称性和传递性，那么称 $R$ 是 $A$ 上的一个\textbf{偏序关系}。带有偏序 $R$ 的集合 $A$ 称为\textbf{偏序集}，记作 $(A,R)$ 或 $(A,\preceq)$。
+\end{definition}
+
+\begin{definition}[全序/线性序]
+设 $R$ 是 $A$ 上的一个偏序关系。如果对所有 $a,b\in A$，总有 $aRb$ 或 $bRa$ 成立，那么称 $R$ 是 $A$ 上的一个\textbf{全序关系}。
+\end{definition}
+
+\begin{definition}[严格偏序]
+设 $R$ 是 $A$ 上的一个关系。如果 $R$ 同时具有反自反性和传递性，那么称 $R$ 是 $A$ 上的一个\textbf{严格偏序关系}。注意：反自反性和传递性会推出不对称性。
+\end{definition}
+
+我们还可以定义逆关系和复合关系。
+
+需要注意的是，逆关系的定义域和值域与原关系相比会发生互换。
+
+\begin{definition}[逆关系]
+定义\textbf{逆关系} $R^{-1}\subseteq Y\times X$ 为
+\[
+R^{-1}=\{(y,x)\mid (x,y)\in R\}.
+\]
+用更形式化的语言写作：
+\[
+R^{-1}=\{(x,y)\in \text{ran}R\times \text{dom}R\mid yRx\}.
+\]
+\end{definition}
+
+\begin{definition}[复合关系]
+设 $R\subseteq X\times Y$ 且 $S\subseteq Y\times Z$。定义\textbf{复合关系} $S\circ R\subseteq X\times Z$ 为
+\[
+S\circ R=\{(x,z)\mid \exists y\in Y((x,y)\in R\wedge (y,z)\in S)\}.
+\]
+\end{definition}
+
+\newpage
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(R^{-1})^{-1}=R$。
+    \item $(R\circ S)^{-1}=S^{-1}\circ R^{-1}$。
+    \item $R\circ (S\cup T)=(R\circ S)\cup(R\circ T)$。
+\end{enumerate}
+\end{theorem}
+
+不过，需要注意的是，$R\circ(S\cap T)\ne (R\circ S)\cap(R\circ T)$。下面给出一个反例。
+
+定义 $U=\{a,b,c,d\}$，$R=\{(a,b),(a,c)\}$，$S=\{(b,d)\}$，$T=\{(c,d)\}$。因为 $S\cap T=\emptyset$，所以 $R\circ(S\cap T)=\emptyset$。但是 $(R\circ S)\cap(R\circ T)=\{(a,d)\}$，这就是一个反例。
+
+利用等价关系的概念，我们可以精确地“划分”一个集合。
+
+\begin{definition}[划分]
+设 $A$ 是一个非空集合。$A$ 的非空子集组成的一个集合族 $P$（即 $P\subseteq\mathcal{P}(A)$）称为 $A$ 上的一个\textbf{划分}，如果满足：
+\begin{enumerate}
+    \item $P$ 中没有空集：$\forall S\in P(S\ne\emptyset)$。
+    \item $P$ 中所有集合的并集为 $A$：$\bigcup_{S\in P}S=A$。
+    \item $P$ 中的集合两两不交：$\forall S_1,S_2\in P(S_1\ne S_2\to S_1\cap S_2=\emptyset)$。
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+集合 $A$ 的每一个划分都对应于 $A$ 上的一个等价关系，反之亦然。
+\end{theorem}
+
+\subsection{一个简短例子：测度}
+
+这里产生一个问题：我们能否给 $\mathbb{R}$ 的任意子集赋予一个非负数，用来表示它的“长度”？
+
+\begin{definition}[测度]
+设 $\mathcal{M}$ 是集合 $X$ 的某些子集构成的集合族。$\mathcal{M}$ 上的一个\textbf{测度} $\mu$ 是一个函数 $\mu:\mathcal{M}\to[0,\infty]$，使得对 $\mathcal{M}$ 中任意两两不交的可数无穷集合序列 $\{A_i\}_{i=1}^{\infty}$，也就是当 $i\ne j$ 时 $A_i\cap A_j=\emptyset$，如果它们的并集也属于 $\mathcal{M}$，则有
+\[
+\mu\left(\bigcup_{i=1}^{\infty}A_i\right)=\sum_{i=1}^{\infty}\mu(A_i).
+\]
+这个关键性质称为\textbf{可数可加性}。
+\end{definition}
+
+是否存在一个定义在 $\mathcal{P}(\mathbb{R})$ 上的测度 $m$，也就是定义在所有实数子集上的测度，使它满足下面这些条件，也就是我们对“长度”的朴素理解？
+\begin{enumerate}
+    \item $m([0,1])=1$。
+    \item 平移不变性：对任意 $A\subseteq\mathbb{R}$ 和 $x\in\mathbb{R}$，有 $m(A+x)=m(A)$，其中 $A+x=\{a+x\mid a\in A\}$。这意味着，在数轴上具有相同结构的集合应当具有相同测度。
+    \item 可数可加性。
+\end{enumerate}
+
+遗憾的是，答案是否定的。我们可以构造出\textbf{Vitali 集}，它无法按照这些条件被测量。
+
+\begin{proof}[不可测集存在性的证明（Vitali 集）]
+在 $[0,1]$ 上定义等价关系 $\sim$：
+\[
+x\sim y\iff x-y\in\mathbb{Q}.
+\]
+这是一个等价关系。令 $V$ 为它的等价类集合。根据选择公理，可以从每一个等价类中恰好选择一个元素，把这些代表元合在一起形成一个代表元集合 $M$。可以假设 $M\subseteq[0,1]$。
+
+令 $\mathbb{Q}^*=\mathbb{Q}\cap[-1,1]$。对每个 $q\in\mathbb{Q}^*$，定义
+\[
+M_q=M+q=\{m+q\mid m\in M\}.
+\]
+我们有以下结论：
+\begin{enumerate}
+    \item 所有 $M_q$（其中 $q\in\mathbb{Q}^*$）两两不交。若 $y\in M_q\cap M_r$，则 $y=m_1+q=m_2+r$。这意味着 $m_1-m_2=r-q\in\mathbb{Q}$，所以 $m_1\sim m_2$。根据 $M$ 的构造，推出 $m_1=m_2$，因此 $q=r$。
+    \item $[0,1]\subseteq\bigcup_{q\in\mathbb{Q}^*}M_q$。对任意 $x\in[0,1]$，令 $m\in M$ 为与 $x$ 等价的代表元，则 $x-m=q\in\mathbb{Q}$。由于 $x,m\in[0,1]$，所以 $q\in[-1,1]$。于是 $x=m+q\in M_q$。
+    \item $\bigcup_{q\in\mathbb{Q}^*}M_q\subseteq[-1,2]$。这是因为 $M\subseteq[0,1]$ 且 $\mathbb{Q}^*\subseteq[-1,1]$。
+\end{enumerate}
+
+现在尝试测量 $M$。假设 $m(M)=c$。由平移不变性，对所有 $q\in\mathbb{Q}^*$ 都有 $m(M_q)=m(M)=c$。又因为 $\mathbb{Q}^*$ 是可数的，根据可数可加性有
+\[
+m\left(\bigcup_{q\in\mathbb{Q}^*}M_q\right)=\sum_{q\in\mathbb{Q}^*}m(M_q)=\sum_{q\in\mathbb{Q}^*}c.
+\]
+由前面的包含关系得到：
+\[
+m([0,1])\le m\left(\bigcup_{q\in\mathbb{Q}^*}M_q\right)\le m([-1,2]),
+\]
+也就是
+\[
+1\le \sum_{q\in\mathbb{Q}^*}c\le 3.
+\]
+如果 $c=0$，则得到 $1\le0$，矛盾。若 $c>0$，则 $1\le\infty$ 本身不是矛盾，但 $\sum c\le3$ 会推出 $\infty\le3$，矛盾。因此，$M$ 无法被赋予测度 $m(M)$，也就是说它是\textbf{不可测的}。
+\end{proof}
+
+\subsection*{补充知识：Lebesgue 测度的定义}
+
+\begin{remark}
+\textbf{说明：} 本节补充介绍 Lebesgue 测度的定义。它同时给出原始的构造性思路和现代的抽象定义。这里的内容用于提供更深入的历史与理论背景，初读时可以视为选读材料。
+\end{remark}
+
+\subsubsection*{1. Lebesgue 的原始想法与构造}
+
+Henri Lebesgue 发展出的原始想法，是一个用于定义集合 $E\subset\mathbb{R}^n$ 的测度的构造过程。它从简单集合（区间）开始，再从外部去逼近更复杂的集合。
+
+\begin{definition}[Lebesgue 外测度与可测性]
+任意集合 $E\subset\mathbb{R}^n$ 的\textbf{Lebesgue 外测度} $m^*(E)$ 定义如下：用\textbf{可数}个 $n$ 维区间（或立方体）覆盖 $E$，并取这些覆盖总体积的下确界：
+\[
+m^*(E)=\inf\left\{\sum_{k=1}^{\infty}\ell(I_k):E\subset\bigcup_{k=1}^{\infty}I_k\right\},
+\]
+其中 $\{I_k\}$ 是一个可数的 $n$ 维区间族，$\ell(I_k)$ 是该区间各边长度的乘积，也就是它的体积。
+
+如果对每一个 $\epsilon>0$，都存在一个开集 $O\supset E$，使得差集的外测度满足 $m^*(O\setminus E)<\epsilon$，那么称集合 $E$ 是\textbf{Lebesgue 可测}的。这就是 Carathéodory 判别准则，是后来对原始思想的改进。它很好地刻画了“可测集合可以被开集充分接近地逼近”这一想法。
+
+对一个可测集合 $E$，它的 Lebesgue 测度 $m(E)$ 就定义为它的外测度：$m(E)=m^*(E)$。
+\end{definition}
+
+\subsubsection*{2. 通过 $\sigma$-代数给出的现代改进定义}
+
+现代方法更加抽象，也更有力量。它把 Lebesgue 测度定义为某个特定 $\sigma$-代数上测度的完备化。这是现代大多数测度论教材采用的标准定义。
+
+\begin{definition}[通过 $\sigma$-代数定义的 Lebesgue 测度]
+令 $\mathcal{B}(\mathbb{R}^n)$ 为 $\mathbb{R}^n$ 上的 Borel $\sigma$-代数。\textbf{Lebesgue $\sigma$-代数}记作 $\mathcal{L}$，它是 $\mathcal{B}(\mathbb{R}^n)$ 关于 Lebesgue 测度的完备化。
+
+\textbf{Lebesgue 测度}是唯一的测度
+\[
+m:\mathcal{L}\to[0,\infty]
+\]
+并满足以下性质：
+\begin{enumerate}
+    \item \textbf{平移不变性：} 对任意 $A\in\mathcal{L}$ 和 $x\in\mathbb{R}^n$，有 $m(A+x)=m(A)$。
+    \item \textbf{归一化：} 单位立方体的测度为 $1$，也就是 $m([0,1]^n)=1$。
+    \item \textbf{可数可加性：} 对任意两两不交的 Lebesgue 可测集可数族 $\{E_i\}_{i=1}^{\infty}$，有
+    \[
+    m\left(\bigcup_{i=1}^{\infty}E_i\right)=\sum_{i=1}^{\infty}m(E_i).
+    \]
+\end{enumerate}
+等价地说，它是定义在初等集合代数（有限个区间的并）上的预测度，通过 Carathéodory 扩张定理延拓到完整 Lebesgue $\sigma$-代数后得到的唯一扩张。
+\end{definition}
+
+\subsubsection*{3. Vitali 集：不可测集的一个例子}
+
+Lebesgue 测度性质的一个重要结果是：存在并非 Lebesgue 可测的集合。最著名的例子就是 Giuseppe Vitali 于 1905 年构造的\textbf{Vitali 集}。
+
+\begin{definition}[Vitali 集的构造]
+考虑区间 $[0,1]\subset\mathbb{R}$。在 $[0,1]$ 上定义等价关系 $\sim$：
+\[
+x\sim y\iff x-y\in\mathbb{Q}.
+\]
+这个关系把 $[0,1]$ 划分为若干等价类。借助选择公理，我们从每一个等价类中恰好选择一个元素，形成集合 $V\subset[0,1]$。这个集合 $V$ 称为\textbf{Vitali 集}。
+\end{definition}
+
+\begin{theorem}[Vitali 集不是 Lebesgue 可测的]
+Vitali 集 $V$ 不是 Lebesgue 可测的。
+\end{theorem}
+
+\begin{proof}
+证明采用反证法。假设 $V$ 是 Lebesgue 可测的。
+
+考虑 $[-1,1]$ 中的有理数，记为 $\mathbb{Q}\cap[-1,1]$。对每个 $q\in\mathbb{Q}\cap[-1,1]$，定义平移：
+\[
+V_q=V+q=\{v+q:v\in V\}.
+\]
+
+这些集合 $V_q$ 两两不交。若 $v_1+q_1=v_2+q_2$，其中 $v_1,v_2\in V$ 且 $q_1,q_2\in\mathbb{Q}$，则 $v_1-v_2=q_2-q_1\in\mathbb{Q}$，这意味着 $v_1\sim v_2$。由于 $V$ 从每个等价类中恰好取了一个元素，所以 $v_1=v_2$，进而 $q_1=q_2$。
+
+由 Lebesgue 测度的平移不变性可知，如果 $V$ 可测，那么每个 $V_q$ 都可测，并且 $m(V_q)=m(V)$。
+
+现在注意到：
+\[
+[0,1]\subset\bigcup_{q\in\mathbb{Q}\cap[-1,1]}V_q\subset[-1,2].
+\]
+
+如果 $V$ 可测且 $m(V)=0$，那么由可数可加性得
+\[
+m\left(\bigcup_q V_q\right)=\sum_q m(V_q)=0,
+\]
+这与 $m([0,1])=1$ 矛盾。
+
+如果 $m(V)>0$，那么
+\[
+m\left(\bigcup_q V_q\right)=\sum_q m(V_q)=\infty,
+\]
+这与 $m([-1,2])=3$ 矛盾。
+
+因此，关于 $V$ 可测的假设必定为假。Vitali 集 $V$ 不是 Lebesgue 可测的。我们无法找到可数个区间来覆盖 Vitali 集。
+\end{proof}
+
+\begin{remark}
+像 Vitali 集这样的不可测集的存在说明，在保持平移不变性和可数可加性的同时，Lebesgue 测度不可能扩张到 $\mathbb{R}^n$ 的所有子集上。这个结果依赖于选择公理。事实上，可以证明，在没有选择公理的某些集合论模型中，$\mathbb{R}$ 的所有子集都可以是 Lebesgue 可测的。
+\end{remark}
+
+\subsection{另一个例子：关系的闭包}
+
+在定义了关系的基本性质之后，我们自然会遇到一个问题：如果集合 $A$ 上的关系 $R$ 缺少某种性质，那么包含 $R$ 且拥有该性质的\emph{最小}关系是什么？这个问题引出了关系\textbf{闭包}的概念。
+
+\begin{definition}[闭包]
+设 $P$ 是关系的一种性质，例如自反性、对称性或传递性。集合 $A$ 上关系 $R$ 的\textbf{$P$-闭包}，是集合 $A$ 上满足下面条件的最小关系 $S$：
+\begin{enumerate}
+    \item $R\subseteq S$；
+    \item $S$ 具有性质 $P$。
+\end{enumerate}
+\end{definition}
+
+有三类重要的闭包：
+\begin{description}
+    \item[自反闭包] $R'=R\cup I_A$，其中 $I_A=\{(a,a)\mid a\in A\}$ 是 $A$ 上的恒等关系。
+    \item[对称闭包] $R'=R\cup R^{-1}$。
+    \item[传递闭包] $R^*=\bigcup_{n=1}^{\infty}R^n$，其中 $R^1=R$，且 $R^{n+1}=R^n\circ R$。
+\end{description}
+
+\begin{proof}[证明 $R^*$ 是传递闭包]
+需要证明 $R^*$ 是传递的，并且它是包含 $R$ 的最小传递关系。
+\begin{enumerate}
+    \item \textbf{传递性。}
+    设 $(x,y)\in R^*$ 且 $(y,z)\in R^*$。根据定义，存在某个 $m\ge1$ 使 $(x,y)\in R^m$，并且存在某个 $n\ge1$ 使 $(y,z)\in R^n$。
+    根据关系复合的定义，这推出 $(x,z)\in R^{m+n}$。由于 $m+n\ge1$，所以
+    \[
+    (x,z)\in\bigcup_{k=1}^{\infty}R^k=R^*.
+    \]
+    因此 $R^*$ 是传递的。
+
+    \item \textbf{最小性。}
+    设 $T$ 是任意一个传递关系，并且 $R\subseteq T$。我们需要证明 $R^*\subseteq T$。
+    已知 $R^1=R\subseteq T$。假设 $R^k\subseteq T$（归纳假设）。令 $(a,c)\in R^{k+1}=R^k\circ R$。那么存在 $b$，使得 $(a,b)\in R^k$ 且 $(b,c)\in R$。
+    根据归纳假设，$(a,b)\in T$。又因为 $R\subseteq T$，所以 $(b,c)\in T$。由于 $T$ 是传递的，$(a,b)\in T\wedge(b,c)\in T$ 推出 $(a,c)\in T$。
+    因此 $R^{k+1}\subseteq T$。根据归纳法，对所有 $n\ge1$ 都有 $R^n\subseteq T$。所以
+    \[
+    R^*=\bigcup_{n=1}^{\infty}R^n\subseteq T.
+    \]
+    这说明 $R^*$ 是包含 $R$ 的最小传递关系。
+\end{enumerate}
+\end{proof}
+
+\subsection{映射与函数}
+
+在数学表达中，我们用集合论语言来定义映射。
+
+\begin{definition}[映射/函数]
+从 $A$ 到 $B$ 的一个\textbf{映射}，也称为\textbf{函数}，记作 $f:A\to B$，是一个关系 $f\subseteq A\times B$，并且对每一个 $x\in A$，都存在唯一的对象 $y\in B$，使得 $(x,y)\in f$。我们把这个唯一的 $y$ 记作 $f(x)$。
+\begin{itemize}
+    \item 集合 $A$ 称为 $f$ 的\textbf{定义域}。
+    \item 集合 $B$ 称为 $f$ 的\textbf{陪域}。
+    \item 集合 $\{f(x)\mid x\in A\}\subseteq B$ 称为 $f$ 的\textbf{值域}或\textbf{像}。
+\end{itemize}
+唯一性要求为：
+\[
+\forall x\in A\,\forall y_1,y_2\in B\,[((x,y_1)\in f\wedge(x,y_2)\in f)\to y_1=y_2].
+\]
+\end{definition}
+
+\begin{definition}[单射]
+函数 $f:A\to B$ 是\textbf{单射}，也称一一映射，当且仅当
+\[
+\forall x_1,x_2\in A\,(f(x_1)=f(x_2)\to x_1=x_2).
+\]
+这意味着定义域中的每个元素都对应到陪域中唯一的元素。
+\end{definition}
+
+\begin{definition}[满射]
+函数 $f:A\to B$ 是\textbf{满射}，当且仅当
+\[
+\forall y\in B\,\exists x\in A\,(f(x)=y).
+\]
+这意味着陪域等于值域。
+\end{definition}
+
+\begin{definition}[双射]
+函数 $f:A\to B$ 是\textbf{双射}，当且仅当它既是单射又是满射。
+\end{definition}
+
+\begin{definition}[反函数]
+设 $f:A\to B$ 是一个函数。函数 $g:B\to A$ 称为 $f$ 的\textbf{反函数}，也称反映射，当且仅当它满足以下两个条件：
+\begin{enumerate}
+    \item $g\circ f=id_A$，其中 $id_A$ 是 $A$ 上的恒等映射；
+    \item $f\circ g=id_B$，其中 $id_B$ 是 $B$ 上的恒等映射。
+\end{enumerate}
+如果 $f$ 的反映射存在，那么它是唯一的，记作 $f^{-1}$。一个函数存在反函数，当且仅当它是双射。
+\end{definition}
+
+\begin{definition}[函数复合]
+设 $f:A\to B$ 和 $g:B\to C$ 是两个函数。$g$ 与 $f$ 的\textbf{复合}是一个新函数，记作 $g\circ f:A\to C$，定义为
+\[
+(g\circ f)(x)=g(f(x))\quad \text{for all }x\in A.
+\]
+\end{definition}
+
+\subsubsection{函数的特殊类型}
+
+\begin{definition}[实函数]
+如果定义域 $X\subseteq\mathbb{R}$，陪域 $Y\subseteq\mathbb{R}$，那么这个映射称为\textbf{一元实函数}，记作 $y=f(x)$。
+\end{definition}
+
+\paragraph{分段函数}
+分段函数是由多个子函数共同定义的函数，每个子函数适用于主函数定义域中的某个区间或区域。
+\[
+f(x)=\begin{cases}
+    f_1(x), & \text{if condition 1},\\
+    f_2(x), & \text{if condition 2},\\
+    \vdots & \vdots
+\end{cases}
+\]
+
+\paragraph{隐函数}
+隐函数是由联系变量的方程来定义的函数，例如 $F(x,y)=0$，而不是由显式公式 $y=f(x)$ 给出。
+
+\paragraph{参数函数}
+参数函数通过把曲线上点的坐标表示为第三个变量的函数来描述一条曲线，这个第三个变量称为参数，通常记作 $t$。
+\[
+\begin{cases}
+    x=f(t),\\
+    y=g(t)
+\end{cases}
+\quad \text{for }t\text{ in some interval }I.
+\]
+
+\begin{definition}[基本初等函数]
+基本初等函数是一组有限的基础函数：
+\begin{enumerate}
+    \item 常值函数：$f(x)=c$。
+    \item 幂函数：$f(x)=x^{\alpha}$。
+    \item 指数函数：$f(x)=a^x$，其中 $a>0$ 且 $a\ne1$。
+    \item 对数函数：$f(x)=\log_a x$。
+    \item 三角函数：$\sin x,\cos x,\tan x$ 等。
+    \item 反三角函数：$\arcsin x,\arccos x$ 等。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[初等函数]
+\textbf{初等函数}是指可以由基本初等函数经过有限次以下运算得到的函数：
+\begin{itemize}
+    \item 算术运算：加法、减法、乘法、除法；
+    \item 复合：函数复合运算。
+\end{itemize}
+\end{definition}
+
+\begin{definition}[运算]
+\textbf{运算}是从一个集合到其自身的函数。更具体地说，集合 $X$ 上的一个 \textbf{$n$ 元运算} $\omega$ 是一个函数 $\omega:X^n\to X$。
+\end{definition}
+
+\subsection{序结构}
+
+\subsubsection{良序}
+
+前面已经介绍了若干有序关系。现在我们定义良序的概念和性质。这是第 1 章的最后一部分，而良序也可以看作通向下一章的桥梁。
+
+\begin{definition}[良序集]
+一个全序集 $(W,\le)$ 称为\textbf{良序集}，如果它满足：每一个非空子集都有最小元。
+\[
+\forall S\subseteq W\,(S\ne\emptyset\to \exists s\in S\,\forall x\in S(s\le x)).
+\]
+\end{definition}
+
+\begin{theorem}
+自然数集 $\mathbb{N}$ 在通常序 $\le$ 下是良序的。这就是\textbf{良序原理}。
+\end{theorem}
+
+\begin{proof}
+取 $\mathbb{N}$ 的任意非空子集 $S$。从 $0$ 开始依次检查每一个自然数。第一个属于 $S$ 的数就是最小元。这个过程必定会在有限步内终止，因为如果始终找不到这样的元素，就意味着 $S$ 为空集，这与假设矛盾。因此，$\mathbb{N}$ 在通常序下是良序集。
+\end{proof}
+
+良序原理与自然数集之间似乎存在非常紧密的联系。而且，这种“从最小元素开始”的原则看起来与数学归纳法（MI）具有某种对称关系。下一章会揭示它们之间的联系。
+
+\noindent
+\textbf{关键词：} 集合，公理，ZFC 公理化集合论，有序对，笛卡尔积，关系，良序集。\\
+\textbf{参考文献：} Kenneth H. Rosen, \textit{Discrete Mathematics and Its Applications}, Eighth Edition, McGraw-Hill Education.
+

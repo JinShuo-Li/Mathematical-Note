@@ -1,0 +1,348 @@
+% chapter0_cn.tex
+% 第 0 章中文译稿。
+
+\chapterzero
+
+所有数学洞见都会经历一个从“朴素理解”到“严谨表述”的过程。数学自身也是如此；一切公理化语言都无法完全脱离经验主义者的朴素描述性语言。
+
+为了介绍今后会频繁使用的一些特殊数学符号，我特意在第一章之前加入了第零章，用来呈现关于数学语言和数学逻辑的部分知识。在本章中，我也会介绍一些与公理有关的内容；不过在后续章节中，我们不一定每次都如此严格地定义公理。
+
+\section{命题逻辑}
+
+\subsection{命题逻辑的朴素引入}
+
+在正式进入命题逻辑的主要内容之前，先从一个问题开始：什么是命题？请看下面这些句子：
+
+\begin{enumerate}
+    \item 方程 $x^2+1=0$ 有实数解；
+    \item 素数有无穷多个；
+    \item 每一个不小于 $4$ 的偶整数 $n$ 都可以写成两个素数之和，也就是著名的 Goldbach 猜想；
+    \item 现在几点了？
+    \item 这句话是假的。
+\end{enumerate}
+
+在上面的句子中，前三个句子具有相同的性质：一是它们都是陈述事实的句子或断言；二是它们要么为真，要么为假，但不能同时既真又假。然而，第四个句子不是陈述句，而第五个句子的正确性无法判定。
+
+所以，为了研究数学，我们需要那些断言一个或若干事实的句子。有时候，只要它的真值能够被确定，它究竟是真是假并不是最重要的。这并不意味着其他类型的表达不重要。我们之所以重视这类表达，是因为所有公理、定义和定理都是以这种形式写成的。
+
+\begin{definition}[命题]
+命题是陈述事实的句子或断言，并且它要么为真，要么为假，但不能同时既真又假。
+\end{definition}
+
+为了让命题更便于操作，我们使用\textbf{命题变量}来表示不同的命题。常用的命题变量包括 $p,q,r,\dots$ 等字母。
+
+有时我们需要把不同的命题变量连接起来，形成新的命题。这时就需要使用“并且”“或者”“推出”等词语来说明它们之间的关系。
+
+\begin{definition}[逻辑运算符/逻辑联结词]
+逻辑运算符或逻辑联结词，是用来连接命题变量并形成复合命题的符号。
+\end{definition}
+
+常见的逻辑运算符如下：
+
+\begin{itemize}
+    \item $\neg$：否定，即“非”。
+    \item $\wedge$：合取，即“并且”。
+    \item $\vee$：析取，即“或者”。
+    \item $\to$ 或 $\Rightarrow$：条件，即“推出”。
+    \item $\leftrightarrow$：双条件，即“当且仅当”。
+    \item $\oplus$：异或。
+\end{itemize}
+
+\begin{definition}[复合命题]
+复合命题是由命题变量或命题常量通过逻辑运算符构造出来的命题。
+\end{definition}
+
+\begin{definition}[原子命题]
+原子命题是不能再进一步分解的命题。它是逻辑表达式中最基本的构成单位，并被看作一个不可再分的语义单位。
+\end{definition}
+
+如果要判断一个原子命题是否为真，我们需要使用数学不同领域中的相关知识。但怎样判断一个复合命题的真假呢？我们可以使用真值表。
+
+\begin{definition}[真值表]
+真值表是逻辑中使用的一种数学表格，用于根据输入值计算逻辑表达式的真值。
+\end{definition}
+
+\paragraph{否定}
+\[
+\begin{array}{c|c}
+p & \neg p \\
+\hline
+T & F \\
+F & T
+\end{array}
+\]
+
+\paragraph{合取}
+\[
+\begin{array}{c|c|c}
+p & q & p\wedge q \\
+\hline
+T & T & T \\
+T & F & F \\
+F & T & F \\
+F & F & F
+\end{array}
+\]
+
+\paragraph{析取}
+\[
+\begin{array}{c|c|c}
+p & q & p\vee q \\
+\hline
+T & T & T \\
+T & F & T \\
+F & T & T \\
+F & F & F
+\end{array}
+\]
+
+\paragraph{条件，即蕴含}
+\[
+\begin{array}{c|c|c}
+p & q & p\to q \\
+\hline
+T & T & T \\
+T & F & F \\
+F & T & T \\
+F & F & T
+\end{array}
+\]
+
+\paragraph{双条件，即当且仅当}
+\[
+\begin{array}{c|c|c}
+p & q & p\leftrightarrow q \\
+\hline
+T & T & T \\
+T & F & F \\
+F & T & F \\
+F & F & T
+\end{array}
+\]
+
+\paragraph{异或}
+\[
+\begin{array}{c|c|c}
+p & q & p\oplus q \\
+\hline
+T & T & F \\
+T & F & T \\
+F & T & T \\
+F & F & F
+\end{array}
+\]
+
+就像数值计算一样，逻辑运算符也有优先级。下面是逻辑运算符从高到低的优先级顺序：
+\[
+( ), [ ] \quad \neg \quad \wedge \quad \vee \quad \oplus \quad \to \quad \leftrightarrow.
+\]
+除此之外，先出现的运算符具有更高的优先级。简而言之，我们先计算优先级较高的逻辑运算符，再计算优先级较低的运算符。
+
+利用这些规则，我们可以定义不同命题的真值。不过，复合命题中还存在一些特殊类别：
+
+\begin{itemize}
+    \item \textbf{重言式}：无论命题变量取什么真值，始终为真的复合命题。
+    \item \textbf{矛盾式}：无论命题变量取什么真值，始终为假的复合命题。
+    \item \textbf{偶然式}：既不是重言式，也不是矛盾式的复合命题。它可以为真，也可以为假，取决于变量的取值。
+\end{itemize}
+
+基于上面的定义，现在可以严格定义什么是逻辑等价。
+
+\begin{definition}[逻辑等价]
+如果 $p\leftrightarrow q$ 是一个重言式，那么我们称复合命题 $p,q$ \textbf{逻辑等价}。如果 $p$ 和 $q$ 逻辑等价，记作
+\[
+p\equiv q.
+\]
+\end{definition}
+
+这个定义的意思是：对于每一个原子命题的不同真值组合，$p$ 和 $q$ 最终得到的真值都相同。在后续学习中，我们会知道，上面这些运算符中的若干个就已经足够表达所有命题。
+
+下面列出一些经常使用的例子。这些等价式可以直接使用：
+\begin{align*}
+\text{恒等律：}\quad & p\wedge T\equiv p, & p\vee F\equiv p; \\
+\text{支配律：}\quad & p\vee T\equiv T, & p\wedge F\equiv F; \\
+\text{吸收律：}\quad & p\vee(p\wedge q)\equiv p, & p\wedge(p\vee q)\equiv p; \\
+\text{否定律：}\quad & p\vee\neg p\equiv T, & p\wedge\neg p\equiv F; \\
+\text{交换律：}\quad & p\vee q\equiv q\vee p, & p\wedge q\equiv q\wedge p; \\
+\text{结合律：}\quad & (p\vee q)\vee r\equiv p\vee(q\vee r), & (p\wedge q)\wedge r\equiv p\wedge(q\wedge r); \\
+\text{分配律：}\quad & p\vee(q\wedge r)\equiv(p\vee q)\wedge(p\vee r), & p\wedge(q\vee r)\equiv(p\wedge q)\vee(p\wedge r); \\
+\text{德摩根律：}\quad & \neg(p\wedge q)\equiv\neg p\vee\neg q, & \neg(p\vee q)\equiv\neg p\wedge\neg q.
+\end{align*}
+
+\begin{definition}[可满足性]
+如果一个复合命题在某种命题变量的真值赋值下为真，那么称它是\textbf{可满足的}。能够使复合命题为真的真值赋值称为一个\textbf{解}。如果一个复合命题不可满足，我们称它是\textbf{不可满足的}。
+\end{definition}
+
+目前，我们可以使用真值表和逻辑等价来检查一个复合命题是否可满足。对于计算机科学专业的读者，也可以使用专门的算法来解决所谓的“布尔可满足性问题”，例如启发式搜索等。
+
+\subsection{功能完备性}
+
+根据前面的学习，我们知道不同变量之间可以通过联结词构成复合命题。然而，我们真的需要这么多联结词来表示所有关系和所有复合命题吗？答案显然是否定的。在某些情况下，我们只需要两个联结词就可以达到所谓的功能完备状态。
+
+\begin{definition}[析取范式]
+如果一个复合命题是若干个合取项的析取，并且这些合取项由命题变量或它们的否定构成，那么称该复合命题处于\textbf{析取范式}，英文为 \textbf{disjunctive normal form，DNF}。
+\end{definition}
+
+\begin{theorem}
+每一个复合命题都逻辑等价于某个析取范式形式的复合命题。
+\end{theorem}
+
+\begin{proof}
+这个定理并不难证明。根据前面的内容，我们知道每一个复合命题都可以写出真值表。根据真值表，我们可以把它改写成析取范式。例如，异或联结词的真值表为：
+\[
+\begin{array}{c|c|c}
+p & q & p\oplus q \\
+\hline
+T & T & F \\
+T & F & T \\
+F & T & T \\
+F & F & F
+\end{array}
+\]
+中间两行，也就是结果为 $T$ 的两行，表示这个复合命题的解。因此，我们可以写出如下命题：
+\[
+p\oplus q\equiv(p\wedge\neg q)\vee(\neg p\wedge q).
+\]
+这个复合命题中，每一个由析取连接起来的部分都表示原命题可满足性问题的一个解。这说明，只要能够为复合命题写出真值表，就可以把它改写成析取范式。从这个角度看，定理是相当清楚的。
+\end{proof}
+
+进一步来看：我们能否把复合命题改写成其他形式？答案显然也是可以的。
+
+\begin{definition}[合取范式]
+如果一个复合命题是若干个析取项的合取，并且这些析取项由命题变量或它们的否定构成，那么称该复合命题处于\textbf{合取范式}，英文为 \textbf{conjunctive normal form，CNF}。
+\end{definition}
+
+\begin{theorem}
+每一个复合命题都逻辑等价于某个合取范式形式的复合命题。
+\end{theorem}
+
+\begin{proof}
+我们仍然使用真值表来证明这个定理。设有一个命题 $A$。首先，利用定理 0.1.1，把 $\neg A$ 改写为析取范式。接下来，对 $\neg A$ 再取否定，并使用德摩根律，就可以把 $A$ 改写为合取范式。
+\end{proof}
+
+定理 0.1.1 和定理 0.1.2 非常巧妙。在电路设计中，由于我们不可能为每一个逻辑联结词都设计一个电路元件，所以必须使用尽可能少的电路元件来表达所有逻辑表达式。根据这些定理，我们不再需要使用那么多联结词。只需要合取、析取和否定，就足以构造出与世界上任意命题逻辑等价的命题。
+
+\begin{definition}[功能完备]
+如果任意复合命题都逻辑等价于某个只使用某一逻辑运算符集合中运算符的复合命题，那么称这个逻辑运算符集合是\textbf{功能完备的}。
+\end{definition}
+
+因此，我们可以说集合
+\[
+\{\neg,\vee,\wedge\}
+\]
+是功能完备的。同时，根据德摩根律：
+\[
+p\wedge q\equiv\neg(\neg p\vee\neg q),
+\]
+\[
+p\vee q\equiv\neg(\neg p\wedge\neg q),
+\]
+可以发现，合取可以用析取和否定表示，而析取也可以用合取和否定表示。这意味着集合
+\[
+\{\neg,\vee\}
+\]
+和
+\[
+\{\neg,\wedge\}
+\]
+也是功能完备的。
+
+\begin{note}
+最令人惊讶的事实是，确实存在一种联结词，它本身就是功能完备的，例如 NAND 或 NOR。不过我们以后不会使用它，所以读者可以自行查阅。
+\end{note}
+
+\section{谓词逻辑}
+
+在很多情况下，使用命题逻辑已经足够。但有一类陈述无法用命题逻辑工具表达。在这种情况下，我们需要使用谓词逻辑来构造逻辑表达式。
+
+\begin{definition}[谓词]
+\textbf{谓词}是一种带有变量的陈述。谓词也称为\textbf{命题函数}。谓词可以记作
+\[
+P(x,y,z,\dots),
+\]
+其中 $x,y,z$ 称为变量。
+\end{definition}
+
+\begin{definition}[量词]
+我们使用\textbf{量词}来表示所涉及元素的数量。量词有两类：$\forall$ 和 $\exists$。
+\begin{itemize}
+    \item $\forall$：\textbf{全称量词}，意思是“对所有”或“任意”。
+    \item $\exists$：\textbf{存在量词}，意思是“存在”。
+\end{itemize}
+\end{definition}
+
+例如，“每一位 SJTUer 都是人才”这个陈述可以写成谓词逻辑的形式：
+\[
+\forall x(\text{SJTUer}(x)\to \text{Talent}(x)).
+\]
+
+谓词中的变量都有受限制的取值范围，这些范围称为谓词的\textbf{论域}。对于论域中的所有值，我们都可以把谓词改写为命题的形式。如果论域是有限集合
+\[
+\{x_1,x_2,\dots,x_n\},
+\]
+那么有：
+\[
+\forall x P(x)\equiv P(x_1)\wedge P(x_2)\wedge\dots\wedge P(x_n),
+\]
+\[
+\exists x P(x)\equiv P(x_1)\vee P(x_2)\vee\dots\vee P(x_n).
+\]
+但如果论域是无限的，我们就只能用谓词逻辑的形式来表达这种逻辑关系。
+
+\begin{itemize}
+    \item $\forall xP(x)$ 表示“对于论域中的每一个 $x$，$P(x)$ 都成立”。如果论域中存在某个值 $a$，使得 $P(a)$ 为假，那么这个陈述就是假的。这个 $a$ 称为一个\textbf{反例}。
+    \item $\exists xP(x)$ 表示“存在一个 $x$，使得 $P(x)$ 成立”。如果对于论域中所有值 $a$，$P(a)$ 都为假，那么这个陈述就是假的。
+\end{itemize}
+
+然而，并不是所有带有谓词和量词的句子都能形成谓词逻辑中的命题。例如，
+\[
+\forall x(P(x)\wedge Q(y))
+\]
+就不是一个完整的谓词逻辑命题。因为当 $y$ 的取值发生变化时，我们无法判断这个句子是真的还是假的，因此它的真值是不确定的。
+
+那么，怎样才能确保一个句子是谓词逻辑中的命题呢？在
+\[
+\forall x(P(x)\wedge Q(y))
+\]
+这个例子中，造成问题的是 $y$。而与量词相连的 $x$ 并没有造成不便。因此，我们称那些跟在量词之后并受到量词约束的变量为\textbf{约束变量}；否则，它们就是\textbf{自由变量}。如果一个句子中的每一个变量都是约束变量，那么它就是一个命题。
+
+和命题逻辑一样，谓词逻辑中的表达式也可以用逻辑联结词连接，并且也有一些运算规律。
+
+\paragraph{量词的德摩根律}
+\[
+\neg\forall xP(x)\equiv\exists x\neg P(x),
+\]
+\[
+\neg\exists xP(x)\equiv\forall x\neg P(x).
+\]
+
+\paragraph{非对称结合律}
+\[
+\forall x\forall yP(x,y)\equiv\forall y\forall xP(x,y),
+\]
+\[
+\exists x\exists yP(x,y)\equiv\exists y\exists xP(x,y).
+\]
+
+\begin{note}
+这里的结合规律是非对称的。下面两个断言不一定成立。在某些情况下，它们甚至可能是假的：
+\[
+\forall x\exists yP(x,y)\not\equiv\exists y\forall xP(x,y).
+\]
+\end{note}
+
+\begin{definition}[谓词逻辑中的逻辑等价]
+如果 $\phi$ 和 $\psi$ 是带有谓词和量词、但没有自由变量的陈述，那么我们称 $\phi$ 和 $\psi$ \textbf{逻辑等价}，记作
+\[
+\phi\equiv\psi,
+\]
+其含义是：无论给定怎样的具体谓词，也无论给定怎样的论域，$\phi$ 和 $\psi$ 的真值总是一致的。
+\end{definition}
+
+此外，我们也可以定义普遍有效性，类似于命题逻辑中的重言式；谓词逻辑中也存在可满足性。由于本章只是一个简要介绍，因此这里不再进一步展开。
+
+在本章中，我们初步认识了数学形式下的逻辑。关于命题逻辑和谓词逻辑的这个概览，为清晰推理建立了形式基础。逻辑是理性思维不可或缺的脚手架，是先于一切具体知识的\textbf{先验框架}。它的重要性不需要再作过多说明。
+
+\noindent
+\textbf{关键词：} 命题逻辑，谓词逻辑，逻辑等价。\\
+\textbf{参考文献：} Kenneth H. Rosen, \textit{Discrete Mathematics and Its Applications}, Eighth Edition, McGraw-Hill Education.

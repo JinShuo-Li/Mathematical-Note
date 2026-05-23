@@ -1,0 +1,941 @@
+\chapter{应用数学：概率论}
+
+概率论研究随机现象中的数量规律。它既可以从古典组合问题出发，也可以在测度论框架中被严格公理化。前者适合处理有限样本空间和计数问题，后者则能统一描述离散、连续以及更一般的随机对象。
+
+本章先介绍经典概率、条件概率和随机变量，再过渡到测度论基础、条件期望、概率不等式、生成函数、收敛方式、极限定理以及随机过程的入门概念。
+
+\section{经典概率与计数}
+
+\subsection{随机试验与样本空间}
+
+\begin{definition}[随机试验]
+在相同条件下可以重复进行，并且结果具有不确定性的过程称为\textbf{随机试验}。
+\end{definition}
+
+\begin{definition}[样本空间与事件]
+随机试验所有可能结果构成的集合称为\textbf{样本空间}，通常记作 $\Omega$。样本空间的子集称为\textbf{事件}。
+\end{definition}
+
+\begin{example}
+投掷一枚硬币一次，样本空间可写为
+\[
+    \Omega=\{H,T\}.
+\]
+投掷一枚骰子一次，样本空间可写为
+\[
+    \Omega=\{1,2,3,4,5,6\}.
+\]
+事件“点数为偶数”就是
+\[
+    A=\{2,4,6\}.
+\]
+\end{example}
+
+\subsection{概率的古典定义}
+
+\begin{definition}[古典概率]
+若样本空间 $\Omega$ 有限，并且所有基本结果等可能，则事件 $A\subseteq\Omega$ 的概率定义为
+\[
+    P(A)=\frac{|A|}{|\Omega|}.
+\]
+\end{definition}
+
+\begin{example}
+从一副标准扑克牌中随机抽一张，抽到红桃的概率为
+\[
+    \frac{13}{52}=\frac14.
+\]
+\end{example}
+
+\subsection{基本计数原理}
+
+\begin{proposition}[加法原理]
+若两个任务不能同时发生，且第一个任务有 $m$ 种方法，第二个任务有 $n$ 种方法，则完成其中一个任务共有 $m+n$ 种方法。
+\end{proposition}
+
+\begin{proposition}[乘法原理]
+若一个过程分为两个阶段，第一阶段有 $m$ 种选择，第二阶段对每种第一阶段选择都有 $n$ 种选择，则全过程共有 $mn$ 种选择。
+\end{proposition}
+
+\begin{definition}[排列]
+从 $n$ 个不同对象中取出 $r$ 个并排列，方法数为
+\[
+    P(n,r)=\frac{n!}{(n-r)!}.
+\]
+\end{definition}
+
+\begin{definition}[组合]
+从 $n$ 个不同对象中取出 $r$ 个但不考虑顺序，方法数为
+\[
+    \binom nr=\frac{n!}{r!(n-r)!}.
+\]
+\end{definition}
+
+\begin{example}
+从 $10$ 个人中选出 $3$ 人组成委员会，方法数为
+\[
+    \binom{10}{3}=120.
+\]
+\end{example}
+
+\begin{theorem}[二项式定理]
+对任意非负整数 $n$，有
+\[
+    (x+y)^n=\sum_{k=0}^n\binom nk x^{n-k}y^k.
+\]
+\end{theorem}
+
+\begin{remark}
+组合数不仅用于计数，也自然出现在二项分布、生成函数和多项式展开中。
+\end{remark}
+
+\section{条件概率与独立性}
+
+\subsection{条件概率}
+
+\begin{definition}[条件概率]
+若 $P(B)>0$，则在事件 $B$ 已发生的条件下，事件 $A$ 的条件概率定义为
+\[
+    P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+\]
+\end{definition}
+
+\begin{example}
+从一副扑克牌中抽一张。令 $A$ 为“抽到 A”，$B$ 为“抽到黑桃”。则
+\[
+    P(A\mid B)=\frac{1}{13}.
+\]
+\end{example}
+
+\begin{proposition}[乘法公式]
+若 $P(B)>0$，则
+\[
+    P(A\cap B)=P(A\mid B)P(B).
+\]
+更一般地，
+\[
+    P(A_1\cap\cdots\cap A_n)
+    =P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1\cap\cdots\cap A_{n-1}).
+\]
+\end{proposition}
+
+\subsection{独立性}
+
+\begin{definition}[事件独立]
+事件 $A$ 与 $B$ 称为独立，如果
+\[
+    P(A\cap B)=P(A)P(B).
+\]
+当 $P(B)>0$ 时，这等价于 $P(A\mid B)=P(A)$。
+\end{definition}
+
+\begin{definition}[相互独立]
+事件族 $A_1,\dots,A_n$ 称为相互独立，如果对任意非空指标集 $I\subseteq\{1,\dots,n\}$，都有
+\[
+    P\left(\bigcap_{i\in I}A_i\right)=\prod_{i\in I}P(A_i).
+\]
+\end{definition}
+
+\begin{remark}
+两两独立不一定推出相互独立。相互独立要求任意多个事件的交都满足乘法关系。
+\end{remark}
+
+\subsection{Bayes 定理}
+
+\begin{theorem}[全概率公式]
+设 $B_1,\dots,B_n$ 构成样本空间的一个划分，且 $P(B_i)>0$。则对任意事件 $A$，有
+\[
+    P(A)=\sum_{i=1}^n P(A\mid B_i)P(B_i).
+\]
+\end{theorem}
+
+\begin{theorem}[Bayes 定理]
+在全概率公式的条件下，若 $P(A)>0$，则
+\[
+    P(B_j\mid A)=
+    \frac{P(A\mid B_j)P(B_j)}{\sum_{i=1}^n P(A\mid B_i)P(B_i)}.
+\]
+\end{theorem}
+
+\begin{remark}
+Bayes 定理说明，观察到证据 $A$ 之后，先验概率 $P(B_j)$ 可以被更新为后验概率 $P(B_j\mid A)$。它是统计推断、机器学习和信息处理中的基础公式。
+\end{remark}
+
+\section{离散随机变量}
+
+\subsection{定义}
+
+\begin{definition}[离散随机变量]
+随机变量是从样本空间到实数集的函数
+\[
+    X:\Omega\to\mathbb{R}.
+\]
+若 $X$ 的取值集合有限或可数，则称 $X$ 为离散随机变量。
+\end{definition}
+
+\begin{definition}[概率质量函数]
+离散随机变量 $X$ 的概率质量函数定义为
+\[
+    p_X(x)=P(X=x).
+\]
+它满足 $p_X(x)\ge0$ 且
+\[
+    \sum_x p_X(x)=1.
+\]
+\end{definition}
+
+\begin{definition}[分布函数]
+随机变量 $X$ 的分布函数定义为
+\[
+    F_X(x)=P(X\le x).
+\]
+\end{definition}
+
+\subsection{离散情形中的期望与方差}
+
+\begin{definition}[期望]
+离散随机变量 $X$ 的期望定义为
+\[
+    \mathbb{E}X=\sum_x xP(X=x),
+\]
+只要该级数绝对收敛。
+\end{definition}
+
+\begin{definition}[方差]
+随机变量 $X$ 的方差定义为
+\[
+    \operatorname{Var}(X)=\mathbb{E}\left[(X-\mathbb{E}X)^2\right].
+\]
+\end{definition}
+
+\begin{proposition}[方差的计算公式]
+若 $\mathbb{E}X^2<\infty$，则
+\[
+    \operatorname{Var}(X)=\mathbb{E}X^2-(\mathbb{E}X)^2.
+\]
+\end{proposition}
+
+\begin{proposition}[期望的线性性]
+若期望存在，则
+\[
+    \mathbb{E}(aX+bY)=a\mathbb{E}X+b\mathbb{E}Y.
+\]
+这里不要求 $X,Y$ 独立。
+\end{proposition}
+
+\begin{remark}
+期望线性性是概率论中最常用的工具之一。许多复杂随机变量的期望可以通过拆成指标变量来计算。
+\end{remark}
+
+\subsection{常见离散分布}
+
+\begin{definition}[Bernoulli 分布]
+若随机变量 $X$ 只取 $0$ 和 $1$，且
+\[
+    P(X=1)=p,
+    \qquad
+    P(X=0)=1-p,
+\]
+则称 $X\sim\operatorname{Bernoulli}(p)$。此时
+\[
+    \mathbb{E}X=p,
+    \qquad
+    \operatorname{Var}(X)=p(1-p).
+\]
+\end{definition}
+
+\begin{definition}[二项分布]
+若 $X$ 表示 $n$ 次独立 Bernoulli$(p)$ 试验中成功次数，则
+\[
+    X\sim\operatorname{Bin}(n,p),
+\]
+并且
+\[
+    P(X=k)=\binom nk p^k(1-p)^{n-k},
+    \qquad k=0,1,\dots,n.
+\]
+此时
+\[
+    \mathbb{E}X=np,
+    \qquad
+    \operatorname{Var}(X)=np(1-p).
+\]
+\end{definition}
+
+\begin{example}
+投掷一枚不均匀硬币 $n$ 次，正面出现次数服从二项分布。
+\end{example}
+
+\begin{definition}[几何分布]
+若 $X$ 表示第一次成功出现所需试验次数，且每次成功概率为 $p$，则
+\[
+    P(X=k)=(1-p)^{k-1}p,
+    \qquad k=1,2,\dots.
+\]
+称 $X$ 服从几何分布。
+\end{definition}
+
+\begin{definition}[Poisson 分布]
+若
+\[
+    P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!},
+    \qquad k=0,1,2,\dots,
+\]
+其中 $\lambda>0$，则称 $X\sim\operatorname{Poisson}(\lambda)$。此时
+\[
+    \mathbb{E}X=\lambda,
+    \qquad
+    \operatorname{Var}(X)=\lambda.
+\]
+\end{definition}
+
+\begin{remark}
+Poisson 分布常用于近似单位时间或单位区域内稀有事件出现的次数。
+\end{remark}
+
+\section{连续随机变量}
+
+\subsection{密度函数}
+
+\begin{definition}[概率密度函数]
+随机变量 $X$ 称为连续型，如果存在非负函数 $f_X$，使得对任意集合 $A$，有
+\[
+    P(X\in A)=\int_A f_X(x)\,dx.
+\]
+函数 $f_X$ 称为 $X$ 的概率密度函数，并满足
+\[
+    \int_{-\infty}^{\infty}f_X(x)\,dx=1.
+\]
+\end{definition}
+
+\begin{definition}[连续变量的分布函数]
+若 $X$ 有密度 $f_X$，则
+\[
+    F_X(x)=P(X\le x)=\int_{-\infty}^x f_X(t)\,dt.
+\]
+在连续点处，$F_X'(x)=f_X(x)$。
+\end{definition}
+
+\begin{definition}[期望]
+连续随机变量的期望定义为
+\[
+    \mathbb{E}X=\int_{-\infty}^{\infty}x f_X(x)\,dx,
+\]
+只要积分绝对收敛。
+\end{definition}
+
+\subsection{常见连续分布}
+
+\begin{definition}[均匀分布]
+若 $X$ 在区间 $[a,b]$ 上具有密度
+\[
+    f_X(x)=
+    \begin{cases}
+    \dfrac1{b-a},&a\le x\le b,\\
+    0,&\text{否则},
+    \end{cases}
+\]
+则称 $X\sim U(a,b)$。此时
+\[
+    \mathbb{E}X=\frac{a+b}{2},
+    \qquad
+    \operatorname{Var}(X)=\frac{(b-a)^2}{12}.
+\]
+\end{definition}
+
+\begin{definition}[指数分布]
+若 $X$ 的密度为
+\[
+    f_X(x)=
+    \begin{cases}
+    \lambda e^{-\lambda x},&x\ge0,\\
+    0,&x<0,
+    \end{cases}
+\]
+其中 $\lambda>0$，则称 $X\sim\operatorname{Exp}(\lambda)$。
+\end{definition}
+
+\begin{definition}[正态分布]
+若 $X$ 的密度为
+\[
+    f_X(x)=\frac1{\sqrt{2\pi}\sigma}
+    \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),
+\]
+其中 $\sigma>0$，则称 $X\sim N(\mu,\sigma^2)$。
+\end{definition}
+
+\begin{remark}
+正态分布之所以重要，一个根本原因是中心极限定理：大量独立小扰动的和，在适当标准化后往往趋向正态分布。
+\end{remark}
+
+\section{测度论基础}
+
+\subsection{为什么经典概率还不够}
+
+古典概率依赖有限且等可能的样本空间；连续概率依赖积分；随机过程则需要在函数空间上定义概率。为了把这些情况放在统一框架中，需要使用 $\sigma$-代数和概率测度。
+
+\subsection{$\sigma$-代数}
+
+\begin{definition}[$\sigma$-代数]
+设 $\Omega$ 是集合。子集族 $\mathcal{F}\subseteq\mathcal{P}(\Omega)$ 称为 $\sigma$-代数，如果：
+\begin{enumerate}
+    \item $\Omega\in\mathcal{F}$；
+    \item 若 $A\in\mathcal{F}$，则 $A^c\in\mathcal{F}$；
+    \item 若 $A_1,A_2,\dots\in\mathcal{F}$，则
+    \[
+        \bigcup_{n=1}^{\infty}A_n\in\mathcal{F}.
+    \]
+\end{enumerate}
+$\mathcal{F}$ 中的集合称为可测事件。
+\end{definition}
+
+\begin{proposition}
+若 $\mathcal{F}$ 是 $\sigma$-代数，则它对可数交也封闭，即
+\[
+    \bigcap_{n=1}^{\infty}A_n\in\mathcal{F}
+\]
+只要每个 $A_n\in\mathcal{F}$。
+\end{proposition}
+
+\begin{definition}[Borel $\sigma$-代数]
+拓扑空间 $X$ 中由所有开集生成的最小 $\sigma$-代数称为 Borel $\sigma$-代数，记作 $\mathcal{B}(X)$。
+\end{definition}
+
+\subsection{概率空间}
+
+\begin{definition}[概率测度]
+设 $\mathcal{F}$ 是 $\Omega$ 上的 $\sigma$-代数。函数 $P:\mathcal{F}\to[0,1]$ 称为概率测度，如果
+\[
+    P(\Omega)=1
+\]
+且对两两不交的事件 $A_1,A_2,\dots$，有可列可加性
+\[
+    P\left(\bigcup_{n=1}^{\infty}A_n\right)=\sum_{n=1}^{\infty}P(A_n).
+\]
+\end{definition}
+
+\begin{definition}[概率空间]
+三元组
+\[
+    (\Omega,\mathcal{F},P)
+\]
+称为\textbf{概率空间}。
+\end{definition}
+
+\begin{proposition}[基本性质]
+对任意事件 $A,B\in\mathcal{F}$，有
+\[
+    P(A^c)=1-P(A),
+\]
+若 $A\subseteq B$，则 $P(A)\le P(B)$，并且
+\[
+    P(A\cup B)=P(A)+P(B)-P(A\cap B).
+\]
+\end{proposition}
+
+\begin{proposition}[概率的连续性]
+若 $A_1\subseteq A_2\subseteq\cdots$，则
+\[
+    P\left(\bigcup_{n=1}^{\infty}A_n\right)=\lim_{n\to\infty}P(A_n).
+\]
+若 $A_1\supseteq A_2\supseteq\cdots$，则
+\[
+    P\left(\bigcap_{n=1}^{\infty}A_n\right)=\lim_{n\to\infty}P(A_n).
+\]
+\end{proposition}
+
+\section{随机变量作为可测函数}
+
+\subsection{可测性}
+
+\begin{definition}[随机变量]
+设 $(\Omega,\mathcal{F},P)$ 是概率空间。函数 $X:\Omega\to\mathbb{R}$ 称为随机变量，如果对任意 Borel 集 $B\in\mathcal{B}(\mathbb{R})$，都有
+\[
+    X^{-1}(B)\in\mathcal{F}.
+\]
+也就是说，$X$ 是从 $(\Omega,\mathcal{F})$ 到 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 的可测函数。
+\end{definition}
+
+\begin{remark}
+可测性的意义在于，形如 $\{X\in B\}$ 的事件必须能被赋予概率。
+\end{remark}
+
+\begin{definition}[分布]
+随机变量 $X$ 的分布是 $\mathbb{R}$ 上的概率测度 $\mu_X$，定义为
+\[
+    \mu_X(B)=P(X\in B)=P(X^{-1}(B)).
+\]
+\end{definition}
+
+\begin{definition}[随机向量]
+映射 $X:\Omega\to\mathbb{R}^n$ 若可测，则称为随机向量。它的分布是 $\mathbb{R}^n$ 上的概率测度。
+\end{definition}
+
+\subsection{作为积分的期望}
+
+\begin{definition}[期望]
+随机变量 $X$ 的期望定义为 Lebesgue 积分
+\[
+    \mathbb{E}X=\int_\Omega X\,dP,
+\]
+只要该积分有意义。
+\end{definition}
+
+\begin{theorem}[无意识统计学家定律]
+若 $X$ 的分布为 $\mu_X$，而 $g$ 是可测函数，则
+\[
+    \mathbb{E}g(X)=\int_{\mathbb{R}} g(x)\,d\mu_X(x),
+\]
+只要两边有意义。离散情形下为
+\[
+    \mathbb{E}g(X)=\sum_x g(x)P(X=x),
+\]
+连续密度情形下为
+\[
+    \mathbb{E}g(X)=\int_{-\infty}^{\infty}g(x)f_X(x)\,dx.
+\]
+\end{theorem}
+
+\section{联合分布与独立性}
+
+\subsection{联合分布}
+
+\begin{definition}[联合分布]
+随机向量 $(X,Y)$ 的分布称为 $X$ 与 $Y$ 的联合分布，定义为
+\[
+    \mu_{X,Y}(A)=P((X,Y)\in A),
+    \qquad A\in\mathcal{B}(\mathbb{R}^2).
+\]
+\end{definition}
+
+\begin{definition}[联合密度]
+若存在非负函数 $f_{X,Y}$，使得
+\[
+    P((X,Y)\in A)=\iint_A f_{X,Y}(x,y)\,dxdy,
+\]
+则称 $f_{X,Y}$ 为联合密度。
+\end{definition}
+
+\begin{definition}[边缘密度]
+若 $(X,Y)$ 有联合密度 $f_{X,Y}$，则边缘密度为
+\[
+    f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,
+\]
+\[
+    f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.
+\]
+\end{definition}
+
+\subsection{随机变量的独立性}
+
+\begin{definition}[随机变量独立]
+随机变量 $X,Y$ 称为独立，如果对任意 Borel 集 $A,B$，有
+\[
+    P(X\in A,Y\in B)=P(X\in A)P(Y\in B).
+\]
+\end{definition}
+
+\begin{proposition}[分解判别法]
+若 $X,Y$ 有联合密度，则 $X,Y$ 独立，当且仅当
+\[
+    f_{X,Y}(x,y)=f_X(x)f_Y(y)
+\]
+几乎处处成立。离散情形中对应为
+\[
+    P(X=x,Y=y)=P(X=x)P(Y=y).
+\]
+\end{proposition}
+
+\begin{proposition}
+若 $X,Y$ 独立，且期望存在，则
+\[
+    \mathbb{E}(XY)=\mathbb{E}X\,\mathbb{E}Y.
+\]
+\end{proposition}
+
+\begin{remark}
+反过来，$\mathbb{E}(XY)=\mathbb{E}X\,\mathbb{E}Y$ 通常不能推出独立，只能说明二者不相关。
+\end{remark}
+
+\subsection{协方差与相关系数}
+
+\begin{definition}[协方差]
+随机变量 $X,Y$ 的协方差定义为
+\[
+    \operatorname{Cov}(X,Y)
+    =\mathbb{E}\left[(X-\mathbb{E}X)(Y-\mathbb{E}Y)\right].
+\]
+\end{definition}
+
+\begin{definition}[相关系数]
+若 $\operatorname{Var}(X)>0$ 且 $\operatorname{Var}(Y)>0$，定义
+\[
+    \rho_{X,Y}=\frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}.
+\]
+\end{definition}
+
+\newpage
+
+\begin{proposition}
+相关系数满足
+\[
+    -1\le\rho_{X,Y}\le1.
+\]
+这来自 Cauchy--Schwarz 不等式。
+\end{proposition}
+
+\section{条件期望}
+
+\subsection{关于事件的条件化}
+
+若 $P(A)>0$，则
+\[
+    \mathbb{E}(X\mid A)=\frac{\mathbb{E}(X\mathbf{1}_A)}{P(A)}.
+\]
+它表示在事件 $A$ 已发生的条件下，对 $X$ 的平均值。
+
+\subsection{关于随机变量的条件化}
+
+对于离散随机变量，条件期望可以写作
+\[
+    \mathbb{E}(Y\mid X=x)=\sum_y yP(Y=y\mid X=x).
+\]
+于是 $\mathbb{E}(Y\mid X)$ 本身是 $X$ 的函数。
+
+\begin{definition}[关于 $\sigma$-代数的条件期望]
+设 $X$ 可积，$\mathcal{G}\subseteq\mathcal{F}$ 是子 $\sigma$-代数。随机变量 $Z$ 称为 $X$ 关于 $\mathcal{G}$ 的条件期望，记作
+\[
+    Z=\mathbb{E}(X\mid\mathcal{G}),
+\]
+如果 $Z$ 是 $\mathcal{G}$-可测的，并且对任意 $A\in\mathcal{G}$，都有
+\[
+    \int_A Z\,dP=\int_A X\,dP.
+\]
+\end{definition}
+
+\begin{definition}[关于随机变量的条件期望]
+定义
+\[
+    \mathbb{E}(Y\mid X)=\mathbb{E}(Y\mid\sigma(X)),
+\]
+其中 $\sigma(X)$ 是由 $X$ 生成的 $\sigma$-代数。
+\end{definition}
+
+\begin{theorem}[塔式性质]
+若 $\mathcal{H}\subseteq\mathcal{G}\subseteq\mathcal{F}$，则
+\[
+    \mathbb{E}\left(\mathbb{E}(X\mid\mathcal{G})\mid\mathcal{H}\right)
+    =\mathbb{E}(X\mid\mathcal{H}).
+\]
+特别地，
+\[
+    \mathbb{E}\left(\mathbb{E}(X\mid\mathcal{G})\right)=\mathbb{E}X.
+\]
+\end{theorem}
+
+\begin{remark}
+条件期望不是简单的数，而是给定信息后最好的可测预测。它在鞅论、统计估计和随机过程理论中十分核心。
+\end{remark}
+
+\section{概率不等式}
+
+\begin{theorem}[Markov 不等式]
+若 $X\ge0$ 且 $a>0$，则
+\[
+    P(X\ge a)\le\frac{\mathbb{E}X}{a}.
+\]
+\end{theorem}
+
+\begin{theorem}[Chebyshev 不等式]
+若 $X$ 有有限方差，则对任意 $\varepsilon>0$，有
+\[
+    P(|X-\mathbb{E}X|\ge\varepsilon)
+    \le\frac{\operatorname{Var}(X)}{\varepsilon^2}.
+\]
+\end{theorem}
+
+\begin{theorem}[Jensen 不等式]
+若 $\varphi$ 是凸函数，且相关期望存在，则
+\[
+    \varphi(\mathbb{E}X)\le\mathbb{E}\varphi(X).
+\]
+\end{theorem}
+
+\begin{theorem}[Cauchy--Schwarz 不等式]
+若 $X,Y\in L^2$，则
+\[
+    |\mathbb{E}(XY)|^2\le\mathbb{E}(X^2)\mathbb{E}(Y^2).
+\]
+\end{theorem}
+
+\section{生成函数与特征函数}
+
+\subsection{概率生成函数}
+
+\begin{definition}[概率生成函数]
+若 $X$ 是取非负整数值的随机变量，则它的概率生成函数定义为
+\[
+    G_X(s)=\mathbb{E}s^X=\sum_{k=0}^{\infty}P(X=k)s^k.
+\]
+\end{definition}
+
+\begin{proposition}
+若 $X,Y$ 独立且取非负整数值，则
+\[
+    G_{X+Y}(s)=G_X(s)G_Y(s).
+\]
+\end{proposition}
+
+\subsection{矩母函数}
+
+\begin{definition}[矩母函数]
+随机变量 $X$ 的矩母函数定义为
+\[
+    M_X(t)=\mathbb{E}e^{tX},
+\]
+只要该期望在 $t=0$ 附近存在。
+\end{definition}
+
+\begin{remark}
+若矩母函数在零点附近存在，则其导数给出矩：
+\[
+    M_X^{(n)}(0)=\mathbb{E}X^n.
+\]
+\end{remark}
+
+\subsection{特征函数}
+
+\begin{definition}[特征函数]
+随机变量 $X$ 的特征函数定义为
+\[
+    \varphi_X(t)=\mathbb{E}e^{itX},
+    \qquad t\in\mathbb{R}.
+\]
+\end{definition}
+
+\begin{proposition}[基本性质]
+特征函数总是存在，并满足
+\[
+    \varphi_X(0)=1,
+    \qquad
+    |\varphi_X(t)|\le1.
+\]
+若 $X,Y$ 独立，则
+\[
+    \varphi_{X+Y}(t)=\varphi_X(t)\varphi_Y(t).
+\]
+\end{proposition}
+
+\begin{theorem}[唯一性定理]
+随机变量的特征函数唯一决定其分布。
+\end{theorem}
+
+\section{收敛方式}
+
+\begin{definition}[几乎处处收敛]
+若
+\[
+    P\left(\lim_{n\to\infty}X_n=X\right)=1,
+\]
+则称 $X_n$ 几乎处处收敛到 $X$，记作
+\[
+    X_n\to X\quad a.s.
+\]
+\end{definition}
+
+\begin{definition}[依概率收敛]
+若对任意 $\varepsilon>0$，有
+\[
+    P(|X_n-X|>\varepsilon)\to0,
+\]
+则称 $X_n$ 依概率收敛到 $X$，记作
+\[
+    X_n\xrightarrow{P}X.
+\]
+\end{definition}
+
+\begin{definition}[$L^p$ 收敛]
+若
+\[
+    \mathbb{E}|X_n-X|^p\to0,
+\]
+则称 $X_n$ 在 $L^p$ 中收敛到 $X$。
+\end{definition}
+
+\begin{definition}[依分布收敛]
+若 $X_n$ 的分布函数 $F_n$ 在 $X$ 的分布函数 $F$ 的每个连续点处满足
+\[
+    F_n(x)\to F(x),
+\]
+则称 $X_n$ 依分布收敛到 $X$，记作
+\[
+    X_n\xrightarrow{d}X.
+\]
+\end{definition}
+
+\begin{theorem}[收敛方式之间的关系]
+有如下蕴含关系：
+\[
+    X_n\to X\ a.s.\quad\Longrightarrow\quad X_n\xrightarrow{P}X
+    \quad\Longrightarrow\quad X_n\xrightarrow{d}X.
+\]
+若 $X_n\to X$ 于 $L^p$，则 $X_n\xrightarrow{P}X$。
+\end{theorem}
+
+\begin{remark}
+依分布收敛是最弱的常见收敛方式之一，它只描述分布的极限，不要求随机变量在同一样本点上接近。
+\end{remark}
+
+\section{极限定理}
+
+\subsection{大数定律}
+
+\begin{theorem}[弱大数定律]
+设 $X_1,X_2,\dots$ 独立同分布，且
+\[
+    \mathbb{E}X_i=\mu,
+    \qquad
+    \operatorname{Var}(X_i)=\sigma^2<\infty.
+\]
+令
+\[
+    \overline X_n=\frac1n\sum_{i=1}^n X_i.
+\]
+则
+\[
+    \overline X_n\xrightarrow{P}\mu.
+\]
+\end{theorem}
+
+\begin{proof}
+由期望线性性，$\mathbb{E}\overline X_n=\mu$；由独立性，
+\[
+    \operatorname{Var}(\overline X_n)=\frac{\sigma^2}{n}.
+\]
+对 $\overline X_n$ 使用 Chebyshev 不等式即可得到结论。
+\end{proof}
+
+\begin{theorem}[强大数定律]
+若 $X_1,X_2,\dots$ 独立同分布且 $\mathbb{E}|X_1|<\infty$，则
+\[
+    \frac1n\sum_{i=1}^n X_i\to\mathbb{E}X_1
+    \quad a.s.
+\]
+\end{theorem}
+
+\begin{remark}
+弱大数定律给出依概率收敛，强大数定律给出几乎处处收敛。后者更强，也更接近频率稳定性的直观表述。
+\end{remark}
+
+\subsection{中心极限定理}
+
+\begin{theorem}[Lindeberg--Levy 中心极限定理]
+设 $X_1,X_2,\dots$ 独立同分布，且
+\[
+    \mathbb{E}X_i=\mu,
+    \qquad
+    \operatorname{Var}(X_i)=\sigma^2>0.
+\]
+则
+\[
+    \frac{\sum_{i=1}^n X_i-n\mu}{\sigma\sqrt n}
+    \xrightarrow{d}N(0,1).
+\]
+\end{theorem}
+
+中心极限定理说明，独立同分布随机变量之和在标准化后趋向正态分布。这一结论解释了为什么正态分布在统计学和自然科学中频繁出现。
+
+\begin{remark}
+中心极限定理中的标准化有两个作用：减去均值使中心回到 $0$，除以标准差尺度 $\sigma\sqrt n$ 使方差稳定为 $1$。
+\end{remark}
+
+\section{Borel--Cantelli 引理}
+
+\begin{definition}[事件的上极限]
+事件列 $A_1,A_2,\dots$ 的上极限定义为
+\[
+    \limsup_{n\to\infty}A_n
+    =\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}A_k.
+\]
+它表示“无限多个 $A_n$ 发生”的事件。
+\end{definition}
+
+\newpage
+
+\begin{theorem}[第一 Borel--Cantelli 引理]
+若
+\[
+    \sum_{n=1}^{\infty}P(A_n)<\infty,
+\]
+则
+\[
+    P(A_n\ \text{无限多次发生})=0.
+\]
+即
+\[
+    P\left(\limsup_{n\to\infty}A_n\right)=0.
+\]
+\end{theorem}
+
+\begin{theorem}[第二 Borel--Cantelli 引理]
+若事件 $A_1,A_2,\dots$ 相互独立，并且
+\[
+    \sum_{n=1}^{\infty}P(A_n)=\infty,
+\]
+则
+\[
+    P(A_n\ \text{无限多次发生})=1.
+\]
+\end{theorem}
+
+\section{随机过程导论}
+
+\begin{definition}[随机过程]
+随机过程是一族随机变量
+\[
+    \{X_t:t\in T\},
+\]
+其中 $T$ 称为指标集。若 $T=\mathbb{N}$，称为离散时间随机过程；若 $T=[0,\infty)$，称为连续时间随机过程。
+\end{definition}
+
+\begin{example}
+简单随机游走、Poisson 过程、Brown 运动、马尔可夫链和时间序列模型都是随机过程的例子。
+\end{example}
+
+\begin{definition}[滤过]
+一族 $\sigma$-代数 $\{\mathcal{F}_t\}_{t\in T}$ 称为滤过，如果当 $s\le t$ 时，
+\[
+    \mathcal{F}_s\subseteq\mathcal{F}_t.
+\]
+它表示随时间增长而增加的信息。
+\end{definition}
+
+\begin{definition}[鞅]
+设 $\{X_t\}$ 适应滤过 $\{\mathcal{F}_t\}$，且 $\mathbb{E}|X_t|<\infty$。如果对 $s\le t$，有
+\[
+    \mathbb{E}(X_t\mid\mathcal{F}_s)=X_s,
+\]
+则称 $\{X_t\}$ 是鞅。
+\end{definition}
+
+\begin{remark}
+鞅可以理解为“公平游戏”的数学模型：在已知当前信息的条件下，未来的期望等于现在的值。
+\end{remark}
+
+\begin{example}[简单随机游走]
+设 $\xi_1,\xi_2,\dots$ 独立同分布，且
+\[
+    P(\xi_i=1)=P(\xi_i=-1)=\frac12.
+\]
+定义
+\[
+    S_n=\sum_{i=1}^n \xi_i.
+\]
+则 $\{S_n\}$ 是一维简单对称随机游走，并且相对于自然滤过是鞅。
+\end{example}
+
+\section{结语}
+
+概率论从有限样本空间中的计数问题出发，最终发展为建立在测度论基础上的严密理论。随机变量是可测函数，期望是积分，独立性是乘积分布结构，条件期望是给定信息下的最佳预测。大数定律和中心极限定理解释了随机现象中的稳定性与正态近似，而随机过程则把概率论推向时间演化和动态系统。
+
+\textbf{关键词：} 概率空间，随机变量，期望，方差，独立性，条件期望，收敛方式，大数定律，中心极限定理，随机过程。

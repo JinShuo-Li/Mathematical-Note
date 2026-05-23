@@ -1,0 +1,410 @@
+\chapter{应用数学：图论}
+
+图论用点和边描述对象之间的关系。它既可以研究纯粹的组合结构，也可以建模交通网络、通信网络、社交网络、网页链接、任务依赖和数据结构。图论的特点是：定义看起来简单，但很快就会出现深刻而复杂的问题。
+
+本章按照从基本概念到经典结构、再到算法与随机图的路线展开。重点不在于列举所有图论结论，而在于建立一套能被后续离散数学、算法设计和应用建模反复使用的语言。
+
+\section{图论引论}
+
+\subsection{基本概念与分类}
+
+\begin{definition}[简单图]
+一个\textbf{简单图}是二元组
+\[
+    G=(V,E),
+\]
+其中 $V$ 是顶点集，$E$ 是边集，并且每条边都是 $V$ 中两个不同顶点构成的无序二元子集。简单图不允许自环，也不允许重边。
+\end{definition}
+
+\begin{definition}[多重图]
+允许两个顶点之间存在多条边的图称为\textbf{多重图}。
+\end{definition}
+
+\begin{definition}[伪图]
+允许自环的图称为\textbf{伪图}。自环是一条从某个顶点连回自身的边。
+\end{definition}
+
+\begin{definition}[有向图]
+一个\textbf{有向图}由顶点集和有向边集组成。有向边是有序对 $(u,v)$，表示从 $u$ 指向 $v$ 的边。
+\end{definition}
+
+\begin{definition}[度]
+在无向图中，顶点 $v$ 的\textbf{度}记作 $\deg(v)$，是与 $v$ 相接的边数；自环通常贡献 $2$。在有向图中，顶点有入度和出度，分别记作
+\[
+    \deg^-(v),\qquad \deg^+(v).
+\]
+\end{definition}
+
+\begin{theorem}[握手引理]
+对任意有限无向图 $G=(V,E)$，有
+\[
+    \sum_{v\in V}\deg(v)=2|E|.
+\]
+因此，奇度顶点的个数一定为偶数。
+\end{theorem}
+
+\begin{proof}
+每条边恰好被它的两个端点各计数一次，所以所有顶点度数之和等于边数的两倍。由于总和为偶数，奇数项的个数必须为偶数。
+\end{proof}
+
+\begin{definition}[图同构]
+两个图 $G=(V,E)$ 和 $H=(W,F)$ 称为\textbf{同构}，如果存在双射
+\[
+    \varphi:V\to W
+\]
+使得任意 $u,v\in V$，都有
+\[
+    \{u,v\}\in E
+    \quad\Longleftrightarrow\quad
+    \{\varphi(u),\varphi(v)\}\in F.
+\]
+\end{definition}
+
+\begin{theorem}[同构不变量]
+若两个图同构，则它们具有相同的顶点数、边数、度数序列、连通分量数、是否二分、是否平面等性质。
+\end{theorem}
+
+同构不变量可以用来证明两个图不同构，但通常不能单独用来证明两个图同构。
+
+\begin{theorem}[Havel--Hakimi 定理]
+非负整数序列
+\[
+    d_1\ge d_2\ge\cdots\ge d_n
+\]
+是某个简单图的度数序列，当且仅当序列
+\[
+    d_2-1,d_3-1,\dots,d_{d_1+1}-1,d_{d_1+2},\dots,d_n
+\]
+在重新排序后仍是图的度数序列。
+\end{theorem}
+
+这个定理给出了判断度数序列是否可图化的递归方法。
+
+\begin{definition}[邻接矩阵]
+设 $G$ 是顶点为 $v_1,\dots,v_n$ 的图。它的邻接矩阵是 $n\times n$ 矩阵 $A=(a_{ij})$，其中
+\[
+    a_{ij}=
+    \begin{cases}
+    1,&\text{若 }v_i\text{ 与 }v_j\text{ 相邻},\\
+    0,&\text{否则}.
+    \end{cases}
+\]
+对多重图，$a_{ij}$ 可表示对应边的条数。
+\end{definition}
+
+\begin{theorem}
+邻接矩阵 $A$ 的 $k$ 次幂满足：$(A^k)_{ij}$ 等于从 $v_i$ 到 $v_j$ 的长度为 $k$ 的走法数。
+\end{theorem}
+
+\begin{definition}[关联矩阵]
+设 $G$ 有顶点 $v_1,\dots,v_n$ 和边 $e_1,\dots,e_m$。关联矩阵是 $n\times m$ 矩阵 $B=(b_{ij})$，其中 $b_{ij}=1$ 表示顶点 $v_i$ 与边 $e_j$ 相接，否则为 $0$。有向图中常用 $-1,0,1$ 表示边的方向。
+\end{definition}
+
+\begin{definition}[无向图中的路]
+无向图中的一条\textbf{走法}是顶点与边交替出现的序列
+\[
+    v_0,e_1,v_1,e_2,\dots,e_k,v_k,
+\]
+其中每条 $e_i$ 连接 $v_{i-1}$ 和 $v_i$。若所有边互不相同，称为迹；若所有顶点互不相同，称为路径。
+\end{definition}
+
+\begin{definition}[有向图中的路]
+有向图中的有向路要求每条边的方向与行进方向一致，即边依次为
+\[
+    (v_0,v_1),(v_1,v_2),\dots,(v_{k-1},v_k).
+\]
+\end{definition}
+
+\begin{definition}[连通性]
+无向图称为连通，如果任意两个顶点之间都有路径。图的极大连通子图称为连通分量。
+\end{definition}
+
+\begin{definition}[割点与桥]
+若删除顶点 $v$ 及其相关边会增加连通分量数，则称 $v$ 为割点。若删除边 $e$ 会增加连通分量数，则称 $e$ 为桥。
+\end{definition}
+
+\begin{theorem}[Whitney 不等式]
+对非平凡连通图，有
+\[
+    \kappa(G)\le \lambda(G)\le \delta(G),
+\]
+其中 $\kappa(G)$ 是点连通度，$\lambda(G)$ 是边连通度，$\delta(G)$ 是最小度。
+\end{theorem}
+
+\begin{definition}[完全图]
+含有 $n$ 个顶点且任意两个不同顶点之间都有边的简单图称为完全图，记作 $K_n$。
+\end{definition}
+
+\begin{definition}[二分图]
+图 $G=(V,E)$ 称为二分图，如果存在划分
+\[
+    V=X\cup Y,
+    \qquad X\cap Y=\varnothing,
+\]
+使得每条边都连接 $X$ 中一点和 $Y$ 中一点。
+\end{definition}
+
+\begin{definition}[完全二分图]
+若二分图的两个部分大小分别为 $m,n$，并且两个部分之间所有可能的边都存在，则称为完全二分图，记作 $K_{m,n}$。
+\end{definition}
+
+\begin{theorem}[二分图的刻画]
+图是二分图，当且仅当它不含奇圈。
+\end{theorem}
+
+\begin{theorem}[Hall 婚配定理]
+设二分图的两部分为 $X,Y$。存在覆盖 $X$ 的匹配，当且仅当对任意 $S\subseteq X$，都有
+\[
+    |N(S)|\ge |S|,
+\]
+其中 $N(S)$ 表示与 $S$ 中顶点相邻的 $Y$ 中顶点集合。
+\end{theorem}
+
+\begin{definition}[平面图]
+若图可以画在平面上，并且边之间除了公共端点外不相交，则称为平面图。
+\end{definition}
+
+\begin{theorem}[Euler 公式]
+若连通平面图有 $v$ 个顶点、$e$ 条边和 $f$ 个面，则
+\[
+    v-e+f=2.
+\]
+\end{theorem}
+
+\begin{definition}[图的细分]
+在一条边上插入新的二度顶点，称为对该边的细分。若两个图可以通过细分得到同构图，则称它们同胚。
+\end{definition}
+
+\begin{theorem}[Kuratowski 定理]
+有限图是平面图，当且仅当它不含与 $K_5$ 或 $K_{3,3}$ 的某个细分同构的子图。
+\end{theorem}
+
+\begin{theorem}[四色定理]
+任意平面图的顶点都可以用至多四种颜色染色，使得相邻顶点颜色不同。
+\end{theorem}
+
+\section{道路与回路}
+
+\subsection{Euler 回路}
+
+\begin{definition}
+经过图中每条边恰好一次的闭迹称为\textbf{Euler 回路}。经过每条边恰好一次但不一定闭合的迹称为\textbf{Euler 路}。
+\end{definition}
+
+\begin{theorem}
+有限连通无向图存在 Euler 回路，当且仅当每个顶点的度都是偶数。有限连通无向图存在 Euler 路，当且仅当奇度顶点个数为 $0$ 或 $2$。
+\end{theorem}
+
+\subsection{Hamilton 圈}
+
+\begin{definition}
+经过图中每个顶点恰好一次并回到起点的圈称为\textbf{Hamilton 圈}。经过每个顶点恰好一次但不必回到起点的路称为 Hamilton 路。
+\end{definition}
+
+与 Euler 问题相比，Hamilton 问题通常更困难；不存在像偶度条件那样简单的完全刻画。
+
+\begin{theorem}[Ore 定理]
+设 $G$ 是含 $n\ge3$ 个顶点的简单图。若对任意不相邻顶点 $u,v$，都有
+\[
+    \deg(u)+\deg(v)\ge n,
+\]
+则 $G$ 含有 Hamilton 圈。
+\end{theorem}
+
+\section{树与森林}
+
+\subsection{定义与刻画}
+
+\begin{definition}[树]
+连通且无圈的无向图称为\textbf{树}。
+\end{definition}
+
+\begin{definition}[森林]
+无圈的无向图称为\textbf{森林}。森林的每个连通分量都是树。
+\end{definition}
+
+\begin{theorem}
+任意含 $n$ 个顶点的树都有 $n-1$ 条边。
+\end{theorem}
+
+\begin{theorem}[树的刻画]
+对有限简单图 $G$，以下命题等价：
+\begin{enumerate}
+    \item $G$ 是树；
+    \item $G$ 连通且有 $n-1$ 条边；
+    \item $G$ 无圈且有 $n-1$ 条边；
+    \item 任意两个顶点之间存在唯一简单路径；
+    \item $G$ 连通，并且删除任意一条边都会使其不连通；
+    \item $G$ 无圈，并且添加任意一条新边都会产生唯一圈。
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[推论]
+含 $n$ 个顶点、$c$ 个连通分量的森林有
+\[
+    n-c
+\]
+条边。
+\end{theorem}
+
+\subsection{有根树}
+
+\begin{definition}[有根树]
+指定一个特殊顶点作为根的树称为\textbf{有根树}。
+\end{definition}
+
+\begin{definition}
+在有根树中，若顶点 $u$ 位于从根到 $v$ 的路径上，则称 $u$ 是 $v$ 的祖先，$v$ 是 $u$ 的后代。若 $u$ 与 $v$ 相邻且 $u$ 更接近根，则称 $u$ 是 $v$ 的父节点，$v$ 是 $u$ 的子节点。
+\end{definition}
+
+\begin{definition}
+没有子节点的顶点称为叶子；非叶子顶点称为内部顶点。
+\end{definition}
+
+\begin{definition}
+若每个内部顶点最多有 $m$ 个子节点，则称该树为 $m$ 叉树；若每个内部顶点恰有 $m$ 个子节点，则称为满 $m$ 叉树。
+\end{definition}
+
+\begin{theorem}
+若满 $m$ 叉树有 $i$ 个内部顶点，则总顶点数为
+\[
+    n=mi+1,
+\]
+叶子数为
+\[
+    \ell=(m-1)i+1.
+\]
+\end{theorem}
+
+\begin{theorem}
+高度为 $h$ 的 $m$ 叉树至多有
+\[
+    m^h
+\]
+个叶子。
+\end{theorem}
+
+\begin{definition}
+若有根树的每一层都尽可能填满，且最后一层从左到右填充，则称为完全树。这类树在堆和优先队列中非常常见。
+\end{definition}
+
+\subsection{生成树}
+
+\begin{definition}[生成树]
+连通图 $G$ 的一个生成子图若是树，并且包含 $G$ 的所有顶点，则称为 $G$ 的\textbf{生成树}。
+\end{definition}
+
+\begin{theorem}
+每个有限连通图都有生成树。
+\end{theorem}
+
+\begin{definition}[带权图]
+若图的每条边 $e$ 都赋有一个权重 $w(e)$，则称为带权图。
+\end{definition}
+
+\begin{definition}[最小生成树]
+连通带权图中，总权重最小的生成树称为\textbf{最小生成树}。
+\end{definition}
+
+\begin{theorem}[Prim 算法的正确性]
+从任意起点开始，每次选择连接当前树与外部顶点的最小权边，并加入这条边，最终得到一棵最小生成树。
+\end{theorem}
+
+\begin{remark}
+Prim 算法和 Kruskal 算法都依赖同一个割性质：若某条边是跨越某个割的最小权边，则它可以安全地出现在某棵最小生成树中。
+\end{remark}
+
+\subsection*{图算法实现}
+
+图算法通常围绕两种基本表示展开：邻接矩阵和邻接表。邻接矩阵适合稠密图，查询两个顶点是否相邻的时间复杂度为 $O(1)$，但空间复杂度为 $O(n^2)$。邻接表适合稀疏图，空间复杂度为 $O(n+m)$。
+
+广度优先搜索 BFS 从一个起点出发，先访问距离为 $1$ 的顶点，再访问距离为 $2$ 的顶点，依次向外扩展。它可以求无权图中的最短路径。深度优先搜索 DFS 则沿着一条路径尽可能深入，回溯后再探索其他分支。DFS 常用于判断连通性、寻找环、拓扑排序以及分解强连通分量。
+
+Dijkstra 算法用于求非负权图中的单源最短路径。它维护每个顶点的当前最短距离估计，每次选取距离最小的未确定顶点并进行松弛。若使用优先队列实现，复杂度可写为
+\[
+    O((n+m)\log n).
+\]
+
+Floyd--Warshall 算法用于求所有顶点对之间的最短路径。它的动态规划思想是逐步允许更多中间顶点参与路径，递推形式为
+\[
+    d_{ij}^{(k)}=\min\left(d_{ij}^{(k-1)},\ d_{ik}^{(k-1)}+d_{kj}^{(k-1)}\right).
+\]
+
+\section{随机图}
+
+\subsection{随机图的基本性质}
+
+Erd\H{o}s--R\'enyi 随机图模型 $G(n,p)$ 定义如下：顶点集为 $\{1,2,\dots,n\}$，任意两点之间独立地以概率 $p$ 连边。
+
+\begin{theorem}[$G(n,p)$ 的度分布]
+在 $G(n,p)$ 中，固定顶点的度服从二项分布
+\[
+    \deg(v)\sim \operatorname{Bin}(n-1,p).
+\]
+因此
+\[
+    \mathbb{E}\deg(v)=(n-1)p.
+\]
+\end{theorem}
+
+\begin{theorem}[连通性阈值]
+随机图 $G(n,p)$ 的连通性阈值约为
+\[
+    p=\frac{\log n}{n}.
+\]
+当 $p$ 明显大于该量时，图以高概率连通；当 $p$ 明显小于该量时，图以高概率不连通。
+\end{theorem}
+
+\begin{theorem}[巨型分量的出现]
+令 $p=c/n$。当 $c<1$ 时，$G(n,p)$ 的所有连通分量通常都较小；当 $c>1$ 时，会出现一个包含正比例顶点的巨型连通分量。
+\end{theorem}
+
+\begin{theorem}[$G(n,p)$ 的直径]
+在适当条件下，随机图的典型距离大约为
+\[
+    \frac{\log n}{\log(np)}.
+\]
+这解释了大规模随机网络中“小世界”现象的一部分。
+\end{theorem}
+
+\begin{definition}[局部聚类系数]
+设顶点 $v$ 的邻居集合为 $N(v)$。若 $\deg(v)\ge2$，则 $v$ 的局部聚类系数定义为
+\[
+    C_v=\frac{\text{邻居之间实际存在的边数}}{\binom{\deg(v)}{2}}.
+\]
+\end{definition}
+
+\begin{theorem}[$G(n,p)$ 的聚类系数]
+在随机图 $G(n,p)$ 中，局部聚类系数的期望约为 $p$。
+\end{theorem}
+
+\subsection{随机图理论中的重要定理}
+
+\begin{theorem}[零一律]
+在某些逻辑语言中，随机图 $G(n,p)$ 的许多一阶性质，其概率随着 $n\to\infty$ 会趋向于 $0$ 或 $1$，而不会趋向中间值。
+\end{theorem}
+
+\begin{theorem}[子图阈值]
+固定图 $H$ 在 $G(n,p)$ 中出现的阈值与 $H$ 的边数和顶点数密度有关。通常，越稠密的图需要越大的 $p$ 才会以高概率出现。
+\end{theorem}
+
+\begin{theorem}[Hamilton 圈]
+随机图出现 Hamilton 圈的阈值与最小度至少为 $2$ 的阈值密切相关，典型量级为
+\[
+    p\sim \frac{\log n}{n}.
+\]
+\end{theorem}
+
+\subsection{随机图的算法生成}
+
+生成 $G(n,p)$ 最直接的方法是遍历所有 $\binom n2$ 对顶点，并独立抛硬币决定是否连边。该方法简单，但当图很稀疏而 $n$ 很大时效率不高。更高效的方法会利用几何分布跳过长串不存在的边，从而只花接近实际边数的时间。
+
+\subsection{随机图的应用}
+
+随机图可用于模拟社交网络、通信网络、流行病传播、网页链接、容错系统和复杂系统。虽然真实网络通常不是完全独立连边的 $G(n,p)$，但随机图模型提供了基准模型，使我们能判断某个观察到的现象是否仅由随机性造成，还是体现了更深的结构。
+
+\subsection{结论与未来方向}
+
+图论把关系结构转化为可计算、可证明的对象。经典图论关注路径、连通性、染色、匹配、树和平面图；算法图论关注如何高效地处理这些结构；随机图论则研究在随机机制下大规模图的典型行为。三者共同构成了离散数学和现代计算科学的重要基础。
+
+\textbf{关键词：} 图，连通性，二分图，平面图，Euler 回路，Hamilton 圈，树，生成树，随机图。

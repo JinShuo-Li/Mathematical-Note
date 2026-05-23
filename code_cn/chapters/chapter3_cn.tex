@@ -1,0 +1,1992 @@
+\chapter{线性代数}
+\begin{quote}
+\emph{
+在完成分析部分的第一阶段之后，我们现在进入一个新的章节：线性代数。它是数学中一个相当不同的部分。
+}
+
+\emph{
+不同于分析学和微积分，线性代数更强调几何理解。证明依然重要，但对学习者来说，更关键的是建立关于这一学科的几何直觉。这里需要说明的是，直觉不同于想象。虽然我们只能直接想象三维欧几里得空间，但直觉可以把我们带向更高维的空间，也可以带向更抽象的线性空间。
+}
+
+\emph{
+在这一部分中，我们会从解线性方程组开始，然后研究一种特殊的线性空间：向量空间。最后，我们会进入更加抽象的部分：线性空间。它为我们提供一种新的工具，用来研究更一般形式的代数结构和系统。
+}
+
+\emph{
+更具体地说，在最后关于抽象线性空间的部分中，我们会讨论线性无关、基、维数和线性变换等关键概念。理解这些基础概念，可以帮助我们把看起来彼此不同的数学对象，例如函数、多项式和矩阵，统一到同一个强有力的框架之下。这种抽象并不只是学术上的训练；它也为处理微分方程、数据科学、量子力学和工程优化等领域中的复杂问题提供了基本语言和工具。在研究 $\mathbb{R}^n$ 时建立起来的几何直觉，会在我们进入这些高维且抽象的领域时发挥不可替代的作用。也正因为如此，线性代数成为现代数学中最基础、应用最广泛的领域之一。
+}
+
+\emph{
+在后面的章节中，我们还会介绍代数学的另一分支，即抽象代数。线性代数更关注多元方程，而抽象代数则研究高次方程的解结构，这是数学中更加抽象的一部分。不过，即使在抽象代数中，我们仍然需要线性代数的知识。因此，现在就让我们开始吧。
+}
+\end{quote}
+
+\section{线性方程与矩阵}
+
+\subsection{线性方程组}
+
+我相信大多数读者都见过如下形式的方程组：
+
+\[
+\begin{cases}
+x+y=1\\
+x-y =0
+\end{cases}
+\]
+
+它们可能有不同数量的变量和方程，但它们共享一个共同特征：\textbf{每一个方程都是线性的。}变量只以一次幂出现，变量之间没有乘积，例如 $xy$，也没有非线性函数，例如 $\sin(x)$ 或 $\sqrt{x}$。
+
+对于这种方程系统，我们称其为\textbf{线性方程组}。它的一般形式包含 $m$ 个方程和 $n$ 个变量，也称为一个 $m \times n$ 系统：
+
+\[
+\begin{cases}
+a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1\\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2\\
+\quad \vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m
+\end{cases}
+\]
+其中，$x_1,\ldots,x_n$ 是\textbf{变量}，也就是未知量；$a_{ij}$ 是\textbf{系数}；$b_1,\ldots,b_m$ 是\textbf{常数项}。
+
+方程组的一个\textbf{解}，是指一组数 $(s_1,s_2,\ldots,s_n)$，当它们分别代入 $(x_1,x_2,\ldots,x_n)$ 时，能够同时满足全部 $m$ 个方程。所有可能解构成的集合称为\textbf{解集}。
+
+\begin{example}[一个 $2\times 2$ 系统]
+考虑方程组
+\[
+\begin{cases}
+x_1 + x_2 = 3 \\
+x_1 - x_2 = -1
+\end{cases}
+\]
+我们可以用初等代数求解。
+\begin{enumerate}
+    \item \textbf{代入法：}由第一个方程得到 $x_2 = 3-x_1$。把它代入第二个方程，得到 $x_1-(3-x_1)=-1$，即 $2x_1-3=-1$，所以 $2x_1=2$，从而 $x_1=1$。于是 $x_2=3-1=2$。唯一解是 $(1,2)$。
+    \item \textbf{消元法：}将两个方程相加：$(x_1+x_2)+(x_1-x_2)=3+(-1)$，得到 $2x_1=2$，所以 $x_1=1$。用第一个方程减去第二个方程：$(x_1+x_2)-(x_1-x_2)=3-(-1)$，得到 $2x_2=4$，所以 $x_2=2$。
+\end{enumerate}
+因此解集只包含一个点 $(1,2)$。
+\end{example}
+
+在线性代数中，我们关心三个问题：
+\begin{enumerate}
+    \item \textbf{存在性：}解是否存在？也就是说，系统是否\textbf{相容}？
+    \item \textbf{唯一性：}如果解存在，它是否唯一？
+    \item \textbf{计算性：}如果解存在，应该怎样求出它们？
+\end{enumerate}
+
+从几何角度看，对于一个 $2\times 2$ 系统，每一个方程都表示 $\mathbb{R}^2$ 平面中的一条直线。解集就是这些直线的交集。
+\begin{itemize}
+    \item \textbf{唯一解：}两条直线交于一个点。
+    \item \textbf{无解：}两条直线平行且不重合。
+    \item \textbf{无穷多解：}两个方程表示同一条直线。
+\end{itemize}
+
+对于一个 $3\times 3$ 系统，每一个方程都是 $\mathbb{R}^3$ 中的一个平面。三个平面的交集可能是一个点、一条直线、一个平面，也可能为空集。
+
+当方程规模变大时，例如 $5$ 个方程、$5$ 个变量，代入法和消元法会变得非常繁琐。因此，我们需要一种更系统、更高效的方法。矩阵正是在这里登场的。
+
+\subsection{矩阵代数}
+
+\subsubsection{矩阵记号与特殊矩阵}
+
+新方法的本质，是在不改变解集的情况下操作方程。我们注意到，方程组中的全部信息都包含在系数 $a_{ij}$ 和常数项 $b_i$ 之中。变量名 $x_1,x_2,\ldots$ 只是占位符。因此，我们可以把整个系统编码进一个紧凑的矩形数组中，这个数组称为\textbf{矩阵}。
+
+\begin{definition}
+\textbf{矩阵}是由数字组成的矩形数组，这些数字称为矩阵的\textbf{元素}或\textbf{项}。一个具有 $m$ 行和 $n$ 列的矩阵称为 $m\times n$ 矩阵。
+\end{definition}
+
+对于一般线性方程组，我们定义两个重要矩阵。
+
+\textbf{系数矩阵}为
+\[ \textbf{A} = \begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix} \]
+我们也可以把它记作 $A=[a_{ij}]$。其中 $a_{ij}$ 表示第 $i$ 行第 $j$ 列的元素。
+
+包含常数项的矩阵称为\textbf{增广矩阵}：
+\[ (A \mid \mathbf{b}) = \left(\begin{array}{cccc|c}
+a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\
+a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
+\end{array}\right) \]
+因此，求解方程组就等价于操作这个增广矩阵。
+
+\newpage
+
+\begin{example}
+方程组
+\[
+\begin{cases}
+x_1 - 2x_2 + x_3 = 0 \\
+2x_2 - 8x_3 = 8 \\
+5x_1 - 5x_3 = 10
+\end{cases}
+\]
+的系数矩阵为
+\[ A = \begin{pmatrix} 1 & -2 & 1 \\ 0 & 2 & -8 \\ 5 & 0 & -5 \end{pmatrix} \]
+增广矩阵为
+\[ (A \mid \mathbf{b}) = \left(\begin{array}{ccc|c} 1 & -2 & 1 & 0 \\ 0 & 2 & -8 & 8 \\ 5 & 0 & -5 & 10 \end{array}\right) \]
+\end{example}
+
+\paragraph{矩阵术语与特殊矩阵}
+
+\begin{itemize}
+    \item \textbf{大小/维度：}一个有 $m$ 行和 $n$ 列的矩阵 $A$ 的大小为 $m\times n$。
+    \item \textbf{方阵：}如果矩阵的行数等于列数，即 $m=n$，则称该矩阵为\textbf{方阵}。
+    \item \textbf{相等：}两个矩阵 $A=[a_{ij}]$ 和 $B=[b_{ij}]$ \textbf{相等}，当且仅当它们大小相同，并且每一个对应元素都相等，即对所有 $i,j$ 都有 $a_{ij}=b_{ij}$。
+    \item \textbf{主对角线：}在方阵中，元素 $a_{11},a_{22},\ldots,a_{nn}$ 构成\textbf{主对角线}。
+    \item \textbf{副对角线：}在方阵中，从右上角到左下角的对角线
+    $$a_{1n}, a_{2,n-1}, \ldots, a_{n1}$$
+    称为\textbf{副对角线}。
+\end{itemize}
+
+下面列出几类特殊矩阵：
+
+\begin{enumerate}
+    \item \textbf{零矩阵：}所有元素都为 $0$ 的矩阵，大小可以任意。通常记为 $\mathbf{0}$ 或 $\mathbf{0}_{m\times n}$。
+    \[ \mathbf{0} = \begin{pmatrix} 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 0 \end{pmatrix} \]
+    \item \textbf{单位矩阵：}方阵 $I_n$，或简记为 $I$，其主对角线元素全为 $1$，其他元素全为 $0$。
+    \[ I_3 = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \]
+    单位矩阵是乘法单位元：在维度相容时，$AI=A$ 且 $IA=A$。
+    \item \textbf{对角矩阵：}主对角线之外的所有元素都为 $0$ 的方阵。
+    \[ D = \begin{pmatrix} 3 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 5 \end{pmatrix} \]
+    \item \textbf{上三角矩阵：}主对角线下方元素全为 $0$ 的方阵，即当 $i>j$ 时 $a_{ij}=0$。
+    \[ U = \begin{pmatrix} 1 & 4 & -1 \\ 0 & 2 & 7 \\ 0 & 0 & 3 \end{pmatrix} \]
+    \item \textbf{下三角矩阵：}主对角线上方元素全为 $0$ 的方阵，即当 $i<j$ 时 $a_{ij}=0$。
+    \[ L = \begin{pmatrix} 1 & 0 & 0 \\ 5 & 2 & 0 \\ -1 & 0 & 3 \end{pmatrix} \]
+    \item \textbf{转置：}一个 $m\times n$ 矩阵 $A$ 的\textbf{转置}记作 $A^T$，或 $A'$，它是通过交换矩阵的行和列得到的 $n\times m$ 矩阵。也就是说，$(A^T)_{ij}=A_{ji}$。
+    \[ A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix} \quad \implies \quad A^T = \begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{pmatrix} \]
+    \item \textbf{对称矩阵：}若方阵 $A$ 满足 $A^T=A$，则称其为对称矩阵。这意味着对所有 $i,j$，都有 $a_{ij}=a_{ji}$。
+    \[ S = \begin{pmatrix} 1 & 5 & -1 \\ 5 & 2 & 0 \\ -1 & 0 & 3 \end{pmatrix} \]
+    \item \textbf{反对称矩阵：}若方阵 $A$ 满足 $A^T=-A$，则称其为反对称矩阵。这意味着 $a_{ij}=-a_{ji}$，并且 $a_{ii}=0$。
+    \[ K = \begin{pmatrix} 0 & 5 & -1 \\ -5 & 0 & 2 \\ 1 & -2 & 0 \end{pmatrix} \]
+\end{enumerate}
+
+\subsubsection{矩阵运算}
+
+我们可以在矩阵上定义代数运算。
+
+\paragraph{矩阵加法与数乘}
+\begin{definition}
+设 $A=[a_{ij}]$ 和 $B=[b_{ij}]$ 是两个\textbf{大小相同}的 $m\times n$ 矩阵。
+\begin{enumerate}
+    \item \textbf{加法：}它们的和 $A+B$ 是 $m\times n$ 矩阵 $C=[c_{ij}]$，其中 $c_{ij}=a_{ij}+b_{ij}$。
+    \item \textbf{数乘：}设 $c$ 是一个标量，也就是一个实数。矩阵 $cA$ 是 $m\times n$ 矩阵 $D=[d_{ij}]$，其中 $d_{ij}=c\cdot a_{ij}$。
+\end{enumerate}
+矩阵减法定义为 $A-B=A+(-1)B$。
+\end{definition}
+
+\begin{example}
+设 $A=\begin{pmatrix}1&2\\3&4\end{pmatrix}$，$B=\begin{pmatrix}5&0\\-1&7\end{pmatrix}$。则
+\[ A+B = \begin{pmatrix} 1+5 & 2+0 \\ 3-1 & 4+7 \end{pmatrix} = \begin{pmatrix} 6 & 2 \\ 2 & 11 \end{pmatrix} \]
+\[ 3A = \begin{pmatrix} 3(1) & 3(2) \\ 3(3) & 3(4) \end{pmatrix} = \begin{pmatrix} 3 & 6 \\ 9 & 12 \end{pmatrix} \]
+注意，$A + \begin{pmatrix}1&2&3\\4&5&6\end{pmatrix}$ 是\textbf{没有定义的}，因为矩阵大小不匹配。
+\end{example}
+
+这些运算满足熟悉的性质：
+\begin{property}[加法与数乘的性质]
+设 $A,B,C$ 是 $m\times n$ 矩阵，$c,d$ 是标量。
+\begin{enumerate}
+    \item $A+B=B+A$，即加法交换律。
+    \item $(A+B)+C=A+(B+C)$，即加法结合律。
+    \item $A+\mathbf{0}=A$，即加法单位元。
+    \item $A+(-A)=\mathbf{0}$，即加法逆元。
+    \item $c(A+B)=cA+cB$，即分配律。
+    \item $(c+d)A=cA+dA$，即分配律。
+    \item $c(dA)=(cd)A$。
+    \item $1A=A$。
+\end{enumerate}
+\end{property}
+\begin{remark}
+这八条性质再加上封闭性，恰好就是\textbf{向量空间}的公理。所有 $m\times n$ 矩阵构成的集合 $M_{m\times n}$ 是向量空间的一个典型例子。
+\end{remark}
+
+\newpage
+
+\paragraph{矩阵乘法}
+矩阵乘法更复杂，也更加重要。
+
+\begin{definition}[矩阵乘法]
+设 $A$ 是一个 $m\times \mathbf{n}$ 矩阵，$B$ 是一个 $\mathbf{n}\times p$ 矩阵。它们的\textbf{乘积} $AB$ 是一个 $m\times p$ 矩阵 $C=[c_{ij}]$。
+$AB$ 中第 $i$ 行第 $j$ 列的元素 $c_{ij}$，由 $A$ 的第 $i$ 行与 $B$ 的第 $j$ 列作\textbf{点积}得到：
+\[ c_{ij} = (A\text{ 的第 }i\text{ 行})\cdot (B\text{ 的第 }j\text{ 列}) = a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{in}b_{nj} \]
+\[ c_{ij}=\sum_{k=1}^{n} a_{ik}b_{kj} \]
+\end{definition}
+
+\textbf{关键注意：}乘积 $AB$ 只有在 \textbf{$A$ 的列数}等于\textbf{$B$ 的行数}时才有定义。
+\[
+(m\times \mathbf{n})\cdot(\mathbf{n}\times p)\to(m\times p)
+\]
+
+\begin{example}
+设 $A=\begin{pmatrix}1&2&3\\4&5&6\end{pmatrix}$，它是 $2\times3$ 矩阵；$B=\begin{pmatrix}7&8\\9&0\\1&2\end{pmatrix}$，它是 $3\times2$ 矩阵。乘积 $AB$ 是一个 $2\times2$ 矩阵。
+\[
+AB = \begin{pmatrix}
+(1\cdot 7 + 2\cdot 9 + 3\cdot 1) & (1\cdot 8 + 2\cdot 0 + 3\cdot 2) \\
+(4\cdot 7 + 5\cdot 9 + 6\cdot 1) & (4\cdot 8 + 5\cdot 0 + 6\cdot 2)
+\end{pmatrix}
+= \begin{pmatrix} 28 & 14 \\ 79 & 44 \end{pmatrix}
+\]
+再计算 $BA$。它会是一个 $3\times3$ 矩阵。
+\[
+BA = \begin{pmatrix} 7 & 8 \\ 9 & 0 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}
+= \begin{pmatrix}
+39 & 54 & 69 \\
+9 & 18 & 27 \\
+9 & 12 & 15
+\end{pmatrix}
+\]
+\end{example}
+
+\begin{property}[矩阵乘法的性质]
+设 $A,B,C$ 是维度相容的矩阵，$c$ 是标量。
+\begin{enumerate}
+    \item \textbf{警告：}一般来说 $AB\neq BA$。矩阵乘法\textbf{不满足交换律}。
+    \item $A(BC)=(AB)C$，即结合律。
+    \item $A(B+C)=AB+AC$，即左分配律。
+    \item $(A+B)C=AC+BC$，即右分配律。
+    \item $c(AB)=(cA)B=A(cB)$。
+    \item $I_mA=A=AI_n$，即乘法单位元。
+\end{enumerate}
+\end{property}
+
+虽然一般矩阵并不满足 $AB=BA$，但我们仍然希望找到一些具有这种性质的矩阵。后续章节中会介绍一些特殊矩阵，它们可以满足这种交换关系。
+
+上面这些性质的证明留给读者完成。
+
+\begin{remark}
+请记住，$\textbf{A}\textbf{b}=\textbf{0}$ 不能推出 $A=0$ 或 $B=0$。这也是矩阵运算中反直觉现象的一个例子。
+\end{remark}
+
+\begin{definition}
+设 $A$ 是一个 $n$ 阶方阵，$m\in\mathbb{N}^{*}$。$m$ 个 $A$ 的乘积称为 $A$ 的 $m$ 次幂，记作 $A^m$。特别地，我们定义 $A^0=I_n$。
+\end{definition}
+
+矩阵幂的计算\textbf{基本上}遵循通常的代数规则，但要注意乘法顺序。例如：
+\[(A+B)^2 = A^2 + AB + BA + B^2\]
+\[(A+B)(A-B) = A^2 - AB + BA - B^2\]
+
+\begin{definition}
+设 $A=(a_{ij})_{m\times n}$。若 $A^T=(b_{kl})_{n\times m}$ 满足 $b_{kl}=a_{lk}$，其中 $k=1,2,\cdots,n$，$l=1,2,\cdots,m$，则称 $A^T$ 为 $A$ 的转置矩阵。
+\end{definition}
+
+\begin{property}[转置的性质]
+\begin{enumerate}
+    \item $(A^T)^T=A$。
+    \item $(A+B)^T=A^T+B^T$。
+    \item $(cA)^T=cA^T$。
+    \item \textbf{反序性质：}$(AB)^T=B^TA^T$。
+    \item $(A^m)^T=(A^T)^m$。
+\end{enumerate}
+\end{property}
+\begin{proof}[证明 $(AB)^T=B^TA^T$]
+设 $A$ 是 $m\times n$ 矩阵，$B$ 是 $n\times p$ 矩阵。则 $AB$ 是 $m\times p$ 矩阵，因此 $(AB)^T$ 是 $p\times m$ 矩阵。
+同时，$B^T$ 是 $p\times n$ 矩阵，$A^T$ 是 $n\times m$ 矩阵，所以 $B^TA^T$ 也是 $p\times m$ 矩阵。两者大小相同。
+令 $C=AB$。$C^T$ 的第 $(i,j)$ 个元素是 $C_{ji}$。
+根据定义，
+\[
+C_{ji}=\sum_{k=1}^{n}A_{jk}B_{ki}.
+\]
+再令 $D=B^TA^T$。$D$ 的第 $(i,j)$ 个元素为
+\[ D_{ij}=\sum_{k=1}^{n}(B^T)_{ik}(A^T)_{kj}. \]
+由转置定义，$(B^T)_{ik}=B_{ki}$，$(A^T)_{kj}=A_{jk}$。
+因此
+\[
+D_{ij}=\sum_{k=1}^{n}B_{ki}A_{jk}=\sum_{k=1}^{n}A_{jk}B_{ki}.
+\]
+所以 $D_{ij}=C_{ji}=(C^T)_{ij}$。由于所有元素都相等，得到 $B^TA^T=(AB)^T$。
+\end{proof}
+
+方阵还有一个重要数值，后面会用到。
+
+\begin{definition}[矩阵的迹]
+设 $A=(a_{ij})$ 是一个 $n$ 阶方阵。数
+\[
+\sum_{i=1}^{n}a_{ii}
+\]
+称为矩阵 $A$ 的迹，记作 $\operatorname{tr}(A)$。
+\end{definition}
+
+\begin{property}
+\begin{enumerate}
+    \item $\operatorname{tr}(A+B)=\operatorname{tr}(A)+\operatorname{tr}(B)$。
+    \item $\operatorname{tr}(kA)=k\operatorname{tr}(A)$。
+    \item $\operatorname{tr}(AB)=\operatorname{tr}(BA)$。
+    \item $\operatorname{tr}(A^T)=\operatorname{tr}(A)$。
+\end{enumerate}
+\end{property}
+
+\subsubsection*{分块矩阵的定义}
+分块矩阵是指把一个矩阵划分成若干较小的子矩阵，这些子矩阵称为\textbf{块}。这种划分可以通过水平线和竖直线把矩阵分割成矩形块来实现。分块之后，我们可以把一个大矩阵看成由若干更小、更易处理的部分组成。
+
+若 $A$ 是一个 $m\times n$ 矩阵，可以如下分块：
+\[
+A = \begin{bmatrix}
+    A_{11} & A_{12} & \cdots & A_{1q} \\
+    A_{21} & A_{22} & \cdots & A_{2q} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    A_{p1} & A_{p2} & \cdots & A_{pq}
+\end{bmatrix}
+\]
+其中，每个 $A_{ij}$ 都是 $A$ 的一个子矩阵，也就是一个块。块的大小必须相容：例如同一列块中的子矩阵列数要一致，同一行块中的子矩阵行数也要一致。
+
+\textbf{分块矩阵的运算}
+
+\paragraph*{分块矩阵加法}
+如果两个矩阵 $A$ 与 $B$ 被分成对应块大小\textbf{相同}的分块形式，则可以按块相加：
+\[
+A+B=\begin{bmatrix}
+A_{11}+B_{11} & A_{12}+B_{12} & \cdots\\
+A_{21}+B_{21} & A_{22}+B_{22} & \cdots\\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\]
+为了使加法有定义，每一对对应块 $A_{ij}$ 和 $B_{ij}$ 必须大小相同。
+
+\paragraph*{分块矩阵数乘}
+数乘通过把每一个块都乘以该标量来完成：
+\[
+cA=\begin{bmatrix}
+cA_{11} & cA_{12} & \cdots\\
+cA_{21} & cA_{22} & \cdots\\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\]
+
+\paragraph*{分块矩阵乘法}
+如果 $A$ 是一个 $m\times n$ 的分块矩阵，$B$ 是一个 $n\times p$ 的分块矩阵，并且 $A$ 的列块数等于 $B$ 的行块数，那么乘积 $C=AB$ 可以按块计算：
+\[
+C_{ij}=\sum_{k=1}^{q}A_{ik}B_{kj}.
+\]
+这要求每一个 $A_{ik}$ 的列数都等于相应 $B_{kj}$ 的行数。所得的块 $C_{ij}$ 是对应块乘积之和。
+
+\textbf{例：}若 $A=\begin{bmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{bmatrix}$，$B=\begin{bmatrix}B_{11}\\B_{21}\end{bmatrix}$，则
+\[
+AB=\begin{bmatrix}
+A_{11}B_{11}+A_{12}B_{21}\\
+A_{21}B_{11}+A_{22}B_{21}
+\end{bmatrix}.
+\]
+
+\paragraph*{分块矩阵转置}
+分块矩阵的转置，是先把每个块转置，再把块的位置也转置：
+\[
+A^\top=\begin{bmatrix}
+A_{11}^\top & A_{21}^\top & \cdots\\
+A_{12}^\top & A_{22}^\top & \cdots\\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\]
+注意，块的位置也会发生转置，例如原来位于 $(1,2)$ 的块，转置后会出现在 $(2,1)$ 的位置。
+
+\paragraph*{分块对角矩阵}
+分块对角矩阵是指非对角块全为零矩阵的方形分块矩阵：
+\[
+A=\begin{bmatrix}
+A_{11}&0&\cdots&0\\
+0&A_{22}&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&A_{pp}
+\end{bmatrix}
+\]
+分块对角矩阵的运算会简化，因为不同对角块可以独立处理。例如，如果各对角块都可逆，则分块对角矩阵的逆就是由这些对角块的逆组成的分块对角矩阵。
+
+\subsubsection*{使用分块矩阵的优势}
+\begin{itemize}
+    \item 可以把大矩阵拆成较小部分，从而简化运算。
+    \item 有利于并行计算。
+    \item 在理论证明中，可以通过分块结构进行归纳。
+    \item 在数值线性代数中，分块矩阵常用于构造高效算法。
+\end{itemize}
+
+\begin{definition}
+一个 $n\times n$ 方阵 $A$ 称为\textbf{可逆}，或称为\textbf{非奇异}，如果存在一个 $n\times n$ 矩阵 $B$，使得
+\[ AB=I_n \quad \text{且}\quad BA=I_n. \]
+这个矩阵 $B$ 是唯一的，称为 $A$ 的\textbf{逆矩阵}，记作 $A^{-1}$。如果这样的矩阵 $B$ 不存在，则称 $A$ 为\textbf{奇异矩阵}，也就是\textbf{不可逆矩阵}。
+\end{definition}
+
+\begin{example}[$2\times2$ 矩阵的逆]
+设 $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$。如果 $ad-bc\neq0$，则 $A$ 可逆，并且
+\[ A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}. \]
+如果 $ad-bc=0$，则 $A$ 奇异。数 $ad-bc$ 称为 $A$ 的\textbf{行列式}。
+\end{example}
+
+\begin{property}[逆矩阵的性质]
+设 $A$ 和 $B$ 是可逆的 $n\times n$ 矩阵。
+\begin{enumerate}
+    \item $(A^{-1})^{-1}=A$。
+    \item $(AB)^{-1}=B^{-1}A^{-1}$，注意顺序反过来了。
+    \item $(A^T)^{-1}=(A^{-1})^T$。
+    \item 当 $c\neq0$ 时，$(cA)^{-1}=\frac{1}{c}A^{-1}$。
+\end{enumerate}
+\end{property}
+\begin{proof}[证明 $(AB)^{-1}=B^{-1}A^{-1}$]
+只需要检查定义：
+\[ (AB)(B^{-1}A^{-1})=A(BB^{-1})A^{-1}=AIA^{-1}=AA^{-1}=I. \]
+\[ (B^{-1}A^{-1})(AB)=B^{-1}(A^{-1}A)B=B^{-1}IB=B^{-1}B=I. \]
+因此 $B^{-1}A^{-1}$ 满足逆矩阵的定义，它必然是 $AB$ 的逆。
+\end{proof}
+
+\subsection{线性方程组的求解}
+
+现在回到主问题：求解 $m$ 个方程、$n$ 个变量的线性方程组。总体思想就是\textbf{高斯消元法}：把增广矩阵变换成更简单的形式，然后直接读出解。
+
+\subsubsection{初等行变换}
+
+我们可以对增广矩阵进行操作，这些操作对应于对原方程的操作，并且\textbf{不会改变解集}。
+
+\begin{definition}
+三类\textbf{初等行变换}为：
+\begin{enumerate}
+    \item \textbf{替换：}把某一行加上另一行的若干倍，记作 $R_i\to R_i+cR_j$。
+    \item \textbf{交换：}交换两行，记作 $R_i\leftrightarrow R_j$。
+    \item \textbf{倍乘：}把某一行的所有元素都乘以一个非零常数，记作 $R_i\to cR_i$，其中 $c\neq0$。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+如果矩阵 $B$ 可以由矩阵 $A$ 经过一系列初等行变换得到，则称 $A$ 与 $B$ \textbf{行等价}，记作 $A\sim B$。
+\end{definition}
+
+\begin{theorem}
+如果两个线性方程组的增广矩阵行等价，那么这两个方程组具有\textbf{相同的解集}。
+\end{theorem}
+\begin{proof}[说明]
+\begin{itemize}
+    \item 替换 $R_i\to R_i+cR_j$ 对应于把第 $j$ 个方程的 $c$ 倍加到第 $i$ 个方程上。这个步骤可逆，反向操作为 $R_i\to R_i-cR_j$。原系统的任意解仍是新系统的解，反过来也一样。
+    \item 交换 $R_i\leftrightarrow R_j$ 只是交换两个方程的顺序，显然不影响解集。
+    \item 倍乘 $R_i\to cR_i$，其中 $c\neq0$，对应于把一个方程乘以 $c$。它也可逆，反向操作是乘以 $1/c$，所以不改变解集。
+\end{itemize}
+\end{proof}
+
+\subsubsection{行阶梯形与秩}
+
+目标是用初等行变换把矩阵化成一种“阶梯状”的简单形式。
+
+\begin{definition}
+如果一个矩阵满足下面条件，则称它处于\textbf{行阶梯形}，记作 REF：
+\begin{enumerate}
+    \item 所有非零行都在全零行的上方。
+    \item 每一行的\textbf{首项}，也称为\textbf{主元}，即该行最左边的非零元素，位于上一行首项的右侧。
+    \item 每个首项所在列中，位于首项下方的元素全为零。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+如果一个矩阵处于 REF，并且还满足下面条件，则称它处于\textbf{简化行阶梯形}，记作 RREF：
+\begin{enumerate}
+    \item 每个非零行的首项都是 $1$。
+    \item 每个首 $1$ 是其所在列中唯一的非零元素。
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+\textbf{REF}：
+\[ \begin{pmatrix} \fbox{2} & 3 & 4 & 5 \\ 0 & \fbox{1} & 6 & 7 \\ 0 & 0 & 0 & \fbox{8} \\ 0 & 0 & 0 & 0 \end{pmatrix} \]
+\textbf{RREF}：
+\[ \begin{pmatrix} \fbox{1} & 0 & -1 & 0 \\ 0 & \fbox{1} & 2 & 0 \\ 0 & 0 & 0 & \fbox{1} \\ 0 & 0 & 0 & 0 \end{pmatrix} \]
+方框中的元素是主元。
+\end{example}
+
+\begin{theorem}
+每一个矩阵都行等价于唯一的\textbf{简化行阶梯形}。
+\end{theorem}
+
+把矩阵化为 REF 或 RREF 的算法，是我们求解线性方程组的核心方法。
+
+\begin{definition}
+\begin{itemize}
+    \item \textbf{高斯消元法}是指使用初等行变换把矩阵化为 REF 的过程。
+    \item \textbf{高斯--若尔当消元法}是指使用初等行变换把矩阵化为 RREF 的过程。
+\end{itemize}
+\end{definition}
+
+\paragraph{算法：高斯--若尔当消元法}
+我们完整求解一个方程组：
+\[
+\begin{cases}
+x_2+3x_3=4\\
+x_1+x_2+x_3=1\\
+2x_1+3x_2+4x_3=7
+\end{cases}
+\]
+增广矩阵为
+\[
+\left(\begin{array}{ccc|c}
+0 & 1 & 3 & 4 \\
+1 & 1 & 1 & 1 \\
+2 & 3 & 4 & 7
+\end{array}\right).
+\]
+\textbf{第一步：前向阶段，化为 REF。}
+我们需要在左上角 $(1,1)$ 位置放置主元，因此先与第二行交换：
+\[
+\left(\begin{array}{ccc|c}
+1 & 1 & 1 & 1 \\
+0 & 1 & 3 & 4 \\
+2 & 3 & 4 & 7
+\end{array}\right) \quad (R_1\leftrightarrow R_2).
+\]
+消去第一个主元下方的元素：
+\[
+\left(\begin{array}{ccc|c}
+1 & 1 & 1 & 1 \\
+0 & 1 & 3 & 4 \\
+0 & 1 & 2 & 5
+\end{array}\right) \quad (R_3\to R_3-2R_1).
+\]
+然后处理第二个主元 $(2,2)$。它已经是 $1$，继续消去它下方的元素：
+\[
+\left(\begin{array}{ccc|c}
+1 & 1 & 1 & 1 \\
+0 & 1 & 3 & 4 \\
+0 & 0 & -1 & 1
+\end{array}\right) \quad (R_3\to R_3-R_2).
+\]
+此时矩阵已经处于\textbf{行阶梯形}，高斯消元完成。
+如果在这里停下，可以使用\textbf{回代法}：
+由 $R_3$ 得 $-x_3=1$，所以 $x_3=-1$。
+由 $R_2$ 得 $x_2+3x_3=4$，因此 $x_2+3(-1)=4$，所以 $x_2=7$。
+由 $R_1$ 得 $x_1+x_2+x_3=1$，因此 $x_1+7+(-1)=1$，所以 $x_1=-5$。
+唯一解为 $(-5,7,-1)$。
+
+\textbf{第二步：后向阶段，化为 RREF。}
+从 REF 继续，将所有主元化为 $1$：
+\[
+\left(\begin{array}{ccc|c}
+1 & 1 & 1 & 1 \\
+0 & 1 & 3 & 4 \\
+0 & 0 & 1 & -1
+\end{array}\right) \quad (R_3\to -1\cdot R_3).
+\]
+从最右侧主元开始，消去其上方元素：
+\[
+\left(\begin{array}{ccc|c}
+1 & 1 & 0 & 2 \\
+0 & 1 & 0 & 7 \\
+0 & 0 & 1 & -1
+\end{array}\right) \quad (R_1\to R_1-R_3,\ R_2\to R_2-3R_3).
+\]
+继续消去第二个主元上方的元素：
+\[
+\left(\begin{array}{ccc|c}
+1 & 0 & 0 & -5 \\
+0 & 1 & 0 & 7 \\
+0 & 0 & 1 & -1
+\end{array}\right) \quad (R_1\to R_1-R_2).
+\]
+这就是\textbf{简化行阶梯形}。对应的方程组为
+\[
+\begin{cases}
+x_1=-5\\
+x_2=7\\
+x_3=-1
+\end{cases}
+\]
+解可以直接读出。
+
+\paragraph{矩阵的秩}
+阶梯形中自然出现一个关键概念。
+
+\begin{definition}
+矩阵 $A$ 的\textbf{秩}，记作 $\operatorname{rank}(A)$，是它的行阶梯形中首项，也就是主元，的个数。对于给定矩阵，这个数是唯一的。
+\end{definition}
+
+\begin{property}[秩的性质]
+设 $A$ 是一个 $m\times n$ 矩阵。
+\begin{enumerate}
+    \item $\operatorname{rank}(A)\leq \min(m,n)$。
+    \item $\operatorname{rank}(A)=0$ 当且仅当 $A=\mathbf{0}$。
+    \item \textbf{重要定理：}$\operatorname{rank}(A)=\operatorname{rank}(A^T)$，也就是说行秩等于列秩。
+    \item $\operatorname{rank}(AB)\leq \min(\operatorname{rank}(A),\operatorname{rank}(B))$。
+    \item $\operatorname{rank}(A+B)\leq \operatorname{rank}(A)+\operatorname{rank}(B)$。
+    \item $\operatorname{rank}(A)+\operatorname{rank}(B)-n\leq \operatorname{rank}(AB)$。
+    \item 如果 $P,Q$ 可逆，则 $\operatorname{rank}(PAQ)=\operatorname{rank}(A)$。初等行变换等价于左乘一个可逆矩阵，因此行变换不改变秩。
+\end{enumerate}
+简写为
+\[
+\min\{r(A),r(B)\}\geq r(AB)\geq r(A)+r(B)-n,
+\]
+\[
+r(A+B)\leq r(A,B)\leq r\begin{pmatrix} A&O\\O&B\end{pmatrix}.
+\]
+\end{property}
+
+\subsubsection{线性方程组的解集}
+
+\emph{增广矩阵}的 RREF 可以告诉我们解集的全部信息。
+系数矩阵 $A$ 中在 RREF 里含有主元的列称为\textbf{主元列}。与主元列对应的变量称为\textbf{基本变量}；与非主元列对应的变量称为\textbf{自由变量}。
+
+设 $A$ 是一个 $m\times n$ 系数矩阵，令 $r=\operatorname{rank}(A)$。我们分析增广矩阵 $[A\mid\mathbf{b}]$ 的 RREF。
+
+\begin{enumerate}
+    \item \textbf{无解，即不相容系统。}
+    如果 $[A\mid\mathbf{b}]$ 的 RREF 中出现形如 $\begin{pmatrix}0&0&\cdots&0&\mid&1\end{pmatrix}$ 的一行，那么系统无解。
+    这一行对应于不可能成立的方程 $0x_1+\cdots+0x_n=1$，也就是 $0=1$。
+    用秩来描述，就是最后一列，即增广列，成为了主元列。
+    \textbf{条件：$\operatorname{rank}(A)<\operatorname{rank}([A\mid\mathbf{b}])$。}
+
+    \item \textbf{有解，即相容系统。}
+    如果增广列\emph{不是}主元列，则方程组有解。
+    \textbf{条件：$\operatorname{rank}(A)=\operatorname{rank}([A\mid\mathbf{b}])$。} 设这个秩为 $r$。
+    \begin{itemize}
+        \item \textbf{唯一解：}如果不存在自由变量，则方程组有唯一解。这意味着每个变量都是基本变量，也就是 $A$ 的每一列都是主元列。
+        \textbf{条件：$r=n$，其中 $n$ 是变量个数。}
+        \item \textbf{无穷多解：}如果至少存在一个自由变量，则方程组有无穷多解。这意味着 $A$ 的某些列不是主元列。
+        \textbf{条件：$r<n$。} 这时 $n-r$ 个自由变量可以取任意值，也就是参数，而基本变量可以用这些参数表示。
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{参数向量形式}
+当方程组有无穷多解时，我们通常用\textbf{参数向量形式}写出解集。
+
+\newpage
+
+\begin{example}[无穷多解]
+求增广矩阵对应系统的通解：
+\[
+\left(\begin{array}{ccc|c}
+1&0&-5&1\\
+0&1&1&4\\
+0&0&0&0
+\end{array}\right).
+\]
+该矩阵已经处于 RREF。对应方程组为
+\[
+\begin{cases}
+x_1-5x_3=1\\
+x_2+x_3=4\\
+0=0
+\end{cases}
+\]
+主元列是第 $1$ 列和第 $2$ 列，所以 $x_1,x_2$ 是\textbf{基本变量}。第 $3$ 列不是主元列，所以 $x_3$ 是\textbf{自由变量}。
+引入参数 $t$，令 $x_3=t$，其中 $t$ 可取任意实数。于是
+\[ x_1=1+5x_3=1+5t, \]
+\[ x_2=4-x_3=4-t, \]
+\[ x_3=t. \]
+通解 $\mathbf{x}=\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}$ 为
+\[ \mathbf{x}=\begin{pmatrix}1+5t\\4-t\\t\end{pmatrix}=\begin{pmatrix}1\\4\\0\end{pmatrix}+t\begin{pmatrix}5\\-1\\1\end{pmatrix}. \]
+这就是\textbf{参数向量形式}。
+从几何上看，它表示 $\mathbb{R}^3$ 中一条直线，这条直线经过点 $(1,4,0)$，并且平行于向量 $(5,-1,1)$。
+\end{example}
+
+\subsubsection{齐次系统与非齐次系统}
+
+\begin{definition}
+形如 $A\mathbf{x}=\mathbf{0}$ 的线性方程组称为\textbf{齐次}线性方程组，其中 $\mathbf{0}$ 是零向量，也就是所有 $b_i=0$：
+\[
+\begin{cases}
+a_{11}x_1+\cdots+a_{1n}x_n=0\\
+\quad\vdots\\
+a_{m1}x_1+\cdots+a_{mn}x_n=0
+\end{cases}
+\]
+若 $A\mathbf{x}=\mathbf{b}$ 且 $\mathbf{b}\neq\mathbf{0}$，则称其为\textbf{非齐次}系统。
+\end{definition}
+
+齐次系统 $A\mathbf{x}=\mathbf{0}$ \textbf{总是}相容的，因为 $\mathbf{x}=\mathbf{0}$，即零向量，总是它的一个解，这个解称为\textbf{平凡解}。
+真正重要的问题是：它是否存在\textbf{非平凡解}？
+这当且仅当至少有一个自由变量，也等价于 $\operatorname{rank}(A)<n$，其中 $n$ 是变量个数。
+
+\begin{theorem}
+齐次系统 $A\mathbf{x}=\mathbf{0}$ 存在非平凡解，当且仅当 $\operatorname{rank}(A)<n$。
+\end{theorem}
+\begin{corollary}
+如果 $A$ 是 $m\times n$ 矩阵且 $m<n$，也就是方程个数少于变量个数，那么 $A\mathbf{x}=\mathbf{0}$ \textbf{必然}有无穷多解，因为 $\operatorname{rank}(A)\leq m<n$。
+\end{corollary}
+
+两个系统的解集之间存在一个基本联系。
+
+\begin{theorem}[解的结构]
+假设非齐次系统 $A\mathbf{x}=\mathbf{b}$ 相容，并且有一个特解 $\mathbf{x}_p$。那么 $A\mathbf{x}=\mathbf{b}$ 的通解 $\mathbf{x}_g$ 是所有如下形式的向量：
+\[ \mathbf{x}_g=\mathbf{x}_p+\mathbf{x}_h, \]
+其中 $\mathbf{x}_h$ 是对应齐次系统 $A\mathbf{x}=\mathbf{0}$ 的任意解。
+\end{theorem}
+\begin{proof}
+设 $\mathbf{x}_g$ 是 $A\mathbf{x}=\mathbf{b}$ 的任意解。令 $\mathbf{x}_h=\mathbf{x}_g-\mathbf{x}_p$。
+则
+\[
+A\mathbf{x}_h=A(\mathbf{x}_g-\mathbf{x}_p)=A\mathbf{x}_g-A\mathbf{x}_p=\mathbf{b}-\mathbf{b}=\mathbf{0}.
+\]
+因此 $\mathbf{x}_h$ 是对应齐次系统的解。这说明任意解 $\mathbf{x}_g$ 都可以写成 $\mathbf{x}_p+\mathbf{x}_h$ 的形式。
+反过来，若 $\mathbf{x}_h$ 是任意齐次解，则
+\[
+A(\mathbf{x}_p+\mathbf{x}_h)=A\mathbf{x}_p+A\mathbf{x}_h=\mathbf{b}+\mathbf{0}=\mathbf{b}.
+\]
+所以 $\mathbf{x}_p+\mathbf{x}_h$ 是非齐次系统的解。
+\end{proof}
+
+\begin{remark}
+回看上一个例子：
+\[ \mathbf{x}=\underbrace{\begin{pmatrix}1\\4\\0\end{pmatrix}}_{\mathbf{x}_p}+t\underbrace{\begin{pmatrix}5\\-1\\1\end{pmatrix}}_{\mathbf{x}_h}. \]
+这里 $\mathbf{x}_p=(1,4,0)$ 是 $A\mathbf{x}=\mathbf{b}$ 的一个\emph{特解}，而 $\mathbf{x}_h=t(5,-1,1)$ 是对应齐次系统 $A\mathbf{x}=\mathbf{0}$ 的\emph{通解}。
+从几何上看，$A\mathbf{x}=\mathbf{b}$ 的解集是 $A\mathbf{x}=\mathbf{0}$ 的解集经过 $\mathbf{x}_p$ 平移得到的集合。
+\end{remark}
+
+\section{行列式}
+
+现在我们研究与\textbf{方阵}相关的一个强大工具：行列式。行列式是一个数，但它能揭示矩阵的许多信息，其中最重要的一点是判断矩阵是否可逆。
+
+行列式计算需要熟练度和耐心。一旦有其他办法可以避免使用行列式，我们通常会优先选择那些办法。
+
+\subsection{矩阵的行列式}
+
+对于 $1\times1$ 矩阵 $A=(a)$，有 $\det(A)=a$。
+对于 $2\times2$ 矩阵，行列式很简单：
+\[ \det(A)=\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc. \]
+数 $ad-bc$ 非零，当且仅当矩阵可逆。
+
+对于更大的 $n\times n$ 矩阵，我们使用\textbf{代数余子式展开}递归定义行列式。
+
+\begin{definition}
+设 $A$ 是一个 $n\times n$ 矩阵。
+\begin{itemize}
+    \item 元素 $a_{ij}$ 的\textbf{余子式} $M_{ij}$，是删去 $A$ 的第 $i$ 行和第 $j$ 列之后所得 $(n-1)\times(n-1)$ 矩阵的行列式。
+    \item \textbf{代数余子式} $C_{ij}$ 定义为 $C_{ij}=(-1)^{i+j}M_{ij}$。
+\end{itemize}
+\end{definition}
+
+符号 $(-1)^{i+j}$ 的正负号呈棋盘状排列：
+\[
+\begin{pmatrix}
++&-&+&\cdots\\
+-&+&-&\cdots\\
++&-&+&\cdots\\
+\vdots&\vdots&\vdots&\ddots
+\end{pmatrix}.
+\]
+
+\begin{theorem}[代数余子式展开]
+$n\times n$ 矩阵 $A$ 的行列式可以沿\textbf{任意}第 $i$ 行展开：
+\[ \det(A)=a_{i1}C_{i1}+a_{i2}C_{i2}+\cdots+a_{in}C_{in}=\sum_{j=1}^{n}a_{ij}C_{ij}. \]
+也可以沿\textbf{任意}第 $j$ 列展开：
+\[ \det(A)=a_{1j}C_{1j}+a_{2j}C_{2j}+\cdots+a_{nj}C_{nj}=\sum_{i=1}^{n}a_{ij}C_{ij}. \]
+\end{theorem}
+
+\newpage
+
+\begin{example}[$3\times3$ 的代数余子式展开]
+设 $A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}$。沿第一行展开：
+\[ \det(A)=1\cdot C_{11}+2\cdot C_{12}+3\cdot C_{13}. \]
+\[ C_{11}=(-1)^{1+1}\begin{vmatrix}5&6\\8&9\end{vmatrix}=5\cdot9-6\cdot8=45-48=-3. \]
+\[ C_{12}=(-1)^{1+2}\begin{vmatrix}4&6\\7&9\end{vmatrix}=-(4\cdot9-6\cdot7)=-(36-42)=6. \]
+\[ C_{13}=(-1)^{1+3}\begin{vmatrix}4&5\\7&8\end{vmatrix}=4\cdot8-5\cdot7=32-35=-3. \]
+\[ \det(A)=1(-3)+2(6)+3(-3)=-3+12-9=0. \]
+由于 $\det(A)=0$，这个矩阵是\textbf{奇异的}，也就是不可逆的。
+\end{example}
+
+行列式还有一个更形式化的定义，它依赖逆序数的概念。它与上面的定义在逻辑上等价，因此这里不再展开。不过，我想介绍一个更公理化的行列式定义。
+
+\begin{definition}[行列式的公理化定义]
+行列式是唯一满足以下三条公理的函数 $\det: M_n(\mathbb{R})\to\mathbb{R}$：
+\begin{enumerate}
+    \item \textbf{多重线性：}当其他列固定时，行列式关于每一列都是线性函数。
+    \item \textbf{交替性：}如果矩阵中有两列相同，则行列式为零。这也意味着交换两列会使行列式变号。
+    \item \textbf{规范化：}单位矩阵的行列式为 $1$。
+\end{enumerate}
+\end{definition}
+
+另一个更\textbf{现代}的定义与外积有关。
+
+\begin{definition}[外积]
+设 $V$ 是域 $\mathbb{K}$ 上的向量空间。\textbf{外积}是一个双线性映射
+\[
+\wedge:V\times V\to \Lambda^2(V),
+\]
+并满足：
+\begin{enumerate}
+    \item \textbf{反交换性：}对所有 $u,v\in V$，有 $u\wedge v=-v\wedge u$。
+    \item \textbf{幂零性：}对所有 $v\in V$，有 $v\wedge v=0$。
+\end{enumerate}
+第 $k$ 个外幂 $\Lambda^k(V)$ 由形如 $v_1\wedge v_2\wedge\cdots\wedge v_k$ 的元素张成，其中 $v_i\in V$。
+\end{definition}
+
+\begin{definition}[通过外代数定义行列式]
+设 $V$ 是一个 $n$ 维向量空间，基为 $\{e_1,\ldots,e_n\}$。线性算子 $T:V\to V$ 在最高外幂上诱导映射 $\Lambda^nT:\Lambda^n(V)\to\Lambda^n(V)$：
+\[
+\Lambda^nT(e_1\wedge\cdots\wedge e_n)=T(e_1)\wedge\cdots\wedge T(e_n).
+\]
+因为 $\Lambda^n(V)$ 是一维的，所以存在唯一标量 $\det(T)\in\mathbb{K}$，使得
+\[
+T(e_1)\wedge\cdots\wedge T(e_n)=\det(T)\cdot(e_1\wedge\cdots\wedge e_n).
+\]
+这个标量 $\det(T)$ 称为 $T$ 的\textbf{行列式}。
+
+对于列向量为 $a_1,\ldots,a_n\in\mathbb{R}^n$ 的矩阵 $A=(a_{ij})$，有
+\[
+a_1\wedge a_2\wedge\cdots\wedge a_n=\det(A)\cdot(e_1\wedge e_2\wedge\cdots\wedge e_n).
+\]
+\end{definition}
+
+\begin{theorem}
+外代数定义可以推出行列式的公理化定义。
+\end{theorem}
+
+\begin{proof}
+验证三条公理。
+
+一是\textbf{多重线性}。外积关于每个变量都是线性的，例如
+\[
+(\lambda u+\mu v)\wedge w=\lambda(u\wedge w)+\mu(v\wedge w).
+\]
+因此映射 $(a_1,\ldots,a_n)\mapsto a_1\wedge\cdots\wedge a_n$ 是多重线性的，$\det(A)$ 也是多重线性的。
+
+二是\textbf{交替性}。如果 $a_i=a_j$，其中 $i\neq j$，则
+\[
+a_1\wedge\cdots\wedge a_i\wedge\cdots\wedge a_j\wedge\cdots\wedge a_n=0,
+\]
+因为 $v\wedge v=0$。因此 $\det(A)=0$。交换两列时，由反交换性可知符号会改变。
+
+三是\textbf{规范化}。对于单位矩阵 $I$，有
+\[
+e_1\wedge\cdots\wedge e_n=\det(I)\cdot(e_1\wedge\cdots\wedge e_n),
+\]
+因此 $\det(I)=1$。
+\end{proof}
+
+\begin{corollary}
+乘法性质 $\det(AB)=\det(A)\det(B)$ 可以自然推出。
+\end{corollary}
+
+\begin{proof}
+考虑 $\Lambda^n(V)$ 上的复合：
+\[
+\Lambda^n(AB)(e_1\wedge\cdots\wedge e_n)
+=\Lambda^nA(\Lambda^nB(e_1\wedge\cdots\wedge e_n))
+=\det(A)\det(B)(e_1\wedge\cdots\wedge e_n).
+\]
+而它也等于 $\det(AB)(e_1\wedge\cdots\wedge e_n)$，所以 $\det(AB)=\det(A)\det(B)$。
+\end{proof}
+
+\newpage
+
+\begin{remark}[$3\times3$ 矩阵的萨吕法则]
+只对 $3\times3$ 矩阵，有一个快速计算方法。
+把前两列再写到右侧：
+\[
+\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}
+\begin{matrix}a&b\\d&e\\g&h\end{matrix}
+\]
+把右下方向的对角线乘积相加，再减去右上方向的对角线乘积：
+\[ \det=(aei+bfg+cdh)-(gec+hfa+idb). \]
+对于前面的例子，
+$(1\cdot5\cdot9+2\cdot6\cdot7+3\cdot4\cdot8)-(7\cdot5\cdot3+8\cdot6\cdot1+9\cdot4\cdot2)$
+$=(45+84+96)-(105+48+72)=225-225=0$。
+\textbf{警告：}这个方法\emph{不能}用于 $4\times4$ 或更大的矩阵。
+\end{remark}
+
+\subsection{行列式的性质}
+用代数余子式计算行列式的效率很低，复杂度接近 $O(n!)$。更高效的方法是利用行变换，复杂度可达到 $O(n^3)$。
+
+\begin{theorem}[行列式与初等行变换]
+设 $A$ 是 $n\times n$ 矩阵。
+\begin{enumerate}
+    \item \textbf{替换：}若 $B$ 由 $A$ 经过 $R_i\to R_i+cR_j$ 得到，则 $\det(B)=\det(A)$。
+    \item \textbf{交换：}若 $B$ 由 $A$ 经过 $R_i\leftrightarrow R_j$ 得到，则 $\det(B)=-\det(A)$。
+    \item \textbf{倍乘：}若 $B$ 由 $A$ 经过 $R_i\to cR_i$ 得到，则 $\det(B)=c\cdot\det(A)$。
+\end{enumerate}
+\end{theorem}
+
+这使我们可以把 $A$ 化为一个阶梯形矩阵 $U$，也就是三角矩阵，同时记录每一步对行列式造成的影响。
+
+\begin{theorem}
+如果 $A$ 是上三角或下三角矩阵，则其行列式等于对角线元素的乘积：
+\[ \det(A)=a_{11}a_{22}\cdots a_{nn}. \]
+\end{theorem}
+\begin{proof}
+可以反复沿第一行或第一列作代数余子式展开得到。
+\end{proof}
+
+\newpage
+
+\begin{example}[用初等行变换计算 $\det$]
+\[ A=\begin{pmatrix}0&1&5\\3&-6&9\\2&6&1\end{pmatrix}. \]
+\[ \det(A)=-\begin{vmatrix}3&-6&9\\0&1&5\\2&6&1\end{vmatrix}\quad(R_1\leftrightarrow R_2). \]
+\[ \det(A)=-3\begin{vmatrix}1&-2&3\\0&1&5\\2&6&1\end{vmatrix}\quad(R_1\to\frac{1}{3}R_1,\ \text{提出 }3). \]
+\[ \det(A)=-3\begin{vmatrix}1&-2&3\\0&1&5\\0&10&-5\end{vmatrix}\quad(R_3\to R_3-2R_1). \]
+\[ \det(A)=-3\begin{vmatrix}1&-2&3\\0&1&5\\0&0&-55\end{vmatrix}\quad(R_3\to R_3-10R_2). \]
+此时矩阵已经是三角矩阵，因此
+\[ \det(A)=-3\cdot(1\cdot1\cdot(-55))=165. \]
+\end{example}
+
+\begin{property}[行列式的更多性质]
+设 $A,B$ 是 $n\times n$ 矩阵。
+\begin{enumerate}
+    \item \textbf{重要定理：}$A$ 可逆，当且仅当 $\det(A)\neq0$。
+    \item \textbf{乘法性质：}$\det(AB)=\det(A)\det(B)$。
+    \item $\det(A^T)=\det(A)$。这也意味着所有关于行变换的性质都可以对应地用于列变换。
+    \item 如果 $A$ 可逆，则 $\det(A^{-1})=\frac{1}{\det(A)}$。
+    \item 若 $A$ 是 $n\times n$ 矩阵，则 $\det(cA)=c^n\det(A)$。
+    \item 如果 $A$ 有一行或一列全为零，则 $\det(A)=0$。
+    \item 如果 $A$ 有两行或两列完全相同，则 $\det(A)=0$。
+\end{enumerate}
+\end{property}
+\begin{proof}[证明 $\det(A^{-1})=1/\det(A)$]
+由 $AA^{-1}=I$ 得
+\[
+\det(AA^{-1})=\det(I).
+\]
+因此
+\[
+\det(A)\det(A^{-1})=1,
+\]
+从而
+\[
+\det(A^{-1})=\frac{1}{\det(A)}.
+\]
+这里要求 $\det(A)\neq0$，而这由 $A$ 可逆保证。
+\end{proof}
+
+\subsection{克拉默法则与伴随矩阵公式}
+
+行列式为求解 $A\mathbf{x}=\mathbf{b}$ 和计算 $A^{-1}$ 提供了显式公式。它们非常优雅，但对大矩阵来说，与消元法相比计算效率较低。
+
+\begin{theorem}[克拉默法则]
+设 $A$ 是可逆的 $n\times n$ 矩阵。对任意 $\mathbf{b}\in\mathbb{R}^n$，方程 $A\mathbf{x}=\mathbf{b}$ 的唯一解 $\mathbf{x}$ 的各分量为
+\[ x_i=\frac{\det(A_i(\mathbf{b}))}{\det(A)},\quad i=1,2,\ldots,n, \]
+其中 $A_i(\mathbf{b})$ 是把 $A$ 的第 $i$ 列替换成向量 $\mathbf{b}$ 后得到的矩阵。
+\end{theorem}
+
+\begin{example}
+求解
+$ \begin{cases}2x_1+5x_2=-1\\3x_1+7x_2=4\end{cases}$。
+有
+$A=\begin{pmatrix}2&5\\3&7\end{pmatrix}$，$\mathbf{b}=\begin{pmatrix}-1\\4\end{pmatrix}$。
+$\det(A)=2(7)-5(3)=14-15=-1$。
+$A_1(\mathbf{b})=\begin{pmatrix}-1&5\\4&7\end{pmatrix}$，所以 $\det(A_1(\mathbf{b}))=-7-20=-27$。
+$A_2(\mathbf{b})=\begin{pmatrix}2&-1\\3&4\end{pmatrix}$，所以 $\det(A_2(\mathbf{b}))=8-(-3)=11$。
+因此 $x_1=\frac{-27}{-1}=27$，$x_2=\frac{11}{-1}=-11$。
+\end{example}
+
+\begin{definition}[伴随矩阵]
+设 $C=[C_{ij}]$ 是 $A$ 的代数余子式矩阵。$A$ 的\textbf{伴随矩阵}，也称 adjugate，记作 $\operatorname{adj}(A)$，定义为代数余子式矩阵的\textbf{转置}：
+\[ \operatorname{adj}(A)=C^T. \]
+\end{definition}
+
+\begin{theorem}[逆矩阵公式]
+设 $A$ 可逆，则
+\[ A^{-1}=\frac{1}{\det(A)}\operatorname{adj}(A). \]
+\end{theorem}
+\begin{remark}
+这个定理解释了 $2\times2$ 矩阵的逆矩阵公式。
+对于 $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$，有
+$C_{11}=d$，$C_{12}=-c$，$C_{21}=-b$，$C_{22}=a$。
+代数余子式矩阵为 $C=\begin{pmatrix}d&-c\\-b&a\end{pmatrix}$。
+伴随矩阵为 $\operatorname{adj}(A)=C^T=\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$。
+因此
+\[ A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}. \]
+\end{remark}
+
+\subsection{可逆矩阵定理}
+这是线性代数中最重要的定理之一。它把我们目前见过的关于 $n\times n$ 方阵 $A$ 的主要概念全部联系起来。
+
+\begin{theorem}[可逆矩阵定理]
+设 $A$ 是一个 $n\times n$ 方阵。下面这些命题互相等价，也就是说，只要其中一个为真，全部都为真；只要其中一个为假，全部都为假。
+\begin{enumerate}
+    \item $A$ 是可逆矩阵。
+    \item $A$ 行等价于单位矩阵 $I_n$。
+    \item 方程 $A\mathbf{x}=\mathbf{0}$ 只有平凡解 $\mathbf{x}=\mathbf{0}$。
+    \item $A$ 的列向量组成一个线性无关集。
+    \item 线性变换 $T(\mathbf{x})=A\mathbf{x}$ 是一一映射。
+    \item 对于 $\mathbb{R}^n$ 中每一个 $\mathbf{b}$，方程 $A\mathbf{x}=\mathbf{b}$ 至少有一个解。
+    \item $A$ 的列向量张成 $\mathbb{R}^n$。
+    \item 线性变换 $T(\mathbf{x})=A\mathbf{x}$ 把 $\mathbb{R}^n$ 映\emph{到}整个 $\mathbb{R}^n$ 上。
+    \item 存在一个 $n\times n$ 矩阵 $C$，使得 $CA=I_n$。
+    \item 存在一个 $n\times n$ 矩阵 $D$，使得 $AD=I_n$。
+    \item $\det(A)\neq0$。
+    \item $\operatorname{rank}(A)=n$。
+    \item $\operatorname{Nul}(A)=\{\mathbf{0}\}$。
+    \item $\operatorname{Col}(A)=\mathbb{R}^n$。
+    \item $0$ 不是 $A$ 的特征值。这个概念后面会介绍。
+\end{enumerate}
+\end{theorem}
+
+这个定理是一个非常有力的判断工具。要检查一个方阵是否可逆，我们只需要验证其中任意一个条件。例如，检查 $\det(A)\neq0$ 往往是最快的方式之一。
+
+\section{$\mathbb{R}^n$ 中的向量}
+
+现在我们介绍一个新的基础对象：向量。它允许我们用一种强有力的几何方式重新理解方程组。
+
+\subsection{向量与运算}
+从几何上看，在二维 $\mathbb{R}^2$ 或三维 $\mathbb{R}^3$ 中，我们可以把向量看作具有特定长度和方向的箭头。
+
+从代数上看，我们把 $\mathbb{R}^n$ 中的\textbf{向量}定义为一个有序 $n$ 元实数组。通常写成\textbf{列向量}：
+\[ \mathbf{v}=\begin{pmatrix}v_1\\v_2\\\vdots\\v_n\end{pmatrix}. \]
+集合 $\mathbb{R}^n$ 是所有这种 $n$ 维向量的集合。$\mathbb{R}^2$ 是所有形如 $\begin{pmatrix}x\\y\end{pmatrix}$ 的向量的集合，它可以和二维笛卡尔平面对应起来。
+向量 $\mathbf{v}=(v_1,\ldots,v_n)$ 也可以写成\textbf{行向量}，但在矩阵方程中，列向量是标准写法。
+
+我们定义两个基本运算。设 $\mathbf{u}=\begin{pmatrix}u_1\\\vdots\\u_n\end{pmatrix}$，$\mathbf{v}=\begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}$ 是 $\mathbb{R}^n$ 中的向量，$c$ 是实数，也就是\textbf{标量}。
+
+\begin{enumerate}
+    \item \textbf{向量加法：}通过对应分量相加得到 $\mathbf{u}+\mathbf{v}$：
+    \[ \mathbf{u}+\mathbf{v}=\begin{pmatrix}u_1+v_1\\\vdots\\u_n+v_n\end{pmatrix}. \]
+    从几何上看，这对应\textbf{平行四边形法则}。
+    \item \textbf{数乘：}通过把每个分量都乘以 $c$ 得到 $c\mathbf{v}$：
+    \[ c\mathbf{v}=\begin{pmatrix}cv_1\\\vdots\\cv_n\end{pmatrix}. \]
+    从几何上看，这会把向量长度放大或缩小 $|c|$ 倍；如果 $c<0$，还会反向。
+\end{enumerate}
+
+这些运算满足前面列出的八条性质，例如结合律、交换律等，因此 $\mathbb{R}^n$ 是向量空间的典型例子。
+
+\subsection{点积、范数与正交}
+
+除了加法和数乘之外，我们还可以定义一种得到标量的乘积。
+
+\begin{definition}[点积]
+$\mathbb{R}^n$ 中向量 $\mathbf{u},\mathbf{v}$ 的\textbf{点积}，也称\textbf{内积}，定义为
+\[ \mathbf{u}\cdot\mathbf{v}=u_1v_1+u_2v_2+\cdots+u_nv_n=\sum_{i=1}^{n}u_iv_i. \]
+注意：$\mathbf{u}\cdot\mathbf{v}$ 是\textbf{标量}，不是向量。
+也可以用矩阵乘法写成 $\mathbf{u}\cdot\mathbf{v}=\mathbf{u}^T\mathbf{v}$。
+\end{definition}
+
+\begin{property}[点积的性质]
+\begin{enumerate}
+    \item $\mathbf{u}\cdot\mathbf{v}=\mathbf{v}\cdot\mathbf{u}$，即交换律。
+    \item $(\mathbf{u}+\mathbf{v})\cdot\mathbf{w}=\mathbf{u}\cdot\mathbf{w}+\mathbf{v}\cdot\mathbf{w}$，即分配律。
+    \item $(c\mathbf{u})\cdot\mathbf{v}=c(\mathbf{u}\cdot\mathbf{v})$。
+    \item $\mathbf{u}\cdot\mathbf{u}\geq0$，且 $\mathbf{u}\cdot\mathbf{u}=0$ 当且仅当 $\mathbf{u}=\mathbf{0}$。
+\end{enumerate}
+\end{property}
+
+\begin{definition}[范数与距离]
+\begin{enumerate}
+    \item 向量 $\mathbf{v}$ 的\textbf{范数}，或\textbf{长度}，定义为
+    \[ \|\mathbf{v}\|=\sqrt{\mathbf{v}\cdot\mathbf{v}}=\sqrt{v_1^2+v_2^2+\cdots+v_n^2}. \]
+    \item 如果 $\|\mathbf{u}\|=1$，则称 $\mathbf{u}$ 为\textbf{单位向量}。
+    \item 对非零向量 $\mathbf{v}$ 作\textbf{单位化}，就是找到与它同方向的单位向量：$\mathbf{u}=\frac{1}{\|\mathbf{v}\|}\mathbf{v}$。
+    \item 向量 $\mathbf{u}$ 与 $\mathbf{v}$ 之间的\textbf{距离}定义为 $d(\mathbf{u},\mathbf{v})=\|\mathbf{u}-\mathbf{v}\|$。
+\end{enumerate}
+\end{definition}
+
+然而，在处理抽象向量空间时，我们未必有一个天然的点积。这种情况下，可以定义满足点积同类性质的\textbf{内积}。后面会看到如何做。
+
+\begin{definition}[正交性]
+$\mathbb{R}^n$ 中两个向量 $\mathbf{u}$ 与 $\mathbf{v}$ 称为\textbf{正交}，即垂直，如果它们的点积为零：
+\[ \mathbf{u}\perp\mathbf{v}\iff \mathbf{u}\cdot\mathbf{v}=0. \]
+零向量 $\mathbf{0}$ 与 $\mathbb{R}^n$ 中任意向量都正交。
+\end{definition}
+
+类似地，在内积空间或带权点积空间中，我们可以用内积或带权点积替代普通点积来定义正交。
+
+\begin{theorem}[勾股定理]
+$\|\mathbf{u}+\mathbf{v}\|^2=\|\mathbf{u}\|^2+\|\mathbf{v}\|^2$ 当且仅当 $\mathbf{u}\cdot\mathbf{v}=0$。
+\end{theorem}
+\begin{proof}
+\[
+\|\mathbf{u}+\mathbf{v}\|^2=(\mathbf{u}+\mathbf{v})\cdot(\mathbf{u}+\mathbf{v})
+=\mathbf{u}\cdot\mathbf{u}+\mathbf{u}\cdot\mathbf{v}+\mathbf{v}\cdot\mathbf{u}+\mathbf{v}\cdot\mathbf{v}.
+\]
+因此
+\[
+\|\mathbf{u}+\mathbf{v}\|^2=\|\mathbf{u}\|^2+2(\mathbf{u}\cdot\mathbf{v})+\|\mathbf{v}\|^2.
+\]
+等式成立当且仅当 $2(\mathbf{u}\cdot\mathbf{v})=0$，也就是 $\mathbf{u}\cdot\mathbf{v}=0$。
+\end{proof}
+
+点积也可以定义两个向量之间的夹角。
+
+\begin{theorem}
+对 $\mathbb{R}^n$ 中的 $\mathbf{u},\mathbf{v}$，有
+\[ \mathbf{u}\cdot\mathbf{v}=\|\mathbf{u}\|\|\mathbf{v}\|\cos\theta, \]
+其中 $\theta$ 是 $\mathbf{u}$ 与 $\mathbf{v}$ 的夹角。
+\end{theorem}
+这引出一个著名不等式：
+\begin{theorem}[柯西--施瓦茨不等式]
+对 $\mathbb{R}^n$ 中任意 $\mathbf{u},\mathbf{v}$，有
+\[ |\mathbf{u}\cdot\mathbf{v}|\leq \|\mathbf{u}\|\|\mathbf{v}\|. \]
+\end{theorem}
+\begin{theorem}[三角不等式]
+对 $\mathbb{R}^n$ 中任意 $\mathbf{u},\mathbf{v}$，有
+\[ \|\mathbf{u}+\mathbf{v}\|\leq \|\mathbf{u}\|+\|\mathbf{v}\|. \]
+\end{theorem}
+
+\subsection{线性组合与张成}
+
+这是整个线性代数中最重要的思想之一。
+
+\begin{definition}
+$\mathbb{R}^n$ 中向量 $\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_p$ 的一个\textbf{线性组合}，是任意形如
+\[ \mathbf{y}=c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p \]
+的向量，其中 $c_1,\ldots,c_p$ 是任意标量，也称为权重。
+\end{definition}
+
+\begin{example}
+在 $\mathbb{R}^3$ 中，设 $\mathbf{v}_1=\begin{pmatrix}1\\0\\0\end{pmatrix}$，$\mathbf{v}_2=\begin{pmatrix}0\\1\\0\end{pmatrix}$。
+则
+\[
+\mathbf{y}=3\mathbf{v}_1+(-2)\mathbf{v}_2=3\begin{pmatrix}1\\0\\0\end{pmatrix}-2\begin{pmatrix}0\\1\\0\end{pmatrix}=\begin{pmatrix}3\\-2\\0\end{pmatrix}
+\]
+是 $\mathbf{v}_1,\mathbf{v}_2$ 的线性组合。
+但 $\begin{pmatrix}1\\1\\1\end{pmatrix}$ 不是 $\mathbf{v}_1,\mathbf{v}_2$ 的线性组合。
+\end{example}
+
+\begin{definition}
+向量 $\mathbf{v}_1,\ldots,\mathbf{v}_p$ 的\textbf{所有可能线性组合}构成的集合，称为这些向量的\textbf{张成}，记作 $\operatorname{Span}\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$。
+\end{definition}
+
+从几何上看，张成有一个简单解释：
+\begin{itemize}
+    \item 若 $\mathbf{v}\neq\mathbf{0}$，则 $\operatorname{Span}\{\mathbf{v}\}$ 是经过原点和 $\mathbf{v}$ 的直线。
+    \item 若 $\mathbf{u},\mathbf{v}$ 不共线，则 $\operatorname{Span}\{\mathbf{u},\mathbf{v}\}$ 是包含原点、$\mathbf{u}$ 和 $\mathbf{v}$ 的平面。
+    \item $\operatorname{Span}\{\mathbf{0}\}$ 只是集合 $\{\mathbf{0}\}$，也就是原点。
+\end{itemize}
+
+\subsection{矩阵方程 $A\mathbf{x}=\mathbf{b}$}
+
+现在可以把前面的主题联系起来。
+设 $A$ 是一个 $m\times n$ 矩阵。我们可以把它的列看成 $\mathbb{R}^m$ 中的 $n$ 个向量：
+\[
+A=\begin{pmatrix}\mathbf{a}_1&\mathbf{a}_2&\cdots&\mathbf{a}_n\end{pmatrix}.
+\]
+设 $\mathbf{x}=\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}$ 是 $\mathbb{R}^n$ 中的向量。
+
+\begin{definition}[矩阵与向量的乘积]
+$m\times n$ 矩阵 $A$ 与 $n\times1$ 向量 $\mathbf{x}$ 的乘积，记作 $A\mathbf{x}$，定义为\textbf{用 $\mathbf{x}$ 的分量作为权重，对 $A$ 的列向量作线性组合}：
+\[
+A\mathbf{x}=x_1\mathbf{a}_1+x_2\mathbf{a}_2+\cdots+x_n\mathbf{a}_n.
+\]
+这个乘积是一个 $m\times1$ 向量，也就是 $\mathbb{R}^m$ 中的向量。
+\end{definition}
+
+\begin{example}
+\[
+\begin{pmatrix}1&2\\3&4\end{pmatrix}\begin{pmatrix}5\\-1\end{pmatrix}
+=5\begin{pmatrix}1\\3\end{pmatrix}-1\begin{pmatrix}2\\4\end{pmatrix}
+=\begin{pmatrix}5\\15\end{pmatrix}-\begin{pmatrix}2\\4\end{pmatrix}
+=\begin{pmatrix}3\\11\end{pmatrix}.
+\]
+注意，这与矩阵乘法中的行列规则一致：
+\[
+\begin{pmatrix}1(5)+2(-1)\\3(5)+4(-1)\end{pmatrix}=\begin{pmatrix}3\\11\end{pmatrix}.
+\]
+\end{example}
+
+现在回到原始线性方程组：
+\[
+\begin{cases}
+a_{11}x_1+\cdots+a_{1n}x_n=b_1\\
+\quad\vdots\\
+a_{m1}x_1+\cdots+a_{mn}x_n=b_m
+\end{cases}
+\]
+左侧可以写成一个向量方程：
+\[
+x_1\begin{pmatrix}a_{11}\\\vdots\\a_{m1}\end{pmatrix}
++x_2\begin{pmatrix}a_{12}\\\vdots\\a_{m2}\end{pmatrix}
++\cdots+x_n\begin{pmatrix}a_{1n}\\\vdots\\a_{mn}\end{pmatrix}
+=\begin{pmatrix}b_1\\\vdots\\b_m\end{pmatrix}.
+\]
+利用新定义，这正是
+\[ x_1\mathbf{a}_1+x_2\mathbf{a}_2+\cdots+x_n\mathbf{a}_n=\mathbf{b}, \]
+也就是\textbf{矩阵方程}
+\[ A\mathbf{x}=\mathbf{b}. \]
+
+因此，同一个问题有三种等价理解方式：
+\begin{enumerate}
+    \item 一个包含 $m$ 个方程、$n$ 个变量的线性方程组。
+    \item 一个向量方程 $x_1\mathbf{a}_1+\cdots+x_n\mathbf{a}_n=\mathbf{b}$。
+    \item 一个矩阵方程 $A\mathbf{x}=\mathbf{b}$。
+\end{enumerate}
+
+这是一个深刻的重新解释。问题“系统 $A\mathbf{x}=\mathbf{b}$ 是否有解？”等价于问题：
+
+\begin{center}
+\textbf{“向量 $\mathbf{b}$ 是否是 $A$ 的列向量的线性组合？”}
+\end{center}
+或者更简单地说：\textbf{“$\mathbf{b}$ 是否属于 $\operatorname{Span}\{\mathbf{a}_1,\ldots,\mathbf{a}_n\}$？”}
+
+\begin{theorem}
+方程 $A\mathbf{x}=\mathbf{b}$ 有解，当且仅当 $\mathbf{b}$ 属于 $A$ 的列向量的张成空间。这个张成空间称为 $A$ 的\textbf{列空间}，记作 $\operatorname{Col}(A)$。
+\end{theorem}
+
+\subsection{线性无关}
+现在考虑一个相关问题：如果 $\mathbf{b}=\mathbf{0}$ 会怎样？
+方程 $A\mathbf{x}=\mathbf{0}$，也就是 $x_1\mathbf{a}_1+\cdots+x_n\mathbf{a}_n=\mathbf{0}$，称为\textbf{齐次方程}。
+我们知道它\emph{总是}有\textbf{平凡解} $\mathbf{x}=\mathbf{0}$，也就是 $x_1=0,\ldots,x_n=0$。
+但它是否\emph{只有}平凡解呢？
+
+\begin{definition}
+$\mathbb{R}^n$ 中的向量集合 $\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$ 称为\textbf{线性无关}，如果向量方程
+\[ c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_p\mathbf{v}_p=\mathbf{0} \]
+\textbf{只有}平凡解 $c_1=c_2=\cdots=c_p=0$。
+
+如果存在不全为零的权重 $c_i$ 使该等式成立，则称这个集合\textbf{线性相关}。这样的等式称为\textbf{线性相关关系}。
+\end{definition}
+
+\newpage
+
+\begin{example}
+判断集合
+\[
+\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}=\left\{\begin{pmatrix}1\\0\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix},\begin{pmatrix}2\\3\\3\end{pmatrix}\right\}
+\]
+是否线性无关。
+需要求解 $c_1\mathbf{v}_1+c_2\mathbf{v}_2+c_3\mathbf{v}_3=\mathbf{0}$。
+这就是矩阵方程 $A\mathbf{c}=\mathbf{0}$，其中 $A=\begin{pmatrix}\mathbf{v}_1&\mathbf{v}_2&\mathbf{v}_3\end{pmatrix}$。
+\[
+\left(\begin{array}{ccc|c}1&0&2&0\\0&1&3&0\\0&1&3&0\end{array}\right)
+\sim
+\left(\begin{array}{ccc|c}1&0&2&0\\0&1&3&0\\0&0&0&0\end{array}\right)\quad(R_3\to R_3-R_2).
+\]
+$c_3$ 是自由变量，所以存在非平凡解。令 $c_3=t$，则 $c_2=-3t$，$c_1=-2t$。
+当 $t=1$ 时，得到 $c_1=-2,c_2=-3,c_3=1$。
+于是有线性相关关系：
+\[
+-2\mathbf{v}_1-3\mathbf{v}_2+1\mathbf{v}_3=\mathbf{0}\quad\text{或}\quad \mathbf{v}_3=2\mathbf{v}_1+3\mathbf{v}_2.
+\]
+因此这个集合\textbf{线性相关}。
+\end{example}
+
+\begin{property}[关于线性无关的若干结论]
+\begin{itemize}
+    \item 两个向量组成的集合 $\{\mathbf{v}_1,\mathbf{v}_2\}$ 线性相关，当且仅当其中一个向量是另一个向量的标量倍。
+    \item 一个集合线性相关，当且仅当其中至少有一个向量可以由其余向量线性表示。
+    \item 任何包含零向量的集合都是线性相关的。
+    \item \textbf{关键定理：}如果一个集合中向量个数超过每个向量的分量个数，例如 $\mathbb{R}^n$ 中有 $p$ 个向量且 $p>n$，则该集合\textbf{线性相关}。
+\end{itemize}
+\end{property}
+\begin{proof}[证明 $p>n$ 推出线性相关]
+设向量集合为 $\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}\subset\mathbb{R}^n$。
+构造 $n\times p$ 矩阵
+\[
+A=\begin{pmatrix}\mathbf{v}_1&\cdots&\mathbf{v}_p\end{pmatrix}.
+\]
+我们要解 $A\mathbf{x}=\mathbf{0}$。
+这是一个有 $n$ 个方程、$p$ 个变量的齐次系统。由于 $p>n$，变量多于方程，必然至少有 $p-n>0$ 个自由变量。
+自由变量的存在保证了非平凡解的存在。因此这些列向量线性相关。
+\end{proof}
+
+把这个结论与矩阵联系起来，可得：
+\begin{itemize}
+    \item 矩阵 $A$ 的列向量线性无关，当且仅当齐次系统 $A\mathbf{x}=\mathbf{0}$ 只有平凡解。
+    \item 这当且仅当不存在自由变量，也就是 $\operatorname{rank}(A)=n$，即每一列都是主元列。
+\end{itemize}
+这些结论也是可逆矩阵定理中的若干条表述。
+
+\section{线性变换}
+矩阵与向量的乘积 $A\mathbf{x}$ 可以看作一种\emph{作用}或\emph{函数}。矩阵 $A$ 把向量 $\mathbf{x}$ \emph{变换}为新的向量 $A\mathbf{x}$。
+
+\subsection{矩阵变换}
+从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的一个\textbf{变换}，也可以称为函数或映射，是一种规则，它把 $\mathbb{R}^n$ 中的每个向量 $\mathbf{x}$ 对应到 $\mathbb{R}^m$ 中的一个向量 $T(\mathbf{x})$：
+\[ T:\mathbb{R}^n\to\mathbb{R}^m. \]
+\begin{itemize}
+    \item $\mathbb{R}^n$ 是 $T$ 的\textbf{定义域}。
+    \item $\mathbb{R}^m$ 是 $T$ 的\textbf{陪域}。
+    \item $T(\mathbf{x})$ 是 $\mathbf{x}$ 在 $T$ 下的\textbf{像}。
+    \item 所有像 $T(\mathbf{x})$ 构成的集合称为 $T$ 的\textbf{值域}。
+\end{itemize}
+
+一类重要的变换是矩阵变换。对于一个 $m\times n$ 矩阵 $A$，变换 $T(\mathbf{x})=A\mathbf{x}$ 把 $\mathbb{R}^n$ 映到 $\mathbb{R}^m$。
+
+\begin{example}
+设 $A=\begin{pmatrix}1&-3\\3&5\\-1&7\end{pmatrix}$。这个 $A$ 定义了 $T:\mathbb{R}^2\to\mathbb{R}^3$。
+令 $\mathbf{x}=\begin{pmatrix}2\\-1\end{pmatrix}$，则
+\[
+T(\mathbf{x})=A\mathbf{x}=\begin{pmatrix}1&-3\\3&5\\-1&7\end{pmatrix}\begin{pmatrix}2\\-1\end{pmatrix}
+=\begin{pmatrix}1(2)-3(-1)\\3(2)+5(-1)\\-1(2)+7(-1)\end{pmatrix}
+=\begin{pmatrix}5\\1\\-9\end{pmatrix}.
+\]
+因此 $\begin{pmatrix}2\\-1\end{pmatrix}$ 的像是 $\begin{pmatrix}5\\1\\-9\end{pmatrix}$。
+\end{example}
+
+\subsection{线性性}
+矩阵变换 $T(\mathbf{x})=A\mathbf{x}$ 具有一些来自矩阵乘法的特殊性质：
+\begin{enumerate}
+    \item $A(\mathbf{u}+\mathbf{v})=A\mathbf{u}+A\mathbf{v}$。
+    \item $A(c\mathbf{u})=c(A\mathbf{u})$。
+\end{enumerate}
+
+\begin{definition}
+若变换 $T:\mathbb{R}^n\to\mathbb{R}^m$ 对所有 $\mathbf{u},\mathbf{v}\in\mathbb{R}^n$ 和所有标量 $c$ 满足
+\begin{enumerate}
+    \item $T(\mathbf{u}+\mathbf{v})=T(\mathbf{u})+T(\mathbf{v})$，即保持加法；
+    \item $T(c\mathbf{u})=cT(\mathbf{u})$，即保持数乘，
+\end{enumerate}
+则称 $T$ 是\textbf{线性变换}。
+\end{definition}
+这两条规则推出 $T(\mathbf{0})=\mathbf{0}$，并推出“叠加原理”：
+\[
+T(c_1\mathbf{v}_1+\cdots+c_p\mathbf{v}_p)=c_1T(\mathbf{v}_1)+\cdots+c_pT(\mathbf{v}_p).
+\]
+
+\begin{theorem}
+每一个矩阵变换 $T(\mathbf{x})=A\mathbf{x}$ 都是线性变换。
+\end{theorem}
+更有力的事实是，反过来也成立。
+
+\begin{theorem}
+设 $T:\mathbb{R}^n\to\mathbb{R}^m$ 是线性变换。则存在唯一的 $m\times n$ 矩阵 $A$，使得对所有 $\mathbf{x}\in\mathbb{R}^n$ 都有
+\[ T(\mathbf{x})=A\mathbf{x}. \]
+这个矩阵 $A$ 称为 $T$ 的\textbf{标准矩阵}，并且
+\[ A=\begin{pmatrix}T(\mathbf{e}_1)&T(\mathbf{e}_2)&\cdots&T(\mathbf{e}_n)\end{pmatrix}, \]
+其中 $\mathbf{e}_j=\begin{pmatrix}0\\\vdots\\1\\\vdots\\0\end{pmatrix}$ 是 $\mathbb{R}^n$ 的第 $j$ 个标准基向量，即第 $j$ 个位置为 $1$，其余位置为 $0$。
+\end{theorem}
+\begin{proof}
+任意 $\mathbf{x}\in\mathbb{R}^n$ 都可以写作
+\[
+\mathbf{x}=x_1\mathbf{e}_1+\cdots+x_n\mathbf{e}_n.
+\]
+由于 $T$ 线性，
+\[
+T(\mathbf{x})=T(x_1\mathbf{e}_1+\cdots+x_n\mathbf{e}_n)=x_1T(\mathbf{e}_1)+\cdots+x_nT(\mathbf{e}_n).
+\]
+这就是向量 $T(\mathbf{e}_j)$ 的线性组合。根据 $A\mathbf{x}$ 的定义，它正是
+\[
+T(\mathbf{x})=\begin{pmatrix}T(\mathbf{e}_1)&T(\mathbf{e}_2)&\cdots&T(\mathbf{e}_n)\end{pmatrix}\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}=A\mathbf{x}.
+\]
+\end{proof}
+
+\subsection{$\mathbb{R}^2$ 中的几何变换}
+本节帮助我们寻找几何操作对应的矩阵。
+
+\begin{example}[旋转]
+求 $T:\mathbb{R}^2\to\mathbb{R}^2$ 的标准矩阵，其中 $T$ 表示把向量逆时针旋转角度 $\theta$。
+只需要求 $T(\mathbf{e}_1)$ 和 $T(\mathbf{e}_2)$。
+$\mathbf{e}_1=\begin{pmatrix}1\\0\end{pmatrix}$。将其旋转 $\theta$ 后得到
+$T(\mathbf{e}_1)=\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix}$。
+$\mathbf{e}_2=\begin{pmatrix}0\\1\end{pmatrix}$。将其旋转 $\theta$ 后得到
+$T(\mathbf{e}_2)=\begin{pmatrix}-\sin\theta\\\cos\theta\end{pmatrix}$。
+因此标准矩阵为
+\[
+A=\begin{pmatrix}T(\mathbf{e}_1)&T(\mathbf{e}_2)\end{pmatrix}=\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}.
+\]
+\end{example}
+
+\begin{example}[反射]
+求 $T:\mathbb{R}^2\to\mathbb{R}^2$ 的标准矩阵，其中 $T$ 表示关于 $x$ 轴反射。
+有
+$T(\mathbf{e}_1)=T\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}$，
+$T(\mathbf{e}_2)=T\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}0\\-1\end{pmatrix}$。
+因此标准矩阵为
+\[
+A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+\end{example}
+
+\begin{definition}[核与值域]
+设 $T:\mathbb{R}^n\to\mathbb{R}^m$ 是线性变换。
+\begin{itemize}
+    \item $T$ 的\textbf{核} $\operatorname{Ker}(T)$ 是所有满足 $T(\mathbf{x})=\mathbf{0}$ 的 $\mathbf{x}\in\mathbb{R}^n$ 构成的集合。
+    \item $T$ 的\textbf{值域} $\operatorname{Range}(T)$ 是所有可以写成 $\mathbf{y}=T(\mathbf{x})$ 的 $\mathbf{y}\in\mathbb{R}^m$ 构成的集合。
+\end{itemize}
+如果 $\operatorname{Ker}(T)=\{\mathbf{0}\}$，则 $T$ 是\textbf{一一的}。
+如果 $\operatorname{Range}(T)=\mathbb{R}^m$，则 $T$ 是\textbf{映上的}。
+\end{definition}
+如果 $T(\mathbf{x})=A\mathbf{x}$，那么这些概念就是前面已经见过的子空间：
+\begin{itemize}
+    \item $\operatorname{Ker}(T)$ 是 $A\mathbf{x}=\mathbf{0}$ 的解集，即 $A$ 的\textbf{零空间} $\operatorname{Nul}(A)$。
+    \item $\operatorname{Range}(T)$ 是 $A$ 的列向量的所有线性组合构成的集合，即 $A$ 的\textbf{列空间} $\operatorname{Col}(A)$。
+\end{itemize}
+
+\section{抽象线性空间与子空间}
+在前面几节中，我们研究了 $\mathbb{R}^n$ 及其代数性质。我们也观察到，矩阵空间 $M_{m\times n}$ 和多项式空间 $\mathcal{P}_n$ 具有类似性质，例如可以相加、可以数乘。现在，我们把这些性质\textbf{抽象}出来，定义一个更一般的概念。
+
+\subsection{形式化定义}
+
+\begin{definition}
+\textbf{线性空间}，也称\textbf{向量空间}，是一个非空对象集合 $V$，其中的对象称为\textbf{向量}。在 $V$ 上定义两种运算：向量加法 $\mathbf{u}+\mathbf{v}$ 和数乘 $c\mathbf{u}$，其中标量来自某个域 $F$，通常是 $\mathbb{R}$。对所有 $V$ 中向量 $\mathbf{u},\mathbf{v},\mathbf{w}$ 以及所有实标量 $c,d$，这些运算必须满足以下十条公理：
+\begin{enumerate}
+    \item $\mathbf{u}+\mathbf{v}\in V$，即加法封闭。
+    \item $\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$，即交换律。
+    \item $(\mathbf{u}+\mathbf{v})+\mathbf{w}=\mathbf{u}+(\mathbf{v}+\mathbf{w})$，即加法结合律。
+    \item 存在零向量 $\mathbf{0}\in V$，使得 $\mathbf{u}+\mathbf{0}=\mathbf{u}$。
+    \item 对每个 $\mathbf{u}\in V$，存在加法逆元 $-\mathbf{u}\in V$，使得 $\mathbf{u}+(-\mathbf{u})=\mathbf{0}$。
+    \item $c\mathbf{u}\in V$，即数乘封闭。
+    \item $c(\mathbf{u}+\mathbf{v})=c\mathbf{u}+c\mathbf{v}$，即分配律。
+    \item $(c+d)\mathbf{u}=c\mathbf{u}+d\mathbf{u}$，即分配律。
+    \item $c(d\mathbf{u})=(cd)\mathbf{u}$，即数乘结合律。
+    \item $1\mathbf{u}=\mathbf{u}$，即标量单位元。
+\end{enumerate}
+\end{definition}
+
+\subsection{线性空间的例子}
+这个定义的力量，来自满足这些公理的对象非常丰富。
+\begin{itemize}
+    \item \textbf{例 1：$\mathbb{R}^n$。}
+    如前所述，带有标准按分量运算的 $\mathbb{R}^n$ 是我们的原型向量空间。
+    \item \textbf{例 2：多项式空间 $\mathcal{P}_n$。}
+    令 $V=\mathcal{P}_n$，即所有次数\textbf{不超过} $n$ 的多项式集合。该空间中的“向量”是多项式 $\mathbf{p}(t)=a_0+a_1t+\cdots+a_nt^n$。普通的多项式加法和数乘满足全部十条公理。零向量是零多项式 $\mathbf{0}(t)=0$。
+    \item \textbf{例 3：矩阵空间 $M_{m\times n}$。}
+    所有 $m\times n$ 矩阵构成的集合 $V=M_{m\times n}$，配上标准矩阵加法和数乘，构成一个向量空间。这里的零向量是 $m\times n$ 零矩阵。
+    \item \textbf{例 4：函数空间 $C[a,b]$。}
+    令 $V=C[a,b]$ 为区间 $[a,b]$ 上所有连续实值函数构成的集合。运算按点定义：
+    $(f+g)(x)=f(x)+g(x)$，$(cf)(x)=c\cdot f(x)$。
+    连续函数的和仍连续，连续函数的标量倍也连续，因此集合封闭。零向量是常值函数 $f(x)=0$。所以它构成一个向量空间。
+\end{itemize}
+
+\subsection{子空间}
+通常，一个向量空间可以包含在更大的向量空间中。
+
+\begin{definition}
+向量空间 $V$ 的一个\textbf{子空间}，是 $V$ 的一个子集 $H$，并满足以下三条性质：
+\begin{enumerate}
+    \item $V$ 的零向量属于 $H$，即 $\mathbf{0}\in H$。
+    \item $H$ 对向量加法封闭：对所有 $H$ 中的 $\mathbf{u},\mathbf{v}$，有 $\mathbf{u}+\mathbf{v}\in H$。
+    \item $H$ 对数乘封闭：对所有 $H$ 中的 $\mathbf{u}$ 和任意标量 $c$，有 $c\mathbf{u}\in H$。
+\end{enumerate}
+这三条性质保证 $H$ 本身也是一个向量空间，因为其他公理都从 $V$ 继承而来。
+\end{definition}
+
+\begin{example}[一个子空间]
+设 $V=\mathbb{R}^3$。令 $H$ 为 $xy$ 平面，即
+\[
+H=\left\{\begin{pmatrix}x\\y\\0\end{pmatrix}\mid x,y\in\mathbb{R}\right\}.
+\]
+判断 $H$ 是否是子空间。
+\begin{enumerate}
+    \item $\mathbf{0}\in H$ 吗？是的，$\begin{pmatrix}0\\0\\0\end{pmatrix}$ 的第三个分量为 $0$。
+    \item 若 $\mathbf{u}=\begin{pmatrix}u_1\\u_2\\0\end{pmatrix}$，$\mathbf{v}=\begin{pmatrix}v_1\\v_2\\0\end{pmatrix}$ 都在 $H$ 中，则
+    \[
+    \mathbf{u}+\mathbf{v}=\begin{pmatrix}u_1+v_1\\u_2+v_2\\0\end{pmatrix},
+    \]
+    第三个分量仍为 $0$，所以在 $H$ 中。
+    \item 若 $\mathbf{u}=\begin{pmatrix}u_1\\u_2\\0\end{pmatrix}\in H$，则
+    \[
+    c\mathbf{u}=\begin{pmatrix}cu_1\\cu_2\\0\end{pmatrix},
+    \]
+    仍在 $H$ 中。
+\end{enumerate}
+因此 $H$ 是 $\mathbb{R}^3$ 的一个子空间。
+\end{example}
+
+\newpage
+
+\begin{example}[一个非子空间]
+设 $V=\mathbb{R}^2$。令 $H$ 为第一象限，
+\[
+H=\left\{\begin{pmatrix}x\\y\end{pmatrix}\mid x\geq0,\ y\geq0\right\}.
+\]
+\begin{enumerate}
+    \item $\mathbf{0}\in H$，通过。
+    \item $H$ 对加法封闭，通过，因为 $x_1+x_2\geq0$，$y_1+y_2\geq0$。
+    \item $H$ 对数乘封闭吗？取 $c=-1$，$\mathbf{u}=\begin{pmatrix}1\\1\end{pmatrix}\in H$。
+    则
+    \[
+    c\mathbf{u}=-1\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}-1\\-1\end{pmatrix},
+    \]
+    它不在 $H$ 中。
+\end{enumerate}
+因此 $H$ \textbf{不是}子空间。
+\end{example}
+
+\begin{theorem}
+如果 $\mathbf{v}_1,\ldots,\mathbf{v}_p$ 是向量空间 $V$ 中的向量，则
+\[
+H=\operatorname{Span}\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}
+\]
+\textbf{总是} $V$ 的一个子空间。
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+    \item $\mathbf{0}=0\mathbf{v}_1+\cdots+0\mathbf{v}_p$，所以 $\mathbf{0}$ 在张成空间中。
+    \item 设 $\mathbf{u}=c_1\mathbf{v}_1+\cdots+c_p\mathbf{v}_p$，$\mathbf{v}=d_1\mathbf{v}_1+\cdots+d_p\mathbf{v}_p$。则
+    \[
+    \mathbf{u}+\mathbf{v}=(c_1+d_1)\mathbf{v}_1+\cdots+(c_p+d_p)\mathbf{v}_p,
+    \]
+    它仍是线性组合，因此在张成空间中。
+    \item 若 $k$ 是标量，则
+    \[
+    k\mathbf{u}=k(c_1\mathbf{v}_1+\cdots+c_p\mathbf{v}_p)=(kc_1)\mathbf{v}_1+\cdots+(kc_p)\mathbf{v}_p,
+    \]
+    仍在张成空间中。
+\end{enumerate}
+所以任意张成空间都是子空间。
+\end{proof}
+
+\subsection{零空间与列空间}
+任意 $m\times n$ 矩阵 $A$ 都关联着两个基本子空间。
+
+\begin{definition}
+\begin{itemize}
+    \item $A$ 的\textbf{零空间} $\operatorname{Nul}(A)$，是齐次方程 $A\mathbf{x}=\mathbf{0}$ 的所有解组成的集合：
+    \[ \operatorname{Nul}(A)=\{\mathbf{x}\in\mathbb{R}^n\mid A\mathbf{x}=\mathbf{0}\}. \]
+    它是 $\mathbb{R}^n$ 的子空间。
+    \item $A$ 的\textbf{列空间} $\operatorname{Col}(A)$，是 $A$ 的列向量的张成：
+    \[ \operatorname{Col}(A)=\operatorname{Span}\{\mathbf{a}_1,\ldots,\mathbf{a}_n\}=\{\mathbf{b}\in\mathbb{R}^m\mid \mathbf{b}=A\mathbf{x}\text{ 对某个 }\mathbf{x}\in\mathbb{R}^n\text{ 成立}\}. \]
+    它是 $\mathbb{R}^m$ 的子空间。
+\end{itemize}
+\end{definition}
+
+$\operatorname{Nul}(A)$ 描述齐次解集的结构。
+$\operatorname{Col}(A)$ 描述所有使 $A\mathbf{x}=\mathbf{b}$ 相容的 $\mathbf{b}$ 的集合。
+
+\subsection{基与维数}
+现在把张成和线性无关统一起来。
+
+\begin{definition}
+向量空间 $V$ 的一个\textbf{基}，是 $V$ 中一组向量 $\mathcal{B}=\{\mathbf{b}_1,\ldots,\mathbf{b}_p\}$，并满足：
+\begin{enumerate}
+    \item $\mathcal{B}$ 是线性无关集。
+    \item $\mathcal{B}$ 张成 $V$，即 $\operatorname{Span}\{\mathcal{B}\}=V$。
+\end{enumerate}
+\end{definition}
+基既是“最小”的张成集，也是“最大”的线性无关集。
+
+\begin{example}
+标准向量集合 $\mathcal{E}=\{\mathbf{e}_1,\ldots,\mathbf{e}_n\}$ 是 $\mathbb{R}^n$ 的\textbf{标准基}。
+集合 $\{1,t,t^2,\ldots,t^n\}$ 是 $\mathcal{P}_n$ 的\textbf{标准基}。
+\end{example}
+
+\begin{theorem}
+向量空间 $V$ 的所有基都含有相同数量的向量。
+\end{theorem}
+
+\begin{definition}
+非零向量空间 $V$ 的\textbf{维数}，记作 $\dim(V)$，定义为 $V$ 任意一个基中向量的个数。零子空间 $\{\mathbf{0}\}$ 的维数定义为 $0$。
+\end{definition}
+
+\textbf{维数的例子：}
+\begin{itemize}
+    \item $\dim(\mathbb{R}^n)=n$。
+    \item $\dim(\mathcal{P}_n)=n+1$，因为包含 $t^0=1$ 项。
+    \item $\dim(M_{m\times n})=m\times n$。
+    \item $C[a,b]$ 是\textbf{无限维}的。
+\end{itemize}
+
+这里有一个有趣结论：$C[0,1]$ 的基数等于 $\mathbb{R}$ 的基数。
+
+\begin{proof}
+令 $D=\mathbb{Q}\cap[0,1]$ 为 $[0,1]$ 中有理数组成的可数稠密集。
+
+\textbf{上界 $\#C[0,1]\leq\mathfrak{c}$：}定义映射 $\Phi:C[0,1]\to\mathbb{R}^{\mathbb{N}}$：
+\[
+\Phi(f)=(f(q_1),f(q_2),f(q_3),\dots),
+\]
+其中 $\{q_i\}$ 枚举 $D$。若 $\Phi(f)=\Phi(g)$，则对所有 $q\in D$ 有 $f(q)=g(q)$。由连续性和稠密性可得 $f=g$ 于 $[0,1]$ 上成立，因此 $\Phi$ 是单射。所以
+\[
+\#C[0,1]\leq \#(\mathbb{R}^{\mathbb{N}})=\mathfrak{c}^{\aleph_0}=(2^{\aleph_0})^{\aleph_0}=2^{\aleph_0}=\mathfrak{c}.
+\]
+
+\textbf{下界 $\#C[0,1]\geq\mathfrak{c}$：}常值函数族 $\{f_r(x)=r:r\in\mathbb{R}\}$ 是 $C[0,1]$ 的一个子集，并且其基数为 $\mathfrak{c}$。
+
+由 Cantor--Bernstein 定理可知，$\#C[0,1]=\mathfrak{c}$。
+\end{proof}
+
+现在可以为两个常见子空间寻找基。
+\begin{itemize}
+    \item \textbf{$\operatorname{Col}(A)$ 的基：}
+    原矩阵 $A$ 的主元列构成 $\operatorname{Col}(A)$ 的一组基。注意不要使用 RREF 中的列，因为初等行变换会改变列空间。
+    \item \textbf{$\operatorname{Nul}(A)$ 的基：}
+    在把 $A\mathbf{x}=\mathbf{0}$ 的解写成参数向量形式时得到的向量，构成 $\operatorname{Nul}(A)$ 的一组基。
+\end{itemize}
+
+\begin{example}
+\[
+A=\begin{pmatrix}1&0&2\\0&1&3\\0&1&3\end{pmatrix}
+\sim
+\begin{pmatrix}1&0&2\\0&1&3\\0&0&0\end{pmatrix}.
+\]
+\textbf{列空间：}主元位于第 $1$ 列和第 $2$ 列。
+因此
+\[
+\operatorname{Col}(A)\text{ 的一组基为 }\left\{\begin{pmatrix}1\\0\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix}\right\}.
+\]
+所以 $\dim(\operatorname{Col}(A))=2$。
+
+\textbf{零空间：}求解 $A\mathbf{x}=\mathbf{0}$。
+$x_1+2x_3=0$，因此 $x_1=-2x_3$。
+$x_2+3x_3=0$，因此 $x_2=-3x_3$。
+$x_3$ 是自由变量。令 $x_3=t$，则
+\[
+\mathbf{x}=\begin{pmatrix}-2t\\-3t\\t\end{pmatrix}=t\begin{pmatrix}-2\\-3\\1\end{pmatrix}.
+\]
+因此
+\[
+\operatorname{Nul}(A)\text{ 的一组基为 }\left\{\begin{pmatrix}-2\\-3\\1\end{pmatrix}\right\}.
+\]
+所以 $\dim(\operatorname{Nul}(A))=1$。
+\end{example}
+
+注意它与秩的联系：
+\begin{itemize}
+    \item $\dim(\operatorname{Col}(A))=$ 主元列个数 $=\operatorname{rank}(A)$。
+    \item $\dim(\operatorname{Nul}(A))=$ 自由变量个数 $=n-\operatorname{rank}(A)$。
+\end{itemize}
+这导向线性代数中最重要的定理之一。
+
+\begin{theorem}[秩--零化度定理]
+对于一个 $m\times n$ 矩阵 $A$，有
+\[ \dim(\operatorname{Col}(A))+\dim(\operatorname{Nul}(A))=n, \]
+等价地，
+\[ \operatorname{rank}(A)+\operatorname{nullity}(A)=n, \]
+其中 $n$ 是\textbf{列数}，$\operatorname{nullity}(A)=\dim(\operatorname{Nul}(A))$。
+\end{theorem}
+在上一个例子中，$n=3$，$\operatorname{rank}(A)=2$，$\operatorname{nullity}(A)=1$，所以 $2+1=3$，定理成立。这个定理优美地把矩阵关联的两个基本子空间的维数联系在一起。
+
+\subsection{坐标系统}
+$\mathbb{R}^n$ 的一组基 $\mathcal{B}=\{\mathbf{b}_1,\ldots,\mathbf{b}_n\}$ 可以看作一个新的坐标系统。
+由于 $\mathcal{B}$ 张成 $\mathbb{R}^n$ 且线性无关，任意 $\mathbf{x}\in\mathbb{R}^n$ 都能\emph{唯一地}写成
+\[ \mathbf{x}=c_1\mathbf{b}_1+\cdots+c_n\mathbf{b}_n. \]
+\begin{definition}
+标量 $c_1,\ldots,c_n$ 称为 $\mathbf{x}$ \textbf{相对于基 $\mathcal{B}$ 的坐标}。
+$\mathbf{x}$ 相对于 $\mathcal{B}$ 的\textbf{坐标向量}为
+\[ [\mathbf{x}]_{\mathcal{B}}=\begin{pmatrix}c_1\\\vdots\\c_n\end{pmatrix}. \]
+\end{definition}
+
+令 $P_{\mathcal{B}}$ 为\textbf{换基矩阵}
+\[
+P_{\mathcal{B}}=\begin{pmatrix}\mathbf{b}_1&\cdots&\mathbf{b}_n\end{pmatrix}.
+\]
+等式 $\mathbf{x}=c_1\mathbf{b}_1+\cdots+c_n\mathbf{b}_n$ 就是矩阵方程
+\[ \mathbf{x}=P_{\mathcal{B}}[\mathbf{x}]_{\mathcal{B}}. \]
+由于 $P_{\mathcal{B}}$ 的列向量是一组基，$P_{\mathcal{B}}$ 可逆。因此
+\[ [\mathbf{x}]_{\mathcal{B}}=P_{\mathcal{B}}^{-1}\mathbf{x}. \]
+这给出了在标准坐标系 $\mathcal{E}$ 与新坐标系 $\mathcal{B}$ 之间转换的方法。
+
+\subsection{特征值与特征向量}
+
+特征值和特征向量是线性代数中的基础概念，它们能揭示线性变换的结构。在振动分析、量子力学和数据分析等应用中，它们都扮演着核心角色。
+
+我们研究特征值和特征向量，是因为它们帮助我们理解一个由矩阵表示的线性变换如何作用在空间中的某些特殊方向上。具体来说，特征向量表示这样一种方向：在变换作用之后，它的方向不变，只会被拉伸或压缩；相应的特征值则表示拉伸或压缩的倍数。
+
+\begin{definition}[特征值与特征向量]
+设 $A$ 是一个 $n\times n$ 方阵。若存在非零向量 $\mathbf{v}\in\mathbb{R}^n$，使得
+\[
+A\mathbf{v}=\lambda\mathbf{v},
+\]
+则标量 $\lambda$ 称为 $A$ 的一个\textbf{特征值}，向量 $\mathbf{v}$ 称为对应于特征值 $\lambda$ 的\textbf{特征向量}。
+\end{definition}
+
+从几何上看，特征向量是在 $A$ 的作用下方向保持不变的向量；它只会被因子 $\lambda$ 缩放。
+
+为了求特征值，把方程 $A\mathbf{v}=\lambda\mathbf{v}$ 改写为
+\[
+(A-\lambda I)\mathbf{v}=\mathbf{0}.
+\]
+这是一个齐次线性方程组。由于 $\mathbf{v}\neq\mathbf{0}$，该系统必须有非平凡解，因此矩阵 $A-\lambda I$ 必须是奇异的，也就是说其行列式必须为零。
+
+\begin{definition}[特征多项式]
+矩阵 $A$ 的\textbf{特征多项式}定义为
+\[
+p(\lambda)=\det(A-\lambda I).
+\]
+它是关于 $\lambda$ 的 $n$ 次多项式。$A$ 的特征值就是特征方程 $p(\lambda)=0$ 的根。
+\end{definition}
+
+特征多项式的根可以是实数，也可以是复数。重根称为具有大于 $1$ 的代数重数的特征值。每个特征值都对应一个特征空间。
+
+\begin{definition}[特征空间]
+对于特征值 $\lambda$，对应的\textbf{特征空间}是齐次系统 $(A-\lambda I)\mathbf{v}=\mathbf{0}$ 的解空间，即 $\operatorname{Nul}(A-\lambda I)$。特征空间的维数称为 $\lambda$ 的\textbf{几何重数}。
+\end{definition}
+
+\begin{example}
+对于 $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$，特征多项式为 $p(\lambda)=(\lambda-1)(\lambda-3)=0$。
+特征值为 $\lambda_1=1$，$\lambda_2=3$。
+求解 $(A-\lambda I)\mathbf{v}=\mathbf{0}$ 得到对应特征向量：当 $\lambda_1=1$ 时，$\mathbf{v}_1=\begin{pmatrix}1\\-1\end{pmatrix}$；当 $\lambda_2=3$ 时，$\mathbf{v}_2=\begin{pmatrix}1\\1\end{pmatrix}$。
+\end{example}
+
+\subsection{对角化}
+
+对角化是把矩阵变换成对角形式的过程。它可以大幅简化矩阵幂和矩阵指数的计算。其几何解释是：对角化把坐标系统与矩阵的特征向量方向对齐，从而使该矩阵代表的变换更容易理解。
+
+\begin{definition}[可对角化矩阵]
+$n\times n$ 矩阵 $A$ 称为\textbf{可对角化}，如果存在可逆矩阵 $P$ 和对角矩阵 $D$，使得
+\[
+A=PDP^{-1}.
+\]
+等价地，$P^{-1}AP=D$。
+\end{definition}
+
+$D$ 的对角元素是 $A$ 的特征值，$P$ 的列向量是相应的线性无关特征向量。
+
+\begin{theorem}
+矩阵 $A$ 可对角化，当且仅当它有 $n$ 个线性无关的特征向量。这等价于每个特征值的几何重数等于它的代数重数，即它作为特征多项式根的重数。
+\end{theorem}
+
+\begin{example}
+继续前面的例子，$A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 的特征值为 $\lambda_1=1$ 和 $\lambda_2=3$，对应特征向量分别为 $\mathbf{v}_1=\begin{pmatrix}1\\-1\end{pmatrix}$ 和 $\mathbf{v}_2=\begin{pmatrix}1\\1\end{pmatrix}$。这些特征向量线性无关，因此可取
+\[
+P=\begin{pmatrix}1&1\\-1&1\end{pmatrix},\quad D=\begin{pmatrix}1&0\\0&3\end{pmatrix}.
+\]
+容易验证 $A=PDP^{-1}$。
+\end{example}
+
+一旦完成对角化，计算 $A$ 的幂就变得直接：
+\[
+A^k=(PDP^{-1})^k=PD^kP^{-1},
+\]
+因为 $D^k$ 只需把每个对角元素分别提升到 $k$ 次方。
+
+\subsection{内积空间}
+
+内积推广了点积，并为向量空间中长度、角度和正交性的定义提供框架。
+
+\begin{definition}[内积]
+设 $V$ 是实向量空间。\textbf{内积}是一个函数 $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{R}$，对所有 $\mathbf{u},\mathbf{v},\mathbf{w}\in V$ 和所有标量 $c$ 满足：
+\begin{enumerate}
+    \item $\langle\mathbf{u},\mathbf{v}\rangle=\langle\mathbf{v},\mathbf{u}\rangle$，即对称性。
+    \item $\langle\mathbf{u}+\mathbf{v},\mathbf{w}\rangle=\langle\mathbf{u},\mathbf{w}\rangle+\langle\mathbf{v},\mathbf{w}\rangle$，即线性性。
+    \item $\langle c\mathbf{u},\mathbf{v}\rangle=c\langle\mathbf{u},\mathbf{v}\rangle$。
+    \item $\langle\mathbf{u},\mathbf{u}\rangle\geq0$，且 $\langle\mathbf{u},\mathbf{u}\rangle=0$ 当且仅当 $\mathbf{u}=\mathbf{0}$，即正定性。
+\end{enumerate}
+\end{definition}
+
+最常见的例子是 $\mathbb{R}^n$ 上的点积，也就是标准内积：
+\[
+\langle\mathbf{u},\mathbf{v}\rangle=\mathbf{u}\cdot\mathbf{v}=u_1v_1+u_2v_2+\cdots+u_nv_n.
+\]
+
+\begin{definition}[范数与距离]
+由内积诱导的\textbf{范数}，即长度，定义为
+\[
+\|\mathbf{v}\|=\sqrt{\langle\mathbf{v},\mathbf{v}\rangle}.
+\]
+向量 $\mathbf{u}$ 与 $\mathbf{v}$ 之间的\textbf{距离}定义为 $d(\mathbf{u},\mathbf{v})=\|\mathbf{u}-\mathbf{v}\|$。
+\end{definition}
+
+\begin{definition}[正交性]
+若 $\langle\mathbf{u},\mathbf{v}\rangle=0$，则称向量 $\mathbf{u}$ 和 $\mathbf{v}$ \textbf{正交}。如果一个向量集合中任意两个不同向量都正交，则称该集合是正交的。如果此外每个向量的范数都是 $1$，则称该集合是\textbf{标准正交}的。
+\end{definition}
+
+\subsection{正交基与 Gram--Schmidt 过程}
+
+在内积空间中，正交基能极大简化计算。
+
+\begin{theorem}
+若 $\{\mathbf{v}_1,\ldots,\mathbf{v}_k\}$ 是子空间 $H$ 的一组正交基，则对任意 $\mathbf{y}\in H$，有
+\[
+\mathbf{y}=c_1\mathbf{v}_1+\cdots+c_k\mathbf{v}_k,\quad \text{其中 } c_i=\frac{\langle\mathbf{y},\mathbf{v}_i\rangle}{\langle\mathbf{v}_i,\mathbf{v}_i\rangle}.
+\]
+如果该基是标准正交基，则 $c_i=\langle\mathbf{y},\mathbf{v}_i\rangle$。
+\end{theorem}
+
+Gram--Schmidt 过程可以把任意线性无关集转化为一组正交基。
+
+\begin{theorem}[Gram--Schmidt 正交化过程]
+设 $\{\mathbf{x}_1,\ldots,\mathbf{x}_p\}$ 是子空间 $H$ 的一组基。定义
+\begin{align*}
+\mathbf{v}_1 &= \mathbf{x}_1 \\
+\mathbf{v}_2 &= \mathbf{x}_2 - \frac{\langle \mathbf{x}_2, \mathbf{v}_1 \rangle}{\langle \mathbf{v}_1, \mathbf{v}_1 \rangle} \mathbf{v}_1 \\
+\mathbf{v}_3 &= \mathbf{x}_3 - \frac{\langle \mathbf{x}_3, \mathbf{v}_1 \rangle}{\langle \mathbf{v}_1, \mathbf{v}_1 \rangle} \mathbf{v}_1 - \frac{\langle \mathbf{x}_3, \mathbf{v}_2 \rangle}{\langle \mathbf{v}_2, \mathbf{v}_2 \rangle} \mathbf{v}_2 \\
+&\vdots \\
+\mathbf{v}_p &= \mathbf{x}_p - \sum_{i=1}^{p-1} \frac{\langle \mathbf{x}_p, \mathbf{v}_i \rangle}{\langle \mathbf{v}_i, \mathbf{v}_i \rangle} \mathbf{v}_i.
+\end{align*}
+则 $\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}$ 是 $H$ 的一组正交基。将每个向量单位化后，就得到一组标准正交基。
+\end{theorem}
+
+\subsection{对称矩阵与二次型}
+
+实对称矩阵具有特别良好的性质，因此在许多应用中都非常重要。
+
+\begin{theorem}[谱定理]
+设 $A$ 是 $n\times n$ 实对称矩阵，则：
+\begin{enumerate}
+    \item $A$ 的所有特征值都是实数。
+    \item $A$ 有 $n$ 个线性无关的特征向量，并且属于不同特征值的特征向量彼此正交。
+    \item $A$ 可以正交对角化：存在正交矩阵 $Q$，满足 $Q^T=Q^{-1}$，以及对角矩阵 $D$，使得
+    \[
+    A=QDQ^T.
+    \]
+\end{enumerate}
+\end{theorem}
+
+二次型是次数为 $2$ 的齐次多项式，可以用矩阵形式表示为 $\mathbf{x}^TA\mathbf{x}$，其中 $A$ 是对称矩阵。
+
+\begin{definition}[二次型]
+\textbf{二次型}是函数 $Q:\mathbb{R}^n\to\mathbb{R}$，定义为
+\[
+Q(\mathbf{x})=\mathbf{x}^TA\mathbf{x}=\sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j,
+\]
+其中 $A$ 是对称矩阵。
+\end{definition}
+
+通过正交变换 $\mathbf{x}=Q\mathbf{y}$，二次型可以化为标准形式：
+\[
+Q(\mathbf{x})=\mathbf{y}^TD\mathbf{y}=\lambda_1y_1^2+\lambda_2y_2^2+\cdots+\lambda_ny_n^2,
+\]
+其中 $\lambda_i$ 是 $A$ 的特征值。
+
+根据特征值的符号，可以对二次型分类：
+\begin{itemize}
+    \item \textbf{正定：}所有特征值为正，并且当 $\mathbf{x}\neq\mathbf{0}$ 时 $Q(\mathbf{x})>0$。
+    \item \textbf{负定：}所有特征值为负。
+    \item \textbf{不定：}特征值既有正也有负。
+\end{itemize}
+
+这种分类在优化问题和多元微积分中临界点的研究中有重要应用。
+
+\subsection{奇异值分解}
+对角化定理 $A=PDP^{-1}$ 只适用于可对角化的方阵。谱定理只适用于对称矩阵。奇异值分解则是更强的推广：它适用于\textbf{任意} $m\times n$ 矩阵。
+
+\begin{theorem}[奇异值分解]
+设 $A$ 是一个秩为 $r$ 的 $m\times n$ 矩阵。则存在分解
+\[ A=U\Sigma V^T, \]
+其中：
+\begin{itemize}
+    \item $U$ 是 $m\times m$ 正交矩阵，即 $U^TU=I$。$U$ 的列向量称为\textbf{左奇异向量}。
+    \item $V$ 是 $n\times n$ 正交矩阵，即 $V^TV=I$。$V$ 的列向量称为\textbf{右奇异向量}。
+    \item $\Sigma$ 是一个 $m\times n$ 矩形对角矩阵，对角线上元素非负：
+    \[ \Sigma=\begin{pmatrix}D&0\\0&0\end{pmatrix}, \]
+    其中 $D=\operatorname{diag}(\sigma_1,\sigma_2,\dots,\sigma_r)$，且 $\sigma_1\geq\sigma_2\geq\cdots\geq\sigma_r>0$。
+\end{itemize}
+标量 $\sigma_i$ 称为 $A$ 的\textbf{奇异值}。它们是 $A^TA$ 的非零特征值的平方根。
+\end{theorem}
+
+\textbf{几何解释：}
+任意线性变换 $T(\mathbf{x})=A\mathbf{x}$ 都会把定义域中的单位球映射为陪域中的一个超椭球。奇异值就是这个超椭球各半轴的长度。
+
+\textbf{SVD 的构造：}
+\begin{enumerate}
+    \item 计算对称矩阵 $A^TA$ 的特征值，设为 $\lambda_1\geq\cdots\geq\lambda_n$。
+    \item 奇异值为 $\sigma_i=\sqrt{\lambda_i}$。
+    \item 求 $A^TA$ 的标准正交特征向量，它们构成矩阵 $V$。
+    \item $U$ 的前 $r$ 列由 $\mathbf{u}_i=\frac{1}{\sigma_i}A\mathbf{v}_i$ 给出。再把这些向量扩展为 $\mathbb{R}^m$ 的一组标准正交基，从而补全 $U$。
+\end{enumerate}
+
+\section{结论}
+
+在本章中，我们学习了许多概念：从矩阵到行列式，从秩到特征值等等。各部分之间存在非常美丽的对称性。实际上，我们是在用同一种语言，从相同视角描述不同对象，并得到不同结果。这正是数学吸引人的地方。现在，我们围绕线性代数中的两个概念，对本章学习内容作一个总结。
+
+\subsection{秩的解释}
+
+设 $A$ 是域 $\mathbb{F}$，例如 $\mathbb{R}$ 或 $\mathbb{C}$，上的一个 $m\times n$ 矩阵。$A$ 的秩记作 $\text{rank}(A)$ 或 $\rho(A)$，可以用以下等价方式定义和解释。
+
+\subsubsection{向量空间解释}
+\begin{itemize}
+    \item \textbf{列秩：}$A$ 的列空间的维数，也就是由列向量张成的向量空间的维数：
+    \[ \text{rank}(A)=\dim(\text{Col}(A)). \]
+    \item \textbf{行秩：}$A$ 的行空间的维数，也就是由行向量张成的向量空间的维数。一个基本性质是行秩等于列秩：
+    \[ \dim(\text{Row}(A))=\dim(\text{Col}(A)). \]
+    \item \textbf{线性无关解释：}矩阵中最多能取出多少个线性无关的列向量，或行向量。
+\end{itemize}
+
+\subsubsection{计算/代数解释}
+\begin{itemize}
+    \item \textbf{主元定义：}矩阵 $A$ 的简化行阶梯形中主元，也就是首 $1$，的个数。
+    \item \textbf{行列式秩：}矩阵 $A$ 中非零方阵子式的最大阶数。也就是说，若存在某个 $r\times r$ 子矩阵行列式非零，并且所有 $(r+1)\times(r+1)$ 子式都为零，则秩为 $r$。
+    \item \textbf{分解秩：}能使 $A=CR$ 成立的最小整数 $k$，其中 $C$ 是 $m\times k$ 矩阵，$R$ 是 $k\times n$ 矩阵。
+\end{itemize}
+
+\subsubsection{几何与映射解释}
+\begin{itemize}
+    \item \textbf{像空间维数：}如果把 $A$ 看成线性变换 $T:\mathbb{F}^n\to\mathbb{F}^m$，其中 $T(\mathbf{x})=A\mathbf{x}$，那么秩就是 $T$ 的像，也就是值域，的维数：
+    \[ \text{rank}(A)=\dim(\text{Im}(T)). \]
+    \item \textbf{奇异值分解解释：}秩等于 $A$ 的非零奇异值的个数。
+\end{itemize}
+
+\subsection{秩--零化度定理}
+
+秩--零化度定理，常被称为线性代数基本定理，联系了定义域、像和核的维数。下面给出它在不同语境下的表达。
+
+\subsubsection{1. 矩阵语境}
+对于一个 $m\times n$ 矩阵 $A$：
+\begin{theorem}[矩阵形式的秩--零化度定理]
+列数等于秩与零化度之和：
+\[ \text{rank}(A)+\text{nullity}(A)=n. \]
+\end{theorem}
+\begin{itemize}
+    \item \textbf{rank($A$)：}主元列，也就是基本变量，的个数。
+    \item \textbf{nullity($A$)：}零空间的维数 $\dim(\text{Null}(A))$，对应自由列，也就是自由变量，的个数。
+    \item \textbf{解释：}变量总数 $=$ 主元变量数 $+$ 自由变量数。
+\end{itemize}
+
+\subsubsection{2. 线性变换语境}
+设 $V$ 和 $W$ 是向量空间，其中 $V$ 有限维。设 $T:V\to W$ 是线性变换。
+\begin{theorem}[线性映射形式的秩--零化度定理]
+\[ \dim(\text{Im}(T))+\dim(\ker(T))=\dim(V). \]
+\end{theorem}
+\begin{itemize}
+    \item $\dim(\text{Im}(T))$ 是该变换的秩。
+    \item $\dim(\ker(T))$ 是零化度，也就是核的维数。
+    \item 注意，二者之和等于\textit{定义域}的维数，而不是陪域的维数。
+\end{itemize}
+
+\subsubsection{3. 抽象代数语境：同构定理}
+这个定理是向量空间，或模，的\textbf{第一同构定理}的直接结果。
+\begin{theorem}
+\[ V/\ker(T)\cong \text{Im}(T). \]
+\end{theorem}
+两边取维数，得到
+\[ \dim(V)-\dim(\ker(T))=\dim(\text{Im}(T)). \]
+重新整理即可得到标准的秩--零化度公式。
+
+\subsubsection{4. 线性方程组语境}
+考虑齐次系统 $A\mathbf{x}=\mathbf{0}$，其中 $A$ 是 $m\times n$ 矩阵。
+\begin{itemize}
+    \item 解空间的维数为 $k=n-r$，其中 $r=\text{rank}(A)$。
+    \item 如果 $r=n$，即满列秩，则唯一解是平凡解 $\mathbf{0}$，所以零化度为 $0$。
+    \item 如果 $r<m$，对于增广系统 $A\mathbf{x}=\mathbf{b}$，解的存在性取决于 $\mathbf{b}$ 是否属于列空间。
+\end{itemize}
+
+\subsection{线性代数的公理}
+最后，我们需要回答一个问题：线性代数的核心公理是什么？我们认为它就是\textbf{向量空间的公理化定义}。
+
+向量空间的公理化定义之所以是线性代数的中心，是因为它只通过两个基本运算——加法和数乘——以及支配这些运算的公理，捕捉了线性性的本质。这个简单而强大的抽象框架统一了无数数学对象，从几何向量到函数、矩阵，并且为线性变换、线性方程组求解等核心理论提供共同基础。正是在这个意义上，它成为连接数学理论与科学应用的通用语言。
+
+这里再次给出定义。
+
+设 $V$ 是一个非空集合，其元素称为\textbf{向量}；设 $\mathbb{F}$ 是一个\textbf{域}，例如实数域 $\mathbb{R}$ 或复数域 $\mathbb{C}$。在 $V$ 上定义两种运算：
+\begin{itemize}
+    \item \textbf{向量加法：}$+:V\times V\to V$，记作 $(\mathbf{u},\mathbf{v})\mapsto\mathbf{u}+\mathbf{v}$。
+    \item \textbf{数乘：}$\cdot:\mathbb{F}\times V\to V$，记作 $(c,\mathbf{v})\mapsto c\mathbf{v}$。
+\end{itemize}
+
+这些运算必须满足下面 $8$ 条公理，有时把封闭性显式列出时会写成 $10$ 条。
+
+\subsubsection*{1. 向量加法公理}
+\begin{enumerate}
+    \item \textbf{加法封闭：}对所有 $\mathbf{u},\mathbf{v}\in V$，有 $\mathbf{u}+\mathbf{v}\in V$。
+    \item \textbf{加法结合律：}对所有 $\mathbf{u},\mathbf{v},\mathbf{w}\in V$，有
+    \[
+    \mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}.
+    \]
+    \item \textbf{加法交换律：}对所有 $\mathbf{u},\mathbf{v}\in V$，有
+    \[
+    \mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}.
+    \]
+    \item \textbf{零向量存在：}存在向量 $\mathbf{0}\in V$，使得对所有 $\mathbf{v}\in V$，有
+    \[
+    \mathbf{v}+\mathbf{0}=\mathbf{v}.
+    \]
+    \item \textbf{加法逆元存在：}对每个 $\mathbf{v}\in V$，存在向量 $-\mathbf{v}\in V$，使得
+    \[
+    \mathbf{v}+(-\mathbf{v})=\mathbf{0}.
+    \]
+\end{enumerate}
+
+\subsubsection*{2. 数乘公理}
+\begin{enumerate}
+    \setcounter{enumi}{5}
+    \item \textbf{数乘封闭：}对所有 $c\in\mathbb{F}$ 和 $\mathbf{v}\in V$，有 $c\mathbf{v}\in V$。
+    \item \textbf{数乘结合律：}对所有 $a,b\in\mathbb{F}$ 和 $\mathbf{v}\in V$，有
+    \[
+    a(b\mathbf{v})=(ab)\mathbf{v}.
+    \]
+    \item \textbf{乘法单位元：}对所有 $\mathbf{v}\in V$，有
+    \[
+    1\mathbf{v}=\mathbf{v},
+    \]
+    其中 $1$ 是 $\mathbb{F}$ 中的乘法单位元。
+\end{enumerate}
+
+\subsubsection*{3. 分配律}
+\begin{enumerate}
+    \setcounter{enumi}{8}
+    \item \textbf{数乘对向量加法的分配律：}对所有 $a\in\mathbb{F}$ 和 $\mathbf{u},\mathbf{v}\in V$，有
+    \[
+    a(\mathbf{u}+\mathbf{v})=a\mathbf{u}+a\mathbf{v}.
+    \]
+    \item \textbf{数乘对标量加法的分配律：}对所有 $a,b\in\mathbb{F}$ 和 $\mathbf{v}\in V$，有
+    \[
+    (a+b)\mathbf{v}=a\mathbf{v}+b\mathbf{v}.
+    \]
+\end{enumerate}
+
+那么，$V$ 称为域 $\mathbb{F}$ 上的\textbf{向量空间}，或\textbf{线性空间}。
+
+这正是整个体系能够良好运转的原因。
+
+\section{总结与展望}
+
+结束本章关于线性代数的学习时，我们会发现，自己获得的并不只是求解方程或操作矩阵的一组技巧。我们学习了一种新的语言，即线性性的语言。它揭示了数学和科学中普遍存在的隐藏结构。从向量空间的优雅抽象，到线性变换的强大对角化，线性代数为理解那些本质上具有比例性和可加性的关系提供了统一框架。基、维数和线性变换这些概念，构成了一套概念工具箱，为进一步进入更深层的数学景观做好准备，例如泛函分析中的无限维空间，以及微分流形中的弯曲几何。线性代数提醒我们，在表面复杂的现象背后，往往存在简单而清晰的结构；最有力量的数学不仅能给出答案，更能带来理解上的清晰。
+
+线性代数不仅因为其优雅的理论结构而重要，也因为它作为一种通用语言，在科学与工程中有广泛应用。在计算机科学中，它支撑三维图形和搜索算法；在数据科学中，PCA 和 SVD 等技术是数据降维的核心；在物理学中，量子力学建立在 Hilbert 空间之上；在经济学中，许多模型依赖线性系统。正是这种跨学科相关性，使线性代数成为不可或缺的基础。
+
+数学理论的发展也深深依赖线性代数概念。向量空间可以推广为模、流形和 Banach 空间；线性变换引向算子理论和表示论。特征值与特征向量是动力系统稳定性分析、网络科学和量子力学的基础。掌握线性代数，就是获得理解现代数学与理论科学的一把钥匙。
+
+线性代数代表的是一种思维方式：在复杂性中寻找线性结构，并用一种强有力的语言完成建模、分析和问题求解。
+
+\vspace{1cm}

@@ -1,0 +1,630 @@
+\chapter{复分析}
+
+复分析研究复变量函数的微分、积分、级数展开和奇点结构。它与实分析的一个重要差别在于：复可微性比实可微性强得多。一个函数只要在区域内复可微，就会自动具有幂级数展开，并且受到 Cauchy 积分公式、最大模原理、留数定理等强有力结果的约束。
+
+本章的目标不是穷尽复分析的全部内容，而是建立一条从复数、复平面、复可微性到 Cauchy 理论和留数计算的基本路径。
+
+\section{复数与复平面}
+
+\subsection{代数定义}
+
+\begin{definition}[复数]
+复数是形如
+\[
+    z=a+bi
+\]
+的对象，其中 $a,b\in\mathbb{R}$，且 $i^2=-1$。$a$ 称为实部，$b$ 称为虚部，记作
+\[
+    \operatorname{Re}z=a,
+    \qquad
+    \operatorname{Im}z=b.
+\]
+复数集记作 $\mathbb{C}$。
+\end{definition}
+
+复数的加法和乘法按形式运算并使用 $i^2=-1$ 化简：
+\[
+    (a+bi)+(c+di)=(a+c)+(b+d)i,
+\]
+\[
+    (a+bi)(c+di)=(ac-bd)+(ad+bc)i.
+\]
+由此可见，$\mathbb{C}$ 是一个域，并且包含 $\mathbb{R}$ 作为子域。
+
+\begin{definition}[共轭与模]
+设 $z=a+bi$。复共轭定义为
+\[
+    \overline{z}=a-bi,
+\]
+模定义为
+\[
+    |z|=\sqrt{a^2+b^2}.
+\]
+\end{definition}
+
+\begin{proposition}[基本恒等式]
+对任意 $z,w\in\mathbb{C}$，有
+\[
+    z\overline z=|z|^2,
+    \qquad
+    |zw|=|z||w|,
+    \qquad
+    \overline{z+w}=\overline z+\overline w,
+\]
+并且当 $z\ne0$ 时，
+\[
+    z^{-1}=\frac{\overline z}{|z|^2}.
+\]
+\end{proposition}
+
+\subsection{几何解释}
+
+复数 $z=a+bi$ 可以看作平面点 $(a,b)$。因此，$\mathbb{C}$ 与 $\mathbb{R}^2$ 在集合和几何直观上可以对应起来，这个平面称为\textbf{复平面}。在这个解释下，$|z|$ 就是点 $z$ 到原点的欧氏距离。
+
+\begin{definition}[辐角]
+若 $z\ne0$，则满足
+\[
+    z=|z|(\cos\theta+i\sin\theta)
+\]
+的角 $\theta$ 称为 $z$ 的一个\textbf{辐角}，记作 $\arg z$。由于角可以相差 $2\pi$ 的整数倍，辐角通常是多值的。
+\end{definition}
+
+\begin{definition}[极坐标形式]
+若 $z\ne0$，则可以写作
+\[
+    z=r(\cos\theta+i\sin\theta),
+    \qquad r=|z|>0.
+\]
+这称为 $z$ 的极坐标形式。
+\end{definition}
+
+\subsection{Euler 公式}
+
+\begin{theorem}[Euler 公式]
+对任意实数 $\theta$，有
+\[
+    e^{i\theta}=\cos\theta+i\sin\theta.
+\]
+\end{theorem}
+
+这个公式把指数函数、三角函数与复数乘法统一起来，是复分析中最重要的公式之一。
+
+\begin{corollary}[指数形式]
+任意非零复数都可以写成
+\[
+    z=re^{i\theta},
+    \qquad r=|z|>0.
+\]
+\end{corollary}
+
+\newpage
+
+\begin{proposition}[极坐标形式下的乘法]
+若
+\[
+    z_1=r_1e^{i\theta_1},
+    \qquad
+    z_2=r_2e^{i\theta_2},
+\]
+则
+\[
+    z_1z_2=r_1r_2e^{i(\theta_1+\theta_2)}.
+\]
+因此，复数相乘对应于模相乘、辐角相加。
+\end{proposition}
+
+\begin{theorem}[De Moivre 公式]
+对任意整数 $n$，有
+\[
+    (\cos\theta+i\sin\theta)^n
+    =\cos(n\theta)+i\sin(n\theta).
+\]
+\end{theorem}
+
+\begin{example}[单位根]
+方程 $z^n=1$ 的全部解为
+\[
+    z_k=e^{2\pi i k/n},
+    \qquad k=0,1,\dots,n-1.
+\]
+这些点均匀分布在单位圆上，构成正 $n$ 边形的顶点。
+\end{example}
+
+\section{复平面的拓扑}
+
+因为 $\mathbb{C}$ 可与 $\mathbb{R}^2$ 识别，复平面继承了通常的欧氏拓扑。对 $z_0\in\mathbb{C}$ 和 $r>0$，定义开圆盘
+\[
+    D(z_0,r)=\{z\in\mathbb{C}:|z-z_0|<r\}.
+\]
+
+\begin{definition}[开圆盘]
+集合 $D(z_0,r)$ 称为以 $z_0$ 为中心、半径为 $r$ 的开圆盘。
+\end{definition}
+
+\begin{definition}[区域]
+复平面中的非空开连通集称为\textbf{区域}。
+\end{definition}
+
+\begin{definition}[极限与连续性]
+设 $f$ 定义在 $z_0$ 的某个去心邻域中。若存在 $L\in\mathbb{C}$，使得对任意 $\varepsilon>0$，存在 $\delta>0$，当
+\[
+    0<|z-z_0|<\delta
+\]
+时有
+\[
+    |f(z)-L|<\varepsilon,
+\]
+则称
+\[
+    \lim_{z\to z_0}f(z)=L.
+\]
+若 $f$ 在 $z_0$ 有定义且
+\[
+    \lim_{z\to z_0}f(z)=f(z_0),
+\]
+则称 $f$ 在 $z_0$ 连续。
+\end{definition}
+
+这里的极限要求 $z$ 从复平面中任意方向趋向 $z_0$。因此，复变量极限比一元实函数极限更严格。
+
+\section{复可微性}
+
+\subsection{复导数的定义}
+
+\begin{definition}[复导数]
+设 $f$ 在 $z_0$ 的某个邻域中有定义。如果极限
+\[
+    f'(z_0)=\lim_{h\to0}\frac{f(z_0+h)-f(z_0)}{h}
+\]
+存在，则称 $f$ 在 $z_0$ 处复可微，并称该极限为 $f$ 在 $z_0$ 的复导数。
+\end{definition}
+
+由于 $h\in\mathbb{C}$ 可以沿任意方向趋于 $0$，复可微性实际上包含了许多方向导数的一致性要求。
+
+\begin{example}
+函数 $f(z)=z^2$ 在整个复平面上可微，且
+\[
+    f'(z)=2z.
+\]
+这可以直接由差商计算得到：
+\[
+    \frac{(z+h)^2-z^2}{h}=2z+h\to2z.
+\]
+\end{example}
+
+\begin{example}[复共轭函数]
+函数 $f(z)=\overline z$ 在任何点都不复可微。因为在 $z_0$ 处，差商为
+\[
+    \frac{\overline{z_0+h}-\overline{z_0}}{h}=\frac{\overline h}{h}.
+\]
+若 $h$ 沿实轴趋于 $0$，该比值趋于 $1$；若 $h$ 沿虚轴趋于 $0$，该比值趋于 $-1$。极限不存在。
+\end{example}
+
+\subsection{全纯函数}
+
+\begin{definition}[全纯函数]
+设 $\Omega\subseteq\mathbb{C}$ 是开集。如果函数 $f:\Omega\to\mathbb{C}$ 在 $\Omega$ 中每一点都复可微，则称 $f$ 在 $\Omega$ 上\textbf{全纯}。
+\end{definition}
+
+\begin{proposition}[求导法则]
+全纯函数满足通常的求导法则：若 $f,g$ 在 $\Omega$ 上全纯，则 $f+g$、$fg$ 全纯；若 $g$ 没有零点，则 $f/g$ 全纯；复合函数也满足链式法则
+\[
+    (g\circ f)'(z)=g'(f(z))f'(z).
+\]
+\end{proposition}
+
+\section{Cauchy--Riemann 方程}
+
+设
+\[
+    f(z)=u(x,y)+iv(x,y),
+    \qquad z=x+iy,
+\]
+其中 $u,v$ 是实值函数。复可微性要求沿实方向和虚方向得到的差商极限一致。
+
+沿实方向，
+\[
+    f'(z)=u_x+iv_x.
+\]
+沿虚方向，
+\[
+    f'(z)=\frac{u_y+iv_y}{i}=v_y-iu_y.
+\]
+比较实部和虚部得到 Cauchy--Riemann 方程。
+
+\begin{theorem}[Cauchy--Riemann 方程]
+若 $f=u+iv$ 在点 $z=x+iy$ 处复可微，并且 $u,v$ 的偏导数存在，则
+\[
+    u_x=v_y,
+    \qquad
+    u_y=-v_x.
+\]
+\end{theorem}
+
+\begin{theorem}[充分条件]
+若 $u,v$ 在开集 $\Omega$ 上具有连续偏导数，并且满足 Cauchy--Riemann 方程，则 $f=u+iv$ 在 $\Omega$ 上全纯。
+\end{theorem}
+
+\begin{example}
+函数 $f(z)=z^2$ 可写作
+\[
+    f(x+iy)=x^2-y^2+2xyi.
+\]
+此时
+\[
+    u=x^2-y^2,
+    \qquad
+    v=2xy.
+\]
+于是
+\[
+    u_x=2x=v_y,
+    \qquad
+    u_y=-2y=-v_x,
+\]
+满足 Cauchy--Riemann 方程。
+\end{example}
+
+\begin{example}
+函数 $f(z)=\overline z=x-iy$ 对应 $u=x,v=-y$。此时
+\[
+    u_x=1,
+    \qquad
+    v_y=-1,
+\]
+不满足 Cauchy--Riemann 方程，因此不全纯。
+\end{example}
+
+\subsection{几何意义}
+
+\begin{definition}[保角映射]
+若全纯函数 $f$ 在点 $z_0$ 满足 $f'(z_0)\ne0$，则它在 $z_0$ 附近保持曲线夹角及其方向，称为在该点\textbf{保角}。
+\end{definition}
+
+直观上，非零复导数的作用是“旋转加伸缩”。这也是复函数比一般二维实函数更刚性的原因之一。
+
+\section{初等全纯函数}
+
+\subsection{指数函数与三角函数}
+
+\begin{definition}[复指数函数]
+复指数函数定义为
+\[
+    e^z=e^x(\cos y+i\sin y),
+    \qquad z=x+iy.
+\]
+\end{definition}
+
+\begin{proposition}
+复指数函数在整个复平面上全纯，且
+\[
+    (e^z)'=e^z.
+\]
+并且有周期性
+\[
+    e^{z+2\pi i}=e^z.
+\]
+\end{proposition}
+
+\begin{definition}[复正弦与复余弦]
+定义
+\[
+    \sin z=\frac{e^{iz}-e^{-iz}}{2i},
+    \qquad
+    \cos z=\frac{e^{iz}+e^{-iz}}{2}.
+\]
+\end{definition}
+
+\begin{proposition}
+函数 $\sin z$ 和 $\cos z$ 都是整函数，并满足
+\[
+    (\sin z)'=\cos z,
+    \qquad
+    (\cos z)'=-\sin z.
+\]
+同时仍有恒等式
+\[
+    \sin^2 z+\cos^2 z=1.
+\]
+\end{proposition}
+
+\subsection{复对数}
+
+复对数比实对数复杂，因为复指数函数具有周期 $2\pi i$。若 $z=re^{i\theta}$，则对数的自然候选为
+\[
+    \log z=\ln r+i\theta.
+\]
+但 $\theta$ 可以加上 $2\pi k$，所以复对数通常是多值的。
+
+\begin{definition}[多值对数]
+对 $z\ne0$，复对数定义为多值函数
+\[
+    \log z=\ln|z|+i(\arg z+2\pi k),
+    \qquad k\in\mathbb{Z}.
+\]
+\end{definition}
+
+\begin{definition}[主值分支]
+令 $\operatorname{Arg}z\in(-\pi,\pi]$ 表示主辐角。复对数主值定义为
+\[
+    \operatorname{Log}z=\ln|z|+i\operatorname{Arg}z.
+\]
+\end{definition}
+
+\begin{remark}
+复对数不能在整个 $\mathbb{C}\setminus\{0\}$ 上选取单值连续分支。这一现象反映了穿孔平面的拓扑结构。
+\end{remark}
+
+\section{复积分}
+
+\subsection{曲线与围道积分}
+
+\begin{definition}[路径]
+一条路径是连续映射
+\[
+    \gamma:[a,b]\to\mathbb{C}.
+\]
+如果 $\gamma$ 分段连续可微，则称它为分段光滑路径。
+\end{definition}
+
+\begin{definition}[围道积分]
+设 $f$ 在路径 $\gamma$ 的像上连续，且 $\gamma$ 分段光滑。定义
+\[
+    \int_\gamma f(z)\,dz
+    =\int_a^b f(\gamma(t))\gamma'(t)\,dt.
+\]
+\end{definition}
+
+\begin{example}
+若 $\gamma(t)=e^{it}$，$0\le t\le2\pi$，则
+\[
+    \int_\gamma \frac1z\,dz
+    =\int_0^{2\pi}\frac1{e^{it}}ie^{it}\,dt
+    =2\pi i.
+\]
+这个计算是复分析中许多结果的原型。
+\end{example}
+
+\begin{proposition}[估计引理]
+若 $|f(z)|\le M$ 对 $z\in\gamma$ 成立，且 $\gamma$ 的长度为 $L$，则
+\[
+    \left|\int_\gamma f(z)\,dz\right|\le ML.
+\]
+\end{proposition}
+
+\subsection{原函数}
+
+\begin{definition}[原函数]
+若在区域 $\Omega$ 上存在全纯函数 $F$，使得
+\[
+    F'(z)=f(z),
+\]
+则称 $F$ 是 $f$ 的原函数。
+\end{definition}
+
+\begin{theorem}[复线积分基本定理]
+若 $F'=f$，则对任意从 $z_0$ 到 $z_1$ 的分段光滑路径 $\gamma$，有
+\[
+    \int_\gamma f(z)\,dz=F(z_1)-F(z_0).
+\]
+特别地，若 $\gamma$ 是闭路径，则
+\[
+    \int_\gamma f(z)\,dz=0.
+\]
+\end{theorem}
+
+\section{Cauchy 定理与 Cauchy 积分公式}
+
+\begin{theorem}[Cauchy 定理，简单形式]
+设 $\Omega$ 是单连通区域，$f$ 在 $\Omega$ 上全纯。若 $\gamma$ 是 $\Omega$ 中的闭合分段光滑路径，则
+\[
+    \int_\gamma f(z)\,dz=0.
+\]
+\end{theorem}
+
+\begin{remark}
+Cauchy 定理说明，全纯函数沿闭曲线的积分常常为零。它是复分析中由局部可微性推出整体积分性质的核心桥梁。
+\end{remark}
+
+\begin{theorem}[Cauchy 积分公式]
+设 $f$ 在包含闭圆盘 $\overline{D(a,r)}$ 的开集上全纯。若 $|z-a|<r$，则
+\[
+    f(z)=\frac1{2\pi i}\int_{|\zeta-a|=r}\frac{f(\zeta)}{\zeta-z}\,d\zeta.
+\]
+\end{theorem}
+
+这个公式极其重要：区域内部任一点的函数值，可以由边界上的积分完全决定。
+
+\begin{theorem}[导数形式的 Cauchy 积分公式]
+在同样条件下，对任意 $n\ge0$，有
+\[
+    f^{(n)}(z)=\frac{n!}{2\pi i}\int_{|\zeta-a|=r}\frac{f(\zeta)}{(\zeta-z)^{n+1}}\,d\zeta.
+\]
+\end{theorem}
+
+\begin{corollary}
+全纯函数在其定义区域内具有任意阶复导数。
+\end{corollary}
+
+\begin{remark}
+在实分析中，一阶可微并不推出二阶可微；而在复分析中，一次复可微在开集上成立，就会推出无限次可微。这正体现了全纯性的强约束性。
+\end{remark}
+
+\section{幂级数与解析性}
+
+\subsection{幂级数}
+
+\begin{definition}[幂级数]
+以 $a\in\mathbb{C}$ 为中心的幂级数是形如
+\[
+    \sum_{n=0}^{\infty}c_n(z-a)^n
+\]
+的级数。
+\end{definition}
+
+\begin{theorem}[收敛半径]
+每个幂级数都有收敛半径 $R\in[0,\infty]$，使得当 $|z-a|<R$ 时级数绝对收敛，当 $|z-a|>R$ 时发散。
+\end{theorem}
+
+\begin{theorem}[逐项求导]
+幂级数在其收敛圆内可以逐项求导，并且导数幂级数具有相同的收敛半径。
+\end{theorem}
+
+\subsection{全纯推出解析}
+
+\begin{theorem}[全纯函数的 Taylor 展开]
+若 $f$ 在 $D(a,R)$ 上全纯，则对 $|z-a|<R$，有
+\[
+    f(z)=\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(z-a)^n.
+\]
+\end{theorem}
+
+\begin{theorem}[恒等定理]
+设 $\Omega$ 是区域，$f,g$ 在 $\Omega$ 上全纯。若集合
+\[
+    \{z\in\Omega:f(z)=g(z)\}
+\]
+有一个在 $\Omega$ 内的聚点，则 $f\equiv g$。
+\end{theorem}
+
+\begin{remark}
+恒等定理说明，全纯函数由其在很小集合上的取值唯一决定。这与一般实函数形成鲜明对比。
+\end{remark}
+
+\section{零点与奇点}
+
+\subsection{全纯函数的零点}
+
+\begin{definition}[$m$ 阶零点]
+若 $f$ 在 $a$ 附近全纯，并且可以写成
+\[
+    f(z)=(z-a)^m g(z),
+\]
+其中 $g$ 全纯且 $g(a)\ne0$，则称 $a$ 是 $f$ 的 $m$ 阶零点。
+\end{definition}
+
+\begin{proposition}
+非零全纯函数的零点是孤立的。也就是说，如果 $f\not\equiv0$，那么每个零点附近都有一个去心邻域不含其他零点。
+\end{proposition}
+
+\subsection{孤立奇点}
+
+\begin{definition}[孤立奇点]
+若 $f$ 在去心邻域 $0<|z-a|<r$ 上全纯，而在 $a$ 处未定义或不全纯，则称 $a$ 是 $f$ 的孤立奇点。
+\end{definition}
+
+\begin{definition}[孤立奇点的类型]
+孤立奇点分为三类：
+\begin{enumerate}
+    \item 若 $f$ 可以在 $a$ 处补定义为全纯函数，则称为可去奇点；
+    \item 若 $|f(z)|\to\infty$ 当 $z\to a$，则称为极点；
+    \item 既不是可去奇点也不是极点的孤立奇点，称为本性奇点。
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+函数 $\sin z/z$ 在 $0$ 处有可去奇点；函数 $1/z^m$ 在 $0$ 处有 $m$ 阶极点；函数 $e^{1/z}$ 在 $0$ 处有本性奇点。
+\end{example}
+
+\section{Laurent 级数与留数}
+
+\subsection{Laurent 级数}
+
+\begin{theorem}[Laurent 展开]
+若 $f$ 在环域
+\[
+    r<|z-a|<R
+\]
+上全纯，则可唯一写成
+\[
+    f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n,
+\]
+其中级数在该环域内收敛。
+\end{theorem}
+
+\begin{definition}[主部]
+Laurent 级数中负幂部分
+\[
+    \sum_{n=1}^{\infty}c_{-n}(z-a)^{-n}
+\]
+称为主部。
+\end{definition}
+
+\begin{proposition}[由 Laurent 级数分类]
+设 $a$ 是孤立奇点。
+\begin{enumerate}
+    \item 若主部为零，则 $a$ 是可去奇点；
+    \item 若主部只有有限多个非零项，则 $a$ 是极点；
+    \item 若主部有无限多个非零项，则 $a$ 是本性奇点。
+\end{enumerate}
+\end{proposition}
+
+\subsection{留数}
+
+\begin{definition}[留数]
+设 $a$ 是 $f$ 的孤立奇点。Laurent 展开中 $(z-a)^{-1}$ 的系数称为 $f$ 在 $a$ 处的\textbf{留数}，记作
+\[
+    \operatorname{Res}(f,a).
+\]
+\end{definition}
+
+\begin{theorem}[留数定理]
+设 $f$ 在区域 $\Omega$ 中除有限个孤立奇点 $a_1,\dots,a_n$ 外全纯，且闭曲线 $\gamma$ 正向围住这些奇点。则
+\[
+    \int_\gamma f(z)\,dz
+    =2\pi i\sum_{k=1}^n \operatorname{Res}(f,a_k).
+\]
+\end{theorem}
+
+\begin{proposition}[简单极点的留数]
+若 $a$ 是 $f$ 的简单极点，则
+\[
+    \operatorname{Res}(f,a)=\lim_{z\to a}(z-a)f(z).
+\]
+若 $f(z)=g(z)/h(z)$，其中 $g,h$ 在 $a$ 附近全纯，$h(a)=0$ 且 $h'(a)\ne0$，则
+\[
+    \operatorname{Res}(f,a)=\frac{g(a)}{h'(a)}.
+\]
+\end{proposition}
+
+\begin{example}
+计算
+\[
+    \int_{|z|=2}\frac{1}{z(z-1)}\,dz.
+\]
+被积函数在 $0$ 和 $1$ 处有简单极点，均被圆 $|z|=2$ 围住。留数为
+\[
+    \operatorname{Res}(f,0)=-1,
+    \qquad
+    \operatorname{Res}(f,1)=1.
+\]
+因此积分为 $0$。
+\end{example}
+
+\begin{example}
+对实积分，留数定理常用于计算有理函数积分。例如在适当衰减条件下，可以把实轴上的积分与上半平面的半圆围道联系起来，利用极点留数求值。
+\end{example}
+
+\section{主要定理与推论}
+
+\begin{theorem}[Liouville 定理]
+有界整函数必为常数。
+\end{theorem}
+
+\begin{theorem}[代数基本定理]
+每个次数至少为一的复系数多项式在 $\mathbb{C}$ 中至少有一个根。
+\end{theorem}
+
+\begin{theorem}[最大模原理]
+若 $f$ 在区域 $\Omega$ 上全纯且非常数，则 $|f|$ 不可能在 $\Omega$ 内部取得局部最大值。
+\end{theorem}
+
+\begin{remark}
+这些定理显示出复分析的刚性：全纯函数的局部性质会强烈影响其整体行为。有界性、边界值、零点分布和奇点结构之间存在深刻联系。
+\end{remark}
+
+\section{结语}
+
+复分析的核心思想可以概括为：复可微性远强于实可微性。Cauchy 积分公式把边界值与内部值联系起来；Taylor 和 Laurent 展开把函数转化为级数；留数定理则把复杂的积分计算化为有限个局部系数的求和。这些工具不仅在纯数学中具有基础地位，也广泛应用于微分方程、物理、信号处理和概率理论。
+
+\textbf{关键词：} 复数，复平面，全纯函数，Cauchy--Riemann 方程，Cauchy 积分公式，Laurent 级数，留数定理。

@@ -1,0 +1,1155 @@
+\chapter{抽象代数}
+
+抽象代数通过提取支配运算的规则来研究数学结构。在初等代数中，人们通常从数和方程开始；而在抽象代数中，顺序被反过来了：我们先指定一个集合，再指定这个集合上的运算，最后追问仅仅从这些公理出发能够推出什么结论。
+
+这种视角转换很重要。同一种代数模式会出现在许多不同地方：加法下的整数，乘法下的非零实数，多边形的旋转，可逆矩阵，置换，多项式，商算术，以及向量空间。抽象代数就是一种语言，它能够把这些看似不同的对象识别为同一种结构的不同实例。
+
+因此，本章的核心思想可以概括为：
+
+\begin{quote}
+    一个代数结构，就是一个配备了若干运算并且这些运算满足指定公理的集合。一旦公理被固定下来，任何由这些公理证明出的定理，对这些公理的每一个模型都成立。
+\end{quote}
+
+本章将介绍四类主要结构：群、环、域和模。路线是逐层累积的。群描述一个运算以及可逆性；环同时描述加法和乘法；域描述带有除法的算术；模则描述当标量不再要求构成域时的线性代数。
+
+\section{运算与代数结构}
+
+
+在这里有必要先放慢脚步，把两层思考区分开。第一层是具体层面：我们在整数、矩阵、置换或多项式中进行计算。第二层是结构层面：我们追问这些计算实际上使用了哪些形式规律。抽象代数之所以强大，正是在于它让我们学会在这两个层面之间来回移动。一次计算可能发生在某个熟悉的模型中，但它成立的原因也许只依赖结合律、单位元、逆元或分配律。一旦识别出相关规律，同样的论证就可以转移到每一个满足这些规律的结构中。
+
+初学者常见的误解，是以为运算符号本身决定了结构。事实并非如此。同一个符号可能隐藏着非常不同的运算，同一种运算也可能用不同符号来表示。例如在群论中，“乘法”可能指通常的数乘、矩阵乘法、函数复合，也可能是把加法用乘法记号写出来。因此，总应该先问：底层集合是什么，运算是什么，哪些公理成立？
+
+在定义群或环之前，我们先说明什么叫做集合上的一个运算。
+
+\begin{definition}[二元运算]
+设 $S$ 是一个集合。$S$ 上的一个\textbf{二元运算}是一个函数
+\[
+    *:S\times S\to S.
+\]
+对于 $a,b\in S$，通常把 $*(a,b)$ 写成 $a*b$。
+\end{definition}
+
+条件 $*:S\times S\to S$ 已经包含了\textbf{封闭性}：每当把 $S$ 中两个元素结合起来，结果仍然在 $S$ 中。
+
+\begin{example}[运算与非运算]
+加法是 $\mathbb{Z}$ 上的二元运算，因为只要 $a,b\in\mathbb{Z}$，就有 $a+b\in\mathbb{Z}$。减法也是 $\mathbb{Z}$ 上的二元运算。不过，除法不是 $\mathbb{Z}$ 上的二元运算，因为 $1/2\notin\mathbb{Z}$。如果不排除除以 $0$ 的情形，它也不是 $\mathbb{R}$ 上的二元运算。
+\end{example}
+
+\begin{definition}[结合性与交换性]
+设 $*$ 是 $S$ 上的一个二元运算。
+\begin{enumerate}
+    \item 如果对所有 $a,b,c\in S$ 都有 $(a*b)*c=a*(b*c)$，则称 $*$ 是\textbf{结合的}。
+    \item 如果对所有 $a,b\in S$ 都有 $a*b=b*a$，则称 $*$ 是\textbf{交换的}。
+\end{enumerate}
+\end{definition}
+
+结合性不只是一个技术条件。没有它，像 $a*b*c*d$ 这样的表达式就是有歧义的，因为不同的括号放置方式可能给出不同答案。
+
+\begin{example}[一个非结合运算]
+在 $\mathbb{R}$ 上定义 $a*b=a-b$。则
+\[
+    (a*b)*c=(a-b)-c,
+    \qquad
+    a*(b*c)=a-(b-c)=a-b+c.
+\]
+二者通常并不相同。因此，减法不是结合的。
+\end{example}
+
+\begin{definition}[单位元与逆元]
+设 $*$ 是 $S$ 上的一个二元运算。
+\begin{enumerate}
+    \item 如果对所有 $a\in S$ 都有 $e*a=a*e=a$，则称元素 $e\in S$ 是一个\textbf{单位元}。
+    \item 如果 $e$ 是单位元，并且 $a\in S$ 的某个元素 $b\in S$ 满足 $a*b=b*a=e$，则称 $b$ 是 $a$ 的一个\textbf{逆元}。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[单位元的唯一性]
+如果一个二元运算存在单位元，那么单位元唯一。
+\end{proposition}
+
+\begin{proof}
+设 $e$ 和 $e'$ 都是单位元。由于 $e$ 是单位元，$e*e'=e'$；由于 $e'$ 是单位元，$e*e'=e$。因此 $e=e'$。
+\end{proof}
+
+\section{群}
+
+
+关于群的引导性直觉是：群是一个每个允许的动作都可以被反向撤销的世界。结合律说明，一串动作可以连续执行，而不用担心括号如何放置。单位元公理说明，存在一种什么也不改变的动作。逆元公理说明，每个动作都有一个“撤销操作”。这三个要求正是把代数操作当作一套可靠的变换演算所需要的内容。
+
+这种观点也解释了为什么许多群并不交换。如果把运算理解为按时间先后执行的动作，那么顺序通常是重要的：先旋转再反射一个图形，不一定等于先反射再旋转。非交换性不是一种奇怪的缺陷，而是变换的正常行为。阿贝尔群只是运算顺序恰好不重要的特殊情况。
+
+群是把可逆变换这一思想形式化的代数结构。一次旋转可以用相反方向的旋转撤销。一个置换可以由它的逆置换撤销。给一个整数加上某个数，可以通过加上它的相反数撤销。这些例子看起来不同，却服从同样的公理。
+
+\subsection{定义与基本例子}
+
+\begin{definition}[群]
+\textbf{群}是一个二元组 $(G,*)$，其中 $G$ 是一个集合，$*$ 是 $G$ 上的二元运算，并满足以下公理：
+\begin{enumerate}
+    \item \textbf{结合律}：对所有 $a,b,c\in G$，有 $(a*b)*c=a*(b*c)$。
+    \item \textbf{单位元}：存在 $e\in G$，使得对所有 $a\in G$，有 $e*a=a*e=a$。
+    \item \textbf{逆元}：对每个 $a\in G$，存在 $a^{-1}\in G$，使得 $a*a^{-1}=a^{-1}*a=e$。
+\end{enumerate}
+如果对所有 $a,b\in G$ 都有 $a*b=b*a$，则称该群是\textbf{阿贝尔群}。
+\end{definition}
+
+当运算明确时，我们把 $a*b$ 简写为 $ab$。对于加法群，单位元写作 $0$，$a$ 的逆元写作 $-a$。
+
+\begin{example}[标准群]
+\begin{enumerate}
+    \item $(\mathbb{Z},+)$、$(\mathbb{Q},+)$、$(\mathbb{R},+)$ 和 $(\mathbb{C},+)$ 都是阿贝尔群。
+    \item $(\mathbb{R}\setminus\{0\},\cdot)$ 和 $(\mathbb{C}\setminus\{0\},\cdot)$ 都是阿贝尔群。
+    \item $(\mathbb{N},+)$ 不是群，因为正自然数没有加法逆元。
+    \item 可逆 $n\times n$ 实矩阵的集合 $GL_n(\mathbb{R})$ 在矩阵乘法下构成群。当 $n\geq 2$ 时，它不是阿贝尔群。
+    \item 对称群 $S_n$ 由从 $\{1,\dots,n\}$ 到自身的所有双射构成，并在复合运算下成群。它有 $n!$ 个元素。
+\end{enumerate}
+\end{example}
+
+\begin{example}[三角形的对称群]
+一个等边三角形有六个刚性对称：三个旋转和三个反射。这六个变换在复合运算下构成一个群，按照约定通常记作 $D_6$ 或 $D_3$。该群不是阿贝尔群，因为先反射再旋转不一定等于先旋转再反射。
+\end{example}
+
+\begin{remark}
+群中的运算不一定是数值意义上的乘法。它可以是加法、函数复合、矩阵乘法，也可以是几何变换。群论中的“乘法”一词很多时候只是一种记号。
+\end{remark}
+
+\subsection{公理的初等推论}
+
+群的定义很短，但它的推论很强。
+
+\begin{proposition}[逆元的唯一性]
+设 $G$ 是一个群。对每个 $a\in G$，$a$ 的逆元唯一。
+\end{proposition}
+
+\begin{proof}
+设 $b$ 和 $c$ 都是 $a$ 的逆元。于是 $ab=e$ 且 $ca=e$。因此
+\[
+    b=eb=(ca)b=c(ab)=ce=c.
+\]
+所以逆元唯一。
+\end{proof}
+
+\begin{proposition}[消去律]
+设 $G$ 是一个群，$a,b,c\in G$。
+\begin{enumerate}
+    \item 如果 $ab=ac$，则 $b=c$。
+    \item 如果 $ba=ca$，则 $b=c$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+若 $ab=ac$，在等式两边左乘 $a^{-1}$：
+\[
+    a^{-1}(ab)=a^{-1}(ac).
+\]
+由结合律，$(a^{-1}a)b=(a^{-1}a)c$，于是 $eb=ec$，从而 $b=c$。右消去律类似。
+\end{proof}
+
+\begin{proposition}[乘积的逆元]
+对 $a,b\in G$，有
+\[
+    (ab)^{-1}=b^{-1}a^{-1}.
+\]
+\end{proposition}
+
+\begin{proof}
+只需验证 $b^{-1}a^{-1}$ 是 $ab$ 的逆元：
+\[
+    (ab)(b^{-1}a^{-1})=a(bb^{-1})a^{-1}=aea^{-1}=e,
+\]
+同理 $(b^{-1}a^{-1})(ab)=e$。
+\end{proof}
+
+\begin{definition}[幂与元素的阶]
+设 $G$ 是群，$g\in G$。
+\begin{enumerate}
+    \item 对 $n\in\mathbb{N}$，定义 $g^n=g\cdots g$（共 $n$ 次），$g^0=e$，并定义 $g^{-n}=(g^{-1})^n$。
+    \item $g$ 的\textbf{阶}，记作 $|g|$ 或 $\operatorname{ord}(g)$，是使得 $g^n=e$ 的最小正整数 $n$。如果不存在这样的整数，则称 $g$ 具有无限阶。
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+在 $(\mathbb{Z}/6\mathbb{Z},+)$ 中，元素 $2$ 的阶是 $3$，因为
+\[
+    2+2+2=6\equiv 0\pmod 6,
+\]
+而 $2$ 的更小正倍数都不与 $0$ 模 $6$ 同余。
+\end{example}
+
+\subsection{子群与生成子群}
+
+
+子群是我们通过较小部分来分析复杂群的第一种机制。关键在于，子群不是任意子集；它必须在母群的同一套代数生命活动下保持封闭。一旦进入这个子集，乘法、单位元和逆元都必须把我们留在其中。从这个意义上说，子群是嵌在更大群中的一个自足的代数世界。
+
+生成子群 $\langle S\rangle$ 应当理解为所选元素 $S$ 的代数闭包。从 $S$ 出发，我们不得不纳入乘积、逆元、逆元的乘积，等等。所得结果就是使所有由 $S$ 中元素构造出的表达式都有意义的最小环境。这个思想类似于线性代数中的向量张成：一小组生成元可能决定一个很大的结构。
+
+子群就是生活在一个更大群内部的较小群。
+
+\begin{definition}[子群]
+设 $G$ 是群。如果子集 $H\subseteq G$ 在从 $G$ 继承来的运算下本身也是一个群，则称 $H$ 是 $G$ 的\textbf{子群}，记作 $H\leq G$。
+\end{definition}
+
+\begin{lemma}[子群判别法]
+非空子集 $H\subseteq G$ 是 $G$ 的子群，当且仅当对所有 $x,y\in H$，都有 $xy^{-1}\in H$。
+\end{lemma}
+
+\begin{proof}
+如果 $H$ 是子群，那么 $y^{-1}\in H$，因此 $xy^{-1}\in H$。
+
+反过来，假设 $H$ 非空并满足上述条件。取 $h\in H$。令 $x=y=h$，得到 $hh^{-1}=e\in H$。令 $x=e$ 且 $y=h$，得到 $eh^{-1}=h^{-1}\in H$。最后，若 $a,b\in H$，则 $b^{-1}\in H$，并在条件中取 $x=a$、$y=b^{-1}$，可得 $a(b^{-1})^{-1}=ab\in H$。因此 $H$ 含有单位元、逆元和乘积，所以它是子群。
+\end{proof}
+
+\begin{definition}[生成子群]
+设 $S\subseteq G$。由 $S$ \textbf{生成的子群}，记作 $\langle S\rangle$，是包含 $S$ 的最小子群。等价地，它是所有包含 $S$ 的 $G$ 的子群的交。
+\end{definition}
+
+\begin{definition}[循环群]
+如果存在 $g\in G$，使得 $G=\langle g\rangle$，则称群 $G$ 是\textbf{循环群}。这样的元素 $g$ 称为 $G$ 的一个\textbf{生成元}。
+\end{definition}
+
+\begin{theorem}[循环群的分类]
+每一个循环群都同构于 $(\mathbb{Z},+)$，或者同构于某个正整数 $n$ 对应的 $(\mathbb{Z}/n\mathbb{Z},+)$。
+\end{theorem}
+
+\begin{proof}
+设 $G=\langle g\rangle$。定义 $\varphi:\mathbb{Z}\to G$ 为 $\varphi(k)=g^k$。这是一个满的群同态。如果 $g$ 具有无限阶，则 $\ker\varphi=\{0\}$，所以 $\mathbb{Z}\cong G$。如果 $g$ 的阶为 $n$，则 $\ker\varphi=n\mathbb{Z}$，诱导映射给出 $\mathbb{Z}/n\mathbb{Z}\cong G$。
+\end{proof}
+
+\subsection{陪集与拉格朗日定理}
+
+
+陪集最好理解为子群的平移副本。如果 $H$ 记录了所有被认为“内部不可见”的动作，那么 $gH$ 就记录了所有与 $g$ 只相差这样一种不可见动作的元素。这正是陪集自然导向等价类的原因。两个元素处在同一个左陪集中，正是因为其中一个可以通过乘上 $H$ 中的某个元素变成另一个。
+
+拉格朗日定理是群论中第一个重要的计数定理。它的内容不只是 $|H|$ 整除 $|G|$；它还说明群可以被分割为若干个互不相交且大小相同的块。这种等大小分割，是许多整除性结果背后的结构原因，包括有限群中元素的阶整除群的阶这一事实。
+
+子群并不只是静静地位于群内部；它们会把群切分成大小相等的部分。
+
+\begin{definition}[陪集]
+设 $H\leq G$ 且 $g\in G$。
+\begin{enumerate}
+    \item 由 $g$ 确定的 $H$ 的\textbf{左陪集}是 $gH=\{gh:h\in H\}$。
+    \item 由 $g$ 确定的 $H$ 的\textbf{右陪集}是 $Hg=\{hg:h\in H\}$。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[陪集划分群]
+$H$ 在 $G$ 中的左陪集构成 $G$ 的一个划分。
+\end{proposition}
+
+\begin{proof}
+每个 $g\in G$ 都属于 $gH$，因为 $g=ge$ 且 $e\in H$。现在假设两个陪集 $aH$ 与 $bH$ 相交。则存在 $h_1,h_2\in H$，使得 $ah_1=bh_2$。因此
+\[
+    b^{-1}a=h_2h_1^{-1}\in H.
+\]
+对任意 $x\in aH$，写 $x=ah$。于是
+\[
+    x=b(b^{-1}a)h\in bH.
+\]
+所以 $aH\subseteq bH$。对称地，$bH\subseteq aH$。因此两个左陪集要么不相交，要么相等。
+\end{proof}
+
+\begin{theorem}[拉格朗日定理]
+设 $G$ 是有限群，$H\leq G$。则
+\[
+    |G|=[G:H]|H|,
+\]
+其中 $[G:H]$ 表示 $H$ 在 $G$ 中的左陪集个数。特别地，$|H|$ 整除 $|G|$。
+\end{theorem}
+
+\begin{proof}
+左陪集划分 $G$。对每个 $g\in G$，映射 $H\to gH$，$h\mapsto gh$ 是双射，所以每个陪集恰有 $|H|$ 个元素。如果共有 $[G:H]$ 个陪集，则 $|G|=[G:H]|H|$。
+\end{proof}
+
+\begin{corollary}
+如果 $G$ 是有限群且 $g\in G$，那么 $g$ 的阶整除 $|G|$。
+\end{corollary}
+
+\begin{proof}
+由 $g$ 生成的子群的阶为 $|g|$。把拉格朗日定理应用于 $\langle g\rangle\leq G$ 即可。
+\end{proof}
+
+\begin{corollary}
+每个素数阶群都是循环群。
+\end{corollary}
+
+\begin{proof}
+设 $|G|=p$ 为素数，并取 $g\neq e$。$g$ 的阶整除 $p$，且不为 $1$，所以只能是 $p$。因此 $\langle g\rangle=G$。
+\end{proof}
+
+\subsection{正规子群与商群}
+
+
+当我们试图让陪集本身构成群时，正规性的必要性就出现了。对任意子群 $H$，两个左陪集的乘积可能依赖所选代表元，因此运算未必良定义。正规性正是消除这种歧义的条件。它保证先乘代表元再转到陪集，得到的结果与代表元的选择无关。
+
+因此，商群不是通过简单删除元素得到的。它是通过把 $H$ 中所有元素都看作等价于单位元，然后考察剩下的代数结构而得到的。这是群论版本的模整数化简：所有 $n$ 的倍数都被看作零，剩余算术则在剩余类之间进行。
+
+对于一个子群 $H$，陪集集合 $G/H$ 总是一个集合，但它不一定是群。要通过 $(aH)(bH)=abH$ 来乘陪集，就必须保证结果与代表元选择无关。这正是正规性所保证的内容。
+
+\begin{definition}[正规子群]
+子群 $N\leq G$ 称为\textbf{正规子群}，记作 $N\trianglelefteq G$，如果对所有 $g\in G$，都有
+\[
+    gNg^{-1}=N.
+\]
+等价地，对所有 $g\in G$ 和 $n\in N$，都有 $gng^{-1}\in N$。
+\end{definition}
+
+\begin{proposition}[正规性的等价形式]
+设 $N\leq G$。以下条件等价：
+\begin{enumerate}
+    \item $N\trianglelefteq G$。
+    \item 对每个 $g\in G$，有 $gN=Ng$。
+    \item 左陪集集合上的运算 $(aN)(bN)=abN$ 是良定义的。
+\end{enumerate}
+\end{proposition}
+
+
+\begin{definition}[商群]
+如果 $N\trianglelefteq G$，那么左陪集集合
+\[
+    G/N=\{gN:g\in G\}
+\]
+在运算
+\[
+    (aN)(bN)=abN
+\]
+下构成一个群。这个群称为 $G$ 关于 $N$ 的\textbf{商群}。
+\end{definition}
+
+\begin{example}[模 $n$ 整数]
+子群 $n\mathbb{Z}\leq\mathbb{Z}$ 是正规的，因为 $\mathbb{Z}$ 是阿贝尔群。商群
+\[
+    \mathbb{Z}/n\mathbb{Z}
+\]
+正是模 $n$ 的剩余类群。
+\end{example}
+
+
+\begin{remark}
+商构造是数学中最重要的构造之一。它形式化了一种思想：某些元素应当被视为等价。在 $\mathbb{Z}/n\mathbb{Z}$ 中，两个整数若差属于 $n\mathbb{Z}$，就被识别为同一个元素。
+\end{remark}
+
+\subsection{同态与同构定理}
+
+
+同态是保持结构的映射。它们比任意函数更重要，因为它们尊重运算：先乘再映射，与先映射再相乘得到同样结果。从这个意义上说，同态是在不破坏代数语句的前提下，把一种群语言翻译成另一种群语言。
+
+核度量了一个同态所损失的信息。核中的元素在映射之后都与单位元无法区分。像度量了目标中实际被达到的部分。同构定理形式化了这样一种思想：每个同态都可以分解为两个概念步骤：先把核压缩掉，再把所得商结构与像识别起来。
+
+同态是保持结构的映射。它并不只是把元素送到元素，而是把代数关系送到代数关系。
+
+\begin{definition}[群同态]
+设 $G$ 和 $H$ 是群。函数 $\varphi:G\to H$ 称为\textbf{群同态}，如果对所有 $a,b\in G$，都有
+\[
+    \varphi(ab)=\varphi(a)\varphi(b).
+\]
+\end{definition}
+
+\begin{definition}[核与像]
+设 $\varphi:G\to H$ 是群同态。
+\begin{enumerate}
+    \item \textbf{核}是 $\ker\varphi=\{g\in G:\varphi(g)=e_H\}$。
+    \item \textbf{像}是 $\operatorname{im}\varphi=\{\varphi(g):g\in G\}$。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+对群同态 $\varphi:G\to H$，有 $\ker\varphi\trianglelefteq G$ 且 $\operatorname{im}\varphi\leq H$。
+\end{proposition}
+
+\begin{proof}
+像在乘积和逆元下封闭，因为 $\varphi$ 尊重运算。对核而言，若 $x,y\in\ker\varphi$，则
+\[
+    \varphi(xy^{-1})=\varphi(x)\varphi(y)^{-1}=e_He_H=e_H,
+\]
+所以 $xy^{-1}\in\ker\varphi$。因此核是子群。至于正规性，若 $k\in\ker\varphi$ 且 $g\in G$，则
+\[
+    \varphi(gkg^{-1})=\varphi(g)\varphi(k)\varphi(g)^{-1}=\varphi(g)e_H\varphi(g)^{-1}=e_H.
+\]
+因此 $gkg^{-1}\in\ker\varphi$。
+\end{proof}
+
+\begin{theorem}[群第一同构定理]
+设 $\varphi:G\to H$ 是群同态。则
+\[
+    G/\ker\varphi\cong \operatorname{im}\varphi.
+\]
+\end{theorem}
+
+\begin{proof}
+定义 $\Phi:G/\ker\varphi\to\operatorname{im}\varphi$ 为
+\[
+    \Phi(g\ker\varphi)=\varphi(g).
+\]
+如果 $g\ker\varphi=g'\ker\varphi$，则 $g'^{-1}g\in\ker\varphi$，所以 $\varphi(g'^{-1}g)=e_H$，从而 $\varphi(g)=\varphi(g')$。因此 $\Phi$ 良定义。它显然是满射。它的核是单位陪集，因此它是单射。所以它是同构。
+\end{proof}
+
+\begin{remark}
+第一同构定理说明，同态损失的信息恰好就是它的核。一旦把核压缩为单位元，剩下的商结构就是像。
+\end{remark}
+
+\subsection{群作用}
+
+
+群作用是一种让抽象群通过运动显示自身的方式。与其只把群元素当作符号来研究，不如让它们作用在某个集合上，并观察由此产生的对称性。这就是群作用把代数与几何、组合学和数论联系起来的原因。同一个群可以作用在许多不同集合上，而每一种作用都会暴露出不同信息。
+
+轨道--稳定子原理是群作用中最基本的记账法则。轨道计算一个点可以被送到哪些位置；稳定子计算把这个点保持不动的群元素。有限情形下，两者大小相乘等于群的大小。这个定理清楚体现了一个普遍主题：对称性可以通过把运动分解为自由度与约束来度量。
+
+群不仅是对象；它们还会作用在对象上。这个观点解释了为什么群天然适合描述对称性。
+
+\begin{definition}[群作用]
+设 $G$ 是群，$X$ 是集合。$G$ 在 $X$ 上的一个\textbf{左作用}是一个映射
+\[
+    G\times X\to X,\qquad (g,x)\mapsto g\cdot x,
+\]
+满足
+\begin{enumerate}
+    \item 对所有 $x\in X$，有 $e\cdot x=x$；
+    \item 对所有 $g,h\in G$ 和 $x\in X$，有 $(gh)\cdot x=g\cdot(h\cdot x)$。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[轨道与稳定子]
+对 $G$ 在 $X$ 上的一个群作用以及 $x\in X$，定义
+\[
+    \operatorname{Orb}(x)=\{g\cdot x:g\in G\},
+\]
+并定义
+\[
+    \operatorname{Stab}(x)=\{g\in G:g\cdot x=x\}.
+\]
+\end{definition}
+
+\begin{theorem}[轨道--稳定子定理]
+如果 $G$ 是有限群并作用在 $X$ 上，那么对每个 $x\in X$，有
+\[
+    |\operatorname{Orb}(x)|=[G:\operatorname{Stab}(x)].
+\]
+特别地，
+\[
+    |\operatorname{Orb}(x)|\,|\operatorname{Stab}(x)|=|G|.
+\]
+\end{theorem}
+
+\begin{proof}
+定义从 $\operatorname{Stab}(x)$ 的左陪集到 $\operatorname{Orb}(x)$ 的映射：
+\[
+    g\operatorname{Stab}(x)\mapsto g\cdot x.
+\]
+这个映射良定义，因为如果 $g^{-1}h\in\operatorname{Stab}(x)$，则 $h\cdot x=g\cdot x$。由轨道定义可知它也是双射。因此，轨道元素个数等于陪集个数。
+\end{proof}
+
+\begin{definition}[中心与中心化子]
+群 $G$ 的\textbf{中心}为
+\[
+    Z(G)=\{z\in G:zg=gz\text{ for all }g\in G\}.
+\]
+元素 $a\in G$ 的\textbf{中心化子}为
+\[
+    C_G(a)=\{g\in G:ga=ag\}.
+\]
+\end{definition}
+
+\begin{theorem}[类方程]
+设有限群 $G$ 通过共轭作用于自身：$g\cdot x=gxg^{-1}$。则
+\[
+    |G|=|Z(G)|+\sum_i [G:C_G(x_i)],
+\]
+其中 $x_i$ 是非中心共轭类的代表元。
+\end{theorem}
+
+\begin{remark}
+类方程是代数计数的典型例子。它把抽象的共轭作用转化为一个数值方程。许多关于有限群的结构定理都从这个思想开始。
+\end{remark}
+
+\subsection{Sylow 定理}
+
+拉格朗日定理告诉我们，子群的阶必须整除群的阶。其逆命题一般是假的：如果 $d$ 整除 $|G|$，并不一定存在阶为 $d$ 的子群。Sylow 理论告诉我们，对于整除 $|G|$ 的最大素数幂，这个逆命题成立。
+
+\begin{definition}[Sylow $p$-子群]
+设 $G$ 是有限群，并且
+\[
+    |G|=p^k m,
+\]
+其中 $p$ 是素数且 $p\nmid m$。$G$ 中阶为 $p^k$ 的子群称为一个\textbf{Sylow $p$-子群}。
+\end{definition}
+
+\begin{theorem}[Sylow 定理]
+设 $G$ 是有限群，$|G|=p^k m$，其中 $p$ 是素数且 $p\nmid m$。则：
+\begin{enumerate}
+    \item $G$ 至少有一个 Sylow $p$-子群。
+    \item 任意两个 Sylow $p$-子群共轭。
+    \item 如果 $n_p$ 是 Sylow $p$-子群的个数，那么
+    \[
+        n_p\equiv 1\pmod p,
+        \qquad
+        n_p\mid m.
+    \]
+\end{enumerate}
+\end{theorem}
+
+
+\begin{example}[一个 $15$ 阶群]
+设 $|G|=15=3\cdot 5$。Sylow $5$-子群的个数 $n_5$ 满足 $n_5\equiv 1\pmod 5$ 且 $n_5\mid 3$。因此 $n_5=1$。所以 Sylow $5$-子群是正规的。类似地，$n_3\equiv 1\pmod 3$ 且 $n_3\mid 5$，所以 $n_3=1$；$10$ 不可能，因为 $10\nmid 5$。因此两个 Sylow 子群都是正规的。这会强烈限制 $G$ 的结构。
+\end{example}
+
+\section{环}
+
+
+当一个运算已经不够用时，就需要引入环。加法给出一个阿贝尔群结构，而乘法给出第二个运算，并且通过分配律与加法相互作用。这反映了整数和多项式的算术：加法组织各项，乘法组合各项，分配律允许展开和因式分解。
+
+环和域之间最主要的概念差异在于，环中不再保证总能做除法。没有普遍除法并不是弱点；恰恰是这一点使环能够刻画整除性、同余、理想、因式分解和零因子等算术现象。环论的许多问题都在追问：当除法不可用时，熟悉的算术还能够保留下多少。
+
+群描述一个运算。环描述两个运算，传统上称为加法和乘法。引导性例子是 $\mathbb{Z}$：加法形成阿贝尔群，乘法满足结合律，并且乘法对加法满足分配律。
+
+\subsection{定义与例子}
+
+\begin{definition}[环]
+\textbf{环}是一个带有两个二元运算 $+$ 和 $\cdot$ 的集合 $R$，并满足：
+\begin{enumerate}
+    \item $(R,+)$ 是以 $0$ 为单位元的阿贝尔群。
+    \item 乘法满足结合律：对所有 $a,b,c\in R$，有 $(ab)c=a(bc)$。
+    \item 分配律成立：
+    \[
+        a(b+c)=ab+ac,
+        \qquad
+        (a+b)c=ac+bc.
+    \]
+\end{enumerate}
+如果存在元素 $1\in R$，使得对所有 $a\in R$ 有 $1a=a1=a$，则称 $R$ 是\textbf{含幺环}。如果对所有 $a,b\in R$ 有 $ab=ba$，则称 $R$ 是\textbf{交换环}。
+\end{definition}
+
+\begin{example}[基本环]
+\begin{enumerate}
+    \item $\mathbb{Z}$、$\mathbb{Q}$、$\mathbb{R}$ 和 $\mathbb{C}$ 都是含幺交换环。
+    \item $M_n(\mathbb{R})$，即所有 $n\times n$ 实矩阵的集合，是一个含幺环。当 $n\geq 2$ 时它不交换。
+    \item $\mathbb{Z}/n\mathbb{Z}$ 在模加法和模乘法下是一个含幺交换环。
+    \item 如果 $R$ 是环，那么 $R[x]$，即系数在 $R$ 中的多项式集合，也是一个环。
+\end{enumerate}
+\end{example}
+
+\begin{proposition}[环的初等恒等式]
+对任意环 $R$ 和 $a,b\in R$，有
+\begin{enumerate}
+    \item $a0=0a=0$；
+    \item $a(-b)=-(ab)$ 且 $(-a)b=-(ab)$；
+    \item $(-a)(-b)=ab$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+证明第一条。因为 $0+0=0$，所以
+\[
+    a0=a(0+0)=a0+a0.
+\]
+在等式两边都加上 $a0$ 的加法逆元，得到 $0=a0$。恒等式 $0a=0$ 类似。其他结论由分配律和加法逆元的唯一性推出。
+\end{proof}
+
+\subsection{单位、零因子与整环}
+
+\begin{definition}[单位与零因子]
+设 $R$ 是含幺环。
+\begin{enumerate}
+    \item 如果存在 $v\in R$，使得 $uv=vu=1$，则称元素 $u\in R$ 是一个\textbf{单位}。
+    \item 如果非零元素 $a\in R$ 满足存在非零 $b\in R$，使得 $ab=0$ 或 $ba=0$，则称 $a$ 是\textbf{零因子}。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[整环]
+\textbf{整环}是一个含幺交换环，满足 $1\neq 0$ 且没有零因子。
+\end{definition}
+
+\newpage
+
+\begin{example}
+环 $\mathbb{Z}/6\mathbb{Z}$ 不是整环，因为
+\[
+    \overline{2}\cdot\overline{3}=\overline{6}=\overline{0},
+\]
+尽管 $\overline{2}$ 和 $\overline{3}$ 都非零。环 $\mathbb{Z}/5\mathbb{Z}$ 是域，因此是整环。
+\end{example}
+
+\begin{proposition}[整环中的消去律]
+设 $R$ 是整环。如果 $a\neq 0$ 且 $ab=ac$，则 $b=c$。
+\end{proposition}
+
+\begin{proof}
+由 $ab=ac$ 得 $a(b-c)=0$。由于 $a\neq 0$ 且 $R$ 没有零因子，得到 $b-c=0$。因此 $b=c$。
+\end{proof}
+
+\subsection{理想与商环}
+
+
+理想在环论中扮演的角色，类似于正规子群在群论中的角色。它们正是那些可以用来作商并同时保持环运算的子集。条件 $ra\in I$ 和 $ar\in I$ 表示：一旦某个元素在模 $I$ 意义下被宣布为零，那么它的所有环倍数也都必须变成零。这就是为什么理想是模算术的正确代数语言。
+
+例如，理想 $n\mathbb{Z}$ 记录了所有在模 $n$ 意义下应当消失的整数。商环 $\mathbb{Z}/n\mathbb{Z}$ 是通过识别差属于 $n\mathbb{Z}$ 的整数而得到的。这个例子是一般商环的原型：理想编码了我们施加的关系，而商结构描述了在这些关系被施加之后的算术。
+
+在群论中，正规子群正是那些可以作商的子群。在环论中，对应的对象是理想。
+
+\begin{definition}[理想]
+设 $R$ 是环。子集 $I\subseteq R$ 称为\textbf{左理想}，如果：
+\begin{enumerate}
+    \item $(I,+)$ 是 $(R,+)$ 的子群；
+    \item 对所有 $r\in R$ 和 $x\in I$，都有 $rx\in I$。
+\end{enumerate}
+右理想的定义类似。如果 $I$ 同时是左理想和右理想，则称它为\textbf{双边理想}；在交换情形下，通常直接称为\textbf{理想}。
+\end{definition}
+
+\begin{example}[$\mathbb{Z}$ 中的理想]
+对每个整数 $n$，集合
+\[
+    n\mathbb{Z}=\{nk:k\in\mathbb{Z}\}
+\]
+都是 $\mathbb{Z}$ 的一个理想。事实上，$\mathbb{Z}$ 的每个理想都具有这种形式。
+\end{example}
+
+\begin{definition}[主理想]
+设 $R$ 是交换环，$a\in R$。由 $a$ 生成的理想为
+\[
+    (a)=\{ra:r\in R\}.
+\]
+这种形式的理想称为\textbf{主理想}。
+\end{definition}
+
+\begin{definition}[商环]
+设 $I$ 是环 $R$ 的一个理想。商阿贝尔群 $R/I$ 在运算
+\[
+    (a+I)+(b+I)=(a+b)+I,
+    \qquad
+    (a+I)(b+I)=ab+I
+\]
+下成为一个环。这个环称为 $R$ 关于 $I$ 的\textbf{商环}。
+\end{definition}
+
+\begin{example}
+环 $\mathbb{Z}/n\mathbb{Z}$ 就是 $\mathbb{Z}$ 关于理想 $n\mathbb{Z}$ 的商环。
+\end{example}
+
+\subsection{环同态}
+
+\begin{definition}[环同态]
+设 $R$ 和 $S$ 是环。映射 $\varphi:R\to S$ 称为\textbf{环同态}，如果对所有 $a,b\in R$，都有
+\[
+    \varphi(a+b)=\varphi(a)+\varphi(b),
+    \qquad
+    \varphi(ab)=\varphi(a)\varphi(b).
+\]
+如果这些环含有幺元，通常还要求 $\varphi(1_R)=1_S$。
+\end{definition}
+
+\begin{definition}[核与像]
+对环同态 $\varphi:R\to S$，定义
+\[
+    \ker\varphi=\{r\in R:\varphi(r)=0\},
+    \qquad
+    \operatorname{im}\varphi=\{\varphi(r):r\in R\}.
+\]
+\end{definition}
+
+\begin{proposition}
+环同态的核是理想，像是子环。
+\end{proposition}
+
+\begin{theorem}[环第一同构定理]
+设 $\varphi:R\to S$ 是环同态。则
+\[
+    R/\ker\varphi\cong \operatorname{im}\varphi.
+\]
+\end{theorem}
+
+\begin{example}[赋值同态]
+设 $F$ 是域，$a\in F$。定义
+\[
+    \operatorname{ev}_a:F[x]\to F,
+    \qquad
+    f(x)\mapsto f(a).
+\]
+这是一个环同态。它的核由所有能被 $x-a$ 整除的多项式构成。因此
+\[
+    F[x]/(x-a)\cong F.
+\]
+\end{example}
+
+\subsection{素理想与极大理想}
+
+\begin{definition}[素理想与极大理想]
+设 $R$ 是含幺交换环。
+\begin{enumerate}
+    \item 真理想 $P\subsetneq R$ 称为\textbf{素理想}，如果 $ab\in P$ 蕴含 $a\in P$ 或 $b\in P$。
+    \item 真理想 $M\subsetneq R$ 称为\textbf{极大理想}，如果不存在理想 $I$ 使得 $M\subsetneq I\subsetneq R$。
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[关于素理想和极大理想的商]
+设 $R$ 是含幺交换环。
+\begin{enumerate}
+    \item $R/P$ 是整环，当且仅当 $P$ 是素理想。
+    \item $R/M$ 是域，当且仅当 $M$ 是极大理想。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+对第一条，在 $R/P$ 中有
+\[
+    (a+P)(b+P)=P
+\]
+当且仅当 $ab\in P$。因此，$R/P$ 没有零因子，恰好等价于 $ab\in P$ 会推出 $a\in P$ 或 $b\in P$。
+
+对第二条，先假设 $R/M$ 是域。如果 $M\subsetneq I\subseteq R$，取 $a\in I\setminus M$。则 $a+M$ 是 $R/M$ 中的非零元素，因此有逆元 $b+M$。于是 $ab-1\in M\subseteq I$，同时 $ab\in I$，所以 $1\in I$，从而 $I=R$。因此 $M$ 是极大理想。反过来，如果 $M$ 是极大理想且 $a\notin M$，那么由 $M$ 和 $a$ 生成的理想就是整个 $R$，所以存在 $m\in M$ 和 $r\in R$，使得 $m+ra=1$。于是 $(r+M)(a+M)=1+M$，所以 $R/M$ 中每个非零元素都可逆。
+\end{proof}
+
+\subsection{多项式环与整除性}
+
+多项式环是抽象代数与方程求解之间的桥梁。
+
+\begin{definition}[整除性]
+设 $R$ 是整环，$a,b\in R$ 且 $a\neq 0$。如果存在 $c\in R$，使得 $b=ac$，则称 $a$ \textbf{整除} $b$，记作 $a\mid b$。
+\end{definition}
+
+\begin{definition}[不可约元与素元]
+设 $R$ 是整环，$p\in R$ 非零且不是单位。
+\begin{enumerate}
+    \item 如果 $p=ab$ 蕴含 $a$ 或 $b$ 是单位，则称 $p$ 是\textbf{不可约元}。
+    \item 如果 $p\mid ab$ 蕴含 $p\mid a$ 或 $p\mid b$，则称 $p$ 是\textbf{素元}。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+在整环中，每个素元都是不可约元。
+\end{proposition}
+
+\begin{proof}
+设 $p$ 是素元且 $p=ab$。由于 $p\mid ab$，素性说明 $p\mid a$ 或 $p\mid b$。不妨假设 $p\mid a$。则对某个 $c$ 有 $a=pc$，于是 $p=ab=pcb$。由于 $p\neq 0$ 且该环是整环，消去 $p$ 得 $1=cb$，所以 $b$ 是单位。另一种情形类似。
+\end{proof}
+
+\begin{definition}[欧几里得整环、PID 与 UFD]
+设 $R$ 是整环。
+\begin{enumerate}
+    \item 如果 $R$ 有一个允许带余除法的欧几里得函数，则称 $R$ 是\textbf{欧几里得整环}。
+    \item 如果 $R$ 的每个理想都是主理想，则称 $R$ 是\textbf{主理想整环}（PID）。
+    \item 如果每个非零非单位元素都能分解为不可约元，且这种分解在差一个顺序和单位倍的意义下唯一，则称 $R$ 是\textbf{唯一分解整环}（UFD）。
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[整环的层级]
+\[
+    \text{域}\subseteq \text{欧几里得整环}\subseteq \text{PID}\subseteq \text{UFD}\subseteq \text{整环}.
+\]
+\end{theorem}
+
+\begin{remark}
+上面的包含关系不只是术语分类。每一个更强条件都会带来更多工具。在欧几里得整环中，可以运行欧几里得算法。在 PID 中，理想由单个生成元控制。在 UFD 中，因式分解的行为类似于整数分解。
+\end{remark}
+
+\begin{theorem}[多项式环中的除法算法]
+设 $F$ 是域。如果 $f(x),g(x)\in F[x]$ 且 $g(x)\neq 0$，则存在唯一的 $q(x),r(x)\in F[x]$，使得
+\[
+    f(x)=q(x)g(x)+r(x),
+    \qquad
+    r(x)=0\text{ 或 }\deg r<\deg g.
+\]
+\end{theorem}
+
+\begin{corollary}
+如果 $F$ 是域，那么 $F[x]$ 是欧几里得整环，因此也是 PID 和 UFD。
+\end{corollary}
+
+\begin{theorem}[Gauss 引理]
+如果 $R$ 是 UFD，那么 $R[x]$ 也是 UFD。
+\end{theorem}
+
+\section{域}
+
+
+域是这样一种代数环境：除了不能除以零之外，四则初等算术都按预期运行。因为每个非零元素都有乘法逆元，所以域上的线性方程可以用熟悉的高斯消元法求解。这就是普通线性代数把向量空间定义在域上的原因。
+
+当一个域太小，无法包含我们想要的解时，就会出现域扩张。从 $\mathbb{Q}$ 到 $\mathbb{Q}(\sqrt{2})$ 的过渡，添加了 $x^2-2$ 的一个根；从 $\mathbb{R}$ 到 $\mathbb{C}$ 的过渡，添加了 $x^2+1$ 的一个根。基本思想是：在保持域算术的同时，把数系扩张到刚好足以使某些多项式方程可解。
+
+域是每个非零元素都可逆的环。它们是求解线性方程、构造向量空间以及研究多项式根的自然代数环境。
+
+\subsection{定义与第一个例子}
+
+\begin{definition}[域]
+\textbf{域}是一个含幺交换环 $F$，满足 $1\neq 0$，且 $F$ 的每个非零元素都是单位。
+\end{definition}
+
+\begin{example}
+$\mathbb{Q}$、$\mathbb{R}$ 和 $\mathbb{C}$ 都是域。环 $\mathbb{Z}$ 不是域，因为 $2$ 在 $\mathbb{Z}$ 中没有乘法逆元。商环 $\mathbb{Z}/p\mathbb{Z}$ 是域，当且仅当 $p$ 是素数。
+\end{example}
+
+\begin{definition}[特征]
+域 $F$ 的\textbf{特征}是满足
+\[
+    \underbrace{1+1+\cdots+1}_{n\text{ 次}}=0
+\]
+的最小正整数 $n$。如果不存在这样的 $n$，则特征为 $0$。
+\end{definition}
+
+\begin{proposition}
+域的特征要么是 $0$，要么是一个素数。
+\end{proposition}
+
+\begin{proof}
+如果 $\operatorname{char}F=n>0$ 且 $n=ab$，其中 $1<a,b<n$，则
+\[
+    0=n\cdot 1=(a\cdot 1)(b\cdot 1).
+\]
+由于域没有零因子，必有 $a\cdot 1=0$ 或 $b\cdot 1=0$，这与 $n$ 的最小性矛盾。因此 $n$ 是素数。
+\end{proof}
+
+\subsection{域扩张}
+
+\begin{definition}[域扩张]
+如果 $F\subseteq K$ 是两个域，并且 $F$ 的运算是 $K$ 的运算的限制，则称 $K$ 是 $F$ 的一个\textbf{域扩张}，记作 $K/F$。
+\end{definition}
+
+每个域扩张 $K/F$ 都使 $K$ 成为 $F$ 上的向量空间。
+
+\begin{definition}[扩张次数]
+$K/F$ 的\textbf{次数}为
+\[
+    [K:F]=\dim_F K.
+\]
+如果这个维数有限，则称 $K/F$ 是\textbf{有限扩张}。
+\end{definition}
+
+\begin{example}
+域 $\mathbb{C}$ 是 $\mathbb{R}$ 的二次扩张，因为每个复数都能唯一写成 $a+bi$，其中 $a,b\in\mathbb{R}$。因此 $\{1,i\}$ 是 $\mathbb{C}$ 作为 $\mathbb{R}$ 上向量空间的一组基。
+\end{example}
+
+\begin{theorem}[塔式定律]
+如果 $F\subseteq E\subseteq K$ 是域，并且次数有限，则
+\[
+    [K:F]=[K:E][E:F].
+\]
+\end{theorem}
+
+\begin{proof}
+设 $\{u_1,\dots,u_m\}$ 是 $E$ 在 $F$ 上的一组基，$\{v_1,\dots,v_n\}$ 是 $K$ 在 $E$ 上的一组基。那么所有乘积 $u_i v_j$ 构成 $K$ 在 $F$ 上的一组基。因此 $[K:F]=mn$。
+\end{proof}
+
+\subsection{代数元与最小多项式}
+
+\begin{definition}[代数元与超越元]
+设 $K/F$ 是域扩张，$\alpha\in K$。
+\begin{enumerate}
+    \item 如果存在非零多项式 $f(x)\in F[x]$，使得 $f(\alpha)=0$，则称 $\alpha$ 在 $F$ 上是\textbf{代数的}。
+    \item 如果 $\alpha$ 在 $F$ 上不是代数的，则称它在 $F$ 上是\textbf{超越的}。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[最小多项式]
+如果 $\alpha$ 在 $F$ 上是代数的，则 $\alpha$ 在 $F$ 上的\textbf{最小多项式}是唯一的首一不可约多项式 $m_\alpha(x)\in F[x]$，满足 $m_\alpha(\alpha)=0$。
+\end{definition}
+
+\begin{example}
+元素 $\sqrt{2}\in\mathbb{R}$ 在 $\mathbb{Q}$ 上是代数的，它的最小多项式是 $x^2-2$。元素 $i\in\mathbb{C}$ 在 $\mathbb{R}$ 上是代数的，其最小多项式是 $x^2+1$。
+\end{example}
+
+\begin{theorem}[单代数扩张]
+设 $\alpha$ 在 $F$ 上是代数的，最小多项式为 $m_\alpha(x)$。则
+\[
+    F(\alpha)\cong F[x]/(m_\alpha(x)).
+\]
+特别地，
+\[
+    [F(\alpha):F]=\deg m_\alpha.
+\]
+\end{theorem}
+
+\begin{proof}
+考虑赋值同态 $\operatorname{ev}_\alpha:F[x]\to F(\alpha)$，它由 $f(x)\mapsto f(\alpha)$ 给出。它的核是由 $m_\alpha(x)$ 生成的理想。由环的第一同构定理，
+\[
+    F[x]/(m_\alpha(x))\cong \operatorname{im}(\operatorname{ev}_\alpha)=F[\alpha].
+\]
+由于 $\alpha$ 是代数元，有 $F[\alpha]=F(\alpha)$。该商具有基 $1,x,\dots,x^{n-1}$，其中 $n=\deg m_\alpha$。
+\end{proof}
+
+\subsection{分裂域与代数闭包}
+
+\begin{definition}[分裂域]
+设 $f(x)\in F[x]$。域扩张 $K/F$ 称为 $f$ 在 $F$ 上的\textbf{分裂域}，如果：
+\begin{enumerate}
+    \item $f$ 在 $K[x]$ 中完全分解为一次因子；
+    \item $K$ 由 $f$ 的根在 $F$ 上生成。
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+多项式 $x^2-2\in\mathbb{Q}[x]$ 的分裂域是 $\mathbb{Q}(\sqrt{2})$。多项式 $x^3-2$ 有一个实根 $\sqrt[3]{2}$，以及两个复根 $\omega\sqrt[3]{2}$ 和 $\omega^2\sqrt[3]{2}$，其中 $\omega=e^{2\pi i/3}$。它在 $\mathbb{Q}$ 上的分裂域是 $\mathbb{Q}(\sqrt[3]{2},\omega)$。
+\end{example}
+
+\begin{definition}[代数闭域]
+如果域 $K$ 中每个非常数多项式在 $K[x]$ 中都有根，则称 $K$ 是\textbf{代数闭的}。
+\end{definition}
+
+\begin{theorem}[代数学基本定理]
+域 $\mathbb{C}$ 是代数闭的。
+\end{theorem}
+
+\subsection{有限域}
+
+\begin{theorem}[有限域的分类]
+设 $F$ 是有限域。
+\begin{enumerate}
+    \item $F$ 的特征是某个素数 $p$。
+    \item $F$ 的元素个数为 $p^n$，其中 $n\geq 1$。
+    \item 对每个素数 $p$ 和每个整数 $n\geq 1$，都存在一个含有 $p^n$ 个元素的有限域。
+    \item 任意两个含有 $p^n$ 个元素的有限域都同构。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+含有 $q=p^n$ 个元素的有限域记作 $\mathbb{F}_q$ 或 $GF(q)$。乘法群 $\mathbb{F}_q^\times$ 是阶为 $q-1$ 的循环群。
+\end{remark}
+
+\section{Galois 理论}
+
+
+Galois 理论是前面这些结构汇合的地方。一个多项式通过添加它的根给出一个域扩张，而这个扩张的对称性形成一个由域自同构组成的群。令人惊讶的发现是：关于中间域的代数信息，与关于子群的群论信息相对应。
+
+这种对应把关于方程的问题转化为关于对称性的问题。要理解一个方程为什么能用根式求解，需要研究它的 Galois 群的结构。其哲学启示在于：求解方程的困难并不只存在于系数之中；它编码在那些可以在不破坏代数关系的前提下置换根的方式之中。
+
+Galois 理论是群与域的交汇点。它把关于多项式根的问题翻译成关于对称群的问题。多项式的根可以被域自同构置换，而这些置换编码了原方程的深层信息。
+
+\subsection{域自同构}
+
+\begin{definition}[域自同构]
+设 $K/F$ 是域扩张。$K$ 的一个\textbf{$F$-自同构}是一个域同构 $\sigma:K\to K$，并且对每个 $a\in F$，都有
+\[
+    \sigma(a)=a.
+\]
+\end{definition}
+
+\begin{definition}[Galois 群]
+$K$ 的所有 $F$-自同构组成的集合记作
+\[
+    \operatorname{Gal}(K/F).
+\]
+在复合运算下，它构成一个群，称为扩张 $K/F$ 的\textbf{Galois 群}。
+\end{definition}
+
+\newpage
+
+\begin{example}
+对 $K=\mathbb{Q}(\sqrt{2})$ 和 $F=\mathbb{Q}$，每个 $\mathbb{Q}$-自同构都必须把 $\sqrt{2}$ 送到 $x^2-2$ 的另一个根。因此它要么固定 $\sqrt{2}$，要么把它送到 $-\sqrt{2}$。所以
+\[
+    \operatorname{Gal}(\mathbb{Q}(\sqrt{2})/\mathbb{Q})\cong \mathbb{Z}/2\mathbb{Z}.
+\]
+\end{example}
+
+\subsection{正规性与可分性}
+
+\begin{definition}[正规扩张]
+如果代数扩张 $K/F$ 满足：每个在 $F[x]$ 中的不可约多项式只要在 $K$ 中至少有一个根，就会在 $K$ 上完全分裂，则称 $K/F$ 是\textbf{正规扩张}。
+\end{definition}
+
+\begin{definition}[可分多项式与可分扩张]
+如果一个多项式在代数闭包中没有重根，则称它是\textbf{可分的}。如果代数扩张中的每个元素在基域上的最小多项式都是可分的，则称该代数扩张是\textbf{可分扩张}。
+\end{definition}
+
+\begin{definition}[Galois 扩张]
+有限扩张 $K/F$ 称为\textbf{Galois 扩张}，如果它同时正规且可分。
+\end{definition}
+
+\begin{remark}
+在特征为 $0$ 的域上，每个不可约多项式都是可分的。因此，对 $\mathbb{Q}$、$\mathbb{R}$ 或 $\mathbb{C}$ 的扩张来说，可分性通常不会造成困难。正规性往往是更明显的条件。
+\end{remark}
+
+\subsection{基本定理}
+
+\begin{definition}[固定域]
+设 $K/F$ 是域扩张，$H\leq\operatorname{Gal}(K/F)$。$H$ 的\textbf{固定域}为
+\[
+    K^H=\{x\in K:\sigma(x)=x\text{ for all }\sigma\in H\}.
+\]
+\end{definition}
+
+
+\begin{theorem}[Galois 理论基本定理]
+设 $K/F$ 是有限 Galois 扩张，并令 $G=\operatorname{Gal}(K/F)$。存在一个一一对应，并且这个对应反转包含关系：
+\[
+    \{\text{子群 }H\leq G\}
+    \longleftrightarrow
+    \{\text{中间域 }F\subseteq E\subseteq K\},
+\]
+该对应由
+\[
+    H\mapsto K^H,
+    \qquad
+    E\mapsto \operatorname{Gal}(K/E)
+\]
+给出。此外，$E/F$ 是 Galois 扩张，当且仅当 $\operatorname{Gal}(K/E)$ 是 $G$ 的正规子群；此时
+\[
+    \operatorname{Gal}(E/F)\cong G/\operatorname{Gal}(K/E).
+\]
+\end{theorem}
+
+\begin{remark}
+这个对应会反转包含关系：更大的子群固定更多元素，因此对应更小的中间域。这种反转正是 Galois 理论的概念核心。
+\end{remark}
+
+\subsection{根式可解性}
+
+\begin{definition}[可解群]
+如果群 $G$ 存在一列子群
+\[
+    \{e\}=G_0\trianglelefteq G_1\trianglelefteq\cdots\trianglelefteq G_n=G
+\]
+使得每个商群 $G_{i+1}/G_i$ 都是阿贝尔群，则称 $G$ 是\textbf{可解群}。
+\end{definition}
+
+\begin{theorem}[根式可解性的 Galois 判准]
+特征为 $0$ 的域上的一个多项式，如果它的 Galois 群是可解群，那么它可以用根式求解。反过来，在经典 Galois 理论的标准假设下，根式可解性会迫使相应的 Galois 群是可解群。
+\end{theorem}
+
+\begin{remark}
+一般 $n$ 次多项式的 Galois 群是 $S_n$。当 $n\geq 5$ 时，群 $S_n$ 不可解。这就是五次及更高次数多项式方程不存在一般根式公式的结构性原因。
+\end{remark}
+
+\section{模}
+
+
+模通过允许标量来自环而不是域，推广了向量空间。仅这一点变化就会带来很大后果。在向量空间中，每个非零标量都可逆，所以基的行为很整齐，维数也有良好定义。而在模中，标量可能不可逆，甚至可能是零因子，因此线性代数会变得更加细致。
+
+这也正是模有用的原因。它们保留了加法与标量乘法的语言，同时又足够灵活，可以编码阿贝尔群、理想、商结构以及环上线性方程的解。应当把模论理解为：在线性代数中去掉“标量总可以相除”这一简化假设之后所剩下的理论。
+
+向量空间建立在域上。模就是当标量被允许来自环时剩下的结构。这个推广很自然，但它也移除了一些向量空间中方便的性质。特别地，模不一定有基。
+
+\subsection{定义与例子}
+
+\begin{definition}[$R$-模]
+设 $R$ 是含幺环。一个\textbf{左 $R$-模}是一个阿贝尔群 $(M,+)$，并配备一个标量乘法
+\[
+    R\times M\to M,
+    \qquad
+    (r,m)\mapsto rm,
+\]
+使得对所有 $r,s\in R$ 和 $m,n\in M$，都有
+\begin{enumerate}
+    \item $r(m+n)=rm+rn$；
+    \item $(r+s)m=rm+sm$；
+    \item $(rs)m=r(sm)$；
+    \item $1m=m$。
+\end{enumerate}
+\end{definition}
+
+\begin{example}[基本模]
+\begin{enumerate}
+    \item 域 $F$ 上的每个向量空间都是一个 $F$-模。
+    \item 每个阿贝尔群都是一个 $\mathbb{Z}$-模，其中 $n\cdot g$ 表示重复加法。
+    \item 环 $R$ 是它自身上的一个模。
+    \item 交换环 $R$ 的每个理想都是 $R$ 作为模时的一个 $R$-子模。
+\end{enumerate}
+\end{example}
+
+\begin{definition}[子模]
+设 $M$ 是一个 $R$-模。如果子集 $N\subseteq M$ 是 $M$ 的加法子群，并且对所有 $r\in R$、$n\in N$ 都有 $rn\in N$，则称 $N$ 是一个\textbf{子模}。
+\end{definition}
+
+\begin{definition}[商模]
+如果 $N$ 是 $M$ 的子模，那么商阿贝尔群 $M/N$ 通过
+\[
+    r(m+N)=rm+N
+\]
+成为一个 $R$-模。
+\end{definition}
+
+\subsection{模同态与正合列}
+
+\begin{definition}[模同态]
+设 $M$ 和 $N$ 是 $R$-模。映射 $f:M\to N$ 称为\textbf{$R$-模同态}，如果
+\[
+    f(m_1+m_2)=f(m_1)+f(m_2),
+    \qquad
+    f(rm)=rf(m)
+\]
+对所有 $m,m_1,m_2\in M$ 和 $r\in R$ 成立。
+\end{definition}
+
+\begin{theorem}[模第一同构定理]
+如果 $f:M\to N$ 是 $R$-模同态，那么
+\[
+    M/\ker f\cong \operatorname{im}f.
+\]
+\end{theorem}
+
+\begin{definition}[正合列]
+一列 $R$-模和同态
+\[
+    \cdots\to M_{i-1}\xrightarrow{f_{i-1}}M_i\xrightarrow{f_i}M_{i+1}\to\cdots
+\]
+称为在 $M_i$ 处\textbf{正合}，如果
+\[
+    \operatorname{im}f_{i-1}=\ker f_i.
+\]
+如果该列在每个模处都正合，则称这是一条\textbf{正合列}。
+\end{definition}
+
+\begin{remark}
+正合性是记录代数信息的一种紧凑方式。例如，一个序列
+\[
+    0\to A\xrightarrow{f}B\xrightarrow{g}C\to 0
+\]
+正合，当且仅当 $f$ 是单射，$g$ 是满射，并且 $C\cong B/f(A)$。
+\end{remark}
+
+\subsection{自由模与基的失效}
+
+\begin{definition}[自由模]
+如果 $R$-模 $M$ 有一组基，也就是说，存在子集 $B\subseteq M$，使得 $M$ 的每个元素都能唯一写成 $B$ 中元素的有限 $R$-线性组合，则称 $M$ 是\textbf{自由的}。
+\end{definition}
+
+\begin{example}
+模 $R^n$ 是自由模，并有标准基 $e_1,\dots,e_n$。然而，并非每个模都是自由的。例如，$\mathbb{Z}/n\mathbb{Z}$ 是一个 $\mathbb{Z}$-模，但它不是自由 $\mathbb{Z}$-模，因为每个元素都有有限加法阶。
+\end{example}
+
+\begin{remark}
+这是向量空间和模之间的主要差异之一。每个向量空间都有基，但一般环上的模可能含有挠元，可能不是自由的，并且可能有更复杂的分解。
+\end{remark}
+
+\subsection{PID 上的有限生成模}
+
+\begin{definition}[有限生成模]
+如果存在 $m_1,\dots,m_n\in M$，使得每个 $m\in M$ 都可以写成
+\[
+    m=r_1m_1+\cdots+r_nm_n
+\]
+其中 $r_1,\dots,r_n\in R$，则称 $R$-模 $M$ 是\textbf{有限生成的}。
+\end{definition}
+
+\begin{definition}[挠元]
+设 $M$ 是整环 $R$ 上的 $R$-模。如果元素 $m\in M$ 满足存在非零 $r\in R$，使得 $rm=0$，则称 $m$ 是\textbf{挠元}。
+\end{definition}
+
+\begin{theorem}[PID 上有限生成模的结构定理]
+设 $R$ 是 PID，$M$ 是有限生成 $R$-模。则
+\[
+    M\cong R^r\oplus R/(d_1)\oplus\cdots\oplus R/(d_k),
+\]
+其中 $r\geq 0$，每个 $d_i$ 都是非零非单位，并且
+\[
+    d_1\mid d_2\mid\cdots\mid d_k.
+\]
+整数 $r$ 和不变因子 $d_i$ 在相差一个单位倍的意义下唯一。
+\end{theorem}
+
+\begin{example}[有限阿贝尔群]
+取 $R=\mathbb{Z}$，结构定理推出每个有限生成阿贝尔群都同构于
+\[
+    \mathbb{Z}^r\oplus \mathbb{Z}/d_1\mathbb{Z}\oplus\cdots\oplus\mathbb{Z}/d_k\mathbb{Z},
+\]
+其中 $d_1\mid d_2\mid\cdots\mid d_k$。
+\end{example}
+
+\begin{example}[重新解释线性代数]
+设 $V$ 是域 $F$ 上的有限维向量空间，$T:V\to V$ 是线性变换。可以通过定义
+\[
+    f(x)\cdot v=f(T)(v)
+\]
+把 $V$ 变成一个 $F[x]$-模。PID $F[x]$ 上有限生成模的结构定理，是通向有理标准形和 Jordan 标准形的一条路线。
+\end{example}
+
+\section{总结}
+
+抽象代数用结构代替计算。群编码可逆运算和对称性。环编码带有加法和乘法的算术。域提供线性代数和多项式方程所需要的标量系统。Galois 理论把域扩张与对称群联系起来。模推广了向量空间，并揭示当标量不再构成域时，线性代数会如何改变。
+
+贯穿始终的共同方法是：用公理定义结构，构造保持结构的映射，识别核与商，然后在同构意义下分类对象。这种模式是现代数学的核心组织原则之一。

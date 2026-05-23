@@ -1,0 +1,1743 @@
+\chapter{数学分析 II}
+
+现在我们进入分析学的另一个部分，即数学分析 II。本章主要研究多元函数的性质，包括级数、欧氏空间中的极限与连续性、多元函数的微分学，以及多重积分与曲线积分等内容。我们也会引入向量值函数，并研究它们在导数、Jacobi 矩阵和几何应用中的表现。这一章为后续学习多元微积分、微分方程和数学物理提供基础。
+
+\section{级数}
+
+本节的核心思想是：无穷级数并不是一次性完成的“无限次加法”，而是一个极限过程。我们先相加有限多项，得到一列部分和，然后再讨论这列部分和是否稳定下来。这个区分非常重要：单独观察通项 $a_n$ 的行为并不够，真正起决定作用的是部分和的累积行为。
+
+许多收敛判别法都可以理解为把部分和与更简单的对象进行比较。正项级数由单调性和有界性控制；交错级数由正负抵消控制；Dirichlet 判别法和 Abel 判别法则由有界振荡与单调衰减共同控制。函数项级数的一致收敛又多了一层要求：这种稳定必须在定义域中所有点上以同样的速度发生。
+
+级数是数学分析中的基本概念，它提供了一种用较简单对象之和来表示函数的方式。在物理、工程和经济学中，级数常用于刻画复杂现象并求解问题。
+
+\subsection{数项级数}
+
+无穷级数的研究可以看成反常积分的离散类似物。它使我们能够定义无限多个项的和，也为后面把函数表示为幂级数，也就是 Taylor 级数，奠定基础。
+
+\begin{definition}[无穷级数]
+给定一列实数 $\{a_n\}_{n=1}^{\infty}$，形式表达式
+\[
+    \sum_{n=1}^{\infty}a_n=a_1+a_2+a_3+\cdots
+\]
+称为一个\textbf{无穷级数}。数 $a_n$ 称为该级数的通项。
+\end{definition}
+
+为了给这个无限和赋值，我们先考察有限和。
+
+\subsection{上极限与下极限}
+
+上极限和下极限很有用，因为即使普通极限不存在，它们仍然能够保留序列最终上界和最终下界的信息。与其问整列数列趋向哪里，不如问它的子列可以在哪些地方聚集。这也是为什么 $\limsup$ 和 $\liminf$ 会自然出现在根值判别法、比值判别法和振荡表达式中。
+
+一个直观记忆方法是：$\limsup x_n$ 是从足够远处看过去时序列的“极限天花板”，而 $\liminf x_n$ 是它的“极限地板”。如果这两个量相等，天花板和地板就把序列夹成一个真正的极限；如果二者不同，则说明序列存在持续振荡或多个渐近行为。
+
+在研究级数收敛性时，经常需要使用数列的上极限和下极限，尤其是在普通极限不存在的情况下。
+
+\begin{definition}[聚点]
+设 $\{x_n\}$ 是一个数列。如果存在一个子列 $\{x_{n_k}\}$，使得
+\[
+    \lim_{k\to\infty}x_{n_k}=\xi,
+\]
+其中 $\xi\in\mathbb{R}\cup\{+\infty,-\infty\}$，则称 $\xi$ 是该数列的一个\textbf{聚点}。
+\end{definition}
+
+\begin{definition}[上极限与下极限]
+设 $E$ 是数列 $\{x_n\}$ 的所有聚点构成的集合。定义\textbf{上极限}和\textbf{下极限}为
+\[
+    \limsup_{n\to\infty}x_n=\sup E,
+    \qquad
+    \liminf_{n\to\infty}x_n=\inf E.
+\]
+\end{definition}
+
+\begin{theorem}
+数列 $\{x_n\}$ 收敛到 $L$，其中 $L$ 可以是 $\pm\infty$，当且仅当
+\[
+    \limsup x_n=\liminf x_n=L.
+\]
+\end{theorem}
+
+这个定理的直观含义很清楚：如果数列收敛，那么它的所有子列都收敛到同一个极限，因此聚点集合只有 $\{L\}$，上极限和下极限都等于 $L$。反过来，如果上极限和下极限在 $L$ 处相等，就意味着所有聚点都只能是 $L$，于是整列数列被迫收敛到 $L$。
+
+\begin{property}
+对任意两个数列 $\{x_n\}$ 和 $\{y_n\}$，有
+\begin{enumerate}
+    \item $\limsup (x_n+y_n)\leq \limsup x_n+\limsup y_n$；
+    \item $\liminf (x_n+y_n)\geq \liminf x_n+\liminf y_n$。
+\end{enumerate}
+如果其中至少有一个数列收敛，则等号成立。
+\end{property}
+
+\begin{definition}[级数的收敛]
+记级数的第 $n$ 个\textbf{部分和}为
+\[
+    S_n=\sum_{k=1}^{n}a_k=a_1+\cdots+a_n.
+\]
+如果部分和数列 $\{S_n\}$ 收敛到某个极限 $S$，也就是
+\[
+    \lim_{n\to\infty}S_n=S,
+\]
+则称级数\textbf{收敛}到 $S$，并记作
+\[
+    \sum_{n=1}^{\infty}a_n=S.
+\]
+如果 $\{S_n\}$ 不收敛，则称该级数\textbf{发散}。
+\end{definition}
+
+\begin{theorem}[级数的 Cauchy 准则]
+级数 $\sum a_n$ 收敛，当且仅当对任意 $\epsilon>0$，存在整数 $N$，使得对所有 $n>N$ 和任意 $p\geq 1$，都有
+\[
+    |S_{n+p}-S_n|=|a_{n+1}+a_{n+2}+\cdots+a_{n+p}|<\epsilon.
+\]
+\end{theorem}
+
+\begin{theorem}[收敛的必要条件]
+如果级数 $\sum_{n=1}^{\infty}a_n$ 收敛，则
+\[
+    \lim_{n\to\infty}a_n=0.
+\]
+\end{theorem}
+
+反命题是\textbf{错误的}。例如调和级数 $\sum 1/n$ 发散，虽然 $\lim 1/n=0$。这是级数分析中最基本、也最容易误用的陷阱。
+
+\begin{property}[线性性]
+如果 $\sum a_n=A$ 且 $\sum b_n=B$，那么对任意常数 $\alpha,\beta$，有
+\[
+    \sum(\alpha a_n+\beta b_n)=\alpha A+\beta B.
+\]
+\end{property}
+
+\subsubsection{正项级数的判别法}
+
+如果 $a_n\geq0$ 对所有 $n$ 都成立，则称 $\sum a_n$ 是一个\textbf{正项级数}。对这类级数来说，部分和数列 $\{S_n\}$ 单调递增。
+
+\begin{theorem}
+正项级数收敛，当且仅当它的部分和数列有上界。
+\end{theorem}
+
+\paragraph{比较判别法}
+
+\begin{theorem}[直接比较判别法]
+设 $0\leq a_n\leq b_n$ 对所有 $n$ 成立。
+\begin{enumerate}
+    \item 如果 $\sum b_n$ 收敛，则 $\sum a_n$ 收敛；
+    \item 如果 $\sum a_n$ 发散，则 $\sum b_n$ 发散。
+\end{enumerate}
+\end{theorem}
+
+\newpage
+
+\begin{theorem}[极限比较判别法]
+设 $a_n>0,b_n>0$。考虑极限
+\[
+    L=\lim_{n\to\infty}\frac{a_n}{b_n}.
+\]
+\begin{enumerate}
+    \item 如果 $0<L<+\infty$，则 $\sum a_n$ 与 $\sum b_n$ 同敛散；
+    \item 如果 $L=0$ 且 $\sum b_n$ 收敛，则 $\sum a_n$ 收敛；
+    \item 如果 $L=+\infty$ 且 $\sum b_n$ 发散，则 $\sum a_n$ 发散。
+\end{enumerate}
+\end{theorem}
+
+\paragraph{积分判别法与 $p$-级数}
+
+\begin{theorem}[积分判别法]
+设 $f(x)$ 是 $[1,+\infty)$ 上连续、正值且递减的函数，并且 $f(n)=a_n$。则级数
+\[
+    \sum_{n=1}^{\infty}a_n
+\]
+收敛，当且仅当反常积分
+\[
+    \int_1^{+\infty}f(x)\,dx
+\]
+收敛。
+\end{theorem}
+
+由此可以得到著名的 $p$-级数判别：
+
+\begin{corollary}[$p$-级数]
+级数
+\[
+    \sum_{n=1}^{\infty}\frac{1}{n^p}
+\]
+在 $p>1$ 时收敛，在 $p\leq1$ 时发散。
+\end{corollary}
+
+这个定理还可以用更一般的形式表述如下。
+
+\newpage
+
+\begin{theorem}
+设 $f(x)$ 在每个区间 $[a,A]$ 上连续、正值且可积，其中 $A>a>0$。取一列递增数列 $\{a_n\}$，满足 $a_n\to+\infty$ 且 $a_1=a$。则级数
+\[
+    \sum_{n=1}^{\infty}\int_{a_n}^{a_{n+1}}f(x)\,dx
+\]
+与反常积分
+\[
+    \int_a^{+\infty}f(x)\,dx
+\]
+同敛散。更具体地，如果 $f$ 递减，则有
+\[
+    \sum_{n=1}^{\infty}\int_{a_n}^{a_{n+1}}f(x)\,dx
+    =\int_a^{+\infty}f(x)\,dx.
+\]
+\end{theorem}
+
+\begin{remark}
+\begin{enumerate}
+    \item 数列 $\{a_n\}$ 的选取并不唯一。常见选择是 $a_n=n$，这会回到标准的积分判别法。根据具体函数和问题背景，也可以选择其他分点。
+    \item 如果 $f$ 不是正函数，并且 $\int_a^{+\infty}f(x)\,dx$ 收敛，那么可以通过考察积分块绝对值来判断对应级数的收敛性。但如果 $\int_a^{+\infty}f(x)\,dx$ 发散，则不能在没有额外信息时直接推出对应级数的结论。
+\end{enumerate}
+\end{remark}
+
+下面给出积分判别法的若干应用。
+
+\begin{example}
+判断级数 $\sum_{n=2}^{\infty}\frac{1}{n\ln^q n}$ 的敛散性。
+
+\textbf{解：} 考虑 $x\geq2$ 上的函数
+\[
+    f(x)=\frac{1}{x\ln^q x}.
+\]
+当 $q>0$ 且 $x>e$ 时，该函数连续、正值且递减。应用积分判别法：
+\[
+    \int_2^{+\infty}\frac{1}{x\ln^q x}\,dx.
+\]
+令 $t=\ln x$，则 $dx=e^t dt$，且当 $x=2$ 时 $t=\ln 2$。积分化为
+\[
+    \int_{\ln 2}^{+\infty}\frac{1}{t^q}\,dt.
+\]
+该积分当且仅当 $q>1$ 时收敛。因此，级数 $\sum_{n=2}^{\infty}\frac{1}{n\ln^q n}$ 当且仅当 $q>1$ 时收敛，否则发散。
+\end{example}
+
+也可以反过来用积分判别法研究反常积分。
+
+\newpage
+
+\begin{example}
+判断积分
+\[
+    \int_0^{+\infty}\frac{dx}{1+x^2\sin^2x}
+\]
+的敛散性。
+
+\textbf{解：} 关键是找到合适的分点数列。取 $a_n=n\pi$，$n=0,1,2,\dots$。考虑级数
+\[
+    \sum_{n=0}^{\infty}\int_{n\pi}^{(n+1)\pi}\frac{dx}{1+x^2\sin^2x}.
+\]
+令
+\[
+    A_n=\int_{n\pi}^{(n+1)\pi}\frac{dx}{1+x^2\sin^2x}.
+\]
+则
+\[
+\begin{aligned}
+A_n
+&=\int_0^{\pi}\frac{dt}{1+(n\pi+t)^2\sin^2t}  \\
+&>\int_0^{\frac{1}{(n+1)\pi}}\frac{dt}{1+(n\pi+t)^2\sin^2t}.
+\end{aligned}
+\]
+注意到在 $0<t<\frac{1}{(n+1)\pi}$ 时，
+\[
+    (n\pi+t)^2\sin^2t<(n+1)^2\pi^2t^2<1.
+\]
+因此
+\[
+    A_n>\int_0^{\frac{1}{(n+1)\pi}}\frac{dt}{2}
+    =\frac{1}{2(n+1)\pi}.
+\]
+由于调和级数发散，由比较判别法，$\sum A_n$ 发散。因此原反常积分发散。
+\end{example}
+
+\newpage
+
+\begin{example}
+判断积分
+\[
+    \int_0^{+\infty}\frac{dx}{1+x^4\sin^2x}
+\]
+的敛散性。
+
+\textbf{解：} 仍取 $a_n=n\pi$。考虑
+\[
+    \sum_{n=0}^{\infty}\int_{n\pi}^{(n+1)\pi}\frac{dx}{1+x^4\sin^2x}.
+\]
+令
+\[
+    A_n=\int_{n\pi}^{(n+1)\pi}\frac{dx}{1+x^4\sin^2x}.
+\]
+把区间平移到 $[0,\pi]$ 并拆成两段：
+\[
+\begin{aligned}
+A_n
+&=\int_0^{\frac{\pi}{2}}\frac{dt}{1+(n\pi+t)^4\sin^2t}
+ +\int_{\frac{\pi}{2}}^{\pi}\frac{dt}{1+(n\pi+t)^4\sin^2t}  \\
+&=I_1+I_2.
+\end{aligned}
+\]
+对 $I_1$，有
+\[
+I_1<\int_0^{\frac{\pi}{2}}\frac{dt}{1+c_1 n^4 t^2},
+\]
+也可以用标准估计得到 $I_1=O(n^{-2})$。同理 $I_2=O(n^{-2})$。更细致地说，零点附近 $\sin t\sim t$，积分块的量级由
+\[
+    \int_0^1\frac{dt}{1+n^4t^2}=O(n^{-2})
+\]
+控制。于是 $A_n=O(n^{-2})$，而 $\sum n^{-2}$ 收敛，所以原积分收敛。
+\end{example}
+
+\paragraph{一个小插曲：上极限和下极限}
+
+有时数列并不愿意稳定下来，而是在若干位置之间反复跳动。此时普通极限不存在，我们就改为追踪它的极端聚点，也就是上极限 $\limsup_{n\to\infty}x_n$ 和下极限 $\liminf_{n\to\infty}x_n$。它们的代数运算不能完全照搬普通极限，例如
+\[
+    \limsup(x_n+y_n)\leq \limsup x_n+\limsup y_n.
+\]
+只有当其中一个数列真正收敛时，等号才可以安全使用。
+
+\paragraph{比值判别法与根值判别法}
+
+这两种判别法是实际计算中最常使用的方法。
+
+\newpage
+
+\begin{theorem}[D'Alembert 比值判别法]
+设 $\sum a_n$ 是正项级数，并设
+\[
+    \rho=\lim_{n\to\infty}\frac{a_{n+1}}{a_n}.
+\]
+\begin{itemize}
+    \item 如果 $\rho<1$，则级数收敛；
+    \item 如果 $\rho>1$，则级数发散；
+    \item 如果 $\rho=1$，则判别法失效。例如 $\sum 1/n$ 发散，而 $\sum 1/n^2$ 收敛，但二者的比值极限都是 $1$。
+\end{itemize}
+\end{theorem}
+
+这个定理的证明依赖于如下不等式：
+\[
+\liminf_{n\to\infty}\frac{x_{n+1}}{x_n}
+\leq \liminf_{n\to\infty}\sqrt[n]{x_n}
+\leq \limsup_{n\to\infty}\sqrt[n]{x_n}
+\leq \limsup_{n\to\infty}\frac{x_{n+1}}{x_n}.
+\]
+
+\begin{theorem}[Cauchy 根值判别法]
+设 $\sum a_n$ 是正项级数，并设
+\[
+    \rho=\limsup_{n\to\infty}\sqrt[n]{a_n}.
+\]
+\begin{itemize}
+    \item 如果 $\rho<1$，则级数收敛；
+    \item 如果 $\rho>1$，则级数发散；
+    \item 如果 $\rho=1$，则判别法失效。
+\end{itemize}
+\end{theorem}
+
+\paragraph{Raabe 判别法}
+
+当比值判别法给出 $\rho=1$ 时，Raabe 判别法提供了更精细的标准。
+
+\begin{theorem}[Raabe 判别法]
+设 $a_n>0$。考虑极限
+\[
+    R=\lim_{n\to\infty}n\left(\frac{a_n}{a_{n+1}}-1\right).
+\]
+\begin{itemize}
+    \item 如果 $R>1$，则级数收敛；
+    \item 如果 $R<1$，则级数发散；
+    \item 如果 $R=1$，则判别法失效。
+\end{itemize}
+\end{theorem}
+
+\subsubsection{交错级数}
+
+交错级数具有形式
+\[
+    \sum_{n=1}^{\infty}(-1)^{n-1}a_n,
+\]
+其中 $a_n>0$。
+
+\begin{theorem}[Leibniz 判别法]
+如果数列 $\{a_n\}$ 满足
+\begin{enumerate}
+    \item $a_n$ 单调递减；
+    \item $\lim_{n\to\infty}a_n=0$，
+\end{enumerate}
+则交错级数 $\sum_{n=1}^{\infty}(-1)^{n-1}a_n$ 收敛。
+\end{theorem}
+
+这种收敛来自正负项之间的抵消。部分和一会儿位于极限之上，一会儿位于极限之下，并且振幅逐渐缩小到零。
+
+\subsubsection{绝对收敛与条件收敛}
+
+\begin{definition}[绝对收敛与条件收敛]
+设 $\sum a_n$ 是一个实数项级数。
+\begin{enumerate}
+    \item 如果 $\sum |a_n|$ 收敛，则称 $\sum a_n$ \textbf{绝对收敛}；
+    \item 如果 $\sum a_n$ 收敛但 $\sum |a_n|$ 发散，则称 $\sum a_n$ \textbf{条件收敛}。
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+绝对收敛必然推出收敛。
+\end{theorem}
+
+\begin{proof}
+由不等式
+\[
+    0\leq a_n+|a_n|\leq 2|a_n|
+\]
+以及比较判别法可知，正项级数 $\sum(a_n+|a_n|)$ 收敛。于是
+\[
+    \sum a_n=\sum(a_n+|a_n|)-\sum|a_n|
+\]
+也收敛。
+\end{proof}
+
+条件收敛比绝对收敛更脆弱。对条件收敛级数重新排列项的顺序，可能改变和，甚至使其发散。这说明绝对收敛才是更稳定的收敛概念。
+
+\subsubsection{Dirichlet 判别法与 Abel 判别法}
+
+\begin{theorem}[Dirichlet 判别法]
+设 $\{a_n\}$ 的部分和
+\[
+    A_n=\sum_{k=1}^{n}a_k
+\]
+有界，且 $\{b_n\}$ 单调趋于 $0$。则级数
+\[
+    \sum_{n=1}^{\infty}a_nb_n
+\]
+收敛。
+\end{theorem}
+
+\begin{theorem}[Abel 判别法]
+设级数 $\sum a_n$ 收敛，且数列 $\{b_n\}$ 单调有界。则级数
+\[
+    \sum_{n=1}^{\infty}a_nb_n
+\]
+收敛。
+\end{theorem}
+
+这两个定理都可以通过分部求和来证明。它们的共同思想是：一个有界振荡因素乘上一个足够规则的衰减因素，就能够产生收敛。
+
+\subsubsection{级数的性质}
+
+\begin{property}
+设 $\sum a_n$ 与 $\sum b_n$ 收敛。
+\begin{enumerate}
+    \item 对任意常数 $\alpha,\beta$，级数 $\sum(\alpha a_n+\beta b_n)$ 收敛，并且和等于相应线性组合；
+    \item 删除、增加或改变有限多项，不改变级数的收敛性，只会改变级数和的数值；
+    \item 如果 $\sum a_n$ 绝对收敛，则任意重排后的级数仍然收敛，并且和不变。
+\end{enumerate}
+\end{property}
+
+\subsubsection{级数的乘积}
+
+给定两个级数
+\[
+    \sum_{n=0}^{\infty}a_n,
+    \qquad
+    \sum_{n=0}^{\infty}b_n,
+\]
+它们的 Cauchy 乘积定义为
+\[
+    \sum_{n=0}^{\infty}c_n,
+    \qquad
+    c_n=\sum_{k=0}^{n}a_kb_{n-k}.
+\]
+
+\begin{theorem}[Cauchy 乘积]
+如果 $\sum a_n$ 和 $\sum b_n$ 都绝对收敛，且和分别为 $A$ 和 $B$，则它们的 Cauchy 乘积绝对收敛，并且和为 $AB$。
+\end{theorem}
+
+\begin{remark}
+如果只知道两个级数普通收敛，而没有绝对收敛，则 Cauchy 乘积可能出现额外问题。因此在使用乘积公式时，绝对收敛是最常见、也最安全的条件。
+\end{remark}
+
+\subsubsection{无穷乘积}
+
+除了无穷和之外，还可以研究无穷乘积。
+
+\begin{definition}[无穷乘积]
+给定数列 $\{u_n\}$，形式表达式
+\[
+    \prod_{n=1}^{\infty}(1+u_n)
+\]
+称为一个无穷乘积。它的第 $n$ 个部分乘积为
+\[
+    P_n=\prod_{k=1}^{n}(1+u_k).
+\]
+如果 $P_n$ 收敛到一个非零有限极限 $P$，则称无穷乘积收敛，并记作
+\[
+    \prod_{n=1}^{\infty}(1+u_n)=P.
+\]
+\end{definition}
+
+无穷乘积通常通过取对数转化为级数问题。若 $u_n$ 足够小，则
+\[
+    \ln(1+u_n)\sim u_n.
+\]
+因此，在许多情况下，$\prod(1+u_n)$ 的收敛性与 $\sum u_n$ 的收敛性密切相关。
+
+\begin{theorem}
+设 $u_n>-1$。若级数 $\sum |u_n|$ 收敛，则无穷乘积 $\prod(1+u_n)$ 收敛到一个非零有限值。
+\end{theorem}
+
+数学家也利用无穷乘积推出一些著名公式。例如 Euler 乘积把 Riemann zeta 函数和素数联系起来：
+\[
+    \zeta(s)=\sum_{n=1}^{\infty}\frac{1}{n^s}
+    =\prod_{p\ \mathrm{prime}}\frac{1}{1-p^{-s}},
+    \qquad s>1.
+\]
+
+另一个经典公式是 Stirling 公式：
+\[
+    n!\sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n.
+\]
+它说明阶乘的增长速度可以由一个连续函数近似。
+
+\subsection{函数项级数}
+
+数项级数的每一项都是一个数，而函数项级数的每一项是一个函数。设 $E$ 是一个集合，$u_n:E\to\mathbb{R}$。函数项级数写作
+\[
+    \sum_{n=1}^{\infty}u_n(x).
+\]
+对每个固定的 $x\in E$，它都变成一个数项级数。若对所有 $x\in E$ 都收敛，则定义和函数
+\[
+    S(x)=\sum_{n=1}^{\infty}u_n(x).
+\]
+
+关键问题是：点态收敛是否足以保证和函数继承每一项的连续性、可积性或可微性？答案通常是否定的。为了安全地交换极限与连续、积分、导数等运算，我们需要更强的一致收敛。
+
+\begin{definition}[点态收敛]
+若对每个固定的 $x\in E$，数项级数 $\sum u_n(x)$ 都收敛到 $S(x)$，则称函数项级数在 $E$ 上\textbf{点态收敛}到 $S$。
+\end{definition}
+
+\begin{definition}[一致收敛]
+若对任意 $\epsilon>0$，存在 $N$，使得对所有 $n>N$ 以及所有 $x\in E$，都有
+\[
+    |S_n(x)-S(x)|<\epsilon,
+\]
+则称 $S_n$ 在 $E$ 上\textbf{一致收敛}到 $S$。这里
+\[
+    S_n(x)=\sum_{k=1}^{n}u_k(x).
+\]
+\end{definition}
+
+一致收敛要求同一个 $N$ 同时适用于所有 $x\in E$。这就是它比点态收敛更强的地方。
+
+\subsubsection{一致收敛判别法}
+
+\begin{theorem}[一致 Cauchy 准则]
+函数项级数 $\sum u_n(x)$ 在 $E$ 上一致收敛，当且仅当对任意 $\epsilon>0$，存在 $N$，使得对所有 $n>N$、$p\geq1$ 和所有 $x\in E$，都有
+\[
+    |u_{n+1}(x)+\cdots+u_{n+p}(x)|<\epsilon.
+\]
+\end{theorem}
+
+\begin{theorem}[Weierstrass 判别法]
+如果存在正项级数 $\sum M_n$，使得
+\[
+    |u_n(x)|\leq M_n
+\]
+对所有 $x\in E$ 和所有 $n$ 成立，并且 $\sum M_n$ 收敛，则函数项级数 $\sum u_n(x)$ 在 $E$ 上绝对且一致收敛。
+\end{theorem}
+
+\begin{theorem}[函数项级数的 Dirichlet 判别法]
+设 $\sum a_n(x)b_n(x)$ 是函数项级数。如果
+\begin{enumerate}
+    \item $\sum_{k=1}^{n}a_k(x)$ 在 $E$ 上关于 $n$ 一致有界；
+    \item 对每个 $x\in E$，$b_n(x)$ 关于 $n$ 单调趋于 $0$，并且这种趋零是一致的，
+\end{enumerate}
+则 $\sum a_n(x)b_n(x)$ 在 $E$ 上一致收敛。
+\end{theorem}
+
+\begin{theorem}[函数项级数的 Abel 判别法]
+设 $\sum a_n(x)$ 在 $E$ 上一致收敛，且 $b_n(x)$ 关于 $n$ 单调，并在 $E$ 上一致有界。则 $\sum a_n(x)b_n(x)$ 在 $E$ 上一致收敛。
+\end{theorem}
+
+\subsubsection{一致收敛级数的性质}
+
+\begin{theorem}[连续性的保持]
+设每个 $u_n$ 在 $E$ 上连续，且 $\sum u_n$ 在 $E$ 上一致收敛到 $S$。若 $E$ 的拓扑结构允许讨论连续性，则 $S$ 连续。
+\end{theorem}
+
+这个定理的意义是：一致极限可以把极限符号与连续性安全交换。点态极限则不一定有这个性质。
+
+\begin{theorem}[逐项积分]
+设 $u_n$ 在 $[a,b]$ 上可积，且 $\sum u_n$ 在 $[a,b]$ 上一致收敛到 $S$。则
+\[
+    \int_a^b S(x)\,dx
+    =\sum_{n=1}^{\infty}\int_a^b u_n(x)\,dx.
+\]
+\end{theorem}
+
+\begin{theorem}[逐项求导]
+设 $u_n$ 在 $[a,b]$ 上可导，某点 $x_0\in[a,b]$ 处级数 $\sum u_n(x_0)$ 收敛，并且 $\sum u_n'(x)$ 在 $[a,b]$ 上一致收敛。则 $\sum u_n(x)$ 在 $[a,b]$ 上一致收敛到某个可导函数 $S$，且
+\[
+    S'(x)=\sum_{n=1}^{\infty}u_n'(x).
+\]
+\end{theorem}
+
+\subsection{幂级数}
+
+幂级数是性质最好的函数项级数。它们在收敛区间或收敛圆盘内部几乎像多项式一样：可以逐项相加、相乘、积分和求导。收敛半径就是这种稳定的多项式行为与可能发散行为之间的边界。
+
+\begin{definition}[幂级数]
+形如
+\[
+    \sum_{n=0}^{\infty}a_n(x-x_0)^n
+\]
+的函数项级数称为以 $x_0$ 为中心的\textbf{幂级数}。
+\end{definition}
+
+\subsubsection{收敛半径}
+
+\begin{theorem}[收敛半径]
+对任意幂级数 $\sum a_nx^n$，存在 $R\in[0,+\infty]$，使得该级数在 $|x|<R$ 时绝对收敛，在 $|x|>R$ 时发散。$R$ 称为收敛半径。
+\end{theorem}
+
+若极限存在，则常用公式为
+\[
+    R=\lim_{n\to\infty}\left|\frac{a_n}{a_{n+1}}\right|.
+\]
+更一般地，可以用 Cauchy-Hadamard 公式
+\[
+    \frac1R=\limsup_{n\to\infty}\sqrt[n]{|a_n|}.
+\]
+
+幂级数在 $|x|<R$ 内绝对收敛，在 $|x|>R$ 外发散。端点 $x=\pm R$ 的情况必须单独讨论。
+
+\subsubsection{Abel 定理}
+
+\begin{theorem}[Abel 定理]
+若幂级数 $\sum a_nx^n$ 的收敛半径为 $R>0$，则该级数在任意闭区间 $[-r,r]$ 上一致收敛，其中 $0<r<R$。
+\end{theorem}
+
+这说明在收敛区间内部，幂级数可以像多项式一样操作。
+
+\begin{theorem}[逐项求导与逐项积分]
+若幂级数
+\[
+    f(x)=\sum_{n=0}^{\infty}a_n(x-x_0)^n
+\]
+的收敛半径为 $R$，则在 $|x-x_0|<R$ 内，
+\[
+    f'(x)=\sum_{n=1}^{\infty}na_n(x-x_0)^{n-1},
+\]
+并且
+\[
+    \int_{x_0}^{x}f(t)\,dt
+    =\sum_{n=0}^{\infty}\frac{a_n}{n+1}(x-x_0)^{n+1}.
+\]
+这两个新幂级数具有同样的收敛半径 $R$。
+\end{theorem}
+
+\subsection{Taylor 级数与 Maclaurin 级数}
+
+\begin{definition}[Taylor 级数]
+设函数 $f$ 在点 $a$ 的某个邻域内具有任意阶导数。形式级数
+\[
+    \sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n
+\]
+称为 $f$ 在 $a$ 处的\textbf{Taylor 级数}。当 $a=0$ 时，称为\textbf{Maclaurin 级数}。
+\end{definition}
+
+Taylor 级数的问题不是能否写出这个形式表达式，而是它是否真的收敛到原函数。其关键在于余项是否趋于零。
+
+\begin{theorem}[Taylor 公式]
+设 $f$ 在 $a$ 与 $x$ 之间有 $n+1$ 阶连续导数，则
+\[
+    f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k+R_n(x),
+\]
+其中积分型余项为
+\[
+    R_n(x)=\frac1{n!}\int_a^x f^{(n+1)}(t)(x-t)^n\,dt.
+\]
+\end{theorem}
+
+因此，一个函数能够展开成收敛到自身的 Taylor 级数，当且仅当 $R_n(x)\to0$。积分型余项可以通过反复分部积分得到。
+
+常见的 Maclaurin 展开包括
+\[
+    e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},
+    \qquad
+    \sin x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!},
+\]
+\[
+    \cos x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!},
+    \qquad
+    \ln(1+x)=\sum_{n=1}^{\infty}(-1)^{n-1}\frac{x^n}{n},\quad |x|<1.
+\]
+
+
+\section{欧氏空间中的极限与连续性}
+
+在单变量分析中，自变量沿着一条数轴运动。多元分析中，自变量可以从无穷多条路径趋近同一个点，这使极限和连续性变得更加细致。许多反例都来自同一点：沿不同路径趋近时，函数可能表现出不同的极限行为。
+
+\subsection{欧氏空间 $\mathbb{R}^n$ 的结构}
+
+\begin{definition}[欧氏空间]
+$\mathbb{R}^n$ 是所有有序 $n$ 元组
+\[
+    \mathbf{x}=(x_1,x_2,\dots,x_n)
+\]
+构成的集合，其中每个 $x_i\in\mathbb{R}$。它带有通常的向量加法和数乘。
+\end{definition}
+
+\begin{definition}[内积与范数]
+对 $\mathbf{x},\mathbf{y}\in\mathbb{R}^n$，定义标准内积为
+\[
+    \mathbf{x}\cdot\mathbf{y}=\sum_{i=1}^{n}x_iy_i.
+\]
+由此得到欧氏范数
+\[
+    \|\mathbf{x}\|=\sqrt{\mathbf{x}\cdot\mathbf{x}}
+    =\sqrt{x_1^2+\cdots+x_n^2}.
+\]
+两点之间的距离定义为
+\[
+    d(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|.
+\]
+\end{definition}
+
+\begin{property}
+对任意 $\mathbf{x},\mathbf{y}\in\mathbb{R}^n$ 和 $\lambda\in\mathbb{R}$，有
+\begin{enumerate}
+    \item $\|\mathbf{x}\|\geq0$，且 $\|\mathbf{x}\|=0$ 当且仅当 $\mathbf{x}=\mathbf{0}$；
+    \item $\|\lambda\mathbf{x}\|=|\lambda|\|\mathbf{x}\|$；
+    \item $|\mathbf{x}\cdot\mathbf{y}|\leq \|\mathbf{x}\|\|\mathbf{y}\|$；
+    \item $\|\mathbf{x}+\mathbf{y}\|\leq\|\mathbf{x}\|+\|\mathbf{y}\|$。
+\end{enumerate}
+\end{property}
+
+第三条是 Cauchy-Schwarz 不等式，第四条是三角不等式。这些性质保证了 $\mathbb{R}^n$ 中的距离概念与几何直觉一致。
+
+\subsection{$\mathbb{R}^n$ 的基本拓扑}
+
+\begin{definition}[邻域与开球]
+以点 $\mathbf{x}_0\in\mathbb{R}^n$ 为中心、半径 $r>0$ 的开球定义为
+\[
+    B(\mathbf{x}_0,r)=\{\mathbf{x}\in\mathbb{R}^n:\|\mathbf{x}-\mathbf{x}_0\|<r\}.
+\]
+如果一个集合包含某个以 $\mathbf{x}_0$ 为中心的开球，则称它是 $\mathbf{x}_0$ 的一个邻域。
+\end{definition}
+
+\begin{definition}[内点、外点与边界点]
+设 $E\subseteq\mathbb{R}^n$。
+\begin{enumerate}
+    \item 如果存在 $r>0$，使得 $B(\mathbf{x},r)\subseteq E$，则称 $\mathbf{x}$ 是 $E$ 的内点；
+    \item 如果存在 $r>0$，使得 $B(\mathbf{x},r)\cap E=\varnothing$，则称 $\mathbf{x}$ 是 $E$ 的外点；
+    \item 如果 $\mathbf{x}$ 的任意邻域既与 $E$ 相交，又与 $E$ 的补集相交，则称 $\mathbf{x}$ 是 $E$ 的边界点。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[开集与闭集]
+如果 $E$ 中每一点都是内点，则称 $E$ 是\textbf{开集}。如果 $E$ 包含自己的所有边界点，或者等价地，$\mathbb{R}^n\setminus E$ 是开集，则称 $E$ 是\textbf{闭集}。
+\end{definition}
+
+\begin{definition}[有界集与紧集]
+如果存在 $M>0$，使得 $E\subseteq B(\mathbf{0},M)$，则称 $E$ \textbf{有界}。如果 $E$ 的任意开覆盖都存在有限子覆盖，则称 $E$ \textbf{紧}。
+\end{definition}
+
+\subsubsection{$\mathbb{R}^n$ 的基本定理}
+
+实数 $\mathbb{R}$ 依赖完备性公理。在 $\mathbb{R}^n$ 中，完备性的等价形式可以通过下面几个定理表现出来。
+
+\begin{theorem}[Bolzano-Weierstrass 定理]
+$\mathbb{R}^n$ 中任意有界数列都存在收敛子列。
+\end{theorem}
+
+\begin{theorem}[闭矩形套定理]
+设 $\{I_k\}$ 是 $\mathbb{R}^n$ 中一列闭矩形，满足
+\[
+    I_1\supseteq I_2\supseteq I_3\supseteq\cdots,
+\]
+并且各方向边长都趋于 $0$。则存在唯一一点属于所有 $I_k$ 的交集。
+\end{theorem}
+
+\begin{theorem}[Heine-Borel 定理]
+$\mathbb{R}^n$ 的子集 $S$ 紧，当且仅当 $S$ 闭且有界。
+\end{theorem}
+
+\begin{remark}
+这个定理是有限维欧氏空间中特有的现象。更一般地，在有限维赋范空间中也成立；但在无限维赋范空间中，闭且有界并不保证紧，例如闭单位球通常不是紧集。
+
+此外，紧性还有一个等价表述：$S$ 紧，当且仅当 $S$ 的任意无限子集都在 $S$ 中至少有一个聚点。
+\end{remark}
+
+\begin{proof}[在 $\mathbb{R}^2$ 中的证明思路]
+$(\Rightarrow)$ 如果 $S$ 紧，可以用以原点为中心、半径为 $k$ 的开圆盘 $U(0,k)$，$k=1,2,\dots$，覆盖 $S$。由有限子覆盖可得 $S$ 有界。要证明 $S$ 闭，假设 $a\notin S$ 是 $S$ 的聚点。可以用
+\[
+    V_n=\{\mathbf{x}:\|\mathbf{x}-a\|>1/n\}
+\]
+构造 $S$ 的一个开覆盖。由于 $a\notin S$，这些集合的并覆盖 $S$；但因为 $a$ 是聚点，任何有限多个 $V_n$ 都无法覆盖足够接近 $a$ 的那些点，矛盾。因此 $S$ 必须闭。
+
+$(\Leftarrow)$ 如果 $S$ 闭且有界，可以把它放入一个大闭矩形中。利用闭矩形套定理或 Bolzano-Weierstrass 定理，对矩形不断二分，可以证明任意开覆盖都存在有限子覆盖。
+\end{proof}
+
+\subsection{多元函数的极限}
+
+设 $D\subseteq\mathbb{R}^n$，函数 $f:D\to\mathbb{R}^m$，点 $\mathbf{a}$ 是 $D$ 的聚点。
+
+\begin{definition}[多元函数极限]
+如果存在 $\mathbf{L}\in\mathbb{R}^m$，使得对任意 $\epsilon>0$，存在 $\delta>0$，当 $\mathbf{x}\in D$ 且
+\[
+    0<\|\mathbf{x}-\mathbf{a}\|<\delta
+\]
+时，都有
+\[
+    \|f(\mathbf{x})-\mathbf{L}\|<\epsilon,
+\]
+则称 $f(\mathbf{x})$ 当 $\mathbf{x}\to\mathbf{a}$ 时趋于 $\mathbf{L}$，记作
+\[
+    \lim_{\mathbf{x}\to\mathbf{a}}f(\mathbf{x})=\mathbf{L}.
+\]
+\end{definition}
+
+多元极限的定义形式和一元极限类似，但含义更强。$\mathbf{x}$ 可以沿任何路径趋近 $\mathbf{a}$，而极限必须对所有这些趋近方式同时成立。
+
+\subsubsection{路径依赖与极限不存在}
+
+\begin{theorem}[路径判别]
+如果沿两条趋向同一点 $\mathbf{a}$ 的路径，函数极限得到不同结果，则总极限不存在。
+\end{theorem}
+
+\begin{example}
+考虑
+\[
+    f(x,y)=\frac{x^2-y^2}{x^2+y^2},\qquad (x,y)\neq(0,0).
+\]
+沿路径 $y=0$，有 $f(x,0)=1$；沿路径 $x=0$，有 $f(0,y)=-1$。两个结果不同，因此
+\[
+    \lim_{(x,y)\to(0,0)}f(x,y)
+\]
+不存在。
+\end{example}
+
+\begin{example}
+考虑
+\[
+    f(x,y)=\frac{xy}{x^2+y^2},\qquad (x,y)\neq(0,0).
+\]
+沿直线 $y=kx$，有
+\[
+    f(x,kx)=\frac{k}{1+k^2}.
+\]
+该值依赖于 $k$，所以极限不存在。
+\end{example}
+
+\begin{remark}
+沿所有直线路径得到相同极限，并不一定推出二元极限存在。有些函数会沿抛物线或更复杂路径暴露出不同的极限行为。
+\end{remark}
+
+\subsubsection{累次极限与重极限}
+
+对二元函数可以定义累次极限：
+\[
+    \lim_{x\to a}\lim_{y\to b}f(x,y),
+    \qquad
+    \lim_{y\to b}\lim_{x\to a}f(x,y).
+\]
+它们只描述先后沿坐标方向趋近的结果，并不等价于真正的二元极限
+\[
+    \lim_{(x,y)\to(a,b)}f(x,y).
+\]
+
+\begin{remark}
+如果二元极限存在，且相关的一元极限也存在，那么累次极限应当等于二元极限。但两个累次极限相等，并不能保证二元极限存在。
+\end{remark}
+
+\subsection{连续性}
+
+\begin{definition}[连续]
+设 $f:D\subseteq\mathbb{R}^n\to\mathbb{R}^m$，并且 $\mathbf{a}\in D$。如果
+\[
+    \lim_{\mathbf{x}\to\mathbf{a}}f(\mathbf{x})=f(\mathbf{a}),
+\]
+则称 $f$ 在 $\mathbf{a}$ 处连续。如果 $f$ 在 $D$ 的每一点都连续，则称 $f$ 在 $D$ 上连续。
+\end{definition}
+
+\begin{property}
+连续函数关于加法、数乘、乘法、复合等运算封闭。在分母不为零的地方，连续函数的商仍然连续。
+\end{property}
+
+\subsection{紧集上连续函数的性质}
+
+\begin{theorem}[Weierstrass 最值定理]
+设 $K\subseteq\mathbb{R}^n$ 紧，$f:K\to\mathbb{R}$ 连续。则
+\begin{enumerate}
+    \item $f$ 在 $K$ 上有界；
+    \item $f$ 在 $K$ 上能够取得最大值和最小值。也就是说，存在 $\mathbf{x}_{\min},\mathbf{x}_{\max}\in K$，使得对所有 $\mathbf{x}\in K$，有
+    \[
+        f(\mathbf{x}_{\min})\leq f(\mathbf{x})\leq f(\mathbf{x}_{\max}).
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[紧性与连续映射]
+连续映射把紧集映成紧集。若 $K\subseteq\mathbb{R}^n$ 紧，且 $f:K\to\mathbb{R}^m$ 连续，则 $f(K)$ 在 $\mathbb{R}^m$ 中紧。
+\end{theorem}
+
+\begin{theorem}[一致连续性]
+设 $K\subseteq\mathbb{R}^n$ 紧。如果 $f:K\to\mathbb{R}^m$ 在 $K$ 上连续，则 $f$ 在 $K$ 上一致连续。
+\end{theorem}
+
+\begin{definition}[一致连续]
+如果对任意 $\epsilon>0$，存在 $\delta>0$，使得对所有 $\mathbf{x},\mathbf{y}\in D$，只要
+\[
+    \|\mathbf{x}-\mathbf{y}\|<\delta,
+\]
+就有
+\[
+    \|f(\mathbf{x})-f(\mathbf{y})\|<\epsilon,
+\]
+则称 $f$ 在 $D$ 上一致连续。注意这里的 $\delta$ 只依赖于 $\epsilon$，不依赖点 $\mathbf{x}$ 的具体位置。
+\end{definition}
+
+\begin{remark}
+如果定义域不是紧集，例如是开集或无界集，那么连续函数不一定有界，也不一定一致连续。例如 $f(x)=1/x$ 在 $(0,1)$ 上连续，但无界且不一致连续。
+\end{remark}
+
+\subsection{连通性与介值定理}
+
+为了推广介值定理，需要引入连通性的概念。
+
+\begin{definition}[道路连通集]
+集合 $D\subseteq\mathbb{R}^n$ 称为\textbf{道路连通的}，如果对任意两点 $\mathbf{a},\mathbf{b}\in D$，存在连续曲线 $\gamma:[0,1]\to D$，使得
+\[
+    \gamma(0)=\mathbf{a},\qquad \gamma(1)=\mathbf{b}.
+\]
+\end{definition}
+
+\newpage
+
+\begin{theorem}[广义介值定理]
+设 $D\subseteq\mathbb{R}^n$ 道路连通，$f:D\to\mathbb{R}$ 连续。如果 $\mathbf{a},\mathbf{b}\in D$ 且
+\[
+    f(\mathbf{a})<c<f(\mathbf{b}),
+\]
+则存在一点 $\mathbf{c}\in D$，使得 $f(\mathbf{c})=c$。
+\end{theorem}
+
+这说明，道路连通集在连续实值函数下的像是一个区间。
+
+
+\section{多元函数微分学}
+
+从这里开始，我们正式进入多元函数的微分学。我们先介绍偏导数，再介绍方向导数、全微分、Jacobi 矩阵、链式法则、隐函数以及极值问题。
+
+\subsection{偏导数}
+
+\begin{definition}[偏导数]
+设 $f(x_1,x_2,\dots,x_n)$ 在点
+\[
+    \mathbf{x}_0=(x_{0,1},x_{0,2},\dots,x_{0,n})
+\]
+的某个邻域内有定义。如果极限
+\[
+\lim_{x_i\to x_{0,i}}
+\frac{f(x_{0,1},\dots,x_i,\dots,x_{0,n})-f(x_{0,1},\dots,x_{0,i},\dots,x_{0,n})}{x_i-x_{0,i}}
+=A
+\]
+存在，则称 $f$ 在 $\mathbf{x}_0$ 处关于第 $i$ 个变量存在\textbf{偏导数}，记作
+\[
+    \frac{\partial f}{\partial x_i}(\mathbf{x}_0)=A.
+\]
+\end{definition}
+
+偏导数的定义与一元导数非常相似，只是我们只允许一个坐标方向发生变化，其余变量保持不变。
+
+\begin{remark}
+只研究坐标轴方向上的变化，通常不足以完整理解多维情形下的变化率。这就引出了方向导数和全微分。
+\end{remark}
+
+\subsubsection{高阶偏导数}
+
+如果偏导函数本身还可以继续求偏导，就得到高阶偏导数。例如二元函数 $f(x,y)$ 的二阶偏导数包括
+\[
+    f_{xx},\quad f_{xy},\quad f_{yx},\quad f_{yy}.
+\]
+其中
+\[
+    f_{xy}=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right),
+    \qquad
+    f_{yx}=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right).
+\]
+
+\begin{theorem}[混合偏导数相等定理]
+如果 $f_{xy}$ 和 $f_{yx}$ 在点 $(a,b)$ 的某个邻域内存在，并且在 $(a,b)$ 处连续，则
+\[
+    f_{xy}(a,b)=f_{yx}(a,b).
+\]
+\end{theorem}
+
+这个定理说明，在足够光滑的条件下，求偏导的顺序可以交换。但如果连续性条件失效，混合偏导数可能不相等。
+
+\subsection{可微性与全微分}
+
+\begin{definition}[可微]
+设 $f:D\subseteq\mathbb{R}^n\to\mathbb{R}$ 在 $\mathbf{x}_0$ 的邻域内有定义。如果存在一个线性映射
+\[
+    A:\mathbb{R}^n\to\mathbb{R}
+\]
+使得当 $\Delta\mathbf{x}\to\mathbf{0}$ 时，
+\[
+    f(\mathbf{x}_0+\Delta\mathbf{x})-f(\mathbf{x}_0)
+    =A(\Delta\mathbf{x})+o(\|\Delta\mathbf{x}\|),
+\]
+则称 $f$ 在 $\mathbf{x}_0$ 处\textbf{可微}。这个线性映射 $A$ 称为 $f$ 在 $\mathbf{x}_0$ 处的微分。
+\end{definition}
+
+如果 $f$ 可微，则线性主部可以写为
+\[
+    A(\Delta\mathbf{x})
+    =\frac{\partial f}{\partial x_1}(\mathbf{x}_0)\Delta x_1+\cdots+
+    \frac{\partial f}{\partial x_n}(\mathbf{x}_0)\Delta x_n.
+\]
+因此，全微分记作
+\[
+    df=\frac{\partial f}{\partial x_1}dx_1+\cdots+
+    \frac{\partial f}{\partial x_n}dx_n.
+\]
+
+\begin{theorem}[可微的必要条件]
+如果 $f$ 在 $\mathbf{x}_0$ 处可微，则 $f$ 在该点的所有偏导数都存在，并且微分的系数正是这些偏导数。
+\end{theorem}
+
+\begin{proof}
+只令第 $i$ 个变量变化，即取
+\[
+    \Delta\mathbf{x}=(0,\dots,0,\Delta x_i,0,\dots,0).
+\]
+由可微定义有
+\[
+    f(\mathbf{x}_0+\Delta\mathbf{x})-f(\mathbf{x}_0)=A_i\Delta x_i+o(|\Delta x_i|).
+\]
+两边除以 $\Delta x_i$ 并令 $\Delta x_i\to0$，即可得到第 $i$ 个偏导数，且它等于 $A_i$。
+\end{proof}
+
+\begin{theorem}[可微的充分条件]
+如果 $f$ 的所有一阶偏导数在 $\mathbf{x}_0$ 的某个邻域内存在，并且在 $\mathbf{x}_0$ 处连续，则 $f$ 在 $\mathbf{x}_0$ 处可微。
+\end{theorem}
+
+\begin{remark}
+偏导数存在并不保证可微。偏导数只检查坐标方向，而可微性要求所有方向上的增量都能由同一个线性映射统一近似。
+\end{remark}
+
+\subsubsection{高阶微分}
+
+对于二元函数，如果足够光滑，一阶微分为
+\[
+    df=f_xdx+f_ydy.
+\]
+二阶微分可以写作
+\[
+    d^2f=f_{xx}dx^2+2f_{xy}dxdy+f_{yy}dy^2.
+\]
+更一般地，可以把微分算子看作
+\[
+    d=dx\frac{\partial}{\partial x}+dy\frac{\partial}{\partial y},
+\]
+于是
+\[
+    d^nf=\left(dx\frac{\partial}{\partial x}+dy\frac{\partial}{\partial y}\right)^nf.
+\]
+这是一种形式记号，但在函数足够光滑时非常有效。
+
+\subsection{向量值函数与 Jacobi 矩阵}
+
+虽然初等多元微积分主要研究实值函数，但链式法则最清晰的表达方式需要使用向量值函数。
+
+设
+\[
+    F:\mathbb{R}^n\to\mathbb{R}^m,
+    \qquad
+    F(\mathbf{x})=(f_1(\mathbf{x}),\dots,f_m(\mathbf{x})).
+\]
+如果每个分量函数 $f_i$ 都可微，则 $F$ 的导数由一个矩阵表示。
+
+\begin{definition}[Jacobi 矩阵]
+向量值函数 $F=(f_1,\dots,f_m):\mathbb{R}^n\to\mathbb{R}^m$ 的 \textbf{Jacobi 矩阵}定义为
+\[
+    J_F(\mathbf{x})=
+    \begin{pmatrix}
+        \dfrac{\partial f_1}{\partial x_1} & \cdots & \dfrac{\partial f_1}{\partial x_n} \\
+        \vdots & \ddots & \vdots \\
+        \dfrac{\partial f_m}{\partial x_1} & \cdots & \dfrac{\partial f_m}{\partial x_n}
+    \end{pmatrix}.
+\]
+\end{definition}
+
+可微性的线性近似可以写为
+\[
+    F(\mathbf{x}_0+\Delta\mathbf{x})
+    =F(\mathbf{x}_0)+J_F(\mathbf{x}_0)\Delta\mathbf{x}+o(\|\Delta\mathbf{x}\|).
+\]
+
+当 $m=n$ 时，Jacobi 矩阵的行列式称为 Jacobi 行列式，记作
+\[
+    \frac{\partial(f_1,\dots,f_n)}{\partial(x_1,\dots,x_n)}.
+\]
+它在变量代换和局部可逆性中起核心作用。
+
+\subsection{梯度与方向导数}
+
+\begin{definition}[梯度]
+设 $f:\mathbb{R}^n\to\mathbb{R}$。如果 $f$ 在点 $\mathbf{x}$ 的各个偏导数存在，则定义梯度为
+\[
+    \nabla f(\mathbf{x})=
+    \left(\frac{\partial f}{\partial x_1},\dots,
+    \frac{\partial f}{\partial x_n}\right).
+\]
+\end{definition}
+
+\begin{definition}[方向导数]
+设 $f$ 在 $\mathbf{x}_0$ 的邻域内有定义。对非零向量 $\mathbf{u}$，如果极限
+\[
+    \lim_{t\to0}\frac{f(\mathbf{x}_0+t\mathbf{u})-f(\mathbf{x}_0)}{t}=A
+\]
+存在，则称 $f$ 在 $\mathbf{x}_0$ 处沿方向 $\mathbf{u}$ 的\textbf{方向导数}存在，记作
+\[
+    D_{\mathbf{u}}f(\mathbf{x}_0)=A.
+\]
+通常取 $\mathbf{u}$ 为单位向量。
+\end{definition}
+
+\begin{theorem}[方向导数公式]
+如果 $f$ 在 $\mathbf{x}_0$ 处可微，且 $\mathbf{u}$ 是单位向量，则
+\[
+    D_{\mathbf{u}}f(\mathbf{x}_0)=\nabla f(\mathbf{x}_0)\cdot\mathbf{u}.
+\]
+\end{theorem}
+
+\begin{proof}
+由可微性，
+\[
+    f(\mathbf{x}_0+t\mathbf{u})-f(\mathbf{x}_0)
+    =df_{\mathbf{x}_0}(t\mathbf{u})+o(|t|).
+\]
+两边除以 $t$ 并令 $t\to0$，得到
+\[
+    D_{\mathbf{u}}f(\mathbf{x}_0)=df_{\mathbf{x}_0}(\mathbf{u})
+    =\nabla f(\mathbf{x}_0)\cdot\mathbf{u}.
+\]
+\end{proof}
+
+由 Cauchy-Schwarz 不等式，
+\[
+    D_{\mathbf{u}}f=\nabla f\cdot\mathbf{u}
+    \leq \|\nabla f\|\|\mathbf{u}\|=\|\nabla f\|.
+\]
+因此，梯度方向是函数增长最快的方向，最大方向导数为 $\|\nabla f\|$。
+
+\subsection{多元函数的链式法则}
+
+\begin{theorem}[链式法则]
+设 $F:\mathbb{R}^n\to\mathbb{R}^m$ 在 $\mathbf{x}_0$ 处可微，$G:\mathbb{R}^m\to\mathbb{R}^k$ 在 $F(\mathbf{x}_0)$ 处可微。则复合函数 $G\circ F$ 在 $\mathbf{x}_0$ 处可微，并且
+\[
+    J_{G\circ F}(\mathbf{x}_0)=J_G(F(\mathbf{x}_0))J_F(\mathbf{x}_0).
+\]
+\end{theorem}
+
+这就是矩阵乘法自然出现的地方。复合映射的最佳线性近似，等于各个线性近似的复合。
+
+\subsubsection{一阶微分形式不变性}
+
+一阶微分的形式
+\[
+    df=f_xdx+f_ydy
+\]
+在变量代换下保持不变。例如，如果 $x=x(u,v)$，$y=y(u,v)$，那么
+\[
+    df=f_x(x_ud u+x_vd v)+f_y(y_ud u+y_vd v).
+\]
+整理之后得到关于 $u,v$ 的偏导形式。这种形式不变性是链式法则的另一种表达。
+
+\subsection{二元函数的 Taylor 公式}
+
+Taylor 公式是由反复应用微分算子得到的局部多项式近似。对二元函数而言，可以写成
+\[
+    d=dx\frac{\partial}{\partial x}+dy\frac{\partial}{\partial y}.
+\]
+
+\begin{theorem}[Taylor 公式]
+设 $f$ 在点 $(a,b)$ 附近具有足够高阶连续偏导数。令
+\[
+    \Delta x=x-a,
+    \qquad
+    \Delta y=y-b.
+\]
+则有
+\[
+\begin{aligned}
+    f(a+\Delta x,b+\Delta y)
+    &=f(a,b)+df(a,b)+\frac{1}{2!}d^2f(a,b)+\cdots \\
+    &\quad +\frac{1}{n!}d^nf(a,b)+R_n.
+\end{aligned}
+\]
+其中 $d^kf(a,b)$ 表示在 $(a,b)$ 处计算的 $k$ 阶微分。
+\end{theorem}
+
+二阶近似尤其重要：
+\[
+\begin{aligned}
+    f(a+\Delta x,b+\Delta y)
+    &\approx f(a,b)+f_x\Delta x+f_y\Delta y \\
+    &\quad +\frac12\left(f_{xx}\Delta x^2+2f_{xy}\Delta x\Delta y+f_{yy}\Delta y^2\right).
+\end{aligned}
+\]
+
+\begin{theorem}[中值公式]
+如果 $f$ 在连接 $\mathbf{x}$ 与 $\mathbf{x}+\mathbf{h}$ 的线段上连续，并在内部可微，则存在 $\theta\in(0,1)$，使得
+\[
+    f(\mathbf{x}+\mathbf{h})-f(\mathbf{x})
+    =\nabla f(\mathbf{x}+\theta\mathbf{h})\cdot\mathbf{h}.
+\]
+\end{theorem}
+
+\subsection{隐函数}
+
+许多关系自然地写成方程，而不是显式公式。基本形式是
+\[
+    F(x,y)=0.
+\]
+在什么条件下，它能在局部解出 $y=f(x)$？这正是隐函数定理要回答的问题。
+
+\begin{theorem}[隐函数定理，二元情形]
+设 $F(x,y)$ 在点 $(x_0,y_0)$ 的邻域内具有连续偏导数，且
+\[
+    F(x_0,y_0)=0,
+    \qquad
+    F_y(x_0,y_0)\neq0.
+\]
+则存在 $x_0$ 的一个邻域，在该邻域内可以唯一地把方程 $F(x,y)=0$ 解成
+\[
+    y=f(x),
+    \qquad f(x_0)=y_0.
+\]
+并且 $f$ 可微，满足
+\[
+    f'(x)=-\frac{F_x(x,f(x))}{F_y(x,f(x))}.
+\]
+\end{theorem}
+
+条件 $F_y\neq0$ 的几何意义是：曲线在该点附近不会竖直地折叠成无法由 $x$ 唯一决定 $y$ 的形状。
+
+\subsubsection{隐函数组}
+
+更一般地，设有方程组
+\[
+    F_i(x_1,\dots,x_m,y_1,\dots,y_n)=0,
+    \qquad i=1,\dots,n.
+\]
+如果关于变量 $y_1,\dots,y_n$ 的 Jacobi 行列式
+\[
+    \frac{\partial(F_1,\dots,F_n)}{\partial(y_1,\dots,y_n)}
+\]
+在某点不为零，则可以在局部把 $y_1,\dots,y_n$ 表示为 $x_1,\dots,x_m$ 的函数。
+
+这说明，非零 Jacobi 行列式是局部可解性的核心条件。
+
+\subsection{几何应用}
+
+\subsubsection{空间曲线：切线与法平面}
+
+设空间曲线由参数方程给出：
+\[
+    \mathbf{r}(t)=(x(t),y(t),z(t)).
+\]
+在 $t=t_0$ 处，如果
+\[
+    \mathbf{r}'(t_0)\neq\mathbf{0},
+\]
+则切线方向为 $\mathbf{r}'(t_0)$。切线方程可以写成
+\[
+    \mathbf{r}=\mathbf{r}(t_0)+s\mathbf{r}'(t_0).
+\]
+法平面是过点 $\mathbf{r}(t_0)$ 且以 $\mathbf{r}'(t_0)$ 为法向量的平面：
+\[
+    (\mathbf{x}-\mathbf{r}(t_0))\cdot\mathbf{r}'(t_0)=0.
+\]
+
+如果曲线由两个曲面交线给出：
+\[
+    F(x,y,z)=0,
+    \qquad
+    G(x,y,z)=0,
+\]
+那么切向量可以取为
+\[
+    \nabla F\times\nabla G.
+\]
+
+\subsubsection{曲面：切平面与法线}
+
+设曲面由隐式方程
+\[
+    F(x,y,z)=0
+\]
+给出。如果 $\nabla F(x_0,y_0,z_0)\neq\mathbf{0}$，则曲面在该点的切平面为
+\[
+    F_x(x_0,y_0,z_0)(x-x_0)+F_y(x_0,y_0,z_0)(y-y_0)+F_z(x_0,y_0,z_0)(z-z_0)=0.
+\]
+法线方向为 $\nabla F(x_0,y_0,z_0)$。
+
+对于显式曲面 $z=f(x,y)$，可令
+\[
+    F(x,y,z)=f(x,y)-z.
+\]
+于是切平面方程为
+\[
+    z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0).
+\]
+
+\subsection{多元函数极值}
+
+\subsubsection{无约束极值}
+
+\begin{definition}[临界点]
+设 $f:\mathbb{R}^n\to\mathbb{R}$ 可微。如果
+\[
+    \nabla f(\mathbf{x}_0)=\mathbf{0},
+\]
+则称 $\mathbf{x}_0$ 是 $f$ 的一个\textbf{临界点}。
+\end{definition}
+
+如果 $f$ 在内部点取得局部极值，并且可微，则该点必为临界点。
+
+在临界点处，一阶项消失，局部行为由二次型控制。对二元函数，二阶 Taylor 主部为
+\[
+    Q(\Delta x,\Delta y)=
+    f_{xx}\Delta x^2+2f_{xy}\Delta x\Delta y+f_{yy}\Delta y^2.
+\]
+令
+\[
+    D=f_{xx}f_{yy}-f_{xy}^2.
+\]
+
+\begin{theorem}[二元函数二阶判别法]
+设 $f_x(a,b)=f_y(a,b)=0$，且二阶偏导连续。
+\begin{enumerate}
+    \item 如果 $D>0$ 且 $f_{xx}>0$，则 $(a,b)$ 是局部极小点；
+    \item 如果 $D>0$ 且 $f_{xx}<0$，则 $(a,b)$ 是局部极大点；
+    \item 如果 $D<0$，则 $(a,b)$ 是鞍点；
+    \item 如果 $D=0$，则该判别法失效。
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{约束极值与 Lagrange 乘子法}
+
+约束极值问题要求在满足约束条件的集合上寻找极值。例如
+\[
+    g(x,y,z)=0.
+\]
+在约束曲面上，允许的运动方向都切于该曲面。如果 $f$ 在约束下取得极值，则 $\nabla f$ 必须垂直于约束曲面的切空间，因此它应当与 $\nabla g$ 平行。
+
+\begin{theorem}[Lagrange 乘子法]
+设 $f$ 与 $g$ 可微，并且在约束 $g(\mathbf{x})=0$ 上的极值点 $\mathbf{x}_0$ 处有 $\nabla g(\mathbf{x}_0)\neq\mathbf{0}$。则存在常数 $\lambda$，使得
+\[
+    \nabla f(\mathbf{x}_0)=\lambda\nabla g(\mathbf{x}_0).
+\]
+\end{theorem}
+
+如果有多个约束
+\[
+    g_1(\mathbf{x})=0,
+    \dots,
+    g_k(\mathbf{x})=0,
+\]
+则极值点处通常有
+\[
+    \nabla f=\lambda_1\nabla g_1+\cdots+\lambda_k\nabla g_k.
+\]
+
+
+\section{多重积分}
+
+多重积分把一元积分中的“区间上累积”推广为“区域上累积”。在二重积分中，我们把平面区域切分成许多小块，在每个小块上取样函数值，再乘以小块面积，最后取极限。这个过程和 Riemann 积分的思想完全一致，只是几何对象从线段变成了平面区域。
+
+\subsection{Jordan 面积与二重积分}
+
+\begin{definition}[Jordan 可测区域]
+平面有界区域 $D$ 称为 \textbf{Jordan 可测}，如果它的边界面积为 $0$。在这种情况下，$D$ 的面积可以用有限个矩形分割的内外逼近来定义。
+\end{definition}
+
+直观地说，边界足够“薄”的有界区域通常是 Jordan 可测的，例如由有限条分段光滑曲线围成的区域。
+
+\begin{definition}[二重积分]
+设 $f$ 定义在有界 Jordan 可测区域 $D$ 上。把 $D$ 分成若干小区域 $\Delta D_i$，其面积为 $\Delta\sigma_i$，在每个小区域中取样点 $P_i\in\Delta D_i$，考虑和式
+\[
+    \sum_i f(P_i)\Delta\sigma_i.
+\]
+如果当分割的直径趋于 $0$ 时，上式极限存在，并且与分割方式和取样点无关，则称 $f$ 在 $D$ 上可积，并定义
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\lim \sum_i f(P_i)\Delta\sigma_i.
+\]
+\end{definition}
+
+当 $f(x,y)\geq0$ 时，二重积分可以理解为曲面 $z=f(x,y)$ 与区域 $D$ 之间的体积。
+
+\subsubsection{Darboux 和与可积性}
+
+设 $P$ 是对区域 $D$ 的一个分割。在每个小区域 $\Delta D_i$ 上，记
+\[
+    M_i=\sup_{\Delta D_i}f,
+    \qquad
+    m_i=\inf_{\Delta D_i}f.
+\]
+定义 Darboux 上和与下和为
+\[
+    \overline{S}(P)=\sum_i M_i\Delta\sigma_i,
+    \qquad
+    \underline{S}(P)=\sum_i m_i\Delta\sigma_i.
+\]
+
+\begin{definition}[Darboux 可积]
+如果
+\[
+    \inf_P\overline{S}(P)=\sup_P\underline{S}(P),
+\]
+则称 $f$ 在 $D$ 上 Darboux 可积，二者共同的值就是二重积分。
+\end{definition}
+
+\begin{theorem}[连续函数可积]
+如果 $f$ 在有界闭 Jordan 可测区域 $D$ 上连续，则 $f$ 在 $D$ 上可积。
+\end{theorem}
+
+\subsection{二重积分的计算}
+
+二重积分的定义适合建立理论，但实际计算通常依赖把它化成累次积分。
+
+\begin{definition}[$x$-型区域与 $y$-型区域]
+如果区域 $D$ 可以表示为
+\[
+    D=\{(x,y):a\leq x\leq b,\ \varphi_1(x)\leq y\leq\varphi_2(x)\},
+\]
+则称 $D$ 是一个 \textbf{$x$-型区域}。如果它可以表示为
+\[
+    D=\{(x,y):c\leq y\leq d,\ \psi_1(y)\leq x\leq\psi_2(y)\},
+\]
+则称 $D$ 是一个 \textbf{$y$-型区域}。
+\end{definition}
+
+\begin{theorem}[化为累次积分]
+如果 $D$ 是 $x$-型区域，且 $f$ 在 $D$ 上连续，则
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_a^b\left(\int_{\varphi_1(x)}^{\varphi_2(x)}f(x,y)\,dy\right)dx.
+\]
+如果 $D$ 是 $y$-型区域，则
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_c^d\left(\int_{\psi_1(y)}^{\psi_2(y)}f(x,y)\,dx\right)dy.
+\]
+\end{theorem}
+
+\begin{remark}
+选择积分次序常常决定计算难度。同一个区域可能既是 $x$-型区域又是 $y$-型区域；如果一个次序下积分上下限复杂，可以尝试交换积分次序。
+\end{remark}
+
+\subsection{二重积分的基本性质}
+
+下面假设涉及的函数都在相应 Jordan 可测区域上可积。
+
+\begin{property}
+\begin{enumerate}
+    \item 对常数 $a,b$，有
+    \[
+        \iint_D(af+bg)\,d\sigma
+        =a\iint_Df\,d\sigma+b\iint_Dg\,d\sigma.
+    \]
+    \item 如果 $D=D_1\cup D_2$，且 $D_1,D_2$ 的内部不相交，则
+    \[
+        \iint_Df\,d\sigma
+        =\iint_{D_1}f\,d\sigma+
+        \iint_{D_2}f\,d\sigma.
+    \]
+    \item 如果对所有 $(x,y)\in D$ 都有 $f(x,y)\leq g(x,y)$，则
+    \[
+        \iint_Df\,d\sigma\leq\iint_Dg\,d\sigma.
+    \]
+    \item 如果 $f$ 在 $D$ 上可积，则 $|f|$ 在 $D$ 上可积，并且
+    \[
+        \left|\iint_Df\,d\sigma\right|
+        \leq\iint_D|f|\,d\sigma.
+    \]
+\end{enumerate}
+\end{property}
+
+\begin{theorem}[二重积分中值定理]
+如果 $f$ 与 $g$ 在 $D$ 上可积，且 $g$ 不变号，则存在
+\[
+    \xi\in\left[\inf_D f,\sup_D f\right]
+\]
+使得
+\[
+    \iint_Dfg\,d\sigma=\xi\iint_Dg\,d\sigma.
+\]
+如果 $f$ 在连通紧区域 $D$ 上连续，则存在 $(x_0,y_0)\in D$，使得
+\[
+    \iint_Dfg\,d\sigma=f(x_0,y_0)\iint_Dg\,d\sigma.
+\]
+\end{theorem}
+
+\subsection{变量代换与 Jacobi 行列式}
+
+变量代换是多重积分计算中的核心工具。一元积分中，代换 $x=x(u)$ 会产生因子 $|dx/du|$；二重积分中，对应因子就是 Jacobi 行列式的绝对值。
+
+设
+\[
+    x=x(u,v),\qquad y=y(u,v).
+\]
+记变换为 $T(u,v)=(x(u,v),y(u,v))$。它的 Jacobi 行列式为
+\[
+    J=\frac{\partial(x,y)}{\partial(u,v)}
+    =\begin{vmatrix}
+        x_u & x_v\\
+        y_u & y_v
+    \end{vmatrix}.
+\]
+
+\begin{theorem}[二重积分变量代换公式]
+设 $T$ 把 $uv$ 平面中的区域 $G$ 一一光滑地映到 $xy$ 平面中的区域 $D$，且 Jacobi 行列式在 $G$ 内不为零。若 $f$ 在 $D$ 上可积，则
+\[
+    \iint_D f(x,y)\,dxdy
+    =\iint_G f(x(u,v),y(u,v))
+    \left|\frac{\partial(x,y)}{\partial(u,v)}\right|\,dudv.
+\]
+\end{theorem}
+
+这个公式的几何含义是：小矩形 $dudv$ 在变换后近似变成一个小平行四边形，其面积约为 $|J|dudv$。
+
+\begin{example}[极坐标变换]
+极坐标变换为
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta.
+\]
+其 Jacobi 行列式为
+\[
+    \frac{\partial(x,y)}{\partial(r,\theta)}
+    =\begin{vmatrix}
+        \cos\theta & -r\sin\theta\\
+        \sin\theta & r\cos\theta
+    \end{vmatrix}=r.
+\]
+因此
+\[
+    dxdy=r\,drd\theta.
+\]
+在圆盘、圆环、扇形等区域上，极坐标通常会大幅简化计算。
+\end{example}
+
+\subsection{三重积分}
+
+三重积分把二重积分继续推广到空间区域。设 $\Omega\subseteq\mathbb{R}^3$ 是有界可测区域，$f$ 在 $\Omega$ 上有定义。把 $\Omega$ 分成小体积块 $\Delta V_i$，取样点 $P_i$，若极限
+\[
+    \lim\sum_i f(P_i)\Delta V_i
+\]
+存在且与分割和取样无关，则定义
+\[
+    \iiint_{\Omega}f(x,y,z)\,dV.
+\]
+
+三重积分的基本性质与二重积分相同，也可以在适当区域上化为累次积分。
+
+\begin{theorem}[三重积分变量代换]
+设
+\[
+    x=x(u,v,w),\quad y=y(u,v,w),\quad z=z(u,v,w),
+\]
+并设该变换把 $G$ 一一光滑地映到 $\Omega$。若 Jacobi 行列式
+\[
+    \frac{\partial(x,y,z)}{\partial(u,v,w)}
+\]
+不为零，则
+\[
+    \iiint_{\Omega}f(x,y,z)\,dxdydz
+    =\iiint_G f(x(u,v,w),y(u,v,w),z(u,v,w))
+    \left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right|dudvdw.
+\]
+\end{theorem}
+
+常见的三维坐标变换包括柱坐标和球坐标。柱坐标中
+\[
+    x=r\cos\theta,
+    \quad y=r\sin\theta,
+    \quad z=z,
+    \qquad dV=r\,drd\theta dz.
+\]
+球坐标中，若取
+\[
+    x=\rho\sin\varphi\cos\theta,
+    \quad y=\rho\sin\varphi\sin\theta,
+    \quad z=\rho\cos\varphi,
+\]
+则
+\[
+    dV=\rho^2\sin\varphi\,d\rho d\varphi d\theta.
+\]
+
+\section{曲线积分与 Green 公式}
+
+曲线积分把积分区域从平面区域或空间区域降到一条曲线。它的核心思想是：沿曲线把某个量累积起来。根据被积对象不同，曲线积分通常分为两类：第一类曲线积分对弧长积分，第二类曲线积分对坐标微分积分。
+
+\subsection{第一类曲线积分}
+
+设平面或空间曲线 $C$ 由参数方程
+\[
+    \mathbf{r}(t)=(x(t),y(t))
+    \quad\text{或}\quad
+    \mathbf{r}(t)=(x(t),y(t),z(t)),
+    \qquad a\leq t\leq b
+\]
+给出，并且 $\mathbf{r}$ 分段光滑。
+
+\begin{definition}[对弧长的曲线积分]
+函数 $f$ 沿曲线 $C$ 关于弧长的曲线积分定义为
+\[
+    \int_C f\,ds
+    =\int_a^b f(\mathbf{r}(t))\|\mathbf{r}'(t)\|\,dt.
+\]
+在平面情形中，
+\[
+    ds=\sqrt{(x'(t))^2+(y'(t))^2}\,dt.
+\]
+在空间情形中，
+\[
+    ds=\sqrt{(x'(t))^2+(y'(t))^2+(z'(t))^2}\,dt.
+\]
+\end{definition}
+
+第一类曲线积分不依赖曲线方向。若把参数方向反过来，$ds$ 仍然为正，因此积分值不变。
+
+\subsection{第二类曲线积分}
+
+第二类曲线积分与方向有关。它常用于计算力场沿路径所做的功。
+
+\begin{definition}[对坐标的曲线积分]
+设平面曲线 $C$ 由
+\[
+    x=x(t),\qquad y=y(t),\qquad a\leq t\leq b
+\]
+给出，并且 $P,Q$ 在曲线上连续。定义
+\[
+    \int_C P\,dx+Q\,dy
+    =\int_a^b\left[P(x(t),y(t))x'(t)+Q(x(t),y(t))y'(t)\right]dt.
+\]
+\end{definition}
+
+若记向量场
+\[
+    \mathbf{F}=(P,Q),
+    \qquad
+    d\mathbf{r}=(dx,dy),
+\]
+则第二类曲线积分可以写成
+\[
+    \int_C \mathbf{F}\cdot d\mathbf{r}.
+\]
+当曲线方向反向时，第二类曲线积分变号。
+
+\begin{definition}[闭曲线积分]
+如果 $C$ 是一条有向闭曲线，则常把曲线积分写作
+\[
+    \oint_C P\,dx+Q\,dy.
+\]
+正向通常指使区域始终位于行进方向左侧的方向，也就是平面上逆时针方向。
+\end{definition}
+
+\subsection{Green 公式}
+
+Green 公式是平面区域上的二重积分与边界曲线上的曲线积分之间的桥梁。它把区域内部的“旋转密度”累积，转化为边界上的环流。
+
+\begin{theorem}[Green 公式]
+设 $D$ 是平面上由有限条分段光滑简单闭曲线围成的有界闭区域，其边界 $\partial D$ 取正向。设 $P(x,y)$ 与 $Q(x,y)$ 在包含 $D$ 的开区域内具有连续一阶偏导数。则
+\[
+    \oint_{\partial D}P\,dx+Q\,dy
+    =\iint_D\left(\frac{\partial Q}{\partial x}
+    -\frac{\partial P}{\partial y}\right)dxdy.
+\]
+\end{theorem}
+
+\begin{remark}
+公式右侧的
+\[
+    \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}
+\]
+可以看作二维向量场 $\mathbf{F}=(P,Q)$ 的旋度标量。Green 公式说明，整个区域的旋度积分等于沿边界的环流。
+\end{remark}
+
+\begin{proof}[对矩形区域的证明思路]
+先设 $D=[a,b]\times[c,d]$。由一元微积分基本定理，
+\[
+    \iint_D\frac{\partial Q}{\partial x}\,dxdy
+    =\int_c^d\left[Q(b,y)-Q(a,y)\right]dy.
+\]
+这正对应边界左右两条边上 $Q\,dy$ 的贡献。类似地，
+\[
+    \iint_D\frac{\partial P}{\partial y}\,dxdy
+    =\int_a^b\left[P(x,d)-P(x,c)\right]dx,
+\]
+而这与上下两条边上 $P\,dx$ 的贡献相对应。按正向整理符号，就得到矩形情形的 Green 公式。
+
+对一般区域，可以先把区域分割成许多小矩形或简单区域，在每个小区域上应用公式。相邻小区域的公共边界以相反方向出现，贡献互相抵消，最后只剩外边界上的积分。
+\end{proof}
+
+\begin{corollary}[面积公式]
+取 $P=-\dfrac{y}{2}$，$Q=\dfrac{x}{2}$，则
+\[
+    \frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}
+    =\frac12-\left(-\frac12\right)=1.
+\]
+由 Green 公式得到区域 $D$ 的面积
+\[
+    A(D)=\iint_D1\,dxdy
+    =\frac12\oint_{\partial D}x\,dy-y\,dx.
+\]
+也可以取 $P=0,Q=x$，得到
+\[
+    A(D)=\oint_{\partial D}x\,dy;
+\]
+或取 $P=-y,Q=0$，得到
+\[
+    A(D)=-\oint_{\partial D}y\,dx.
+\]
+\end{corollary}
+
+\begin{example}
+求椭圆
+\[
+    \frac{x^2}{a^2}+\frac{y^2}{b^2}=1
+\]
+围成区域的面积。
+
+\textbf{解：} 取正向参数化
+\[
+    x=a\cos t,
+    \qquad
+    y=b\sin t,
+    \qquad 0\leq t\leq2\pi.
+\]
+则
+\[
+    dx=-a\sin t\,dt,
+    \qquad
+    dy=b\cos t\,dt.
+\]
+由面积公式，
+\[
+\begin{aligned}
+    A&=\frac12\oint_C x\,dy-y\,dx \\
+    &=\frac12\int_0^{2\pi}
+    \left(a\cos t\cdot b\cos t-b\sin t\cdot(-a\sin t)\right)dt \\
+    &=\frac12\int_0^{2\pi}ab\,dt
+    =\pi ab.
+\end{aligned}
+\]
+\end{example}
+
+\begin{remark}
+Green 公式是后续 Gauss 公式和 Stokes 公式的二维原型。它体现了一个共同原则：区域内部的微分信息可以通过边界上的积分表达出来。这种“内部—边界”关系是向量分析和微分形式中的核心思想。
+\end{remark}

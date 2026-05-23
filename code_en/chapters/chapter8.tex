@@ -1,0 +1,955 @@
+\chapter{Applied Mathematics: Graph Theory}
+
+\section{Introduction to Graph Theory}
+
+Graph theory is the study of mathematical structures used to model pairwise relations between objects. It provides the theoretical foundation for analyzing networks, data structures, scheduling, optimization, and computational complexity. This chapter establishes rigorous definitions of graph-theoretic structures and provides detailed proofs for central theorems concerning connectivity, planarity, and traversability.
+
+\subsection{Basic Concepts and Classification}
+
+This section covers the fundamental building blocks of graph theory, including definitions, representations, connectivity, and specific classifications of graphs.
+
+\subsubsection{Fundamental Definitions and Theorems}
+
+We begin by distinguishing between different types of graph structures based on the nature of their edges.
+
+\begin{definition}[Simple Graph]
+A \textbf{simple graph} $G = (V, E)$ consists of a non-empty finite set of vertices $V$ and a set $E$ of 2-element subsets of $V$ (unordered pairs of distinct vertices). In a simple graph, there are no loops (edges connecting a vertex to itself) and no multiple edges (more than one edge between the same pair of vertices).
+\end{definition}
+
+\begin{definition}[Multigraph]
+A \textbf{multigraph} $G = (V, E)$ is a graph where multiple edges (also called parallel edges) are allowed between the same pair of vertices. Formally, $E$ is a multiset of unordered pairs of vertices. Loops are typically not allowed in a strict multigraph definition, though conventions vary.
+\end{definition}
+
+\begin{definition}[Pseudograph]
+A \textbf{pseudograph} is a generalization of a multigraph that allows both multiple edges between distinct vertices and \textbf{loops} (edges connecting a vertex to itself).
+\end{definition}
+
+\begin{definition}[Directed Graph]
+A \textbf{directed graph} (or digraph) $G = (V, E)$ consists of a set of vertices $V$ and a set of \textbf{ordered} pairs $E \subseteq V \times V$, called arcs or directed edges. An edge $(u, v)$ is directed from $u$ to $v$.
+\end{definition}
+
+\begin{definition}[Degree]
+The \textbf{degree} of a vertex $v$, denoted $\deg(v)$, is the number of edges incident to it. In a graph with loops, each loop contributes 2 to the degree. In a directed graph, we distinguish between in-degree ($\deg^-(v)$) and out-degree ($\deg^+(v)$).
+\end{definition}
+
+According to these definitions, we can now state and prove a fundamental theorem regarding vertex degrees.
+
+\begin{theorem}[The Handshaking Lemma]
+For any undirected graph $G = (V, E)$, $\sum_{v \in V} \deg(v) = 2|E|$.
+\end{theorem}
+\begin{proof}
+We count the number of incident pairs $(v, e)$ where $v \in V, e \in E$ and $v \in e$.
+Summing over vertices, each vertex $v$ contributes $\deg(v)$ pairs, yielding $\sum \deg(v)$.
+Summing over edges, each edge $\{u, v\}$ has exactly two endpoints, contributing exactly 2 to the sum.
+Thus, the sum of degrees equals twice the number of edges.
+\end{proof}
+
+\subsubsection{Graph Operations and Isomorphism}
+
+\begin{definition}[Graph Isomorphism]
+Two graphs $G = (V, E)$ and $H = (W, F)$ are \textbf{isomorphic} if there exists a bijection $f: V \to W$ such that $\{u, v\} \in E$ if and only if $\{f(u), f(v)\} \in F$.
+\end{definition}
+
+Just like isotope in chemistry, isomorphic graphs are structurally identical, differing only in the labeling of vertices.
+
+\begin{theorem}[Isomorphism Invariants]
+If two graphs are isomorphic, they must have:
+\begin{itemize}
+    \item Same number of vertices and edges
+    \item Same degree sequence
+    \item Same number of cycles of each length
+    \item Same connectivity properties
+\end{itemize}
+\end{theorem}
+
+This invariants remain unchanged under isomorphism, providing necessary (but not sufficient) conditions for two graphs to be isomorphic.
+
+\subsubsection{Degree Sequences and Realizability}
+A sequence of integers is \textbf{graphic} if there exists a simple graph with that degree sequence.
+
+\begin{theorem}[Havel-Hakimi Theorem]
+Let $S = (d_1, d_2, \dots, d_n)$ be a finite list of nonnegative integers that is non-increasing (i.e., $d_1 \ge d_2 \ge \dots \ge d_n$). Let $S'$ be the list obtained by deleting $d_1$ and subtracting 1 from the next $d_1$ elements of $S$. Then, $S$ is graphic if and only if $S'$ is graphic.
+\end{theorem}
+
+\begin{proof}
+\textbf{Intuition:} This theorem provides a recursive algorithm to check if a degree sequence is valid.
+
+($\Leftarrow$) If $S'$ is graphic, there exists a graph $G'$ with degree sequence $S'$. We can construct a graph $G$ with sequence $S$ by adding a new vertex $v_1$ and connecting it to the $d_1$ vertices whose degrees were reduced by 1 in $S'$. Since we connect $v_1$ to distinct vertices, the result is a simple graph.
+
+($\Rightarrow$) If $S$ is graphic, there exists a realization $G$. We must show that there exists a \textit{specific} realization where the vertex with degree $d_1$ connects to the $d_1$ vertices with the highest degrees.
+Let $v_1$ be a vertex with degree $d_1$. Let $N(v_1)$ be its neighbors. If $N(v_1)$ consists of the $d_1$ vertices with the highest degrees (excluding $v_1$), we are done (removing $v_1$ yields $S'$).
+If not, there exist vertices $x, y$ such that $x \in N(v_1)$, $y \notin N(v_1)$, but $\deg(y) > \deg(x)$ (or $\deg(y) \ge \deg(x)$ where $y$ is a preferred high-degree target).
+Since $\deg(y) \ge \deg(x)$, there must be a vertex $z$ such that $z$ is adjacent to $y$ but not to $x$.
+We perform an \textbf{edge swap}: remove edges $\{v_1, x\}$ and $\{y, z\}$, and add edges $\{v_1, y\}$ and $\{x, z\}$.
+This preserves all degrees but moves a neighbor of $v_1$ to a higher-degree vertex. Repeating this process eventually ensures $v_1$ is connected to the $d_1$ highest-degree vertices. Removing $v_1$ then yields a graph with sequence $S'$.
+\end{proof}
+
+The key point of the proof is to \textbf{SWAP} edges to ensure the highest-degree vertices are connected to the vertex with larger degree, thus preserving the degree sequence while constructing a valid graph.
+
+\subsubsection{Graph Representations}
+
+\begin{definition}[Adjacency Matrix]
+For a graph $G = (V, E)$ with $n$ vertices, the \textbf{adjacency matrix} $A$ is an $n \times n$ matrix where $A_{ij} = 1$ if vertices $i$ and $j$ are adjacent, and $0$ otherwise.
+\end{definition}
+
+Adjacency matrices can be applied to different types of graphs.
+
+\begin{theorem}
+For an adjacency matrix $A$:
+\begin{itemize}
+    \item $A^k_{ij}$ counts the number of walks of length $k$ from vertex $i$ to $j$
+    \item The eigenvalues of $A$ provide information about graph structure
+    \item For regular graphs, the largest eigenvalue equals the degree
+\end{itemize}
+\end{theorem}
+
+Adjacency matrices are particularly useful for algorithmic applications and spectral graph theory. In the adjacency matrix, the element $A^k_{ij}$ of the $k$-th power $A^k$ represents the number of paths of length $k$ from vertex $i$ to vertex $j$.
+
+\begin{definition}[Incidence Matrix]
+The \textbf{incidence matrix} $M$ of a graph with $n$ vertices and $m$ edges is an $n \times m$ matrix where $M_{ve} = 1$ if vertex $v$ is incident to edge $e$, and $0$ otherwise.
+\end{definition}
+
+\subsubsection{Connectivity}
+
+Connectivity measures the resilience of a graph.
+
+\begin{definition}[Paths of undirected Graphs]
+A path of length $n,(n \geq 0)$ from $u$ to $v$ in an undirected graph $G=(V,E)$ is a finite sequence of vertices $u = v_0, v_1, v_2, \ldots, v_n = v$ such that each set pair $\{v_{i-1}, v_i\}$ is an edge in $E$.
+\end{definition}
+
+With the definition of paths, we can define connectivity now.
+
+\begin{definition}
+A graph $G$ is \textbf{connected} if there exists a path between every pair of vertices in $G$. Otherwise, it is \textbf{disconnected}.
+\end{definition}
+
+The definitions of directed graphs is similar, except that the edges are ordered pairs.
+
+\begin{definition}[Paths of directed Graphs]
+A path of length $n,(n \geq 0)$ from $u$ to $v$ in a directed graph $G=(V,E)$ is a finite sequence of vertices $u = v_0, v_1, v_2, \ldots, v_n = v$ such that each ordered pair $(v_{i-1}, v_i)$ is an edge in $E$.
+\end{definition}
+
+But the connectivity definition is a bit different. We have two types of connectivity in directed graphs.
+
+\begin{definition}
+A directed graph $G$ is \textbf{strongly connected} if there exists a directed path from every vertex to every other vertex. It is \textbf{weakly connected} if the underlying undirected graph (obtained by replacing all directed edges with undirected edges) is connected.
+\end{definition}
+
+However, simply understanding the concept of connectivity is not enough. We need to quantify how connected a graph is. This leads us to the concepts of vertex and edge connectivity.
+
+\begin{definition}
+\begin{enumerate}
+    \item A \textbf{cut vertex} is a vertex $v \in V$ such that the removal of the vertex $v$ results in more connected components than $G$.
+    \item A subset $V'$ in $V$ is called a vertex cut if the subgraph $G-V'$ is disconnected.
+    \item The \textbf{vertex connectivity} $\kappa(G)$ is the minimum number of vertices whose removal disconnects $G$ or results in a single vertex.
+\end{enumerate}
+\end{definition}
+
+Likewise, we can define edge connectivity using the same format.
+
+\begin{definition}
+\begin{enumerate}
+    \item A \textbf{bridge} (or cut edge) is an edge $e \in E$ such that the removal of the edge $e$ results in more connected components than $G$.
+    \item A subset $E'$ in $E$ is called an edge cut if the subgraph $G-E'$ is disconnected.
+    \item The \textbf{edge connectivity} $\lambda(G)$ is the minimum number of edges whose removal disconnects $G$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Whitney's Inequality]
+For any graph $G$, the vertex connectivity $\kappa(G)$, edge connectivity $\lambda(G)$, and minimum degree $\delta(G)$ satisfy:
+\[ \kappa(G) \le \lambda(G) \le \delta(G) \]
+\end{theorem}
+
+\begin{proof}
+\textbf{Part 1: $\lambda(G) \le \delta(G)$}
+Let $v$ be a vertex with minimum degree $\delta(G)$. The set of edges incident to $v$ forms an edge cut separating $v$ from the rest of the graph (assuming $n > 1$). This cut has size $\delta(G)$. Since $\lambda(G)$ is the size of the \textit{minimum} edge cut, $\lambda(G) \le \delta(G)$.
+
+\textbf{Part 2: $\kappa(G) \le \lambda(G)$}
+Consider a minimum edge cut $[S, \bar{S}]$ consisting of $\lambda(G)$ edges.
+\begin{itemize}
+    \item \textbf{Case A:} If every vertex in $S$ is adjacent to every vertex in $\bar{S}$, then $\lambda(G) = |S||\bar{S}|$. In this case, removing all vertices in $S$ (or $\bar{S}$, whichever is smaller) disconnects the graph (or leaves a trivial graph). Since $|S| \le |S||\bar{S}|$ (assuming non-trivial sets), the inequality holds.
+    \item \textbf{Case B:} If not all edges exist between $S$ and $\bar{S}$, there exist $x \in S$ and $y \in \bar{S}$ such that $\{x, y\} \notin E$. We construct a vertex cut. For every edge $e = \{u, v\}$ in the edge cut, choose the endpoint that belongs to $S$ (or consistently $\bar{S}$). Let $T$ be this set of vertices. Removing $T$ breaks all paths between $S \setminus T$ and $\bar{S}$. We can optimize this selection: strictly speaking, Menger's Theorem or a direct construction shows that a vertex cut of size $\le \lambda(G)$ exists.
+\end{itemize}
+Thus, $\kappa(G) \le \lambda(G)$.
+\end{proof}
+
+\subsubsection{Special Graph Classes}
+
+In this part we will introduce some special classes of graphs along with their properties.
+
+\paragraph{Complete Graphs}
+\begin{definition}
+A \textbf{complete graph} $K_n$ is a simple graph where every pair of distinct vertices is connected by an edge.
+\end{definition}
+
+Complete graphs are maximally connected and serve as important examples in graph theory. Here are some of the properties of complete graphs.
+
+\begin{theorem}
+For $K_n$:
+\begin{itemize}
+    \item Number of edges: $\frac{n(n-1)}{2}$
+    \item Regular of degree $n-1$
+    \item Hamiltonian and Eulerian for $n \geq 3$
+\end{itemize}
+\end{theorem}
+
+\paragraph{Bipartite Graphs}
+Another important class of graphs is bipartite graphs. They are widely used in modeling relationships between two distinct sets as well as data structures like matchings. Databases, recommendation systems, and scheduling problems often utilize bipartite graphs.
+
+\begin{definition}
+A \textbf{bipartite graph} is a graph $G = (V, E)$ where the vertex set $V$ can be partitioned into two disjoint sets $X$ and $Y$ such that every edge in $E$ connects a vertex in $X$ to a vertex in $Y$. There are no edges between vertices within the same set.
+\end{definition}
+
+A wonderful property of bipartite graphs is defined by the concept of matchings. A matching is a set of edges without common vertices.
+
+\begin{definition}
+A \textbf{matching} in a graph $G = (V, E)$ is a subset of edges $M \subseteq E$ such that no two edges in $M$ share a common vertex. A maximal matching is a matching with the largest number of edges.
+\end{definition}
+
+\begin{definition}
+A \textbf{complete matching} is a matching that covers every vertex of the graph. In a bipartite graph $G = (X, Y, E)$, a complete matching pairs every vertex in $X$ with a unique vertex in $Y$.
+\end{definition}
+
+\begin{theorem}[Characterization of Bipartite Graphs]
+A graph $G$ is bipartite if and only if it contains no odd cycles.
+\end{theorem}
+
+\begin{proof}
+(\textbf{$\Rightarrow$}) Let $G$ be bipartite with partitions $X$ and $Y$. Any path must alternate between sets: $x_1 \in X, y_1 \in Y, x_2 \in X, \dots$. To return to the starting set $X$ to close a cycle, one must traverse an even number of steps. Thus, any cycle must have even length.
+
+(\textbf{$\Leftarrow$}) Assume $G$ has no odd cycles. We assume $G$ is connected (otherwise apply to components). Pick a start vertex $v_0$.
+Define sets $V_i = \{ v \in V \mid d(v_0, v) = i \}$.
+Let $X = \bigcup_{k \text{ even}} V_k$ and $Y = \bigcup_{k \text{ odd}} V_k$.
+We claim $X$ and $Y$ are independent sets.
+Suppose there is an edge between $u, w \in X$. Then $u \in V_i, w \in V_j$ with $i, j$ even.
+There is a path from $v_0$ to $u$ of length $i$ and to $w$ of length $j$. Combining these with edge $\{u, w\}$ creates a closed walk of length $i+j+1$ (odd).
+While a closed walk is not a simple cycle, a closed odd walk \textit{must} contain a simple odd cycle (standard lemma). This contradicts the hypothesis.
+Thus, no edges exist within $X$ (similarly for $Y$). $G$ is bipartite.
+\end{proof}
+
+There is a famous theorem regarding matchings in bipartite graphs, known as Hall's Marriage Theorem. The theorem provides a necessary and sufficient condition for the existence of a perfect matching that saturates one part of the bipartition.
+
+\begin{theorem}[Hall's Marriage Theorem]
+Let $G = (X, Y, E)$ be a bipartite graph. There exists a matching that saturates $X$ if and only if for every subset $S \subseteq X$, $|N(S)| \ge |S|$, where $N(S)$ denotes the set of neighbors of vertices in $S$.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) If a matching saturates $X$, every vertex in $S$ is matched to a distinct vertex in $N(S)$ (its partner). Thus, the number of available neighbors must be at least the number of elements in $S$.
+
+($\Leftarrow$) \textit{Proof by induction on $|X|$.}
+Base case $|X|=1$: If $|N(S)| \ge |S| \implies \deg(x) \ge 1$, edge exists, matching exists.
+Assume true for $|X| < k$. Consider $|X|=k$.
+\begin{itemize}
+    \item \textbf{Case 1 (Strong Condition):} If for all proper subsets $\emptyset \subset S \subset X$, we have the strict inequality $|N(S)| \ge |S| + 1$.
+    Pick any edge $\{u, v\}$ with $u \in X$. Match them. Consider $G' = G - \{u, v\}$.
+    For any subset $S' \subseteq X \setminus \{u\}$, its neighborhood in $G'$ is $N_{G'}(S') = N_G(S') \setminus \{v\}$.
+    Since $|N_G(S')| \ge |S'| + 1$, we have $|N_{G'}(S')| \ge |S'|$.
+    By induction, the rest of $X$ can be matched.
+
+    \item \textbf{Case 2 (Tight Condition):} There exists a "critical" proper subset $A \subset X$ where $|N(A)| = |A|$.
+    By the induction hypothesis (since $|A| < k$), $A$ can be matched to $N(A)$.
+    Let $G' = G - (A \cup N(A))$. We must show $G'$ satisfies Hall's condition for the remaining set $X' = X \setminus A$.
+    Let $S' \subseteq X'$. Note that $N_G(S' \cup A) = N_{G'}(S') \cup N(A)$.
+    By Hall's condition on $G$: $|N_G(S' \cup A)| \ge |S' \cup A| = |S'| + |A|$.
+    Since $N(A)$ and $N_{G'}(S')$ are disjoint (by definition of removing $N(A)$):
+    $|N_{G'}(S')| + |N(A)| \ge |S'| + |A|$.
+    Substituting $|N(A)| = |A|$, we get $|N_{G'}(S')| \ge |S'|$.
+    Thus, $X'$ can also be matched. Combining matchings yields the result.
+\end{itemize}
+\end{proof}
+
+\textit{Note on Matchings}
+\begin{itemize}
+    \item \textbf{König's Theorem:} In any bipartite graph, the size of the maximum matching equals the size of the minimum vertex cover.
+    \item \textbf{Regular Bipartite Graphs:} Every $k$-regular bipartite graph has a perfect matching (for $k \geq 1$).
+\end{itemize}
+
+\paragraph{Planar Graphs}
+
+Another important class of graphs is planar graphs. They are widely used in geographic mapping, circuit design, and network visualization.
+
+\begin{definition}[Planar Graph]
+A graph is \textbf{planar} if it can be drawn on a plane without any edges crossing.
+\end{definition}
+
+One of the most famous results in planar graph theory is Euler's formula, which relates the number of vertices, edges, and faces in a connected planar graph.
+
+\begin{theorem}[Euler's Formula]
+For any connected planar graph with $v$ vertices, $e$ edges, and $f$ faces (regions), the following holds:
+\[ v - e + f = 2 \]
+\end{theorem}
+
+\begin{proof}
+\textit{Proof by induction on the number of edges $e$.}
+\begin{itemize}
+    \item \textbf{Base Case:} If $e=0$, then $v=1$ (since connected). There is 1 face (the outer infinite region).
+    \[ 1 - 0 + 1 = 2 \]
+    The formula holds.
+    \item \textbf{Inductive Step:} Assume the formula holds for all connected planar graphs with fewer than $k$ edges. Let $G$ have $k$ edges.
+    \begin{itemize}
+        \item \textbf{Subcase 1: $G$ is a tree.} Then $G$ has no cycles. $e = v - 1$ and $f = 1$.
+        \[ v - (v-1) + 1 = 2 \]
+        Formula holds.
+        \item \textbf{Subcase 2: $G$ contains a cycle.} Choose an edge $E_{cycle}$ that lies on a cycle. Since it is on a cycle, it separates two distinct faces. Removing $E_{cycle}$ merges these two faces into one, decreasing $f$ by 1. The number of edges $e$ decreases by 1. The number of vertices $v$ remains constant. The graph remains connected.
+        Let the parameters for $G - E_{cycle}$ be $v', e', f'$.
+        By induction: $v' - e' + f' = 2$.
+        Substitute $v'=v$, $e'=e-1$, $f'=f-1$:
+        \[ v - (e-1) + (f-1) = 2 \implies v - e + 1 + f - 1 = 2 \implies v - e + f = 2 \]
+    \end{itemize}
+\end{itemize}
+The formula holds for all connected planar graphs.
+\end{proof}
+
+We see that Euler's formula in graph theory shares a similar structure to Euler's characteristic in topology, highlighting the deep connections between these fields. Actually, Euler's formula can be viewed as a special case of the Euler characteristic for surfaces, where planar graphs correspond to graphs embedded on a sphere (which has Euler characteristic 2). We can also use the formula to derive the Euler's formula in topology by considering graphs drawn on surfaces of different genus. Readers interested in topology may explore this connection further.
+
+So how can we define whether a graph is planar or not? Kuratowski's Theorem provides a complete characterization of planar graphs in terms of forbidden subgraphs. But before stating the theorem, we need to define the concept of \textbf{homeomorphism}.
+
+\begin{definition}
+A graph $H$ is a \textbf{homeomorphism} of a graph $G$ if $H$ can be obtained from $G$ by subdividing edges (replacing each edge with a path of length 2).
+\end{definition}
+
+\begin{theorem}[Kuratowski's Theorem]
+A graph is planar if and only if it does not contain a subgraph that is homeomorphism $K_5$ or $K_{3,3}$.
+\end{theorem}
+
+After all, why do we care about planar graphs? One of the most famous problems in graph theory is the Four Color Theorem, which states that any planar graph can be colored using at most four colors such that no two adjacent vertices share the same color. This theorem has important applications in map coloring, scheduling, and network design.
+
+\begin{theorem}[Four Color Theorem]
+Every planar graph is 4-colorable.
+\end{theorem}
+
+\section{Paths and Circuits}
+
+In graph theory, paths and circuits are fundamental concepts that describe ways to traverse a graph. A path is a sequence of vertices connected by edges, while a circuit is a closed path that starts and ends at the same vertex. This section explores key theorems related to Eulerian circuits and Hamiltonian cycles, providing rigorous proofs for each. We shall pay special attention to two special types of traversals: Eulerian circuits, which cover every edge exactly once, and Hamiltonian cycles, which visit every vertex exactly once.
+
+\subsection{Eulerian Circuits}
+
+\begin{definition}
+An \textbf{Eulerian circuit} in a graph is a closed trail that visits every edge exactly once.
+\end{definition}
+
+To define whether a graph has an Eulerian circuit, we can use the following theorem.
+
+\begin{theorem}
+A connected graph $G$ has an Eulerian circuit (a closed trail covering every edge exactly once) if and only if every vertex in $G$ has an even degree.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) If there is an Eulerian circuit, consider the traversal of the circuit. Every time the trail enters a vertex $v$, it must subsequently leave $v$ via a different edge. Thus, the edges incident to $v$ are used in pairs (entry and exit). Consequently, the total degree of every vertex must be even.
+
+($\Leftarrow$) Assume all vertices have even degree. We construct a trail $T$ of maximum length.
+\begin{enumerate}
+    \item \textbf{$T$ must be a closed cycle.} Suppose $T$ starts at $u$ and ends at $v$ ($u \neq v$). The number of edges in $T$ incident to $v$ is odd (one entry for every exit, plus one final entry). However, $\deg(v)$ is even in $G$. Thus, there is at least one unused edge incident to $v$. We could extend $T$ through this edge, contradicting the assumption that $T$ is a maximal trail. Thus, $T$ must end at $u$.
+    \item \textbf{$T$ covers all edges.} Suppose $T$ does not include all edges. Since $G$ is connected, there must be an unused edge $e=\{x, y\}$ where $x$ lies on $T$. Consider the subgraph $G' = G - E(T)$. Since $T$ is a cycle, every vertex in $T$ has even degree in $T$. Since vertices in $G$ have even degree, vertices in $G'$ must also have even degree (even - even = even).
+    We can start a new trail $T'$ from $x$ in $G'$. Because degrees are even, this trail can be extended until it returns to $x$. We can then splice $T'$ into $T$ to form a longer closed trail, contradicting the maximality of $T$.
+\end{enumerate}
+Therefore, $T$ must contain all edges.
+\end{proof}
+
+Also, there is another concept similar to Eulerian circuits, called Euler paths.
+
+\begin{definition}
+An \textbf{Euler path} in a graph is a trail that visits every edge exactly once but does not necessarily start and end at the same vertex.
+\end{definition}
+
+Similarly, we can define whether a graph has an Euler path or not.
+
+\begin{theorem}
+A connected graph $G$ has an Euler path (a trail covering every edge exactly once) if and only if exactly two vertices in $G$ have odd degree.(Except there is a trivial case that all vertices have even degree, which means there is an Eulerian circuit.)
+\end{theorem}
+
+The proof is similar to the previous theorem, so we omit it here.
+
+\subsection{Hamiltonian Cycles}
+
+Another important concept in graph theory is the existence of Hamiltonian cycles.
+
+\begin{definition}
+A \textbf{Hamiltonian cycle} in a graph is a closed loop that visits every vertex exactly once.
+\end{definition}
+
+Unfortunately, there is no simple necessary and sufficient condition for the existence of Hamiltonian cycles like there is for Eulerian circuits. However, we do have some sufficient conditions, such as Ore's Theorem.
+
+\begin{theorem}[Ore's Theorem]
+Let $G$ be a simple graph with $n \ge 3$ vertices. If for every pair of non-adjacent vertices $u$ and $v$,
+\[ \deg(u) + \deg(v) \ge n \]
+then $G$ is Hamiltonian.
+\end{theorem}
+
+\begin{proof}
+\textit{Proof by Contradiction.}
+Assume the condition holds but $G$ is not Hamiltonian. We add edges to $G$ as long as the graph remains non-Hamiltonian. Let the resulting maximal non-Hamiltonian graph be $G^*$.
+In $G^*$, adding any single edge $\{u, v\}$ creates a Hamiltonian cycle. This implies there is a Hamiltonian path in $G^*$ from $u$ to $v$: $u = v_1 \to v_2 \to \dots \to v_n = v$.
+Since edge $\{u, v\}$ does not exist in $G^*$, the degree condition applies: $\deg(u) + \deg(v) \ge n$.
+
+We look for a "crossover" index. Let $S = \{i \mid \{u, v_{i+1}\} \in E(G^*)\}$ be the indices where $u$ connects to the node \textit{after} $v_i$.
+Let $T = \{i \mid \{v_i, v\} \in E(G^*)\}$ be the indices where $v$ connects to $v_i$.
+Note that indices are taken from $\{1, \dots, n-1\}$.
+The size $|S| = \deg(u)$ and $|T| = \deg(v)$.
+Sum of sizes: $|S| + |T| \ge n$.
+The available indices are $1, \dots, n-1$. By the Pigeonhole Principle, $S \cap T \neq \emptyset$.
+Let $k \in S \cap T$. Then $\{u, v_{k+1}\} \in E$ and $\{v_k, v\} \in E$.
+We can construct a cycle:
+\[ u \to v_{k+1} \to v_{k+2} \dots \to v \to v_k \to v_{k-1} \dots \to v_2 \to u \]
+This cycle visits every vertex exactly once, making $G^*$ Hamiltonian, which is a contradiction.
+\end{proof}
+
+\section{Trees and Forests}
+
+Trees and forests are fundamental structures in graph theory with numerous applications in computer science, biology, and network design. A tree is a connected acyclic graph, while a forest is a disjoint union of trees. This section explores the properties and characterizations of trees and forests, providing rigorous definitions and theorems.
+
+\subsection{Definitions and Characterization}
+
+\begin{definition}[Trees]
+A tree is a connected undirected simple graph without simple circuits (acyclic).
+\end{definition}
+
+Forests are closely related to trees. You can think of a forest as a collection of trees. Remember that a tree is a special case of a forest with only one connected component.
+
+\begin{definition}[Forests]
+A forest is a undirected simple graph without simple circuits (acyclic).
+\end{definition}
+
+There is a relatively abstract characterization of trees.
+
+\begin{theorem}
+An undirected graph $G$ is a tree iff any two vertices in $G$ is connected by a unique simple path.
+\end{theorem}
+
+\begin{theorem}[Characterization of Trees]
+A graph $G$ with $|V|=n$ vertices is a tree if and only if it is connected and $|E|=n-1$.
+\end{theorem}
+
+\begin{theorem}[Corollary]
+A connected simple graph $G=(V,E)$ satisfies that $|E| \geq |V|-1$.
+\end{theorem}
+
+\begin{proof}
+If a connected simple graph $G$ has $|E| < |V|-1$, then we can add edges to $G$ until it has $|V|-1$ edges. The resulting graph is still connected, but by the previous theorem, it must be a tree. However, a tree with $n$ vertices has exactly $n-1$ edges, so adding edges to reach $n-1$ edges contradicts the assumption that we started with fewer than $n-1$ edges. Therefore, any connected simple graph must have at least $|V|-1$ edges.
+\end{proof}
+
+\begin{proof}
+\textbf{($\Rightarrow$) Tree $\implies$ Connected and $n-1$ edges.}
+We proceed by induction on $n$.
+\textit{Base Case:} For $n=1$, $e=0$. The condition holds ($0 = 1-1$).
+\textit{Inductive Step:} Assume all trees with $k$ vertices have $k-1$ edges. Let $T$ be a tree with $k+1$ vertices.
+Since $T$ is acyclic and finite ($n \ge 2$), it must contain at least two vertices of degree 1 (leaves). Let $v$ be a leaf and $e$ be the incident edge.
+Consider $T' = T - \{v\}$. $T'$ is still connected (removing a leaf does not break connectivity) and acyclic. Thus $T'$ is a tree with $k$ vertices.
+By the inductive hypothesis, $T'$ has $k-1$ edges. Since $T$ has exactly one more edge than $T'$, $|E(T)| = (k-1) + 1 = k = (k+1)-1$.
+
+A more rigorous proof is done by randomly selecting a vertex in the tree, and discussing all the vertices in the neighborhood of the vertex. Once we remove the vertex, all the neighbors become roots of subtrees. We can apply the inductive hypothesis on each subtree because they all satisfy the inductive hypothesis, and sum up the number of edges. Mark that according to the definition of tree, there is no cycle in the graph, so there is no edge between any two subtrees, and the intersections between subtrees are empty. Thus the total number of edges is the sum of edges in each subtree plus the number of edges connecting the root vertex to each subtree (which is exactly the number of subtrees). This gives us the desired result.
+
+\textbf{($\Leftarrow$) Connected and $n-1$ edges $\implies$ Tree.}
+Assume $G$ is connected with $n-1$ edges. We must show $G$ is acyclic.
+Suppose $G$ contains a cycle. Remove an edge from this cycle. The graph remains connected. Repeat this process until the graph is acyclic. Let the resulting graph be $T$.
+$T$ is a tree (connected and acyclic) on $n$ vertices. By the first part of this proof, $T$ must have $n-1$ edges.
+However, we started with $n-1$ edges and removed at least one edge to break the cycle. This implies $G$ initially had $> n-1$ edges, a contradiction. Thus, $G$ contains no cycles.
+\end{proof}
+
+\subsection{Rooted Trees}
+
+\begin{definition}[Rooted Tree]
+A rooted tree is a tree with a designated vertex called the root, and the designated vertex is the root of the tree.
+\end{definition}
+
+\begin{definition}
+Assume we have a rooted tree $(V,E)$ with the root r. Then we define that:
+\begin{enumerate}
+    \item The \textbf{level} of a vertex v is the length of the unique simple path from r to v.
+    \item The \textbf{height} of the tree is the maximum level of any vertex in the tree.
+    \item The partial order $\leq$ on V is defined as: for any two vertices u,v in V, u $\leq$ v if and only if u lies on the unique simple path from r to v.
+    \item The \textbf{parent} of a vertex $v \neq r$ is the unique vertex $u$ such that $\{u,v\} \in E$ and $u$ is on the unique simple path from r to v.
+    \item The \textbf{children} of a vertex v is the set of vertices $\{u \in V | \{u,v\} \in E$ and v is the parent of u$\}$.
+    \item A \textbf{leaf} is a vertex with no children (degree 1 if not the root, degree 0 if it is the root).
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+If $G$ is a rooted tree, then $G$ is m-ary is every internal vertex has at most m children. If every internal vertex has exactly m children, then G is a \textbf{full m-ary tree}.
+\end{definition}
+
+\begin{definition}
+A rooted tree $G$ is binary if it is 2-ary.
+\end{definition}
+
+\begin{theorem}
+In a full m-ary tree with $n$ internal vertices, the number of leaves $L$ is given by:
+\[ L = (m-1)n + 1 \]
+\end{theorem}
+
+\begin{theorem}
+An m-ary tree of height $h$ has at most $m^h$ leaves.
+\end{theorem}
+
+The proofs of the above two theorems are left as exercises for the reader. Hints: use induction on the number of internal vertices for the first theorem, and induction on the height for the second theorem.
+
+\begin{definition}
+A rooted m-ary tree of height $h$ is balanced if all its leaves are at leverl $h$ or $h-1$.
+\end{definition}
+
+\subsection{Spanning Trees}
+
+\begin{definition}[Spanning Tree]
+If $G=(V,E)$ is a connected graph, then a \textbf{spanning tree} of $G$ is a subgraph $T=(V,E')$ that is a tree. $T$ contains all the vertices of $G$.
+\end{definition}
+
+\begin{theorem}
+A simple graph $G$ is connected if and only if it has a spanning tree.
+\end{theorem}
+
+\begin{proof}
+(\textbf{If}) If $G$ has a spanning tree $T$, then $T$ is connected (by definition of tree). Since $T$ is a subgraph of $G$ and contains all vertices of $G$, $G$ must also be connected.
+(\textbf{Only if}) Assume $G$ is connected. We can construct a spanning tree by starting with an arbitrary vertex and performing a depth-first search (DFS) or breadth-first search (BFS) to explore all vertices. As we explore, we add edges to our spanning tree whenever we encounter a new vertex. Since $G$ is connected, this process will eventually visit all vertices, resulting in a spanning tree that includes all vertices of $G$.
+Actually, a spanning tree can be obtained by removing edges from $G$ until no cycles remain while ensuring the graph remains connected. This process will yield a spanning tree.
+\end{proof}
+
+\begin{definition}[Weighted Graph]
+A \textbf{weighted graph} is a graph $G=(V,E)$ together with a weight function $w: E \to \mathbb{R}$ that assigns a real number (weight) to each edge.
+\end{definition}
+
+\begin{definition}[Minimum Spanning Tree]
+In a weighted connected graph $G$, a \textbf{minimum spanning tree} is a spanning tree with the smallest total edge weight.
+\end{definition}
+
+To find a minimum spanning tree, we can use algorithms such as Kruskal's or Prim's algorithm.
+\textbf{Prim's Algorithm:}
+\begin{enumerate}
+    \item Start with an arbitrary vertex and initialize the tree with this vertex.
+    \item At each step, add the minimum-weight edge that connects a vertex in the tree to a vertex outside the tree.
+    \item Repeat until all vertices are included in the tree.
+\end{enumerate}
+
+\begin{theorem}[Prim's Algorithm Correctness]
+Prim's algorithm correctly finds a minimum spanning tree in a connected weighted graph.
+\end{theorem}
+
+\begin{proof}
+We will prove that the spanning tree $T$ produced by Prim's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
+
+The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
+\begin{quote}
+Let $G=(V,E)$ be a connected, undirected graph with edge weights. For any nonempty proper subset $S \subset V$ (i.e., $S$ is a set containing some, but not all, vertices of the graph), let $e$ be a minimum-weight edge with one endpoint in $S$ and the other in $V \setminus S$. Then $e$ is contained in \textbf{some} minimum spanning tree of $G$.
+\end{quote}
+Prim's algorithm, at each step, chooses exactly such a minimum-weight edge (a \emph{light edge}) crossing the cut $(S, V \setminus S)$, where $S$ is the set of vertices already included in the partially constructed tree.
+
+We will now prove that every edge added by Prim's algorithm belongs to at least one MST. The proof proceeds by \textbf{contradiction}.
+
+Assume, for the sake of contradiction, that the tree $T$ produced by Prim's algorithm is \emph{not} a minimum spanning tree. Then there exists at least one MST, say $T'$, of $G$ such that $w(T') < w(T)$. Since both $T$ and $T'$ span all vertices of $G$ but have different edge sets, there must be an edge $e$ that is selected by Prim's algorithm at some step but is \emph{not} in $T'$.
+
+Let us consider the moment when Prim's algorithm adds edge $e = (u,v)$ to $T$. At that moment, the algorithm's vertex set $S$ contains $u$ (without loss of generality) but not $v$. Since $e$ is not in $T'$, if we add $e$ to $T'$, it creates a unique cycle $C$ in $T' \cup \{e\}$.
+
+Within this cycle $C$, there must be at least one other edge $e' = (x,y)$ that also crosses the cut $(S, V \setminus S)$ (with $x \in S$ and $y \in V \setminus S$). This is because the cycle starts and ends in $S$ and must leave and re-enter $S$; edge $e$ provides one crossing, so there must be another crossing to complete the cycle.
+
+By Prim's algorithm's greedy choice, $e$ is a minimum-weight edge crossing the cut $(S, V \setminus S)$. Therefore, we have
+\[
+w(e) \leq w(e').
+\]
+
+Now, consider the new tree $T'' = T' \setminus \{e'\} \cup \{e\}$. $T''$ is also a spanning tree of $G$ because it is connected and has exactly $|V|-1$ edges. The weight of $T''$ is
+\[
+w(T'') = w(T') - w(e') + w(e).
+\]
+Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$.
+
+\begin{itemize}
+    \item If $w(e) < w(e')$, then $w(T'') < w(T')$, which contradicts the assumption that $T'$ is an MST (since an MST must have minimum possible weight).
+    \item If $w(e) = w(e')$, then $w(T'') = w(T')$, meaning $T''$ is also an MST. However, $T''$ now contains the edge $e$ selected by Prim's algorithm.
+\end{itemize}
+
+Therefore, in either case, the edge $e$ chosen by Prim's algorithm is contained in at least one MST (namely, either $T'$ or $T''$). This argument can be applied iteratively to every edge added by Prim's algorithm. Consequently, the final tree $T$ produced by Prim's algorithm must be a minimum spanning tree itself.
+
+Thus, Prim's algorithm correctly computes a minimum spanning tree of the given graph $G$.
+
+\end{proof}
+
+Another popular algorithm for finding a minimum spanning tree is Kruskal's algorithm.
+\textbf{Kruskal's Algorithm}
+\begin{enumerate}
+    \item Choose the initial graph $G_1$ with all the vertices included and no edges.
+    \item Construct $G_{i+1}$ by adding the smallest weight edge that forms a forest.
+    \item Finally, $G_{m-1}$ is a minimum spanning tree, where $m$ is the number of vertices.
+\end{enumerate}
+
+Mind that we view each step as adding an edge to the existing forest, connecting two isolated components, ensuring that no cycles are formed. Every isolated vertex is considered a component.
+
+\begin{proof}
+\textbf{Kruskal's Algorithm Correctness}
+We will prove that the spanning tree $T$ produced by Kruskal's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
+The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
+\begin{quote}
+Let $S \subset V$ be a subset of vertices, and let $e$ be a minimum-weight edge crossing the cut $(S, V \setminus S)$. Then, $e$ belongs to every MST of $G$.
+\end{quote}
+Kruskal's algorithm, at each step, chooses exactly such a minimum-weight edge (a \emph{light edge}) that does not form a cycle with the edges already selected.
+
+We will now prove that every edge added by Kruskal's algorithm belongs to at least one MST. The proof proceeds by \textbf{contradiction}.
+
+Assume, for the sake of contradiction, that the tree $T$ produced by Kruskal's algorithm is \emph{not} a minimum spanning tree. Then there exists at least one MST, say $T'$, of $G$ such that $w(T') < w(T)$. Since both $T$ and $T'$ span all vertices of $G$ but have different edge sets, there must be an edge $e$ that is selected by Kruskal's algorithm at some step but is \emph{not} in $T'$. We choose the first such edge in the order selected by Kruskal's algorithm.
+
+Let us consider the moment when Kruskal's algorithm adds edge $e = (u,v)$ to $T$. At that moment, the algorithm's selected edges form a forest, and adding $e$ connects two distinct components of this forest, or adding $e$ connects two vertices in a connected component, which is contradicted to the rule of the algorithm, we shall ignore this case. Let $S$ be the set of vertices in one of these components (say, the component containing $u$). Since $e$ is not in $T'$, if we add $e$ to $T'$, it creates a unique cycle $C$ in $T' \cup \{e\}$.
+
+Within this cycle $C$, there must be at least one other edge $e' = (x,y)$ that also crosses the cut $(S, V \setminus S)$ (with $x \in S$ and $y \in V \setminus S$). This is because the cycle starts and ends in $S$ and must leave and re-enter $S$; edge $e$ provides one crossing, so there must be another crossing to complete the cycle.
+
+By Kruskal's algorithm's greedy choice, $e$ is a minimum-weight edge crossing the cut $(S, V \setminus S)$. Therefore, we have
+
+\[w(e) \leq w(e').\]
+
+Now, consider the new tree $T'' = T' \setminus \{e' \} \cup \{e\}$. $T''$ is also a spanning tree of $G$ because it is connected and has exactly $|V|-1$ edges. The weight of $T''$ is
+
+\[w(T'') = w(T') - w(e') + w(e).\]
+
+Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$. But this contradicts the assumption that $w(T') < w(T)$, since $T''$ is a spanning tree of $G$ and $w(T'') \leq w(T')$. Therefore, our assumption must be false, and Kruskal's algorithm produces a minimum spanning tree.
+
+\end{proof}
+
+Another possible application of spanning trees is the Huffman coding tree, which is widely used in data compression algorithms.
+
+The Huffman coding tree is a binary tree used for lossless data compression. It assigns variable-length codes to input characters based on their frequencies, with more frequent characters receiving shorter codes. The tree is constructed using a greedy algorithm that combines the two least frequent nodes iteratively until a single tree is formed.
+
+Here are the steps to construct a Huffman coding tree:
+\begin{enumerate}
+    \item Construct the forest conssisting of single-node trees for each character, with the weight of each node equal to the frequency of the corresponding character.
+    \item Sort the weights of the trees in the forest in non-decreasing order.
+    \item While there is more than one tree in the forest:
+    \begin{enumerate}
+        \item Select the two trees with the smallest weights.
+        \item Create a new internal node with these two trees as children, and assign it a weight equal to the sum of their weights.
+        \item Insert the new tree back into the forest, maintaining the sorted order of weights.
+    \end{enumerate}
+    \item The remaining tree in the forest is the Huffman coding tree.
+\end{enumerate}
+
+Each leaf node in the Huffman coding tree represents a character, and the path from the root to the leaf determines the binary code for that character (left edge = 0, right edge = 1).
+
+For example, consider the characters A, B, C, and D with frequencies 5, 9, 12, and 13, respectively. The Huffman coding tree would be constructed as follows:
+\begin{enumerate}
+    \item Create single-node trees: A(5), B(9), C(12), D(13).
+    \item Sort: A(5), B(9), C(12), D(13).
+    \item Combine A and B: New node AB(14) with children A and B.
+    \item Sort: C(12), D(13), AB(14).
+    \item Combine C and D: New node CD(25) with children C and D.
+    \item Sort: AB(14), CD(25).
+    \item Combine AB and CD: New root node ABCD(39) with children AB and CD.
+    \item Then the final Huffman coding tree is formed.
+\end{enumerate}
+
+Why the Huffman coding tree is optimal can be proved using a greedy choice argument and an exchange argument, showing that any other prefix-free code would result in a longer average code length.
+
+\begin{proof}
+\textbf{Huffman's Algorithm Correctness}
+
+We will prove that the binary tree $T$ produced by Huffman's algorithm is an optimal prefix-free code for the given set of characters with their frequencies.
+
+Notation:
+\begin{itemize}
+    \item Let $C$ be the set of characters.
+    \item Let $f(c)$ be the frequency of character $c \in C$.
+    \item Let $d_T(c)$ be the depth of character $c$ in the tree $T$.
+    \item The cost of the code represented by tree $T$ is given by:
+    \[
+    \text{Cost}(T) = \sum_{c \in C} f(c) \cdot d_T(c).
+    \]
+\end{itemize}
+
+We will prove the optimality of Huffman's algorithm using induction on the number of characters $|C|$.
+
+\textbf{Base case}: For $|C| = 2$, the optimal code is trivial: assign one character to '0' and the other to '1'. Huffman's algorithm produces this code, which is optimal.
+\textbf{Inductive step}: Assume Huffman's algorithm produces an optimal code for any set of $k$ characters. We will show it also produces an optimal code for $k+1$ characters.
+Let $C = \{c_1, c_2, \ldots, c_{k+1}\}$ be the set of characters with frequencies $f(c_1) \leq f(c_2) \leq \ldots \leq f(c_{k+1})$.
+Huffman's algorithm combines the two characters with the smallest frequencies, say $c_1$ and $c_2$, into a new character $c_{12}$ with frequency $f(c_{12}) = f(c_1) + f(c_2)$.
+By the inductive hypothesis, Huffman's algorithm produces an optimal code for the reduced set $C' = \{c_{12}, c_3, \ldots, c_{k+1}\}$.
+Let $T'$ be the optimal tree for $C'$. We can construct the tree $T$ for $C$ by replacing the leaf node for $c_{12}$ in $T'$ with an internal node having $c_1$ and $c_2$ as its children.
+The cost of the tree $T$ can be expressed as:
+\[\text{Cost}(T) = \text{Cost}(T') + f(c_1) + f(c_2).\]
+Now, consider any other prefix-free code tree $T^*$ for the original set $C$. We can construct a tree $T'^*$ for the reduced set $C'$ by merging the leaves for $c_1$ and $c_2$ into a single leaf for $c_{12}$. The cost of $T^*$ can be expressed as:
+\[\text{Cost}(T^*) = \text{Cost}(T'^*) + f(c_1) + f(c_2).\]
+By the inductive hypothesis, we have:
+\[\text{Cost}(T') \leq \text{Cost}(T'^*).\]
+Thus,
+\[\text{Cost}(T) = \text{Cost}(T') + f(c_1) + f(c_2) \leq \text{Cost}(T'^*) + f(c_1) + f(c_2) = \text{Cost}(T^*).\]
+Therefore, Huffman's algorithm produces an optimal prefix-free code for any set of $k+1$ characters.
+By induction, Huffman's algorithm produces an optimal prefix-free code for any set of characters.
+
+\end{proof}
+
+We have to claim that the construction process of the Huffman coding tree itself is an implementation of Kruskal's algorithm, since at each step we are combining two trees with the smallest weights, which is equivalent to adding the smallest weight edge that connects two components in Kruskal's algorithm.
+
+Also, as we dive deeper into the processes, the construction itself is a kind of mathematical induction, since at each step we are reducing the problem size by one (combining two characters into one), and we can prove the optimality using induction as shown in the proof above.
+
+\subsection*{Graph Algorithms Implementation}
+The following Python code implements BFS, DFS, Prim's Algorithm, and Kruskal's Algorithm using adjacency matrices represented as nested lists.
+
+\textbf{BFS Algorithm}
+\begin{lstlisting}[language=Python]
+def find_shortest_path_BFS(matrix, start, end):
+    """
+    Find shortest path using Breadth-First Search (unweighted).
+    """
+    vertices_count = len(matrix)
+    if not (isinstance(start, int) and isinstance(end, int)):
+        raise TypeError("Start and End vertices must be integers")
+    if not (0 <= start < vertices_count and 0 <= end < vertices_count):
+        raise ValueError("Vertex index out of range")
+
+    queue = [start]
+    memory = {start: None}
+    found = False
+    idx = 0
+
+    while idx < len(queue):
+        curr = queue[idx]
+        if curr == end:
+            found = True
+            break
+        
+        for i in range(vertices_count):
+            if matrix[curr][i] != 0 and i not in memory:
+                memory[i] = curr
+                queue.append(i)
+                if i == end:
+                    found = True
+                    break
+        if found:
+            break
+        idx += 1
+        
+    if not found:
+        return None
+        
+    path = []
+    index = end
+    while index is not None:
+        path.append(index)
+        index = memory[index]
+    return path[::-1]
+\end{lstlisting}
+
+\textbf{DFS Algorithm}
+\begin{lstlisting}[language=Python]
+def find_path_DFS(matrix, start, end):
+    """
+    Find a path using Depth-First Search.
+    """
+    vertices_count = len(matrix)
+    if not (isinstance(start, int) and isinstance(end, int)):
+        raise TypeError("Start and End vertices must be integers")
+    if not (0 <= start < vertices_count and 0 <= end < vertices_count):
+        raise ValueError("Vertex index out of range")
+
+    stack = [start]
+    memory = {start: None}
+    found = False
+    
+    while len(stack) > 0:
+        curr = stack.pop()
+        if curr == end:
+            found = True
+            break
+        
+        for i in range(vertices_count):
+            if matrix[curr][i] != 0 and i not in memory:
+                memory[i] = curr
+                stack.append(i)
+                
+    if not found:
+        return None
+        
+    path = []
+    curr_node = end
+    while curr_node is not None:
+        path.append(curr_node)
+        curr_node = memory[curr_node]
+    return path[::-1]
+\end{lstlisting}
+
+\textbf{Prim's Algorithm}
+\begin{lstlisting}[language=Python]
+def minimum_spanning_tree_prim(weights):
+    """
+    Implementation of Prim's algorithm for MST.
+    Returns the MST as an adjacency matrix.
+    """
+    if not isinstance(weights, list):
+        raise TypeError("Weights must be a nested list (matrix)")
+    if len(weights) == 0:
+        raise ValueError("Weights matrix cannot be empty")
+    if len(weights) != len(weights[0]):
+         raise ValueError("Weights matrix must be square")
+    
+    n = len(weights)
+    INF = float('inf')
+    key = [INF] * n
+    parent = [None] * n
+    mst_set = [False] * n
+    key[0] = 0
+    parent[0] = -1
+
+    for _ in range(n):
+        min_val = INF
+        u = -1
+        for v in range(n):
+            if not mst_set[v] and key[v] < min_val:
+                min_val = key[v]
+                u = v
+                
+        if u == -1: 
+            break
+        mst_set[u] = True
+        for v in range(n):
+            w = weights[u][v]
+            if w > 0 and not mst_set[v] and w < key[v]:
+                key[v] = w
+                parent[v] = u
+                
+    mst_matrix = [[0] * n for _ in range(n)]
+    for i in range(1, n):
+        if parent[i] is not None:
+            u, v = parent[i], i
+            weight = weights[u][v]
+            mst_matrix[u][v] = weight
+            mst_matrix[v][u] = weight
+    return mst_matrix
+\end{lstlisting}
+
+\textbf{Kruskal's Algorithm}
+\begin{lstlisting}[language=Python]
+def minimum_spanning_tree_kruskal(weights):
+    """
+    Implementation of Kruskal's algorithm for MST.
+    Returns the MST as an adjacency matrix.
+    """
+    if not isinstance(weights, list):
+        raise TypeError("Weights must be a nested list (matrix)")
+
+    n = len(weights)
+    edges = []
+    for i in range(n):
+        for j in range(i + 1, n):
+            if weights[i][j] > 0:
+                edges.append((weights[i][j], i, j))
+    edges.sort()
+    
+    parent = list(range(n))
+    
+    def find(i):
+        if parent[i] == i:
+            return i
+        parent[i] = find(parent[i])
+        return parent[i]
+        
+    def union(i, j):
+        root_i = find(i)
+        root_j = find(j)
+        if root_i != root_j:
+            parent[root_i] = root_j
+            return True
+        return False
+        
+    mst_matrix = [[0] * n for _ in range(n)]
+    
+    for w, u, v in edges:
+        if union(u, v):
+            mst_matrix[u][v] = w
+            mst_matrix[v][u] = w
+    return mst_matrix
+\end{lstlisting}
+
+
+
+\section{Random Graphs}
+
+\subsection{Basic Properties of Random Graphs}
+
+\paragraph{Degree Distribution}
+\begin{theorem}[Degree Distribution of $G(n,p)$]
+In $G(n,p)$, the degree of each vertex follows a binomial distribution $\text{Bin}(n-1, p)$. For large $n$ and small $p$, it approximates a Poisson distribution $\text{Po}(\lambda)$ with $\lambda = p(n-1)$.
+\end{theorem}
+
+\paragraph{Threshold Functions and Phase Transitions}
+Many properties in random graphs exhibit threshold phenomena: as the parameter $p$ crosses a critical threshold $p_c$, the property changes from almost surely not holding to almost surely holding.
+
+\begin{theorem}[Connectivity Threshold]
+For $G(n,p)$, the threshold function for connectivity is $p_c = \frac{\ln n}{n}$. More precisely:
+\begin{itemize}
+\item If $p = \frac{\ln n + c}{n}$, then $\mathbb{P}(G(n,p) \text{ is connected}) \to e^{-e^{-c}}$ as $n \to \infty$.
+\item If $p \ll \frac{\ln n}{n}$, then $G(n,p)$ is almost surely disconnected.
+\item If $p \gg \frac{\ln n}{n}$, then $G(n,p)$ is almost surely connected.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[Emergence of the Giant Component]
+In $G(n,p)$, there is a critical value $p_c = 1/n$:
+\begin{itemize}
+\item For $p < 1/n$, the largest connected component has size $O(\log n)$.
+\item For $p = 1/n$, the largest component has size $\Theta(n^{2/3})$.
+\item For $p > 1/n$, a "giant component" emerges with size approximately $yn$, where $y$ is the nonzero solution to $y = 1 - e^{-c y}$ with $c = pn$.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Diameter and Average Distance}
+\begin{theorem}[Diameter of $G(n,p)$]
+For $p$ such that $np \to \infty$ and $p$ not too large, the diameter of $G(n,p)$ is approximately $\frac{\ln n}{\ln(np)}$.
+\end{theorem}
+
+\paragraph{Clustering Coefficient}
+\begin{definition}[Local Clustering Coefficient]
+The local clustering coefficient of vertex $i$ is defined as
+\begin{equation}
+C_i = \frac{2 \times \text{number of edges between neighbors of } i}{k_i(k_i-1)}
+\end{equation}
+where $k_i$ is the degree of vertex $i$.
+\end{definition}
+
+\begin{theorem}[Clustering Coefficient of $G(n,p)$]
+In $G(n,p)$, the average clustering coefficient is $p$, independent of network size. This contrasts with many real-world networks where clustering coefficients typically scale inversely with $n$.
+\end{theorem}
+
+\subsection{Important Theorems in Random Graph Theory}
+
+\paragraph{Zero-One Laws}
+\begin{theorem}[Zero-One Law]
+For any monotone graph property $\mathcal{P}$ (a property preserved by adding edges) in $G(n,p)$, there exists a threshold function $p^*(n)$ such that
+\[
+\lim_{n\to\infty} \mathbb{P}(G(n,p) \in \mathcal{P}) = 
+\begin{cases}
+0, & \text{if } p/p^* \to 0 \\
+1, & \text{if } p/p^* \to \infty
+\end{cases}
+\]
+\end{theorem}
+
+\paragraph{Subgraph Appearance}
+\begin{theorem}[Subgraph Threshold]
+Let $H$ be a fixed graph with $v_H$ vertices and $e_H$ edges. Define $\rho(H) = e_H/v_H$. In $G(n,p)$:
+\begin{itemize}
+\item If $p \ll n^{-1/\rho(H)}$, then $G(n,p)$ almost surely does not contain $H$ as a subgraph.
+\item If $p \gg n^{-1/\rho(H)}$, then $G(n,p)$ almost surely contains $H$ as a subgraph.
+\end{itemize}
+\end{theorem}
+
+\paragraph{Hamiltonicity}
+\begin{theorem}[Hamiltonian Cycles]
+For $G(n,p)$, the threshold for the existence of a Hamiltonian cycle is approximately $p \approx \frac{\ln n + \ln \ln n}{n}$. When $p$ exceeds this threshold, $G(n,p)$ is almost surely Hamiltonian.
+\end{theorem}
+
+\subsection{Algorithmic Generation of Random Graphs}
+The $G(n,p)$ model can be generated using a simple algorithm that considers each potential edge independently with probability $p$.
+
+\subsection{Applications of Random Graphs}
+
+\paragraph{Complex Network Modeling}
+Random graph models provide foundational frameworks for modeling social networks, the Internet, biological networks, and other complex systems. While classical models like $G(n,p)$ differ from real networks in certain statistical properties, they serve as the basis for developing more accurate models.
+
+\paragraph{Network Robustness}
+By studying connectivity in random graphs, we can analyze network robustness against random failures. Research shows that many complex systems exhibit remarkable robustness to random failures.
+
+\paragraph{Epidemic Spread}
+Random graph models are used to study disease spread in populations, where vertices represent individuals and edges represent contacts.
+
+\subsection{Conclusion and Future Directions}
+Random graph theory offers a powerful mathematical framework for studying complex networks. Although classical models like $G(n,p)$ differ from real-world networks in certain statistical properties (e.g., degree distribution, clustering), they remain foundational. Current research directions include:
+\begin{itemize}
+\item Developing more realistic random graph models
+\item Studying dynamic random graph processes
+\item Exploring algorithms and computational problems on random graphs
+\item Applying random graph theory to machine learning and data science
+\end{itemize}
