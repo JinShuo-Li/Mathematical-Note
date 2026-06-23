@@ -1662,4 +1662,834 @@ If $f$ is continuous on a connected compact region $D$, then there exists $(x_0,
     \iint_D fg\,d\sigma=f(x_0,y_0)\iint_D g\,d\sigma.
 \]
 \end{theorem}
+\section{Evaluation of Multiple Integrals}
 
+The definition of a multiple integral is conceptually important, but in computation we almost never return to the definition directly. The practical problem is to reduce a multiple integral to repeated one-dimensional integrals. This is the role of Fubini's theorem and the reduction formulas for different types of regions.
+
+\subsection{Reduction of Double Integrals}
+
+A plane region is called $x$-simple if it can be written as
+\[
+    D=\{(x,y):a\le x\le b,\ \varphi_1(x)\le y\le \varphi_2(x)\}.
+\]
+For such a region,
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_a^b\left(\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\right)dx.
+\]
+Similarly, if
+\[
+    D=\{(x,y):c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y)\},
+\]
+then
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_c^d\left(\int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\right)dy.
+\]
+
+The two formulas are not two different integrals. They are two descriptions of the same geometric accumulation. Changing the order of integration means redrawing the same region with the other variable as the outer variable.
+
+\begin{theorem}[Fubini-Type Reduction]
+If $f$ is continuous on a bounded closed Jordan measurable region $D$, then the double integral over $D$ can be computed by the corresponding iterated integral whenever $D$ is represented as a simple region.
+\end{theorem}
+
+\begin{note}
+In applications, most mistakes come from the domain, not from the antiderivative. A reliable workflow is: first draw $D$, then decide which variable is outer, then write the projection interval, and only then write the inner boundary functions.
+\end{note}
+
+\subsection{Changing the Order of Integration}
+
+Suppose an integral is given as
+\[
+    \int_a^b\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\,dx.
+\]
+It represents the region
+\[
+    D=\{(x,y):a\le x\le b,\ \varphi_1(x)\le y\le \varphi_2(x)\}.
+\]
+To reverse the order, we must describe the same set as
+\[
+    D=\{(x,y):c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y)\}.
+\]
+Then
+\[
+    \int_a^b\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\,dx
+    =\int_c^d\int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\,dy.
+\]
+
+If a horizontal or vertical line intersects the region in several disjoint intervals, the region must be split. This splitting is not a technical annoyance; it is the price of forcing a complicated domain into a simple-region form.
+
+\begin{example}[A Typical Order Change]
+Let
+\[
+    D=\{(x,y):0\le x\le 1,\ x^2\le y\le x\}.
+\]
+Since $x^2\le y\le x$ implies $0\le y\le 1$, and for a fixed $y$ the inequalities become
+\[
+    y\le x\le \sqrt{y},
+\]
+we have
+\[
+    \int_0^1\int_{x^2}^{x} f(x,y)\,dy\,dx
+    =\int_0^1\int_y^{\sqrt y} f(x,y)\,dx\,dy.
+\]
+\end{example}
+
+\subsection{Change of Variables}
+
+For a one-variable integral, substitution changes the coordinate on an interval. For a double integral, a change of variables changes the coordinate grid on a plane region. The correction factor is the absolute value of the Jacobian determinant.
+
+Let
+\[
+    x=x(u,v),\qquad y=y(u,v),
+\]
+and assume that this transformation maps a region $G$ in the $uv$-plane one-to-one onto a region $D$ in the $xy$-plane, with continuous first partial derivatives and nonzero Jacobian except possibly on a negligible set. Then
+\[
+    \iint_D f(x,y)\,dxdy
+    =\iint_G f(x(u,v),y(u,v))
+    \left|\frac{\partial(x,y)}{\partial(u,v)}\right|\,dudv,
+\]
+where
+\[
+    \frac{\partial(x,y)}{\partial(u,v)}
+    =
+    \begin{vmatrix}
+        x_u & x_v\\
+        y_u & y_v
+    \end{vmatrix}.
+\]
+
+\begin{example}[Polar Coordinates]
+The polar transformation is
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta.
+\]
+Its Jacobian is
+\[
+    \frac{\partial(x,y)}{\partial(r,\theta)}
+    =
+    \begin{vmatrix}
+        \cos\theta & -r\sin\theta\\
+        \sin\theta & r\cos\theta
+    \end{vmatrix}
+    =r.
+\]
+Hence
+\[
+    dxdy=r\,drd\theta.
+\]
+This is why polar coordinates are effective when the region contains circles, sectors, disks, annuli, or expressions involving $x^2+y^2$.
+\end{example}
+
+\subsection{Triple Integrals}
+
+For a solid region $\Omega\subseteq\mathbb{R}^3$, the triple integral is defined similarly:
+\[
+    \iiint_{\Omega} f(x,y,z)\,dV.
+\]
+If
+\[
+    \Omega=\{(x,y,z):(x,y)\in D,\ z_1(x,y)\le z\le z_2(x,y)\},
+\]
+then
+\[
+    \iiint_{\Omega} f(x,y,z)\,dV
+    =\iint_D\left(\int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z)\,dz\right)dxdy.
+\]
+
+The same idea applies if we project onto the $yz$-plane or $xz$-plane. Again, the essential step is to understand the geometry of the solid.
+
+\subsection{Cylindrical and Spherical Coordinates}
+
+Cylindrical coordinates are
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta,
+    \qquad
+    z=z,
+\]
+with volume element
+\[
+    dV=r\,drd\theta dz.
+\]
+They are useful for cylinders, cones, rotational solids, and integrands involving $x^2+y^2$.
+
+Spherical coordinates may be written as
+\[
+    x=\rho\sin\varphi\cos\theta,
+    \qquad
+    y=\rho\sin\varphi\sin\theta,
+    \qquad
+    z=\rho\cos\varphi,
+\]
+where $\rho\ge0$, $0\le\varphi\le\pi$, and $0\le\theta<2\pi$. The volume element is
+\[
+    dV=\rho^2\sin\varphi\,d\rho d\varphi d\theta.
+\]
+
+\begin{note}
+The symbols $\theta$ and $\varphi$ are not universal. Some books interchange their roles. The formula is safe only after checking how the angles are defined.
+\end{note}
+
+\section{Line and Surface Integrals}
+
+Multiple integrals add quantities over regions with area or volume. Line integrals and surface integrals add quantities over lower-dimensional geometric objects: curves and surfaces. The main new issue is that curves and surfaces may carry orientation.
+
+\subsection{Arc Length and First-Type Line Integrals}
+
+Let a smooth curve $\Gamma$ be parametrized by
+\[
+    \mathbf r(t)=(x(t),y(t),z(t)),
+    \qquad
+    \alpha\le t\le\beta.
+\]
+Its arc length element is
+\[
+    ds=\|\mathbf r'(t)\|\,dt
+    =\sqrt{[x'(t)]^2+[y'(t)]^2+[z'(t)]^2}\,dt.
+\]
+Thus the first-type line integral is
+\[
+    \int_{\Gamma} f(x,y,z)\,ds
+    =\int_{\alpha}^{\beta} f(x(t),y(t),z(t))\|\mathbf r'(t)\|\,dt.
+\]
+This integral is independent of the orientation of the curve. It measures a scalar density accumulated along a curve, such as mass of a wire.
+
+\subsection{Second-Type Line Integrals}
+
+Let
+\[
+    \mathbf F=(P,Q,R)
+\]
+be a vector field. The second-type line integral along an oriented curve $\Gamma$ is
+\[
+    \int_{\Gamma} P\,dx+Q\,dy+R\,dz
+    =\int_{\alpha}^{\beta}
+    \left(Px'(t)+Qy'(t)+Rz'(t)\right)dt,
+\]
+where $P,Q,R$ are evaluated at $\mathbf r(t)$. Equivalently,
+\[
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r
+    =\int_{\alpha}^{\beta}\mathbf F(\mathbf r(t))\cdot\mathbf r'(t)\,dt.
+\]
+
+Reversing the orientation changes the sign:
+\[
+    \int_{-\Gamma}\mathbf F\cdot d\mathbf r
+    =-
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r.
+\]
+
+\begin{note}
+The first-type integral uses $ds$ and has no orientation. The second-type integral uses $dx,dy,dz$ and depends on orientation. This distinction is one of the most common sources of errors.
+\end{note}
+
+\subsection{Path Independence and Potential Functions}
+
+A vector field $\mathbf F=(P,Q,R)$ is called conservative on a region $D$ if there exists a scalar function $U$ such that
+\[
+    \nabla U=\mathbf F.
+\]
+Then
+\[
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r
+    =U(B)-U(A)
+\]
+for any curve $\Gamma$ from $A$ to $B$. In this case, the line integral is path independent.
+
+In a simply connected region in the plane, if $P,Q$ have continuous first partial derivatives, then
+\[
+    \frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}
+\]
+is the standard test for path independence of
+\[
+    \int P\,dx+Q\,dy.
+\]
+In three dimensions, the corresponding condition is
+\[
+    \nabla\times\mathbf F=\mathbf 0,
+\]
+again under suitable simply connected assumptions.
+
+\subsection{Surface Area}
+
+Let a smooth surface $\Sigma$ be parametrized by
+\[
+    \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),
+    \qquad
+    (u,v)\in D.
+\]
+Set
+\[
+    E=\mathbf r_u\cdot\mathbf r_u,
+    \qquad
+    F=\mathbf r_u\cdot\mathbf r_v,
+    \qquad
+    G=\mathbf r_v\cdot\mathbf r_v.
+\]
+Then
+\[
+    dS=\|\mathbf r_u\times\mathbf r_v\|\,dudv
+    =\sqrt{EG-F^2}\,dudv,
+\]
+and the surface area is
+\[
+    S=\iint_D\sqrt{EG-F^2}\,dudv.
+\]
+
+If the surface is given by $z=g(x,y)$ over a plane region $D$, then
+\[
+    dS=\sqrt{1+g_x^2+g_y^2}\,dxdy,
+\]
+so
+\[
+    S=\iint_D\sqrt{1+g_x^2+g_y^2}\,dxdy.
+\]
+If the surface is given implicitly by $H(x,y,z)=0$ and $H_z\ne0$, then locally
+\[
+    dS=\frac{\|\nabla H\|}{|H_z|}\,dxdy.
+\]
+
+\subsection{First-Type Surface Integrals}
+
+For a scalar field $f$ on $\Sigma$,
+\[
+    \iint_{\Sigma} f(x,y,z)\,dS
+    =\iint_D f(\mathbf r(u,v))\|\mathbf r_u\times\mathbf r_v\|\,dudv.
+\]
+If $\Sigma$ is given by $z=g(x,y)$, then
+\[
+    \iint_{\Sigma} f(x,y,z)\,dS
+    =\iint_D f(x,y,g(x,y))\sqrt{1+g_x^2+g_y^2}\,dxdy.
+\]
+This integral is the surface analogue of a first-type line integral: it accumulates scalar density over a surface.
+
+\subsection{Second-Type Surface Integrals}
+
+For a vector field $\mathbf F=(P,Q,R)$, the second-type surface integral is the flux through an oriented surface:
+\[
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS.
+\]
+Using a parametrization $\mathbf r(u,v)$, choosing the orientation given by $\mathbf r_u\times\mathbf r_v$, we have
+\[
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS
+    =\iint_D \mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v)\,dudv.
+\]
+Equivalently,
+\[
+    \mathbf r_u\times\mathbf r_v
+    =
+    \left(
+    \frac{\partial(y,z)}{\partial(u,v)},
+    \frac{\partial(z,x)}{\partial(u,v)},
+    \frac{\partial(x,y)}{\partial(u,v)}
+    \right),
+\]
+so
+\[
+\begin{aligned}
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS
+    =\iint_D &\left[
+    P\frac{\partial(y,z)}{\partial(u,v)}
+    +Q\frac{\partial(z,x)}{\partial(u,v)}
+    +R\frac{\partial(x,y)}{\partial(u,v)}
+    \right]dudv.
+\end{aligned}
+\]
+
+It is common to write the same flux integral as
+\[
+    \iint_{\Sigma} P\,dydz+Q\,dzdx+R\,dxdy.
+\]
+This is not a new object. It is a compact notation for $\mathbf F\cdot\mathbf n\,dS$.
+
+\begin{note}
+Changing the chosen side of the surface changes the sign of the second-type surface integral. It does not change a first-type surface integral.
+\end{note}
+
+\section{Green, Gauss, and Stokes Formulas}
+
+Green's formula, Gauss' formula, and Stokes' formula are the structural core of vector calculus. They all express the same idea in different dimensions: an integral over a boundary can be converted into an integral over the interior, or conversely.
+
+\subsection{Green's Formula}
+
+Let $D\subseteq\mathbb{R}^2$ be a bounded region with positively oriented boundary $\partial D$. Positive orientation means that the region stays on the left as one moves along the boundary, equivalently counterclockwise for the usual orientation of the plane.
+
+\begin{theorem}[Green's Formula]
+If $P$ and $Q$ have continuous first partial derivatives on a region containing $D$, then
+\[
+    \int_{\partial D} P\,dx+Q\,dy
+    =\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy.
+\]
+\end{theorem}
+
+For a rectangle, this follows directly from the one-dimensional fundamental theorem of calculus. For a general region, one decomposes the region into small pieces. The integrals along internal edges cancel because the two neighboring pieces traverse each shared edge in opposite directions.
+
+\begin{corollary}[Area Formulas]
+Taking suitable $P,Q$ in Green's formula gives
+\[
+    A(D)=\iint_D1\,dxdy
+    =\int_{\partial D}x\,dy
+    =-\int_{\partial D}y\,dx
+    =\frac12\int_{\partial D}x\,dy-y\,dx.
+\]
+\end{corollary}
+
+\subsection{Gauss' Formula}
+
+Let $\Omega\subseteq\mathbb{R}^3$ be a solid region with outward oriented boundary surface $\partial\Omega$.
+
+\begin{theorem}[Gauss' Formula]
+If $\mathbf F=(P,Q,R)$ has continuous first partial derivatives on a region containing $\Omega$, then
+\[
+    \iint_{\partial\Omega}\mathbf F\cdot\mathbf n\,dS
+    =\iiint_{\Omega}\nabla\cdot\mathbf F\,dV,
+\]
+that is,
+\[
+    \iint_{\partial\Omega}P\,dydz+Q\,dzdx+R\,dxdy
+    =\iiint_{\Omega}
+    \left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)dxdydz.
+\]
+\end{theorem}
+
+Gauss' formula says that total outward flux equals total source strength inside the region. In physical language, divergence measures local source density.
+
+\subsection{Stokes' Formula}
+
+Let $\Sigma$ be an oriented smooth surface with positively oriented boundary $\partial\Sigma$. The positive orientation is determined by the right-hand rule: if the thumb points in the chosen normal direction, the fingers curl in the positive boundary direction.
+
+\begin{theorem}[Stokes' Formula]
+If $\mathbf F=(P,Q,R)$ has continuous first partial derivatives on a region containing $\Sigma$, then
+\[
+    \int_{\partial\Sigma}P\,dx+Q\,dy+R\,dz
+    =\iint_{\Sigma}(\nabla\times\mathbf F)\cdot\mathbf n\,dS.
+\]
+Equivalently,
+\[
+\begin{aligned}
+    \int_{\partial\Sigma}P\,dx+Q\,dy+R\,dz
+    =\iint_{\Sigma}&
+    \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dydz
+    +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dzdx \\
+    &+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy.
+\end{aligned}
+\]
+\end{theorem}
+
+Stokes' formula converts circulation along a boundary curve into the flux of curl through a spanning surface. Green's formula is the planar special case of Stokes' formula.
+
+\subsection{Gradient, Divergence, Curl, and Conservative Fields}
+
+For a scalar field $u(x,y,z)$,
+\[
+    \nabla u=
+    \left(\frac{\partial u}{\partial x},
+    \frac{\partial u}{\partial y},
+    \frac{\partial u}{\partial z}\right)
+\]
+is the gradient. It points in the direction of fastest increase.
+
+For a vector field $\mathbf F=(P,Q,R)$,
+\[
+    \nabla\cdot\mathbf F
+    =\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
+\]
+is the divergence, measuring local source or sink strength.
+
+The curl is
+\[
+    \nabla\times\mathbf F
+    =
+    \begin{vmatrix}
+        \mathbf i & \mathbf j & \mathbf k\\
+        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z}\\
+        P & Q & R
+    \end{vmatrix}.
+\]
+It measures local rotational tendency.
+
+A field is conservative if $\mathbf F=\nabla U$ for some potential $U$. In a simply connected region, the condition $\nabla\times\mathbf F=\mathbf 0$ is the usual criterion for conservativeness. In that case, line integrals depend only on endpoints.
+
+\section{Parameterized Integrals}
+
+A parameterized integral is an integral in which one variable is integrated out while the other variables are treated as parameters. For example,
+\[
+    I(y)=\int_a^b f(x,y)\,dx.
+\]
+The main question is whether the good properties of $f$ transfer to $I$: continuity, differentiability, and integrability with respect to the parameter.
+
+\subsection{Proper Parameterized Integrals}
+
+Assume $f(x,y)$ is defined on the rectangle
+\[
+    [a,b]\times[c,d].
+\]
+If $f$ is continuous on this rectangle, then
+\[
+    I(y)=\int_a^b f(x,y)\,dx
+\]
+is continuous on $[c,d]$.
+
+\begin{theorem}[Differentiation under the Integral Sign]
+If $f$ and $f_y$ are continuous on $[a,b]\times[c,d]$, then
+\[
+    I(y)=\int_a^b f(x,y)\,dx
+\]
+is differentiable on $[c,d]$, and
+\[
+    I'(y)=\int_a^b \frac{\partial f}{\partial y}(x,y)\,dx.
+\]
+\end{theorem}
+
+\begin{theorem}[Integration with Respect to the Parameter]
+If $f$ is continuous on $[a,b]\times[c,d]$, then
+\[
+    \int_c^d\left(\int_a^b f(x,y)\,dx\right)dy
+    =\int_a^b\left(\int_c^d f(x,y)\,dy\right)dx.
+\]
+\end{theorem}
+
+The conceptual reason is simple: on a compact rectangle, continuity gives uniform control. This uniformity is exactly what allows the limiting operation hidden inside the integral to commute with changes in the parameter.
+
+\subsection{Improper Parameterized Integrals}
+
+Now consider
+\[
+    I(y)=\int_a^{+\infty} f(x,y)\,dx.
+\]
+For each fixed $y$, this is an improper integral. To obtain continuity or differentiability of $I(y)$, pointwise convergence is not enough. We need uniform convergence with respect to the parameter.
+
+\begin{definition}[Uniform Convergence of an Improper Parameterized Integral]
+The improper integral
+\[
+    \int_a^{+\infty} f(x,y)\,dx
+\]
+converges uniformly for $y\in E$ if for every $\varepsilon>0$, there exists $A>a$ such that for all $A_2>A_1>A$ and all $y\in E$,
+\[
+    \left|\int_{A_1}^{A_2} f(x,y)\,dx\right|<\varepsilon.
+\]
+\end{definition}
+
+\begin{theorem}[Weierstrass Test for Improper Parameterized Integrals]
+If
+\[
+    |f(x,y)|\le g(x),
+    \qquad y\in E,
+\]
+and
+\[
+    \int_a^{+\infty}g(x)\,dx
+\]
+converges, then
+\[
+    \int_a^{+\infty}f(x,y)\,dx
+\]
+converges uniformly on $E$.
+\end{theorem}
+
+\begin{theorem}[Continuity and Differentiation]
+If $f(x,y)$ is continuous and the improper integral
+\[
+    \int_a^{+\infty} f(x,y)\,dx
+\]
+converges uniformly on $[c,d]$, then $I(y)$ is continuous on $[c,d]$.
+If, in addition, $f_y$ is continuous and
+\[
+    \int_a^{+\infty} f_y(x,y)\,dx
+\]
+converges uniformly on $[c,d]$, then
+\[
+    I'(y)=\int_a^{+\infty} f_y(x,y)\,dx.
+\]
+\end{theorem}
+
+\begin{note}
+The recurring theme is the same as for function series: pointwise convergence only tells us what happens at each fixed parameter, while uniform convergence lets us preserve analytic structure.
+\end{note}
+
+\section{Euler Integrals}
+
+The classical Euler integrals are the Beta function and the Gamma function. They are important not only as special functions, but also as examples of how improper integrals, parameterized integrals, and changes of variables interact.
+
+\subsection{The Beta Function}
+
+For $p>0$ and $q>0$, define
+\[
+    B(p,q)=\int_0^1 x^{p-1}(1-x)^{q-1}\,dx.
+\]
+The integral may have singularities at both endpoints. Near $0$, the convergence is controlled by $x^{p-1}$; near $1$, it is controlled by $(1-x)^{q-1}$. Hence the natural domain is
+\[
+    p>0,
+    \qquad
+    q>0.
+\]
+
+The Beta function is symmetric:
+\[
+    B(p,q)=B(q,p),
+\]
+which follows from the substitution $x=1-t$.
+
+A useful recursion is
+\[
+    B(p,q)=\frac{q-1}{p+q-1}B(p,q-1),
+    \qquad q>1.
+\]
+It is obtained by integration by parts.
+
+Another useful form is obtained by the substitution $x=\sin^2\theta$:
+\[
+    B(p,q)=2\int_0^{\pi/2}\sin^{2p-1}\theta\cos^{2q-1}\theta\,d\theta.
+\]
+Equivalently,
+\[
+    \int_0^{\pi/2}\sin^{m}\theta\cos^{n}\theta\,d\theta
+    =\frac12 B\left(\frac{m+1}{2},\frac{n+1}{2}\right),
+\]
+whenever $m>-1$ and $n>-1$.
+
+\subsection{The Gamma Function}
+
+For $p>0$, define
+\[
+    \Gamma(p)=\int_0^{+\infty} x^{p-1}e^{-x}\,dx.
+\]
+Near $0$, the convergence is controlled by $x^{p-1}$; near $+\infty$, the exponential factor dominates any power. Hence $\Gamma(p)$ is defined for $p>0$.
+
+The fundamental recursion is
+\[
+    \Gamma(p+1)=p\Gamma(p),
+\]
+which follows from integration by parts:
+\[
+    \Gamma(p+1)=\int_0^{+\infty}x^p e^{-x}\,dx
+    =p\int_0^{+\infty}x^{p-1}e^{-x}\,dx.
+\]
+Since
+\[
+    \Gamma(1)=1,
+\]
+we get
+\[
+    \Gamma(n+1)=n!,
+    \qquad n\in\mathbb N.
+\]
+Thus the Gamma function extends the factorial from positive integers to positive real numbers.
+
+A central value is
+\[
+    \Gamma\left(\frac12\right)=\sqrt\pi,
+\]
+which follows from the Gaussian integral.
+
+\subsection{Relation Between Beta and Gamma}
+
+The key identity is
+\[
+    B(p,q)=\frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)},
+    \qquad p>0,
+    \quad q>0.
+\]
+One standard proof starts from
+\[
+    \Gamma(p)\Gamma(q)
+    =\int_0^{+\infty}\int_0^{+\infty}
+    t^{p-1}s^{q-1}e^{-(t+s)}\,dtds,
+\]
+then changes variables by
+\[
+    r=t+s,
+    \qquad
+    x=\frac{t}{t+s}.
+\]
+The Jacobian is $r$, and the integral separates into
+\[
+    \left(\int_0^1x^{p-1}(1-x)^{q-1}\,dx\right)
+    \left(\int_0^{+\infty}r^{p+q-1}e^{-r}\,dr\right).
+\]
+Therefore
+\[
+    \Gamma(p)\Gamma(q)=B(p,q)\Gamma(p+q).
+\]
+
+There are several deeper identities, such as the reflection formula and Stirling's formula, but for ordinary analysis computations the defining integrals, recursion formulas, and the Beta--Gamma relation are the essential tools.
+
+\section{Fourier Series}
+
+Taylor series approximate a function near one point by powers of $x-x_0$. Fourier series approximate a function on an interval by trigonometric waves. The key idea is not local polynomial approximation, but orthogonal decomposition.
+
+\subsection{Trigonometric Orthogonality}
+
+On $[-\pi,\pi]$, the basic orthogonality relations are
+\[
+    \int_{-\pi}^{\pi}\cos nx\cos mx\,dx=0\quad(n\ne m),
+\]
+\[
+    \int_{-\pi}^{\pi}\sin nx\sin mx\,dx=0\quad(n\ne m),
+\]
+\[
+    \int_{-\pi}^{\pi}\sin nx\cos mx\,dx=0.
+\]
+Also,
+\[
+    \int_{-\pi}^{\pi}\cos^2 nx\,dx=\pi,
+    \qquad
+    \int_{-\pi}^{\pi}\sin^2 nx\,dx=\pi
+\]
+for $n\ge1$, and
+\[
+    \int_{-\pi}^{\pi}1^2\,dx=2\pi.
+\]
+
+This is exactly the same idea as orthogonal coordinates in linear algebra. Fourier coefficients are coordinates of a function along trigonometric basis directions.
+
+\subsection{Fourier Coefficients and Fourier Series}
+
+For an integrable $2\pi$-periodic function $f$, define
+\[
+    a_0=\frac1\pi\int_{-\pi}^{\pi}f(x)\,dx,
+\]
+\[
+    a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx,
+    \qquad
+    b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx.
+\]
+The Fourier series of $f$ is
+\[
+    \frac{a_0}{2}+\sum_{n=1}^{\infty}(a_n\cos nx+b_n\sin nx).
+\]
+Its $m$-th partial sum is
+\[
+    S_m(x)=\frac{a_0}{2}+\sum_{n=1}^{m}(a_n\cos nx+b_n\sin nx).
+\]
+
+For a function on $[-l,l]$, the corresponding expansion is
+\[
+    \frac{a_0}{2}+\sum_{n=1}^{\infty}
+    \left(a_n\cos\frac{n\pi x}{l}+b_n\sin\frac{n\pi x}{l}\right),
+\]
+with
+\[
+    a_n=\frac1l\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\,dx,
+    \qquad
+    b_n=\frac1l\int_{-l}^{l}f(x)\sin\frac{n\pi x}{l}\,dx.
+\]
+
+\subsection{Complex Form}
+
+Using Euler's formula, the Fourier series can also be written as
+\[
+    \sum_{n=-\infty}^{+\infty}c_n e^{inx},
+\]
+where
+\[
+    c_n=\frac1{2\pi}\int_{-\pi}^{\pi}f(x)e^{-inx}\,dx.
+\]
+The real and complex forms are equivalent. The complex form makes orthogonality especially transparent:
+\[
+    \int_{-\pi}^{\pi}e^{inx}e^{-ikx}\,dx
+    =\int_{-\pi}^{\pi}e^{i(n-k)x}\,dx
+    =
+    \begin{cases}
+    2\pi, & n=k,\\
+    0, & n\ne k.
+    \end{cases}
+\]
+
+\subsection{Bessel Inequality and the Least-Squares View}
+
+Let
+\[
+    \langle f,g\rangle=\frac1\pi\int_{-\pi}^{\pi}f(x)g(x)\,dx.
+\]
+Then $S_m$ is the orthogonal projection of $f$ onto the finite-dimensional space
+\[
+    \operatorname{span}\{1,\cos x,\sin x,\ldots,\cos mx,\sin mx\}.
+\]
+Therefore $S_m$ is the best approximation to $f$ in that subspace in the mean-square sense:
+\[
+    \int_{-\pi}^{\pi}|f(x)-S_m(x)|^2\,dx
+\]
+is minimal among all trigonometric polynomials of degree at most $m$.
+
+This immediately gives Bessel's inequality:
+\[
+    \frac{a_0^2}{2}+\sum_{n=1}^{\infty}(a_n^2+b_n^2)
+    \le
+    \frac1\pi\int_{-\pi}^{\pi}f^2(x)\,dx.
+\]
+
+\subsection{Riemann--Lebesgue Lemma}
+
+If $f$ is integrable on $[a,b]$, then
+\[
+    \lim_{n\to\infty}\int_a^b f(x)\sin nx\,dx=0,
+    \qquad
+    \lim_{n\to\infty}\int_a^b f(x)\cos nx\,dx=0.
+\]
+
+The intuition is high-frequency cancellation. The function $f$ changes relatively slowly compared with the rapid oscillation of $\sin nx$ and $\cos nx$, so positive and negative contributions cancel in the limit.
+
+\subsection{Dirichlet Kernel and Pointwise Convergence}
+
+The partial sum can be written as an integral operator:
+\[
+    S_m(x)=\frac1\pi\int_{-\pi}^{\pi}f(x+u)D_m(u)\,du,
+\]
+where
+\[
+    D_m(u)=\frac12+\sum_{n=1}^{m}\cos nu
+    =\frac{\sin\left(m+\frac12\right)u}{2\sin\frac u2}.
+\]
+This is the Dirichlet kernel. It is the continuous analogue of the projection matrix from finite-dimensional linear algebra.
+
+The convergence of $S_m(x)$ is therefore controlled by the behavior of $f$ near $x$. Far from $x$, the oscillation in $D_m(u)$ tends to cancel by the Riemann--Lebesgue lemma. Near $u=0$, the kernel has a singular shape, so local regularity of $f$ matters.
+
+\begin{theorem}[Dirichlet--Jordan Criterion]
+If $f$ is $2\pi$-periodic, piecewise smooth or of bounded variation in a neighborhood of $x$, and the one-sided limits $f(x+0)$ and $f(x-0)$ exist, then the Fourier series converges at $x$ to
+\[
+    \frac{f(x+0)+f(x-0)}2.
+\]
+In particular, if $f$ is continuous at $x$, then the Fourier series converges to $f(x)$.
+\end{theorem}
+
+\begin{theorem}[Dini-Type Local Criterion]
+Let
+\[
+    \sigma(x)=\frac{f(x+0)+f(x-0)}2
+\]
+and
+\[
+    E_x(u)=f(x+u)+f(x-u)-2\sigma(x).
+\]
+If for some $\delta>0$,
+\[
+    \int_0^{\delta}\left|\frac{E_x(u)}{u}\right|du<+\infty,
+\]
+then
+\[
+    S_m(x)\to \sigma(x).
+\]
+\end{theorem}
+
+A Lipschitz or Hölder condition near $x$ implies the Dini condition. Thus these tests are all ways of ensuring that the local error is controlled strongly enough to survive the singular behavior of the Dirichlet kernel.
+
+\subsection{What Fourier Series Really Adds}
+
+Fourier series should be understood at two levels.
+
+First, algebraically, it is an orthogonal expansion. The coefficients are coordinates, and the partial sums are projections.
+
+Second, analytically, pointwise convergence is not automatic from projection. The projection viewpoint controls global mean-square error, while pointwise convergence depends on the local interaction between $f$ and the Dirichlet kernel.
+
+This distinction explains why Fourier theory is both natural and subtle: the construction is linear-algebraic, but the convergence question is genuinely analytic.
+
+\section{Conclusion}
+
+Mathematical Analysis II extends one-variable analysis in two directions. The first direction is multivariable analysis: Euclidean space, multivariable limits, differentiation, implicit functions, extrema, multiple integrals, and vector calculus. The second direction is limiting processes of functions: function series, power series, parameterized integrals, Euler integrals, and Fourier series.
+
+The central idea remains unchanged: analysis is the study of when limiting operations are valid. Can we interchange a limit and an integral? Can we differentiate a series term by term? Can we compute an integral by changing coordinates? Can a boundary integral be replaced by an interior integral? Each theorem in this chapter gives one precise situation in which the answer is yes.

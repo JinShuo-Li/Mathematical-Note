@@ -4,6 +4,11 @@ Now we will move on to another part of the analysis, which is Mathematical Analy
 
 \section{Series}
 
+
+The key idea of this section is that an infinite series is not an infinite act of addition performed all at once. It is a limit process. We add finitely many terms, obtain a sequence of partial sums, and then ask whether that sequence stabilizes. This distinction is essential: the behavior of the terms $a_n$ alone is not enough; what matters is the accumulated behavior of the partial sums.
+
+Many convergence tests can be understood as methods for comparing partial sums with simpler objects. Positive series are controlled by monotonicity and boundedness. Alternating series are controlled by cancellation. Dirichlet and Abel tests are controlled by bounded oscillation multiplied by monotone decay. Uniform convergence of function series adds one more layer: the stabilization must occur at the same speed for every point in the domain.
+
 Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
 
 \subsection{Numerical Series}
@@ -20,6 +25,11 @@ To assign a value to this infinite sum, we look at finite sums.
 
 \subsection{Upper and Lower Limits}
 
+
+Upper and lower limits are especially useful because they preserve information about eventual upper and lower behavior even when an ordinary limit does not exist. Instead of asking where the whole sequence goes, we ask where its subsequences can accumulate. This is why $\limsup$ and $\liminf$ are natural tools in convergence tests involving roots, ratios, and oscillatory expressions.
+
+A practical way to remember them is this: $\limsup x_n$ is the limiting ceiling seen from far out in the sequence, while $\liminf x_n$ is the limiting floor. If these two quantities coincide, the ceiling and the floor squeeze the sequence into a genuine limit. If they differ, the sequence has persistent oscillation or multiple asymptotic behaviors.
+
 To study the convergence of series, it is often helpful to use the concept of upper and lower limits of sequences, especially when the sequence does not converge.
 
 \begin{definition}[Limit Point]
@@ -34,6 +44,8 @@ Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{uppe
 \begin{theorem}
 A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
 \end{theorem}
+
+This theorem is really obvious: if the sequence converges, then all its subsequences converge to the same limit, so the set of limit points is just $\{L\}$, and both $\limsup$ and $\liminf$ equal $L$. Conversely, if $\limsup$ and $\liminf$ coincide at $L$, then all limit points are $L$, which means every subsequence has a further subsequence converging to $L$, forcing the whole sequence to converge to $L$.
 
 \begin{property}
 For any two sequences $\{x_n\}$ and $\{y_n\}$:
@@ -59,13 +71,9 @@ The series $\sum a_n$ converges if and only if for every $\epsilon > 0$, there e
 \begin{theorem}[Necessary Condition for Convergence]
 If the series $\sum_{n=1}^{\infty} a_n$ converges, then $\lim_{n \to \infty} a_n = 0$.
 \end{theorem}
-\begin{remark}
-The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
-\end{remark}
 
-\begin{example}[Geometric Series]
-The series $\sum_{n=0}^{\infty} ar^n$ converges if and only if $|r| < 1$. In that case, the sum is $\frac{a}{1-r}$.
-\end{example}
+The converse is \textbf{false}. For example, the harmonic series $\sum \frac{1}{n}$ diverges even though $\lim \frac{1}{n} = 0$. This is the most fundamental trap in series analysis.
+
 
 \begin{property}[Linearity]
 If $\sum a_n = A$ and $\sum b_n = B$, then for any constants $\alpha, \beta$:
@@ -159,6 +167,8 @@ Also, we can use the integral test to determine the convergence of improper inte
     Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
 \end{example}
 
+\newpage
+
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
     \textbf{Solution:} We again choose the sequence $\{a_n\}$ as $a_n = n\pi$ for $n = 0, 1, 2, \ldots$. Then we consider the series:
@@ -191,6 +201,14 @@ Let $\sum a_n$ be a positive series and let
     \item If $\rho = 1$, the test is \textbf{inconclusive} (e.g., $1/n$ diverges but $1/n^2$ converges, both have $\rho=1$).
 \end{itemize}
 \end{theorem}
+
+The proof of this theorem relies on:
+
+\[
+\liminf_{n \to \infty} \frac{x_{n+1}}{x_n} \leq \liminf_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \frac{x_{n+1}}{x_n}
+\]
+
+\newpage
 
 \begin{theorem}[Cauchy's Root Test]
 Let $\sum a_n$ be a positive series and let
@@ -369,7 +387,6 @@ Also, matheaticians use the infinite product deduce some famous formulas, for ex
 When $n \to \infty$, we have the famous approximation:
 \[n! \sim \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\]
 
-\newpage
 
 \subsection{Function Series}
 
@@ -442,6 +459,11 @@ Take the series $\sum_{n=1}^{\infty} \frac{\sin(n^2 x)}{n^2}$. It converges poin
 To fix this catastrophic failure of properties, we need to bring in the heavy artillery: a stronger form of convergence.
 
 \subsubsection{Uniform Convergence}
+
+
+Uniform convergence is a strengthening of pointwise convergence. In pointwise convergence, for each fixed $x$ we may choose a different threshold $N$ after which the approximation is good. In uniform convergence, one threshold $N$ must work for all $x$ in the domain. This change is small in notation but large in meaning: it prevents convergence from becoming slower and slower as $x$ moves through the domain.
+
+This is the reason uniform convergence preserves many analytic properties. Continuity, integration, and sometimes differentiation involve neighborhoods or limiting processes that depend on $x$. If convergence is only pointwise, these operations may fail to commute with the limit. Uniform convergence supplies the global control needed to exchange limits with other operations.
 
 \begin{definition}[Uniform Convergence]
 A sequence of functions $\{f_n\}$ converges \textbf{uniformly} to $f$ on $E$ if for every $\epsilon > 0$, there exists an integer $N(\epsilon)$ (dependent on $\epsilon$ but \textbf{independent of} $x$) such that for all $n > N(\epsilon)$ and all $x \in E$:
@@ -525,6 +547,7 @@ Consequently, for a series of continuous functions $\sum u_n(x)$, if the series 
 \[ \lim_{x \to x_0} \sum_{n=1}^{\infty} u_n(x) = \sum_{n=1}^{\infty} \lim_{x \to x_0} u_n(x) \]
 \end{theorem}
 
+
 \begin{theorem}[Term-by-Term Integration]
 Let each $\{u_n(x)\}$ be Riemann integrable on $[a, b]$, and suppose the series $\sum_{n=1}^{\infty} u_n(x)$ converges uniformly to $S(x)$ on $[a, b]$. Then the limit function $S(x)$ is also Riemann integrable on $[a, b]$, and the integration and summation can be safely interchanged:
 \[ \int_a^b S(x) \, dx = \sum_{n=1}^{\infty} \int_a^b u_n(x) \, dx \]
@@ -548,6 +571,11 @@ then the convergence is \textbf{uniform} on $[a, b]$.
 
 \subsection{Power Series}
 
+
+Power series form the most well-behaved class of function series. Inside their interval or disk of convergence, they behave almost like polynomials: they may be added, multiplied, integrated, and differentiated term by term. The radius of convergence is the boundary between this stable polynomial-like behavior and possible divergence.
+
+However, the boundary itself requires separate attention. The root or ratio test usually determines convergence strictly inside and strictly outside the radius, but it says nothing decisive at endpoints. Endpoint analysis must return to ordinary series tests. This is why power series problems naturally split into three parts: find the radius, test the interior, and examine the boundary.
+
 A power series is a specific type of function series of the form:
 \[ \sum_{n=0}^{\infty} a_n (x - x_0)^n = a_0 + a_1(x - x_0) + a_2(x - x_0)^2 + \cdots \]
 where $a_n$ are the coefficients of the series, and $x_0$ is the center of convergence. For simplicity in notation and proofs, we often set $x_0 = 0$ by a simple change of variables $y = x - x_0$, transforming the series into $\sum_{n=0}^{\infty} a_n x^n$.
@@ -556,7 +584,6 @@ where $a_n$ are the coefficients of the series, and $x_0$ is the center of conve
 
 Unlike general function series, which might converge on complicated sets, power series possess a highly structured domain of convergence. The set of points where a power series converges is always an interval centered at $x_0$.
 
-\newpage
 
 \begin{theorem}[Cauchy-Hadamard Theorem]
 Given a power series $\sum a_n x^n$, let
@@ -613,6 +640,7 @@ For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\l
 
 We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
 
+
 \begin{theorem}[Taylor Series]
 If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n (x-x_0)^n$ with a non-zero radius of convergence $R$, then by repeatedly differentiating and evaluating at $x=x_0$, we find that the coefficients are uniquely determined as:
 \[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
@@ -644,8 +672,6 @@ Repeating this process $n-1$ more times gives:
 This completes the proof.
 \end{proof}
 
-\newpage
-
 \begin{example}[Standard Maclaurin Expansions]
 The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
 \begin{align*}
@@ -659,6 +685,11 @@ The following cornerstone expansions appear frequently throughout analysis and p
 \end{example}
 
 \section{Limits and Continuity in Euclidean Space}
+
+
+The passage from one-variable analysis to several-variable analysis is not merely a change of notation. In one variable, a point can approach another point only from the left or from the right. In $\mathbb{R}^n$, there are infinitely many paths of approach. As a result, limits and continuity become more geometric: we must control behavior in every direction simultaneously.
+
+The norm, inner product, open balls, closed sets, compactness, and connectedness provide the language for this control. They allow us to state multivariable versions of familiar theorems without relying on pictures. For example, compactness replaces the closed bounded interval, and connectedness replaces the intuitive idea of an interval having no gaps.
 
 Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
 
@@ -771,6 +802,11 @@ A sequence $\{\mathbf{x}_k\}$ in $\mathbb{R}^n$ converges if and only if it is a
 
 \subsection{Limits of Functions of Several Variables}
 
+
+When testing a multivariable limit, path checking is a diagnostic tool rather than a complete proof method. If two paths lead to different limiting values, the limit cannot exist. But if several convenient paths give the same answer, this only gives evidence, not proof. A proof must bound $|f(x)-L|$ in terms of the distance from $x$ to the limiting point, or otherwise reduce the expression to a known theorem.
+
+This distinction explains many standard examples. Along straight lines a function may appear to have one limit, while along a curve such as $y=x^2$ it may behave differently. The hidden problem is that multivariable functions can concentrate their irregular behavior along thin curves that are invisible to a small finite list of test paths.
+
 Let $f: D \subseteq \mathbb{R}^n \to \mathbb{R}^m$ be a function defined on a domain $D$. We are interested in the behavior of $f(\mathbf{x})$ as $\mathbf{x}$ approaches a point $\mathbf{a}$.
 
 \begin{definition}[Limit]
@@ -789,6 +825,8 @@ If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous
 Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
 \end{theorem}
 
+\newpage
+
 \begin{example}
 Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
 \begin{enumerate}
@@ -799,8 +837,6 @@ Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit
 \end{enumerate}
 Since $0 \ne 1/2$, the limit $\lim_{(x,y) \to (0,0)} f(x,y)$ \textbf{does not exist}.
 \end{example}
-
-\newpage
 
 \begin{remark}
 It is not enough to check all straight lines passing through the origin. Consider the famous counterexample:
@@ -814,7 +850,7 @@ For a function of two variables $f(x,y)$, we can define \textbf{iterated limits}
 \[ L_{12} = \lim_{x \to a} \left( \lim_{y \to b} f(x, y) \right) \quad \text{and} \quad L_{21} = \lim_{y \to b} \left( \lim_{x \to a} f(x, y) \right) \]
 
 \begin{proposition}
-The existence of iterated limits does not imply the existence of the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$.
+The existence of iterated limits does not guarantee that the simultaneous limit $\lim_{(x,y) \to (a,b)} f(x,y)$ exists.
 Even if $L_{12} = L_{21}$, the simultaneous limit may not exist.
 Conversely, if the simultaneous limit exists, the iterated limits may not exist (because the inner limits might not be defined).
 However, if the simultaneous limit exists AND the inner limits exist, then they must all be equal.
@@ -881,8 +917,6 @@ $f$ is uniformly continuous on $D$ if for every $\epsilon > 0$, there exists $\d
 Note that $\delta$ depends only on $\epsilon$, not on the location $\mathbf{x}$.
 \end{definition}
 
-\newpage
-
 \begin{remark}
 If the domain is not compact (e.g., open or unbounded), a continuous function need not be bounded or uniformly continuous.
 For example, $f(x) = 1/x$ on $(0, 1)$ is continuous but unbounded and not uniformly continuous.
@@ -904,6 +938,11 @@ This ensures that the image of a path-connected set under a continuous real-valu
 
 \section{Differential Calculus of Multivariable Functions}
 
+
+Partial derivatives measure change along coordinate axes, but differentiability asks for something stronger: the function must be well approximated by one linear map in all directions at once. Thus differentiability is a statement about the existence of a good tangent plane, not merely about the existence of directional slopes. This is why partial derivatives alone do not guarantee differentiability.
+
+The total differential is the linear part of the best local approximation. When $f$ is differentiable at a point, the error after subtracting this linear part is small compared with the distance to the point. In symbols, the remainder is $o(\|h\|)$. This little-$o$ condition is the precise analytic form of the phrase ``locally linear.''
+
 From here, we formally transition into the differential calculus of multivariable functions. We will first introduce partial derivatives and then introduce the idea of directional derivatives.
 
 \subsection{Partial Derivatives}
@@ -918,10 +957,1539 @@ The definition of a partial derivative is very similar to that of a single-varia
 
 However, studying the rate of change only along the coordinate axes is often insufficient for a complete multidimensional analysis. This motivates the definition of the directional derivative.
 
-\newpage
-
 \begin{definition}[Directional Derivative]
 Let $f(\mathbf{x})$ be a function defined in a neighborhood of $\mathbf{x}_0$. For any given non-zero vector $\mathbf{u}$ (often taken as a unit vector), if the following limit exists:
 \[ \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{u}) - f(\mathbf{x}_0)}{t} = A \]
 then we say that $f$ has a \textbf{directional derivative} at $\mathbf{x}_0$ along the direction $\mathbf{u}$, denoted by $D_{\mathbf{u}} f(\mathbf{x}_0) = A$.
 \end{definition}
+
+\subsubsection{Higher Partial Derivatives}
+
+Once first-order partial derivatives exist, they may themselves be differentiated. For a function $z=f(x,y)$, the second-order partial derivatives are denoted by
+\[
+    f_{xx}=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right),\qquad
+    f_{xy}=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right),
+\]
+\[
+    f_{yx}=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right),\qquad
+    f_{yy}=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial y}\right).
+\]
+The mixed derivatives $f_{xy}$ and $f_{yx}$ need not be equal merely because they exist. A reliable sufficient condition is continuity.
+
+\begin{theorem}[Schwarz--Clairaut Theorem]
+Let $f$ be defined in a neighborhood of $(x_0,y_0)$. If the mixed second-order partial derivatives $f_{xy}$ and $f_{yx}$ are continuous in a neighborhood of $(x_0,y_0)$, then
+\[
+    f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0).
+\]
+\end{theorem}
+
+\begin{proof}
+Consider the rectangular second difference
+\[
+I=\frac{f(x_0+h,y_0+k)-f(x_0+h,y_0)-f(x_0,y_0+k)+f(x_0,y_0)}{hk}.
+\]
+Define
+\[
+    \phi(x)=f(x,y_0+k)-f(x,y_0).
+\]
+Applying the one-variable mean value theorem first in $x$ and then in $y$ gives
+\[
+    I=f_{xy}(\xi_1,\eta_1),
+\]
+where $\xi_1$ lies between $x_0$ and $x_0+h$, and $\eta_1$ lies between $y_0$ and $y_0+k$. Similarly, defining
+\[
+    \psi(y)=f(x_0+h,y)-f(x_0,y)
+\]
+and applying the mean value theorem first in $y$ and then in $x$ gives
+\[
+    I=f_{yx}(\xi_2,\eta_2).
+\]
+Hence $f_{xy}(\xi_1,\eta_1)=f_{yx}(\xi_2,\eta_2)$. Letting $(h,k)\to(0,0)$ and using the continuity of the mixed derivatives yields the result.
+\end{proof}
+
+\begin{note}
+The theorem is often remembered as: continuous mixed second partial derivatives may be interchanged. Existence alone is not enough.
+\end{note}
+
+\subsection{Differentiability and the Total Differential}
+
+Partial derivatives measure change along coordinate axes. Differentiability is stronger: it requires the whole increment of the function to be approximated by one linear map, uniformly with respect to all directions.
+
+\begin{definition}[Differentiability]
+Let $f:D\subseteq \mathbb{R}^n\to\mathbb{R}$ be defined in a neighborhood of $\mathbf{x}_0$. We say that $f$ is \textbf{differentiable} at $\mathbf{x}_0$ if there exists a linear map $L:\mathbb{R}^n\to\mathbb{R}$ such that
+\[
+    f(\mathbf{x}_0+\Delta\mathbf{x})-f(\mathbf{x}_0)
+    =L(\Delta\mathbf{x})+o(\|\Delta\mathbf{x}\|),\qquad \Delta\mathbf{x}\to \mathbf{0}.
+\]
+Equivalently, there exist constants $A_1,\dots,A_n$ such that
+\[
+    \Delta f=A_1\Delta x_1+\cdots+A_n\Delta x_n+o\left(\sqrt{\Delta x_1^2+\cdots+\Delta x_n^2}\right).
+\]
+\end{definition}
+
+\begin{theorem}[Coefficients of the Differential]
+If $f$ is differentiable at $\mathbf{x}_0$, then all partial derivatives $\partial f/\partial x_i$ exist at $\mathbf{x}_0$, and
+\[
+    A_i=\frac{\partial f}{\partial x_i}(\mathbf{x}_0).
+\]
+Thus the total differential is
+\[
+    df=\frac{\partial f}{\partial x_1}\,dx_1+\frac{\partial f}{\partial x_2}\,dx_2+\cdots+\frac{\partial f}{\partial x_n}\,dx_n.
+\]
+\end{theorem}
+
+\begin{proof}
+In the definition of differentiability, set all increments equal to $0$ except $\Delta x_i$. Then
+\[
+    f(\mathbf{x}_0+\Delta x_i\mathbf{e}_i)-f(\mathbf{x}_0)
+    =A_i\Delta x_i+o(|\Delta x_i|).
+\]
+Dividing by $\Delta x_i$ and letting $\Delta x_i\to0$ gives the $i$-th partial derivative and shows that it equals $A_i$.
+\end{proof}
+
+\begin{theorem}[Differentiability Implies Continuity]
+If $f$ is differentiable at $\mathbf{x}_0$, then $f$ is continuous at $\mathbf{x}_0$.
+\end{theorem}
+
+\begin{proof}
+Since
+\[
+    \Delta f=L(\Delta\mathbf{x})+o(\|\Delta\mathbf{x}\|),
+\]
+and every linear map in finite-dimensional Euclidean space is bounded, $L(\Delta\mathbf{x})\to0$ as $\Delta\mathbf{x}\to0$. The remainder also tends to $0$. Hence $\Delta f\to0$.
+\end{proof}
+
+\begin{theorem}[A Practical Sufficient Condition]
+If all first-order partial derivatives of $f$ exist in a neighborhood of $\mathbf{x}_0$ and are continuous at $\mathbf{x}_0$, then $f$ is differentiable at $\mathbf{x}_0$.
+\end{theorem}
+
+\begin{proof}[Proof for two variables]
+Let $\Delta x=h$ and $\Delta y=k$. Write
+\[
+\begin{aligned}
+\Delta f={}&f(x_0+h,y_0+k)-f(x_0,y_0)\\
+={}&\bigl[f(x_0+h,y_0+k)-f(x_0,y_0+k)\bigr]
++\bigl[f(x_0,y_0+k)-f(x_0,y_0)\bigr].
+\end{aligned}
+\]
+By the one-variable mean value theorem,
+\[
+    \Delta f=f_x(x_0+\theta_1 h,y_0+k)h+f_y(x_0,y_0+\theta_2 k)k,
+\]
+where $\theta_1,\theta_2\in(0,1)$. Subtracting $f_x(x_0,y_0)h+f_y(x_0,y_0)k$ and using the continuity of $f_x$ and $f_y$ shows that the remainder is $o(\sqrt{h^2+k^2})$.
+\end{proof}
+
+\begin{note}
+The logical implications worth remembering are
+\[
+    C^1 \Longrightarrow \text{differentiable} \Longrightarrow \text{continuous and all partial derivatives exist}.
+\]
+The reverse implications are generally false.
+\end{note}
+
+\begin{example}[Partial Derivatives Do Not Guarantee Differentiability]
+Define
+\[
+    f(x,y)=
+    \begin{cases}
+    \dfrac{x^2y}{x^4+y^2}, & (x,y)\ne(0,0),\\[6pt]
+    0, & (x,y)=(0,0).
+    \end{cases}
+\]
+Along the coordinate axes, the function is identically $0$, so $f_x(0,0)=f_y(0,0)=0$. However, along $y=x^2$,
+\[
+    f(x,x^2)=\frac{x^4}{2x^4}=\frac12,
+\]
+so $f$ is not continuous at the origin. Therefore it is not differentiable there.
+\end{example}
+
+\subsubsection{Higher Differentials}
+
+For a $C^2$ function $f(x,y)$, the second differential is
+\[
+    d^2f=f_{xx}\,dx^2+2f_{xy}\,dx\,dy+f_{yy}\,dy^2.
+\]
+More generally, one may formally write
+\[
+    d^k f=\left(dx\frac{\partial}{\partial x}+dy\frac{\partial}{\partial y}\right)^k f
+\]
+whenever the required partial derivatives exist and are sufficiently regular. The binomial form is especially useful in Taylor expansions.
+
+\subsection{Vector-Valued Functions and Jacobian Matrices}
+
+Although scalar-valued functions are the main object in elementary multivariable calculus, the cleanest formulation of the chain rule uses vector-valued functions.
+
+\begin{definition}[Vector-Valued Function]
+A function $\mathbf{f}:D\subseteq\mathbb{R}^n\to\mathbb{R}^m$ can be written componentwise as
+\[
+    \mathbf{f}(\mathbf{x})=
+    \begin{pmatrix}
+    f_1(x_1,\dots,x_n)\\
+    f_2(x_1,\dots,x_n)\\
+    \vdots\\
+    f_m(x_1,\dots,x_n)
+    \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{definition}[Jacobian Matrix]
+If the component functions have first-order partial derivatives, the Jacobian matrix of $\mathbf{f}$ at $\mathbf{x}$ is
+\[
+    J_{\mathbf{f}}(\mathbf{x})=
+    \begin{pmatrix}
+    \dfrac{\partial f_1}{\partial x_1} & \dfrac{\partial f_1}{\partial x_2} & \cdots & \dfrac{\partial f_1}{\partial x_n}\\[6pt]
+    \dfrac{\partial f_2}{\partial x_1} & \dfrac{\partial f_2}{\partial x_2} & \cdots & \dfrac{\partial f_2}{\partial x_n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \dfrac{\partial f_m}{\partial x_1} & \dfrac{\partial f_m}{\partial x_2} & \cdots & \dfrac{\partial f_m}{\partial x_n}
+    \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{definition}[Differentiability for Vector-Valued Functions]
+The map $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ is differentiable at $\mathbf{x}_0$ if there exists an $m\times n$ matrix $A$ such that
+\[
+    \mathbf{f}(\mathbf{x}_0+\Delta\mathbf{x})-\mathbf{f}(\mathbf{x}_0)
+    =A\Delta\mathbf{x}+o(\|\Delta\mathbf{x}\|).
+\]
+When differentiability holds, $A=J_{\mathbf{f}}(\mathbf{x}_0)$.
+\end{definition}
+
+\begin{theorem}[Matrix Chain Rule]
+Let $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ be differentiable at $\mathbf{x}_0$, and let $\mathbf{g}:\mathbb{R}^m\to\mathbb{R}^p$ be differentiable at $\mathbf{y}_0=\mathbf{f}(\mathbf{x}_0)$. Then $\mathbf{g}\circ\mathbf{f}$ is differentiable at $\mathbf{x}_0$, and
+\[
+    J_{\mathbf{g}\circ\mathbf{f}}(\mathbf{x}_0)=J_{\mathbf{g}}(\mathbf{y}_0)J_{\mathbf{f}}(\mathbf{x}_0).
+\]
+\end{theorem}
+
+\subsection{The Gradient and Directional Derivatives}
+
+For a scalar-valued function $f:D\subseteq\mathbb{R}^n\to\mathbb{R}$, the gradient collects all first-order partial derivatives into one vector:
+\[
+    \nabla f(\mathbf{x})=
+    \left(\frac{\partial f}{\partial x_1}(\mathbf{x}),\dots,
+    \frac{\partial f}{\partial x_n}(\mathbf{x})\right).
+\]
+In two variables,
+\[
+    \nabla f(x,y)=f_x(x,y)\mathbf{i}+f_y(x,y)\mathbf{j}.
+\]
+
+\begin{theorem}[Directional Derivative Formula]
+If $f$ is differentiable at $\mathbf{x}_0$ and $\mathbf{u}$ is a unit vector, then
+\[
+    D_{\mathbf{u}}f(\mathbf{x}_0)=\nabla f(\mathbf{x}_0)\cdot\mathbf{u}.
+\]
+Consequently, the largest directional derivative is $\|\nabla f(\mathbf{x}_0)\|$, attained in the direction of $\nabla f(\mathbf{x}_0)$ if the gradient is nonzero.
+\end{theorem}
+
+\begin{proof}
+Using differentiability,
+\[
+    f(\mathbf{x}_0+t\mathbf{u})-f(\mathbf{x}_0)=\nabla f(\mathbf{x}_0)\cdot(t\mathbf{u})+o(|t|).
+\]
+Divide by $t$ and let $t\to0$.
+\end{proof}
+
+The gradient obeys the familiar differentiation rules:
+\[
+    \nabla(af+bg)=a\nabla f+b\nabla g,
+\]
+\[
+    \nabla(fg)=f\nabla g+g\nabla f,
+\]
+\[
+    \nabla\left(\frac{f}{g}\right)=\frac{g\nabla f-f\nabla g}{g^2},\qquad g\ne0.
+\]
+
+\subsection{Chain Rules for Multivariable Functions}
+
+Let
+\[
+    z=f(x,y),\qquad x=x(u,v),\qquad y=y(u,v).
+\]
+If $f$ is differentiable at $(x(u_0,v_0),y(u_0,v_0))$ and $x,y$ are differentiable at $(u_0,v_0)$, then
+\[
+\frac{\partial z}{\partial u}=\frac{\partial f}{\partial x}\frac{\partial x}{\partial u}+\frac{\partial f}{\partial y}\frac{\partial y}{\partial u},
+\qquad
+\frac{\partial z}{\partial v}=\frac{\partial f}{\partial x}\frac{\partial x}{\partial v}+\frac{\partial f}{\partial y}\frac{\partial y}{\partial v}.
+\]
+This is simply the matrix chain rule written component by component.
+
+\subsubsection{Invariance of the First Differential}
+
+The first differential has the same formal expression under a change of variables:
+\[
+\begin{aligned}
+    dz&=f_x\,dx+f_y\,dy\\
+      &=f_x(x_u\,du+x_v\,dv)+f_y(y_u\,du+y_v\,dv)\\
+      &=z_u\,du+z_v\,dv.
+\end{aligned}
+\]
+This is called the \textbf{invariance of the first differential}. It is a compact way to remember the multivariable chain rule.
+
+\subsection{Taylor Formula for Functions of Two Variables}
+
+Taylor's formula is the local polynomial approximation produced by repeatedly applying the differential operator
+\[
+    h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}.
+\]
+
+\begin{theorem}[Taylor Formula]
+Suppose $f$ has continuous partial derivatives up to order $r+1$ in a neighborhood of $(x_0,y_0)$. For $(x,y)=(x_0+h,y_0+k)$,
+\[
+    f(x_0+h,y_0+k)
+    =f(x_0,y_0)+\sum_{j=1}^{r}\frac{1}{j!}
+    \left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^j f(x_0,y_0)+R_r,
+\]
+where
+\[
+    R_r=o\left((h^2+k^2)^{r/2}\right)
+\]
+for the Peano form of the remainder. A Lagrange-type form is
+\[
+    R_r=\frac{1}{(r+1)!}
+    \left(h\frac{\partial}{\partial x}+k\frac{\partial}{\partial y}\right)^{r+1}
+    f(x_0+\theta h,y_0+\theta k),\qquad 0<\theta<1.
+\]
+\end{theorem}
+
+The second-order expansion is especially important:
+\[
+\begin{aligned}
+    f(x_0+h,y_0+k)=&f(x_0,y_0)+f_x(x_0,y_0)h+f_y(x_0,y_0)k\\
+    &+\frac12\left(f_{xx}(x_0,y_0)h^2+2f_{xy}(x_0,y_0)hk+f_{yy}(x_0,y_0)k^2\right)\\
+    &+o(h^2+k^2).
+\end{aligned}
+\]
+
+\begin{theorem}[Mean Value Formula]
+If $f$ has continuous first-order partial derivatives on a convex domain containing $(x_0,y_0)$ and $(x_0+h,y_0+k)$, then for some $\theta\in(0,1)$,
+\[
+\begin{aligned}
+&f(x_0+h,y_0+k)-f(x_0,y_0)\\
+&\quad=f_x(x_0+\theta h,y_0+\theta k)h+f_y(x_0+\theta h,y_0+\theta k)k.
+\end{aligned}
+\]
+\end{theorem}
+
+\subsection{Implicit Functions}
+
+
+The implicit function theorem explains when an equation can be solved locally for some variables in terms of others. Its core idea is linearization. If the relevant derivative with respect to the variables to be solved for is invertible, then near the point the nonlinear equation behaves like an invertible linear equation. The invertibility condition prevents the solution set from folding vertically or losing dimension.
+
+Geometrically, an equation $F(x,y)=0$ often defines a curve. If $F_y\neq 0$, the curve is locally the graph of a function $y=f(x)$. If $F_y=0$, this graph representation may fail: the curve may have a vertical tangent, a crossing, or a singularity. Thus the derivative condition is not a technical decoration but the mechanism that selects a stable local coordinate system.
+
+Many relations are naturally written as equations rather than explicit formulas. The basic form is
+\[
+    F(x,y)=0.
+\]
+The central question is when this equation locally determines $y$ as a function of $x$.
+
+\begin{theorem}[Implicit Function Theorem: One Equation]
+Let $F(x,y)$ have continuous first-order partial derivatives in a neighborhood of $(x_0,y_0)$. If
+\[
+    F(x_0,y_0)=0,
+    \qquad F_y(x_0,y_0)\ne0,
+\]
+then there exists a neighborhood of $x_0$ on which the equation $F(x,y)=0$ uniquely determines a $C^1$ function $y=f(x)$ with $f(x_0)=y_0$. Moreover,
+\[
+    \frac{dy}{dx}=-\frac{F_x(x,y)}{F_y(x,y)}.
+\]
+\end{theorem}
+
+\begin{theorem}[Implicit Function Theorem: One Dependent Variable]
+Let $F(x_1,\dots,x_n,y)$ have continuous first-order partial derivatives near $(x_1^0,\dots,x_n^0,y_0)$. If
+\[
+    F(x_1^0,\dots,x_n^0,y_0)=0,
+    \qquad F_y(x_1^0,\dots,x_n^0,y_0)\ne0,
+\]
+then the equation $F(x_1,\dots,x_n,y)=0$ locally determines a unique $C^1$ function
+\[
+    y=f(x_1,\dots,x_n),
+\]
+and
+\[
+    \frac{\partial y}{\partial x_i}=-\frac{F_{x_i}}{F_y},\qquad i=1,\dots,n.
+\]
+\end{theorem}
+
+\subsubsection{Systems of Implicit Equations}
+
+For two equations
+\[
+\begin{cases}
+    F(x,y,u,v)=0,\\
+    G(x,y,u,v)=0,
+\end{cases}
+\]
+one wants to solve locally for $u$ and $v$ as functions of $x$ and $y$.
+
+\newpage
+
+\begin{theorem}[Implicit Function Theorem for a System]
+Suppose $F$ and $G$ have continuous first-order partial derivatives near $(x_0,y_0,u_0,v_0)$ and
+\[
+    F(x_0,y_0,u_0,v_0)=G(x_0,y_0,u_0,v_0)=0.
+\]
+If
+\[
+    \frac{\partial(F,G)}{\partial(u,v)}
+    =\begin{vmatrix}F_u&F_v\\G_u&G_v\end{vmatrix}_{(x_0,y_0,u_0,v_0)}\ne0,
+\]
+then the system locally determines unique $C^1$ functions
+\[
+    u=u(x,y),\qquad v=v(x,y).
+\]
+Their derivatives satisfy
+\[
+    \begin{pmatrix}
+    u_x&u_y\\
+    v_x&v_y
+    \end{pmatrix}
+    =-
+    \begin{pmatrix}
+    F_u&F_v\\
+    G_u&G_v
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+    F_x&F_y\\
+    G_x&G_y
+    \end{pmatrix}.
+\]
+\end{theorem}
+
+\begin{note}
+In computations, it is often simpler to differentiate the two equations directly with respect to $x$ or $y$, then solve the resulting linear system for $u_x,v_x$ or $u_y,v_y$.
+\end{note}
+
+\subsection{Geometric Applications}
+
+\subsubsection{Space Curves: Tangent Lines and Normal Planes}
+
+Let a space curve be given by
+\[
+    \mathbf{r}(t)=x(t)\mathbf{i}+y(t)\mathbf{j}+z(t)\mathbf{k}.
+\]
+If $\mathbf{r}'(t_0)\ne\mathbf{0}$, then $\mathbf{r}'(t_0)$ is a tangent vector to the curve at $\mathbf{r}(t_0)$.
+
+The tangent line is
+\[
+    \frac{x-x(t_0)}{x'(t_0)}=\frac{y-y(t_0)}{y'(t_0)}=\frac{z-z(t_0)}{z'(t_0)},
+\]
+with the usual convention that a zero denominator means the corresponding coordinate is constant. The normal plane is
+\[
+    x'(t_0)(x-x(t_0))+y'(t_0)(y-y(t_0))+z'(t_0)(z-z(t_0))=0.
+\]
+
+If the curve is instead given as the intersection of two surfaces
+\[
+\begin{cases}
+    F(x,y,z)=0,\\
+    G(x,y,z)=0,
+\end{cases}
+\]
+and $\nabla F$ and $\nabla G$ are not parallel, then a tangent vector is
+\[
+    \nabla F\times \nabla G
+    =\begin{vmatrix}
+    \mathbf{i}&\mathbf{j}&\mathbf{k}\\
+    F_x&F_y&F_z\\
+    G_x&G_y&G_z
+    \end{vmatrix}.
+\]
+Equivalently,
+\[
+    \nabla F\times\nabla G
+    =\frac{\partial(F,G)}{\partial(y,z)}\mathbf{i}
+    +\frac{\partial(F,G)}{\partial(z,x)}\mathbf{j}
+    +\frac{\partial(F,G)}{\partial(x,y)}\mathbf{k}.
+\]
+
+\subsubsection{Surfaces: Tangent Planes and Normal Lines}
+
+For a surface given implicitly by
+\[
+    F(x,y,z)=0,
+\]
+the gradient is normal to the surface. If $P_0=(x_0,y_0,z_0)$ is on the surface and $\nabla F(P_0)\ne\mathbf{0}$, then the tangent plane is
+\[
+    F_x(P_0)(x-x_0)+F_y(P_0)(y-y_0)+F_z(P_0)(z-z_0)=0.
+\]
+The normal line is
+\[
+    \frac{x-x_0}{F_x(P_0)}=\frac{y-y_0}{F_y(P_0)}=\frac{z-z_0}{F_z(P_0)}.
+\]
+For an explicit surface $z=f(x,y)$, the same formula follows from $F(x,y,z)=f(x,y)-z$:
+\[
+    z-z_0=f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0).
+\]
+
+\subsection{Extrema of Multivariable Functions}
+
+\subsubsection{Unconstrained Extrema}
+
+\begin{definition}[Critical Point]
+Let $f(x,y)$ have first-order partial derivatives. A point $(x_0,y_0)$ is called a critical point if
+\[
+    f_x(x_0,y_0)=0,
+    \qquad
+    f_y(x_0,y_0)=0.
+\]
+\end{definition}
+
+\begin{theorem}[Necessary Condition for an Interior Extremum]
+If $f$ has first-order partial derivatives at an interior point $(x_0,y_0)$ and has a local maximum or local minimum there, then
+\[
+    f_x(x_0,y_0)=f_y(x_0,y_0)=0.
+\]
+\end{theorem}
+
+\begin{theorem}[Second Derivative Test]
+Suppose $f$ has continuous second-order partial derivatives near a critical point $(x_0,y_0)$. Put
+\[
+    A=f_{xx}(x_0,y_0),\qquad B=f_{xy}(x_0,y_0),\qquad C=f_{yy}(x_0,y_0),
+\]
+and
+\[
+    \Delta=AC-B^2.
+\]
+Then:
+\begin{enumerate}
+    \item If $\Delta>0$ and $A>0$, $f$ has a local minimum at $(x_0,y_0)$.
+    \item If $\Delta>0$ and $A<0$, $f$ has a local maximum at $(x_0,y_0)$.
+    \item If $\Delta<0$, $f$ has no local extremum at $(x_0,y_0)$; the point is a saddle point.
+    \item If $\Delta=0$, the test is inconclusive.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Idea]
+At a critical point, the first-order terms in Taylor's formula vanish. The local behavior is governed by the quadratic form
+\[
+    \frac12\left(Ah^2+2Bhk+Ck^2\right).
+\]
+The sign definiteness of this quadratic form is determined by $\Delta=AC-B^2$ and $A$.
+\end{proof}
+
+\subsubsection{Constrained Extrema and Lagrange Multipliers}
+
+The geometric idea behind Lagrange multipliers is tangency. On the constraint curve or surface, an extremum occurs where the level set of the objective can no longer be moved to a higher or lower value without leaving the constraint. Therefore the relevant normal vectors must be linearly dependent.
+
+\begin{theorem}[Lagrange Multiplier Method: One Constraint]
+To find extrema of $f(x,y,z)$ subject to
+\[
+    g(x,y,z)=0,
+\]
+look for solutions of
+\[
+    \nabla f+\lambda\nabla g=\mathbf{0},
+    \qquad
+    g=0.
+\]
+Equivalently, define
+\[
+    L(x,y,z,\lambda)=f(x,y,z)+\lambda g(x,y,z)
+\]
+and solve
+\[
+\begin{cases}
+    L_x=f_x+\lambda g_x=0,\\
+    L_y=f_y+\lambda g_y=0,\\
+    L_z=f_z+\lambda g_z=0,\\
+    L_\lambda=g(x,y,z)=0.
+\end{cases}
+\]
+\end{theorem}
+
+\begin{theorem}[Multiple Constraints]
+For constraints
+\[
+    g(x,y,z)=0,
+    \qquad
+    h(x,y,z)=0,
+\]
+possible constrained extrema satisfy
+\[
+    \nabla f+\lambda\nabla g+\mu\nabla h=\mathbf{0},
+    \qquad
+    g=0,
+    \qquad
+    h=0.
+\]
+Equivalently, use
+\[
+    L=f+\lambda g+\mu h.
+\]
+\end{theorem}
+
+\begin{note}
+Lagrange multiplier equations give candidate points. Boundary points, singular points of the constraint, and points where the rank condition fails must still be checked separately when they occur.
+\end{note}
+
+\section{Multiple Integrals}
+
+
+Multiple integrals should be read in two complementary ways. Analytically, they are limits of sums over small pieces of a region. Geometrically, they compute accumulated quantities: area, volume, mass, charge, probability, or average value. The integrand gives local density, and the integral adds these densities over the region.
+
+The main difficulty is often not the integration itself but the description of the domain. Changing the order of integration or changing variables is essentially a way of choosing better coordinates for the same region. A good coordinate system makes the boundary simple and the integrand manageable; a poor coordinate system can turn a simple problem into a long computation.
+
+The construction of multiple integrals begins with the geometric question of area. For double integrals, the domain must have a well-defined area in the Jordan sense.
+
+\subsection{Jordan Area and Double Integrals}
+
+Let $D\subseteq\mathbb{R}^2$ be bounded and contained in a rectangle
+\[
+    U=[a,b]\times[c,d].
+\]
+Partition $U$ into small rectangles
+\[
+    R_{ij}=[x_{i-1},x_i]\times[y_{j-1},y_j].
+\]
+The inner area is obtained from rectangles completely contained in $D$, while the outer area is obtained from rectangles that intersect $D$. If the supremum of all inner sums equals the infimum of all outer sums, then $D$ has area, denoted $m(D)$.
+
+\begin{theorem}[Jordan Measurability Criterion]
+A bounded plane region $D$ has Jordan area if and only if its boundary $\partial D$ has area zero.
+\end{theorem}
+
+\begin{definition}[Double Integral]
+Let $f$ be defined on a bounded Jordan measurable region $D$. Divide $D$ into subregions $\Delta D_i$ with areas $\Delta\sigma_i$, choose a sample point $P_i\in\Delta D_i$, and let
+\[
+    \lambda=\max_i\operatorname{diam}(\Delta D_i).
+\]
+If the limit
+\[
+    \lim_{\lambda\to0}\sum_{i=1}^n f(P_i)\Delta\sigma_i
+\]
+exists and is independent of the subdivision and the sample points, then $f$ is integrable on $D$, and
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\lim_{\lambda\to0}\sum_{i=1}^n f(P_i)\Delta\sigma_i.
+\]
+\end{definition}
+
+\subsubsection{Darboux Sums and Integrability}
+
+For each subregion $\Delta D_i$, set
+\[
+    M_i=\sup_{(x,y)\in\Delta D_i} f(x,y),
+    \qquad
+    m_i=\inf_{(x,y)\in\Delta D_i} f(x,y).
+\]
+The upper and lower Darboux sums are
+\[
+    U=\sum_{i=1}^n M_i\Delta\sigma_i,
+    \qquad
+    L=\sum_{i=1}^n m_i\Delta\sigma_i.
+\]
+The function $f$ is integrable if and only if
+\[
+    \lim_{\lambda\to0}(U-L)=0.
+\]
+Equivalently, if $\omega_i=M_i-m_i$ is the oscillation of $f$ on $\Delta D_i$, then
+\[
+    \lim_{\lambda\to0}\sum_{i=1}^n \omega_i\Delta\sigma_i=0.
+\]
+
+\begin{theorem}[Continuity Implies Integrability]
+If $D$ is a bounded closed Jordan measurable region and $f$ is continuous on $D$, then $f$ is integrable on $D$.
+\end{theorem}
+
+\subsection{Multiple Integrals}
+
+The definition extends directly to $\mathbb{R}^n$: area elements $\Delta\sigma_i$ are replaced by volume elements $\Delta V_i$, and double integrals are replaced by $n$-fold integrals.
+
+For a three-dimensional body $D$ with density $\rho(x,y,z)$, the mass is
+\[
+    M=\iiint_D \rho(x,y,z)\,dV,
+\]
+and the center of mass is
+\[
+    \bar{x}=\frac{1}{M}\iiint_D x\rho(x,y,z)\,dV,
+    \qquad
+    \bar{y}=\frac{1}{M}\iiint_D y\rho(x,y,z)\,dV,
+    \qquad
+    \bar{z}=\frac{1}{M}\iiint_D z\rho(x,y,z)\,dV.
+\]
+For a plane lamina with density $\rho(x,y)$,
+\[
+    M=\iint_D \rho(x,y)\,d\sigma,
+\]
+\[
+    \bar{x}=\frac{1}{M}\iint_D x\rho(x,y)\,d\sigma,
+    \qquad
+    \bar{y}=\frac{1}{M}\iint_D y\rho(x,y)\,d\sigma.
+\]
+
+\subsection{Basic Properties of Double Integrals}
+
+Assume all functions involved are integrable on the relevant Jordan measurable domains.
+
+\begin{property}[]
+1. For constants $a,b$,
+\[
+    \iint_D (af+bg)\,d\sigma
+    =a\iint_D f\,d\sigma+b\iint_D g\,d\sigma.
+\]
+
+2. If $D=D_1\cup D_2$ and the interiors of $D_1$ and $D_2$ do not overlap, then
+\[
+    \iint_D f\,d\sigma=\iint_{D_1} f\,d\sigma+\iint_{D_2} f\,d\sigma.
+\]
+
+3. If $f(x,y)\le g(x,y)$ for all $(x,y)\in D$, then
+\[
+    \iint_D f\,d\sigma\le \iint_D g\,d\sigma.
+\]
+
+4. If $f$ is integrable on $D$, then $|f|$ is integrable on $D$, and
+\[
+    \left|\iint_D f\,d\sigma\right|\le \iint_D |f|\,d\sigma.
+\]
+\end{property}
+
+\newpage
+
+\begin{theorem}[Mean Value Theorem for Double Integrals]
+If $f$ and $g$ are integrable on $D$, and $g$ does not change sign, then there exists
+\[
+    \xi\in\left[\inf_D f,\sup_D f\right]
+\]
+such that
+\[
+    \iint_D fg\,d\sigma=\xi\iint_D g\,d\sigma.
+\]
+If $f$ is continuous on a connected compact region $D$, then there exists $(x_0,y_0)\in D$ such that
+\[
+    \iint_D fg\,d\sigma=f(x_0,y_0)\iint_D g\,d\sigma.
+\]
+\end{theorem}
+\section{Evaluation of Multiple Integrals}
+
+The definition of a multiple integral is conceptually important, but in computation we almost never return to the definition directly. The practical problem is to reduce a multiple integral to repeated one-dimensional integrals. This is the role of Fubini's theorem and the reduction formulas for different types of regions.
+
+\subsection{Reduction of Double Integrals}
+
+A plane region is called $x$-simple if it can be written as
+\[
+    D=\{(x,y):a\le x\le b,\ \varphi_1(x)\le y\le \varphi_2(x)\}.
+\]
+For such a region,
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_a^b\left(\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\right)dx.
+\]
+Similarly, if
+\[
+    D=\{(x,y):c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y)\},
+\]
+then
+\[
+    \iint_D f(x,y)\,d\sigma
+    =\int_c^d\left(\int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\right)dy.
+\]
+
+The two formulas are not two different integrals. They are two descriptions of the same geometric accumulation. Changing the order of integration means redrawing the same region with the other variable as the outer variable.
+
+\begin{theorem}[Fubini-Type Reduction]
+If $f$ is continuous on a bounded closed Jordan measurable region $D$, then the double integral over $D$ can be computed by the corresponding iterated integral whenever $D$ is represented as a simple region.
+\end{theorem}
+
+\begin{note}
+In applications, most mistakes come from the domain, not from the antiderivative. A reliable workflow is: first draw $D$, then decide which variable is outer, then write the projection interval, and only then write the inner boundary functions.
+\end{note}
+
+\subsection{Changing the Order of Integration}
+
+Suppose an integral is given as
+\[
+    \int_a^b\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\,dx.
+\]
+It represents the region
+\[
+    D=\{(x,y):a\le x\le b,\ \varphi_1(x)\le y\le \varphi_2(x)\}.
+\]
+To reverse the order, we must describe the same set as
+\[
+    D=\{(x,y):c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y)\}.
+\]
+Then
+\[
+    \int_a^b\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y)\,dy\,dx
+    =\int_c^d\int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\,dy.
+\]
+
+If a horizontal or vertical line intersects the region in several disjoint intervals, the region must be split. This splitting is not a technical annoyance; it is the price of forcing a complicated domain into a simple-region form.
+
+\begin{example}[A Typical Order Change]
+Let
+\[
+    D=\{(x,y):0\le x\le 1,\ x^2\le y\le x\}.
+\]
+Since $x^2\le y\le x$ implies $0\le y\le 1$, and for a fixed $y$ the inequalities become
+\[
+    y\le x\le \sqrt{y},
+\]
+we have
+\[
+    \int_0^1\int_{x^2}^{x} f(x,y)\,dy\,dx
+    =\int_0^1\int_y^{\sqrt y} f(x,y)\,dx\,dy.
+\]
+\end{example}
+
+\subsection{Change of Variables}
+
+For a one-variable integral, substitution changes the coordinate on an interval. For a double integral, a change of variables changes the coordinate grid on a plane region. The correction factor is the absolute value of the Jacobian determinant.
+
+Let
+\[
+    x=x(u,v),\qquad y=y(u,v),
+\]
+and assume that this transformation maps a region $G$ in the $uv$-plane one-to-one onto a region $D$ in the $xy$-plane, with continuous first partial derivatives and nonzero Jacobian except possibly on a negligible set. Then
+\[
+    \iint_D f(x,y)\,dxdy
+    =\iint_G f(x(u,v),y(u,v))
+    \left|\frac{\partial(x,y)}{\partial(u,v)}\right|\,dudv,
+\]
+where
+\[
+    \frac{\partial(x,y)}{\partial(u,v)}
+    =
+    \begin{vmatrix}
+        x_u & x_v\\
+        y_u & y_v
+    \end{vmatrix}.
+\]
+
+\begin{example}[Polar Coordinates]
+The polar transformation is
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta.
+\]
+Its Jacobian is
+\[
+    \frac{\partial(x,y)}{\partial(r,\theta)}
+    =
+    \begin{vmatrix}
+        \cos\theta & -r\sin\theta\\
+        \sin\theta & r\cos\theta
+    \end{vmatrix}
+    =r.
+\]
+Hence
+\[
+    dxdy=r\,drd\theta.
+\]
+This is why polar coordinates are effective when the region contains circles, sectors, disks, annuli, or expressions involving $x^2+y^2$.
+\end{example}
+
+\subsection{Triple Integrals}
+
+For a solid region $\Omega\subseteq\mathbb{R}^3$, the triple integral is defined similarly:
+\[
+    \iiint_{\Omega} f(x,y,z)\,dV.
+\]
+If
+\[
+    \Omega=\{(x,y,z):(x,y)\in D,\ z_1(x,y)\le z\le z_2(x,y)\},
+\]
+then
+\[
+    \iiint_{\Omega} f(x,y,z)\,dV
+    =\iint_D\left(\int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z)\,dz\right)dxdy.
+\]
+
+The same idea applies if we project onto the $yz$-plane or $xz$-plane. Again, the essential step is to understand the geometry of the solid.
+
+\subsection{Cylindrical and Spherical Coordinates}
+
+Cylindrical coordinates are
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta,
+    \qquad
+    z=z,
+\]
+with volume element
+\[
+    dV=r\,drd\theta dz.
+\]
+They are useful for cylinders, cones, rotational solids, and integrands involving $x^2+y^2$.
+
+Spherical coordinates may be written as
+\[
+    x=\rho\sin\varphi\cos\theta,
+    \qquad
+    y=\rho\sin\varphi\sin\theta,
+    \qquad
+    z=\rho\cos\varphi,
+\]
+where $\rho\ge0$, $0\le\varphi\le\pi$, and $0\le\theta<2\pi$. The volume element is
+\[
+    dV=\rho^2\sin\varphi\,d\rho d\varphi d\theta.
+\]
+
+\begin{note}
+The symbols $\theta$ and $\varphi$ are not universal. Some books interchange their roles. The formula is safe only after checking how the angles are defined.
+\end{note}
+
+\section{Line and Surface Integrals}
+
+Multiple integrals add quantities over regions with area or volume. Line integrals and surface integrals add quantities over lower-dimensional geometric objects: curves and surfaces. The main new issue is that curves and surfaces may carry orientation.
+
+\subsection{Arc Length and First-Type Line Integrals}
+
+Let a smooth curve $\Gamma$ be parametrized by
+\[
+    \mathbf r(t)=(x(t),y(t),z(t)),
+    \qquad
+    \alpha\le t\le\beta.
+\]
+Its arc length element is
+\[
+    ds=\|\mathbf r'(t)\|\,dt
+    =\sqrt{[x'(t)]^2+[y'(t)]^2+[z'(t)]^2}\,dt.
+\]
+Thus the first-type line integral is
+\[
+    \int_{\Gamma} f(x,y,z)\,ds
+    =\int_{\alpha}^{\beta} f(x(t),y(t),z(t))\|\mathbf r'(t)\|\,dt.
+\]
+This integral is independent of the orientation of the curve. It measures a scalar density accumulated along a curve, such as mass of a wire.
+
+\subsection{Second-Type Line Integrals}
+
+Let
+\[
+    \mathbf F=(P,Q,R)
+\]
+be a vector field. The second-type line integral along an oriented curve $\Gamma$ is
+\[
+    \int_{\Gamma} P\,dx+Q\,dy+R\,dz
+    =\int_{\alpha}^{\beta}
+    \left(Px'(t)+Qy'(t)+Rz'(t)\right)dt,
+\]
+where $P,Q,R$ are evaluated at $\mathbf r(t)$. Equivalently,
+\[
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r
+    =\int_{\alpha}^{\beta}\mathbf F(\mathbf r(t))\cdot\mathbf r'(t)\,dt.
+\]
+
+Reversing the orientation changes the sign:
+\[
+    \int_{-\Gamma}\mathbf F\cdot d\mathbf r
+    =-
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r.
+\]
+
+\begin{note}
+The first-type integral uses $ds$ and has no orientation. The second-type integral uses $dx,dy,dz$ and depends on orientation. This distinction is one of the most common sources of errors.
+\end{note}
+
+\subsection{Path Independence and Potential Functions}
+
+A vector field $\mathbf F=(P,Q,R)$ is called conservative on a region $D$ if there exists a scalar function $U$ such that
+\[
+    \nabla U=\mathbf F.
+\]
+Then
+\[
+    \int_{\Gamma}\mathbf F\cdot d\mathbf r
+    =U(B)-U(A)
+\]
+for any curve $\Gamma$ from $A$ to $B$. In this case, the line integral is path independent.
+
+In a simply connected region in the plane, if $P,Q$ have continuous first partial derivatives, then
+\[
+    \frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}
+\]
+is the standard test for path independence of
+\[
+    \int P\,dx+Q\,dy.
+\]
+In three dimensions, the corresponding condition is
+\[
+    \nabla\times\mathbf F=\mathbf 0,
+\]
+again under suitable simply connected assumptions.
+
+\subsection{Surface Area}
+
+Let a smooth surface $\Sigma$ be parametrized by
+\[
+    \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),
+    \qquad
+    (u,v)\in D.
+\]
+Set
+\[
+    E=\mathbf r_u\cdot\mathbf r_u,
+    \qquad
+    F=\mathbf r_u\cdot\mathbf r_v,
+    \qquad
+    G=\mathbf r_v\cdot\mathbf r_v.
+\]
+Then
+\[
+    dS=\|\mathbf r_u\times\mathbf r_v\|\,dudv
+    =\sqrt{EG-F^2}\,dudv,
+\]
+and the surface area is
+\[
+    S=\iint_D\sqrt{EG-F^2}\,dudv.
+\]
+
+If the surface is given by $z=g(x,y)$ over a plane region $D$, then
+\[
+    dS=\sqrt{1+g_x^2+g_y^2}\,dxdy,
+\]
+so
+\[
+    S=\iint_D\sqrt{1+g_x^2+g_y^2}\,dxdy.
+\]
+If the surface is given implicitly by $H(x,y,z)=0$ and $H_z\ne0$, then locally
+\[
+    dS=\frac{\|\nabla H\|}{|H_z|}\,dxdy.
+\]
+
+\subsection{First-Type Surface Integrals}
+
+For a scalar field $f$ on $\Sigma$,
+\[
+    \iint_{\Sigma} f(x,y,z)\,dS
+    =\iint_D f(\mathbf r(u,v))\|\mathbf r_u\times\mathbf r_v\|\,dudv.
+\]
+If $\Sigma$ is given by $z=g(x,y)$, then
+\[
+    \iint_{\Sigma} f(x,y,z)\,dS
+    =\iint_D f(x,y,g(x,y))\sqrt{1+g_x^2+g_y^2}\,dxdy.
+\]
+This integral is the surface analogue of a first-type line integral: it accumulates scalar density over a surface.
+
+\subsection{Second-Type Surface Integrals}
+
+For a vector field $\mathbf F=(P,Q,R)$, the second-type surface integral is the flux through an oriented surface:
+\[
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS.
+\]
+Using a parametrization $\mathbf r(u,v)$, choosing the orientation given by $\mathbf r_u\times\mathbf r_v$, we have
+\[
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS
+    =\iint_D \mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v)\,dudv.
+\]
+Equivalently,
+\[
+    \mathbf r_u\times\mathbf r_v
+    =
+    \left(
+    \frac{\partial(y,z)}{\partial(u,v)},
+    \frac{\partial(z,x)}{\partial(u,v)},
+    \frac{\partial(x,y)}{\partial(u,v)}
+    \right),
+\]
+so
+\[
+\begin{aligned}
+    \iint_{\Sigma}\mathbf F\cdot\mathbf n\,dS
+    =\iint_D &\left[
+    P\frac{\partial(y,z)}{\partial(u,v)}
+    +Q\frac{\partial(z,x)}{\partial(u,v)}
+    +R\frac{\partial(x,y)}{\partial(u,v)}
+    \right]dudv.
+\end{aligned}
+\]
+
+It is common to write the same flux integral as
+\[
+    \iint_{\Sigma} P\,dydz+Q\,dzdx+R\,dxdy.
+\]
+This is not a new object. It is a compact notation for $\mathbf F\cdot\mathbf n\,dS$.
+
+\begin{note}
+Changing the chosen side of the surface changes the sign of the second-type surface integral. It does not change a first-type surface integral.
+\end{note}
+
+\section{Green, Gauss, and Stokes Formulas}
+
+Green's formula, Gauss' formula, and Stokes' formula are the structural core of vector calculus. They all express the same idea in different dimensions: an integral over a boundary can be converted into an integral over the interior, or conversely.
+
+\subsection{Green's Formula}
+
+Let $D\subseteq\mathbb{R}^2$ be a bounded region with positively oriented boundary $\partial D$. Positive orientation means that the region stays on the left as one moves along the boundary, equivalently counterclockwise for the usual orientation of the plane.
+
+\begin{theorem}[Green's Formula]
+If $P$ and $Q$ have continuous first partial derivatives on a region containing $D$, then
+\[
+    \int_{\partial D} P\,dx+Q\,dy
+    =\iint_D\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy.
+\]
+\end{theorem}
+
+For a rectangle, this follows directly from the one-dimensional fundamental theorem of calculus. For a general region, one decomposes the region into small pieces. The integrals along internal edges cancel because the two neighboring pieces traverse each shared edge in opposite directions.
+
+\begin{corollary}[Area Formulas]
+Taking suitable $P,Q$ in Green's formula gives
+\[
+    A(D)=\iint_D1\,dxdy
+    =\int_{\partial D}x\,dy
+    =-\int_{\partial D}y\,dx
+    =\frac12\int_{\partial D}x\,dy-y\,dx.
+\]
+\end{corollary}
+
+\subsection{Gauss' Formula}
+
+Let $\Omega\subseteq\mathbb{R}^3$ be a solid region with outward oriented boundary surface $\partial\Omega$.
+
+\begin{theorem}[Gauss' Formula]
+If $\mathbf F=(P,Q,R)$ has continuous first partial derivatives on a region containing $\Omega$, then
+\[
+    \iint_{\partial\Omega}\mathbf F\cdot\mathbf n\,dS
+    =\iiint_{\Omega}\nabla\cdot\mathbf F\,dV,
+\]
+that is,
+\[
+    \iint_{\partial\Omega}P\,dydz+Q\,dzdx+R\,dxdy
+    =\iiint_{\Omega}
+    \left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)dxdydz.
+\]
+\end{theorem}
+
+Gauss' formula says that total outward flux equals total source strength inside the region. In physical language, divergence measures local source density.
+
+\subsection{Stokes' Formula}
+
+Let $\Sigma$ be an oriented smooth surface with positively oriented boundary $\partial\Sigma$. The positive orientation is determined by the right-hand rule: if the thumb points in the chosen normal direction, the fingers curl in the positive boundary direction.
+
+\begin{theorem}[Stokes' Formula]
+If $\mathbf F=(P,Q,R)$ has continuous first partial derivatives on a region containing $\Sigma$, then
+\[
+    \int_{\partial\Sigma}P\,dx+Q\,dy+R\,dz
+    =\iint_{\Sigma}(\nabla\times\mathbf F)\cdot\mathbf n\,dS.
+\]
+Equivalently,
+\[
+\begin{aligned}
+    \int_{\partial\Sigma}P\,dx+Q\,dy+R\,dz
+    =\iint_{\Sigma}&
+    \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dydz
+    +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dzdx \\
+    &+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy.
+\end{aligned}
+\]
+\end{theorem}
+
+Stokes' formula converts circulation along a boundary curve into the flux of curl through a spanning surface. Green's formula is the planar special case of Stokes' formula.
+
+\subsection{Gradient, Divergence, Curl, and Conservative Fields}
+
+For a scalar field $u(x,y,z)$,
+\[
+    \nabla u=
+    \left(\frac{\partial u}{\partial x},
+    \frac{\partial u}{\partial y},
+    \frac{\partial u}{\partial z}\right)
+\]
+is the gradient. It points in the direction of fastest increase.
+
+For a vector field $\mathbf F=(P,Q,R)$,
+\[
+    \nabla\cdot\mathbf F
+    =\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
+\]
+is the divergence, measuring local source or sink strength.
+
+The curl is
+\[
+    \nabla\times\mathbf F
+    =
+    \begin{vmatrix}
+        \mathbf i & \mathbf j & \mathbf k\\
+        \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z}\\
+        P & Q & R
+    \end{vmatrix}.
+\]
+It measures local rotational tendency.
+
+A field is conservative if $\mathbf F=\nabla U$ for some potential $U$. In a simply connected region, the condition $\nabla\times\mathbf F=\mathbf 0$ is the usual criterion for conservativeness. In that case, line integrals depend only on endpoints.
+
+\section{Parameterized Integrals}
+
+A parameterized integral is an integral in which one variable is integrated out while the other variables are treated as parameters. For example,
+\[
+    I(y)=\int_a^b f(x,y)\,dx.
+\]
+The main question is whether the good properties of $f$ transfer to $I$: continuity, differentiability, and integrability with respect to the parameter.
+
+\subsection{Proper Parameterized Integrals}
+
+Assume $f(x,y)$ is defined on the rectangle
+\[
+    [a,b]\times[c,d].
+\]
+If $f$ is continuous on this rectangle, then
+\[
+    I(y)=\int_a^b f(x,y)\,dx
+\]
+is continuous on $[c,d]$.
+
+\begin{theorem}[Differentiation under the Integral Sign]
+If $f$ and $f_y$ are continuous on $[a,b]\times[c,d]$, then
+\[
+    I(y)=\int_a^b f(x,y)\,dx
+\]
+is differentiable on $[c,d]$, and
+\[
+    I'(y)=\int_a^b \frac{\partial f}{\partial y}(x,y)\,dx.
+\]
+\end{theorem}
+
+\begin{theorem}[Integration with Respect to the Parameter]
+If $f$ is continuous on $[a,b]\times[c,d]$, then
+\[
+    \int_c^d\left(\int_a^b f(x,y)\,dx\right)dy
+    =\int_a^b\left(\int_c^d f(x,y)\,dy\right)dx.
+\]
+\end{theorem}
+
+The conceptual reason is simple: on a compact rectangle, continuity gives uniform control. This uniformity is exactly what allows the limiting operation hidden inside the integral to commute with changes in the parameter.
+
+\subsection{Improper Parameterized Integrals}
+
+Now consider
+\[
+    I(y)=\int_a^{+\infty} f(x,y)\,dx.
+\]
+For each fixed $y$, this is an improper integral. To obtain continuity or differentiability of $I(y)$, pointwise convergence is not enough. We need uniform convergence with respect to the parameter.
+
+\begin{definition}[Uniform Convergence of an Improper Parameterized Integral]
+The improper integral
+\[
+    \int_a^{+\infty} f(x,y)\,dx
+\]
+converges uniformly for $y\in E$ if for every $\varepsilon>0$, there exists $A>a$ such that for all $A_2>A_1>A$ and all $y\in E$,
+\[
+    \left|\int_{A_1}^{A_2} f(x,y)\,dx\right|<\varepsilon.
+\]
+\end{definition}
+
+\begin{theorem}[Weierstrass Test for Improper Parameterized Integrals]
+If
+\[
+    |f(x,y)|\le g(x),
+    \qquad y\in E,
+\]
+and
+\[
+    \int_a^{+\infty}g(x)\,dx
+\]
+converges, then
+\[
+    \int_a^{+\infty}f(x,y)\,dx
+\]
+converges uniformly on $E$.
+\end{theorem}
+
+\begin{theorem}[Continuity and Differentiation]
+If $f(x,y)$ is continuous and the improper integral
+\[
+    \int_a^{+\infty} f(x,y)\,dx
+\]
+converges uniformly on $[c,d]$, then $I(y)$ is continuous on $[c,d]$.
+If, in addition, $f_y$ is continuous and
+\[
+    \int_a^{+\infty} f_y(x,y)\,dx
+\]
+converges uniformly on $[c,d]$, then
+\[
+    I'(y)=\int_a^{+\infty} f_y(x,y)\,dx.
+\]
+\end{theorem}
+
+\begin{note}
+The recurring theme is the same as for function series: pointwise convergence only tells us what happens at each fixed parameter, while uniform convergence lets us preserve analytic structure.
+\end{note}
+
+\section{Euler Integrals}
+
+The classical Euler integrals are the Beta function and the Gamma function. They are important not only as special functions, but also as examples of how improper integrals, parameterized integrals, and changes of variables interact.
+
+\subsection{The Beta Function}
+
+For $p>0$ and $q>0$, define
+\[
+    B(p,q)=\int_0^1 x^{p-1}(1-x)^{q-1}\,dx.
+\]
+The integral may have singularities at both endpoints. Near $0$, the convergence is controlled by $x^{p-1}$; near $1$, it is controlled by $(1-x)^{q-1}$. Hence the natural domain is
+\[
+    p>0,
+    \qquad
+    q>0.
+\]
+
+The Beta function is symmetric:
+\[
+    B(p,q)=B(q,p),
+\]
+which follows from the substitution $x=1-t$.
+
+A useful recursion is
+\[
+    B(p,q)=\frac{q-1}{p+q-1}B(p,q-1),
+    \qquad q>1.
+\]
+It is obtained by integration by parts.
+
+Another useful form is obtained by the substitution $x=\sin^2\theta$:
+\[
+    B(p,q)=2\int_0^{\pi/2}\sin^{2p-1}\theta\cos^{2q-1}\theta\,d\theta.
+\]
+Equivalently,
+\[
+    \int_0^{\pi/2}\sin^{m}\theta\cos^{n}\theta\,d\theta
+    =\frac12 B\left(\frac{m+1}{2},\frac{n+1}{2}\right),
+\]
+whenever $m>-1$ and $n>-1$.
+
+\subsection{The Gamma Function}
+
+For $p>0$, define
+\[
+    \Gamma(p)=\int_0^{+\infty} x^{p-1}e^{-x}\,dx.
+\]
+Near $0$, the convergence is controlled by $x^{p-1}$; near $+\infty$, the exponential factor dominates any power. Hence $\Gamma(p)$ is defined for $p>0$.
+
+The fundamental recursion is
+\[
+    \Gamma(p+1)=p\Gamma(p),
+\]
+which follows from integration by parts:
+\[
+    \Gamma(p+1)=\int_0^{+\infty}x^p e^{-x}\,dx
+    =p\int_0^{+\infty}x^{p-1}e^{-x}\,dx.
+\]
+Since
+\[
+    \Gamma(1)=1,
+\]
+we get
+\[
+    \Gamma(n+1)=n!,
+    \qquad n\in\mathbb N.
+\]
+Thus the Gamma function extends the factorial from positive integers to positive real numbers.
+
+A central value is
+\[
+    \Gamma\left(\frac12\right)=\sqrt\pi,
+\]
+which follows from the Gaussian integral.
+
+\subsection{Relation Between Beta and Gamma}
+
+The key identity is
+\[
+    B(p,q)=\frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)},
+    \qquad p>0,
+    \quad q>0.
+\]
+One standard proof starts from
+\[
+    \Gamma(p)\Gamma(q)
+    =\int_0^{+\infty}\int_0^{+\infty}
+    t^{p-1}s^{q-1}e^{-(t+s)}\,dtds,
+\]
+then changes variables by
+\[
+    r=t+s,
+    \qquad
+    x=\frac{t}{t+s}.
+\]
+The Jacobian is $r$, and the integral separates into
+\[
+    \left(\int_0^1x^{p-1}(1-x)^{q-1}\,dx\right)
+    \left(\int_0^{+\infty}r^{p+q-1}e^{-r}\,dr\right).
+\]
+Therefore
+\[
+    \Gamma(p)\Gamma(q)=B(p,q)\Gamma(p+q).
+\]
+
+There are several deeper identities, such as the reflection formula and Stirling's formula, but for ordinary analysis computations the defining integrals, recursion formulas, and the Beta--Gamma relation are the essential tools.
+
+\section{Fourier Series}
+
+Taylor series approximate a function near one point by powers of $x-x_0$. Fourier series approximate a function on an interval by trigonometric waves. The key idea is not local polynomial approximation, but orthogonal decomposition.
+
+\subsection{Trigonometric Orthogonality}
+
+On $[-\pi,\pi]$, the basic orthogonality relations are
+\[
+    \int_{-\pi}^{\pi}\cos nx\cos mx\,dx=0\quad(n\ne m),
+\]
+\[
+    \int_{-\pi}^{\pi}\sin nx\sin mx\,dx=0\quad(n\ne m),
+\]
+\[
+    \int_{-\pi}^{\pi}\sin nx\cos mx\,dx=0.
+\]
+Also,
+\[
+    \int_{-\pi}^{\pi}\cos^2 nx\,dx=\pi,
+    \qquad
+    \int_{-\pi}^{\pi}\sin^2 nx\,dx=\pi
+\]
+for $n\ge1$, and
+\[
+    \int_{-\pi}^{\pi}1^2\,dx=2\pi.
+\]
+
+This is exactly the same idea as orthogonal coordinates in linear algebra. Fourier coefficients are coordinates of a function along trigonometric basis directions.
+
+\subsection{Fourier Coefficients and Fourier Series}
+
+For an integrable $2\pi$-periodic function $f$, define
+\[
+    a_0=\frac1\pi\int_{-\pi}^{\pi}f(x)\,dx,
+\]
+\[
+    a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx,
+    \qquad
+    b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx.
+\]
+The Fourier series of $f$ is
+\[
+    \frac{a_0}{2}+\sum_{n=1}^{\infty}(a_n\cos nx+b_n\sin nx).
+\]
+Its $m$-th partial sum is
+\[
+    S_m(x)=\frac{a_0}{2}+\sum_{n=1}^{m}(a_n\cos nx+b_n\sin nx).
+\]
+
+For a function on $[-l,l]$, the corresponding expansion is
+\[
+    \frac{a_0}{2}+\sum_{n=1}^{\infty}
+    \left(a_n\cos\frac{n\pi x}{l}+b_n\sin\frac{n\pi x}{l}\right),
+\]
+with
+\[
+    a_n=\frac1l\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\,dx,
+    \qquad
+    b_n=\frac1l\int_{-l}^{l}f(x)\sin\frac{n\pi x}{l}\,dx.
+\]
+
+\subsection{Complex Form}
+
+Using Euler's formula, the Fourier series can also be written as
+\[
+    \sum_{n=-\infty}^{+\infty}c_n e^{inx},
+\]
+where
+\[
+    c_n=\frac1{2\pi}\int_{-\pi}^{\pi}f(x)e^{-inx}\,dx.
+\]
+The real and complex forms are equivalent. The complex form makes orthogonality especially transparent:
+\[
+    \int_{-\pi}^{\pi}e^{inx}e^{-ikx}\,dx
+    =\int_{-\pi}^{\pi}e^{i(n-k)x}\,dx
+    =
+    \begin{cases}
+    2\pi, & n=k,\\
+    0, & n\ne k.
+    \end{cases}
+\]
+
+\subsection{Bessel Inequality and the Least-Squares View}
+
+Let
+\[
+    \langle f,g\rangle=\frac1\pi\int_{-\pi}^{\pi}f(x)g(x)\,dx.
+\]
+Then $S_m$ is the orthogonal projection of $f$ onto the finite-dimensional space
+\[
+    \operatorname{span}\{1,\cos x,\sin x,\ldots,\cos mx,\sin mx\}.
+\]
+Therefore $S_m$ is the best approximation to $f$ in that subspace in the mean-square sense:
+\[
+    \int_{-\pi}^{\pi}|f(x)-S_m(x)|^2\,dx
+\]
+is minimal among all trigonometric polynomials of degree at most $m$.
+
+This immediately gives Bessel's inequality:
+\[
+    \frac{a_0^2}{2}+\sum_{n=1}^{\infty}(a_n^2+b_n^2)
+    \le
+    \frac1\pi\int_{-\pi}^{\pi}f^2(x)\,dx.
+\]
+
+\subsection{Riemann--Lebesgue Lemma}
+
+If $f$ is integrable on $[a,b]$, then
+\[
+    \lim_{n\to\infty}\int_a^b f(x)\sin nx\,dx=0,
+    \qquad
+    \lim_{n\to\infty}\int_a^b f(x)\cos nx\,dx=0.
+\]
+
+The intuition is high-frequency cancellation. The function $f$ changes relatively slowly compared with the rapid oscillation of $\sin nx$ and $\cos nx$, so positive and negative contributions cancel in the limit.
+
+\subsection{Dirichlet Kernel and Pointwise Convergence}
+
+The partial sum can be written as an integral operator:
+\[
+    S_m(x)=\frac1\pi\int_{-\pi}^{\pi}f(x+u)D_m(u)\,du,
+\]
+where
+\[
+    D_m(u)=\frac12+\sum_{n=1}^{m}\cos nu
+    =\frac{\sin\left(m+\frac12\right)u}{2\sin\frac u2}.
+\]
+This is the Dirichlet kernel. It is the continuous analogue of the projection matrix from finite-dimensional linear algebra.
+
+The convergence of $S_m(x)$ is therefore controlled by the behavior of $f$ near $x$. Far from $x$, the oscillation in $D_m(u)$ tends to cancel by the Riemann--Lebesgue lemma. Near $u=0$, the kernel has a singular shape, so local regularity of $f$ matters.
+
+\begin{theorem}[Dirichlet--Jordan Criterion]
+If $f$ is $2\pi$-periodic, piecewise smooth or of bounded variation in a neighborhood of $x$, and the one-sided limits $f(x+0)$ and $f(x-0)$ exist, then the Fourier series converges at $x$ to
+\[
+    \frac{f(x+0)+f(x-0)}2.
+\]
+In particular, if $f$ is continuous at $x$, then the Fourier series converges to $f(x)$.
+\end{theorem}
+
+\begin{theorem}[Dini-Type Local Criterion]
+Let
+\[
+    \sigma(x)=\frac{f(x+0)+f(x-0)}2
+\]
+and
+\[
+    E_x(u)=f(x+u)+f(x-u)-2\sigma(x).
+\]
+If for some $\delta>0$,
+\[
+    \int_0^{\delta}\left|\frac{E_x(u)}{u}\right|du<+\infty,
+\]
+then
+\[
+    S_m(x)\to \sigma(x).
+\]
+\end{theorem}
+
+A Lipschitz or Hölder condition near $x$ implies the Dini condition. Thus these tests are all ways of ensuring that the local error is controlled strongly enough to survive the singular behavior of the Dirichlet kernel.
+
+\subsection{What Fourier Series Really Adds}
+
+Fourier series should be understood at two levels.
+
+First, algebraically, it is an orthogonal expansion. The coefficients are coordinates, and the partial sums are projections.
+
+Second, analytically, pointwise convergence is not automatic from projection. The projection viewpoint controls global mean-square error, while pointwise convergence depends on the local interaction between $f$ and the Dirichlet kernel.
+
+This distinction explains why Fourier theory is both natural and subtle: the construction is linear-algebraic, but the convergence question is genuinely analytic.
+
+\section{Conclusion}
+
+Mathematical Analysis II extends one-variable analysis in two directions. The first direction is multivariable analysis: Euclidean space, multivariable limits, differentiation, implicit functions, extrema, multiple integrals, and vector calculus. The second direction is limiting processes of functions: function series, power series, parameterized integrals, Euler integrals, and Fourier series.
+
+The central idea remains unchanged: analysis is the study of when limiting operations are valid. Can we interchange a limit and an integral? Can we differentiate a series term by term? Can we compute an integral by changing coordinates? Can a boundary integral be replaced by an interior integral? Each theorem in this chapter gives one precise situation in which the answer is yes.
