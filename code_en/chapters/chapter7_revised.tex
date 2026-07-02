@@ -833,6 +833,445 @@ Let $f$ be holomorphic on a domain $\Omega$. If $|f|$ attains a local maximum at
 The maximum modulus principle is another expression of rigidity. Holomorphic functions cannot have arbitrary local behavior; their values inside a region are controlled by their boundary behavior.
 \end{remark}
 
+
+\section{A More Complete Form of Cauchy's Theory}
+
+The simple form of Cauchy's theorem is enough for many computations, but it hides two important points. First, the theorem does not require the derivative $f'$ to be continuous; complex differentiability alone is sufficient. Second, the value of a contour integral depends not merely on which singularities lie ``inside'' a curve, but on how many times the curve winds around each singularity. These refinements lead naturally to Goursat's theorem and the winding number.
+
+\subsection{Goursat's Theorem}
+
+\begin{theorem}[Cauchy--Goursat Theorem for a Triangle]
+Let $f$ be holomorphic on an open set containing a triangle $T$ and its interior. Then
+\[
+    \int_{\partial T} f(z)\,dz=0.
+\]
+No continuity assumption on $f'$ is required.
+\end{theorem}
+
+\begin{proof}[Nested-Triangle Argument]
+Divide $T$ into four congruent triangles. The integrals over the interior edges cancel, so the integral over $\partial T$ is the sum of the four boundary integrals. At least one small triangle, call it $T_1$, satisfies
+\[
+    \left|\int_{\partial T_1}f(z)\,dz\right|
+    \geq \frac14\left|\int_{\partial T}f(z)\,dz\right|.
+\]
+Repeat the construction to obtain nested triangles
+\[
+    T\supseteq T_1\supseteq T_2\supseteq\cdots
+\]
+whose diameters tend to zero and whose boundary integrals retain at least the corresponding fraction of the original integral. Compactness gives a unique point $z_0$ in all the triangles.
+
+Since $f$ is differentiable at $z_0$,
+\[
+    f(z)=f(z_0)+f'(z_0)(z-z_0)+\varepsilon(z)(z-z_0),
+\]
+where $\varepsilon(z)\to0$ as $z\to z_0$. The constant and linear terms have primitives, so their integrals around $\partial T_n$ vanish. The remaining integral is bounded by
+\[
+    \sup_{z\in T_n}|\varepsilon(z)|\cdot
+    \operatorname{diam}(T_n)\cdot\operatorname{length}(\partial T_n),
+\]
+which tends to zero faster than the scaling inherited from the first triangle. Hence the original integral must be zero.
+\end{proof}
+
+\begin{theorem}[Cauchy's Theorem on Simply Connected Domains]
+Let $\Omega$ be simply connected and let $f$ be holomorphic on $\Omega$. Then every closed piecewise smooth contour $\gamma$ in $\Omega$ satisfies
+\[
+    \int_\gamma f(z)\,dz=0.
+\]
+Equivalently, $f$ has a primitive on $\Omega$.
+\end{theorem}
+
+\begin{remark}
+The equivalence with the existence of a primitive is worth remembering. Vanishing integrals around closed contours imply path independence: if $\gamma_1$ and $\gamma_2$ join $z_0$ to $z$, then following $\gamma_1$ and returning along $\gamma_2$ gives a closed contour. One may therefore define
+\[
+    F(z)=\int_{z_0}^{z}f(\zeta)\,d\zeta,
+\]
+and path independence makes $F$ well-defined. A local difference-quotient argument then gives $F'=f$.
+\end{remark}
+
+\subsection{Winding Number and the General Integral Formula}
+
+\begin{definition}[Winding Number]
+Let $\gamma$ be a closed piecewise smooth contour and let $a$ not lie on its image. The \textbf{winding number} of $\gamma$ about $a$ is
+\[
+    \operatorname{Ind}(\gamma,a)
+    =\frac{1}{2\pi i}\int_\gamma\frac{dz}{z-a}.
+\]
+\end{definition}
+
+\begin{proposition}
+The winding number is an integer. It is constant as $a$ moves within any connected component of $\mathbb{C}\setminus\gamma$, and it is $0$ on the unbounded component.
+\end{proposition}
+
+\begin{theorem}[General Cauchy Integral Formula]
+Let $f$ be holomorphic on a region containing a closed contour $\gamma$ and every point around which $\gamma$ has non-zero winding number. If $a$ does not lie on $\gamma$, then
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{f(z)}{z-a}\,dz
+    =\operatorname{Ind}(\gamma,a)f(a).
+\]
+\end{theorem}
+
+\begin{example}
+If $\gamma(t)=e^{3it}$ for $0\leq t\leq2\pi$, then $\gamma$ traverses the unit circle three times counterclockwise. Hence
+\[
+    \operatorname{Ind}(\gamma,0)=3,
+    \qquad
+    \int_\gamma\frac{e^z}{z}\,dz=6\pi i.
+\]
+The geometric region enclosed by the curve has not changed, but the integral records multiplicity.
+\end{example}
+
+\begin{theorem}[Morera's Theorem]
+Let $f$ be continuous on a domain $\Omega$. If
+\[
+    \int_{\partial T}f(z)\,dz=0
+\]
+for every triangle $T$ whose closure lies in $\Omega$, then $f$ is holomorphic on $\Omega$.
+\end{theorem}
+
+\begin{proof}
+On a disk contained in $\Omega$, fix $z_0$ and define
+\[
+    F(z)=\int_{[z_0,z]}f(\zeta)\,d\zeta.
+\]
+The triangular integral condition makes this definition path independent within the disk. Continuity of $f$ implies $F'=f$, so $f$ is locally a derivative of a holomorphic function and is therefore holomorphic.
+\end{proof}
+
+\section{Singularities: Criteria and Local Behavior}
+
+The Laurent-series classification is exact, but in applications one often recognizes a singularity without computing the entire series. Boundedness detects removable singularities, reciprocal behavior detects poles, and failure of both indicates an essential singularity. These tests connect algebraic expansions with geometric behavior near the exceptional point.
+
+\begin{theorem}[Riemann's Removable Singularity Theorem]
+Let $f$ be holomorphic on $0<|z-z_0|<R$. The following conditions are equivalent:
+\begin{enumerate}
+    \item $f$ extends holomorphically to $z_0$;
+    \item $f$ is bounded in some punctured neighborhood of $z_0$;
+    \item $\displaystyle \lim_{z\to z_0}(z-z_0)f(z)=0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Main Idea]
+If $f$ is bounded near $z_0$, define
+\[
+    g(z)=
+    \begin{cases}
+    (z-z_0)^2f(z),&z\neq z_0,\\
+    0,&z=z_0.
+    \end{cases}
+\]
+Then $g$ is complex differentiable at $z_0$ with $g'(z_0)=0$. Since $g$ has a zero of order at least two, $g(z)/(z-z_0)^2$ extends holomorphically, giving the desired extension of $f$. The other implications follow directly from the extension or from Cauchy's formula.
+\end{proof}
+
+\begin{theorem}[Characterizations of a Pole]
+For a function holomorphic on a punctured neighborhood of $z_0$, the following are equivalent:
+\begin{enumerate}
+    \item $z_0$ is a pole of $f$;
+    \item $|f(z)|\to\infty$ as $z\to z_0$;
+    \item $1/f$ extends holomorphically to $z_0$ and has a zero there.
+\end{enumerate}
+If the zero of $1/f$ has order $m$, then the pole of $f$ has order $m$.
+\end{theorem}
+
+\begin{proposition}[Residue at a Pole of Order $m$]
+If $z_0$ is a pole of order $m$, then
+\[
+    \operatorname{Res}(f,z_0)
+    =\frac{1}{(m-1)!}
+    \lim_{z\to z_0}
+    \frac{d^{m-1}}{dz^{m-1}}
+    \left[(z-z_0)^m f(z)\right].
+\]
+\end{proposition}
+
+\begin{example}
+For
+\[
+    f(z)=\frac{e^z}{(z-1)^3},
+\]
+the point $z=1$ is a pole of order $3$. Thus
+\[
+    \operatorname{Res}(f,1)
+    =\frac{1}{2!}\left.\frac{d^2}{dz^2}e^z\right|_{z=1}
+    =\frac{e}{2}.
+\]
+\end{example}
+
+\begin{theorem}[Casorati--Weierstrass]
+If $z_0$ is an essential singularity of $f$, then the image of every punctured neighborhood of $z_0$ is dense in $\mathbb{C}$.
+\end{theorem}
+
+\begin{proof}
+Suppose some disk $D(w_0,\varepsilon)$ is omitted near $z_0$. Then
+\[
+    g(z)=\frac{1}{f(z)-w_0}
+\]
+is holomorphic and bounded near $z_0$, so $g$ has a removable singularity. If the extension satisfies $g(z_0)\neq0$, then $f=w_0+1/g$ also extends, so $z_0$ is removable. If $g(z_0)=0$, then $1/g$ has a pole, so $f$ has a pole. Both conclusions contradict essentiality.
+\end{proof}
+
+\begin{remark}
+The function $e^{1/z}$ illustrates the theorem. Along sequences for which $1/z$ has large positive real part, the modulus becomes arbitrarily large; along sequences with large negative real part, it approaches $0$; and by varying the imaginary part, the argument winds rapidly. An essential singularity is therefore not merely ``more divergent'' than a pole. It is qualitatively less ordered.
+\end{remark}
+
+\section{Residue Calculus for Real Integrals}
+
+The residue theorem becomes especially useful when a real integral can be embedded into a contour integral. The contour is chosen so that one part of it reproduces the desired real integral, while the remaining parts either vanish or can be related to the same unknown quantity. The main work is therefore not the residue computation but the design of the contour.
+
+\subsection{Rational Functions on the Real Line}
+
+\begin{example}[The Basic Cauchy Integral]
+Let $a>0$. Consider
+\[
+    I=\int_{-\infty}^{\infty}\frac{dx}{x^2+a^2}.
+\]
+Integrate $1/(z^2+a^2)$ over the upper semicircle of radius $R$. The only pole in the upper half-plane is $z=ia$, with residue
+\[
+    \operatorname{Res}\left(\frac{1}{z^2+a^2},ia\right)
+    =\frac{1}{2ia}.
+\]
+The integral over the semicircular arc is bounded by
+\[
+    \frac{\pi R}{R^2-a^2}\longrightarrow0.
+\]
+Therefore
+\[
+    I=2\pi i\cdot\frac{1}{2ia}=\frac{\pi}{a}.
+\]
+\end{example}
+
+\begin{example}[A Fourth-Degree Denominator]
+Consider
+\[
+    I=\int_{-\infty}^{\infty}\frac{dx}{x^4+1}.
+\]
+The poles in the upper half-plane are
+\[
+    z_1=e^{i\pi/4},\qquad z_2=e^{3i\pi/4}.
+\]
+Since the poles are simple,
+\[
+    \operatorname{Res}\left(\frac{1}{z^4+1},z_k\right)
+    =\frac{1}{4z_k^3}.
+\]
+Their sum is
+\[
+    \frac{1}{4e^{3i\pi/4}}+\frac{1}{4e^{9i\pi/4}}
+    =-\frac{i}{2\sqrt2}.
+\]
+The upper semicircular contribution tends to zero, and hence
+\[
+    I=2\pi i\left(-\frac{i}{2\sqrt2}\right)
+    =\frac{\pi}{\sqrt2}.
+\]
+\end{example}
+
+\subsection{Trigonometric Integrals and the Unit Circle}
+
+For integrals over $[0,2\pi]$, the substitution
+\[
+    z=e^{i\theta},\qquad
+    d\theta=\frac{dz}{iz},\qquad
+    \cos\theta=\frac12\left(z+\frac1z\right)
+\]
+turns a trigonometric integral into a contour integral around $|z|=1$.
+
+\newpage
+
+\begin{example}
+Assume $a>|b|>0$. Then
+\[
+    I=\int_0^{2\pi}\frac{d\theta}{a+b\cos\theta}
+\]
+becomes
+\[
+    I=\frac{2}{i}\int_{|z|=1}
+    \frac{dz}{bz^2+2az+b}.
+\]
+The roots are
+\[
+    z_{\pm}=\frac{-a\pm\sqrt{a^2-b^2}}{b},
+\]
+and exactly one of them lies inside the unit circle. Evaluating the residue at that root gives
+\[
+    I=\frac{2\pi}{\sqrt{a^2-b^2}}.
+\]
+\end{example}
+
+\begin{note}
+A contour argument must include three checks: which poles lie inside the contour, why the auxiliary contour pieces vanish or cancel, and whether the orientation is positive. Most sign errors in residue calculations come from skipping one of these checks.
+\end{note}
+
+\section{The Argument Principle and Rouche's Theorem}
+
+A holomorphic function changes both magnitude and argument along a contour. When the contour closes, the net change in argument counts how many times the image curve winds around the origin. Zeros and poles are exactly the points where this winding can be created or destroyed. The argument principle makes this relation precise.
+
+\begin{theorem}[Argument Principle]
+Let $f$ be meromorphic on a region containing a positively oriented simple closed contour $\gamma$ and its interior. Assume that $f$ has no zeros or poles on $\gamma$. If $N$ and $P$ denote the numbers of zeros and poles inside $\gamma$, counted with multiplicity, then
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{f'(z)}{f(z)}\,dz=N-P.
+\]
+\end{theorem}
+
+\begin{proof}
+Near a zero $a$ of order $m$, write $f(z)=(z-a)^m g(z)$ with $g(a)\neq0$. Then
+\[
+    \frac{f'}{f}=\frac{m}{z-a}+\frac{g'}{g},
+\]
+so the residue is $m$. Near a pole of order $m$, the same calculation gives residue $-m$. The residue theorem now yields the formula.
+\end{proof}
+
+\begin{corollary}[Change of Argument]
+Under the same hypotheses, the total change in a continuous choice of $\arg f(z)$ as $z$ traverses $\gamma$ is
+\[
+    2\pi(N-P).
+\]
+\end{corollary}
+
+\begin{theorem}[Rouche's Theorem]
+Let $f$ and $g$ be holomorphic on and inside a simple closed contour $\gamma$. If
+\[
+    |g(z)|<|f(z)|
+\]
+for every $z\in\gamma$, then $f$ and $f+g$ have the same number of zeros inside $\gamma$, counted with multiplicity.
+\end{theorem}
+
+\begin{proof}
+For $0\leq t\leq1$, define $F_t=f+tg$. On $\gamma$,
+\[
+    |tg|\leq|g|<|f|,
+\]
+so $F_t$ never vanishes there. The integer
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{F_t'}{F_t}\,dz
+\]
+depends continuously on $t$, hence is constant. At $t=0$ it counts the zeros of $f$, and at $t=1$ it counts the zeros of $f+g$.
+\end{proof}
+
+\begin{example}
+Determine the number of zeros of
+\[
+    p(z)=z^7+4z^3+1
+\]
+inside $|z|=2$. On the circle,
+\[
+    |z^7|=128,
+    \qquad
+    |4z^3+1|\leq33<128.
+\]
+By Rouche's theorem, $p$ and $z^7$ have the same number of zeros in the disk. Therefore all seven zeros of $p$, counted with multiplicity, lie inside $|z|<2$.
+\end{example}
+
+\begin{example}
+Determine the number of zeros of
+\[
+    q(z)=z^5+10z+3
+\]
+inside $|z|=1$. On the unit circle,
+\[
+    |z^5+3|\leq4<10=|10z|.
+\]
+Thus $q$ and $10z$ have the same number of zeros in the unit disk, namely one.
+\end{example}
+
+\section{Maximum Principles, Open Mapping, and Schwarz's Lemma}
+
+The maximum modulus principle is not an isolated fact. It belongs to a family of results expressing the same rigidity: non-constant holomorphic functions send open sets to open sets, cannot attain interior extrema of modulus, and are severely constrained when mapping the unit disk into itself.
+
+\begin{theorem}[Mean Value Property]
+If $f$ is holomorphic on a neighborhood of the closed disk $\overline{D(z_0,r)}$, then
+\[
+    f(z_0)=\frac{1}{2\pi}\int_0^{2\pi}f(z_0+re^{it})\,dt.
+\]
+\end{theorem}
+
+\begin{proof}
+Parametrize the circle in Cauchy's integral formula by $z=z_0+re^{it}$. Since $dz=ire^{it}dt$, the factors $re^{it}$ cancel.
+\end{proof}
+
+\begin{theorem}[Minimum Modulus Principle]
+Let $f$ be holomorphic and non-vanishing on a domain. If $|f|$ attains a local minimum at an interior point, then $f$ is constant.
+\end{theorem}
+
+\begin{proof}
+The reciprocal $1/f$ is holomorphic. A local minimum of $|f|$ is a local maximum of $|1/f|$, so the maximum modulus principle forces $1/f$, and hence $f$, to be constant.
+\end{proof}
+
+\begin{theorem}[Open Mapping Theorem]
+A non-constant holomorphic function maps open sets to open sets.
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+Let $w_0=f(z_0)$. Choose a small circle around $z_0$ on which $f(z)-w_0$ has no zeros. Its modulus has a positive minimum $m$ on the circle. If $|w-w_0|<m$, then on that circle
+\[
+    |w-w_0|<|f(z)-w_0|.
+\]
+Rouche's theorem shows that $f(z)-w$ and $f(z)-w_0$ have the same number of zeros inside. Since the second function vanishes at $z_0$, so does the first. Thus every $w$ sufficiently close to $w_0$ lies in the image.
+\end{proof}
+
+\begin{theorem}[Schwarz's Lemma]
+Let $f$ be holomorphic on the unit disk $\mathbb{D}$, suppose $f(0)=0$, and assume $|f(z)|\leq1$ for all $z\in\mathbb{D}$. Then
+\[
+    |f(z)|\leq|z|,
+    \qquad
+    |f'(0)|\leq1.
+\]
+If equality holds at some non-zero point or if $|f'(0)|=1$, then
+\[
+    f(z)=e^{i\theta}z
+\]
+for some real $\theta$.
+\end{theorem}
+
+\begin{proof}
+Define $g(z)=f(z)/z$ for $z\neq0$ and $g(0)=f'(0)$. The singularity at $0$ is removable, so $g$ is holomorphic. On $|z|=r<1$,
+\[
+    |g(z)|\leq\frac1r.
+\]
+The maximum modulus principle gives $|g(z)|\leq1/r$ for $|z|\leq r$. Letting $r\to1$ yields $|g(z)|\leq1$, which proves both inequalities. Equality forces $g$ to have an interior maximum modulus, hence to be constant of modulus $1$.
+\end{proof}
+
+\section{Geometric Visualizations}
+
+Complex formulas are often easier to understand when one tracks how curves and regions move. A holomorphic map is locally a rotation and dilation wherever its derivative is non-zero. Singularities and residues, by contrast, are detected by how contours wind around exceptional points.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.05]
+    \draw[->] (-2.2,0)--(2.2,0) node[right] {$\Re z$};
+    \draw[->] (0,-2.2)--(0,2.2) node[above] {$\Im z$};
+    \draw[thick] (0,0) circle (1.35);
+    \draw[->,thick] (1.35,0) arc (0:70:1.35);
+    \node at (0,-2.55) {domain: $z=e^{it}$};
+
+    \begin{scope}[xshift=5.4cm]
+    \draw[->] (-2.2,0)--(2.2,0) node[right] {$\Re w$};
+    \draw[->] (0,-2.2)--(0,2.2) node[above] {$\Im w$};
+    \draw[thick] (0,0) circle (1.35);
+    \draw[->,thick] (1.35,0) arc (0:140:1.35);
+    \node at (0,-2.55) {image under $w=z^2$};
+    \end{scope}
+    \draw[->,very thick] (2.05,1.55)--(3.35,1.55) node[midway,above] {$z\mapsto z^2$};
+\end{tikzpicture}
+\caption{The map $z\mapsto z^2$ doubles arguments. One traversal of an arc in the $z$-plane produces twice the angular change in the $w$-plane.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-3.2,0)--(3.2,0) node[right] {$\Re z$};
+    \draw[->] (0,-2.5)--(0,2.5) node[above] {$\Im z$};
+    \draw[thick,->] (2.5,0) arc (0:350:2.5);
+    \fill (0.8,0.7) circle (2pt) node[above right] {$z_1$};
+    \fill (-0.9,0.4) circle (2pt) node[above left] {$z_2$};
+    \fill (3.0,1.1) circle (2pt) node[right] {$z_3$};
+    \draw[dashed] (0.8,0.7) circle (0.35);
+    \draw[dashed] (-0.9,0.4) circle (0.35);
+\end{tikzpicture}
+\caption{A residue contour encloses $z_1$ and $z_2$ but not $z_3$. The contour integral is $2\pi i$ times the sum of the enclosed residues, with winding numbers included.}
+\end{figure}
+
+\begin{remark}
+The first picture encodes conformality: near a point where $f'(z_0)\neq0$, small directions are rotated by $\arg f'(z_0)$ and scaled by $|f'(z_0)|$. The second picture encodes locality of residues: the global contour integral is assembled from data in arbitrarily small neighborhoods of the enclosed singularities.
+\end{remark}
+
 \section{Conclusion}
 
 Complex analysis begins with a small change in the definition of derivative: the increment $h$ is allowed to approach $0$ from every direction in the complex plane. This small change creates an extremely rigid theory. Holomorphic functions satisfy the Cauchy-Riemann equations, admit contour integral formulas, possess power series expansions, and have isolated singularities whose behavior is encoded by Laurent series.

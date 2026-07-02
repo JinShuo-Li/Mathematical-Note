@@ -666,6 +666,304 @@ Then every singleton is open, so every subset is open.
 Metrizability is a strong property. Metric spaces are always Hausdorff and first countable. Therefore any topology failing these properties cannot come from a metric.
 \end{remark}
 
+
+\section{Separation Axioms Beyond the Hausdorff Condition}
+
+The axioms $T_0$, $T_1$, and $T_2$ compare neighborhoods of points. The next separation axioms compare points with closed sets, and then compare two closed sets with each other. This progression is not cosmetic. Many constructions in analysis require continuous functions that distinguish sets, and such functions cannot be produced from the Hausdorff condition alone.
+
+There are several conventions in the literature. In these notes, a \emph{regular space} and a \emph{normal space} are not assumed to be $T_1$ unless this is stated explicitly. Thus $T_3$ means regular plus $T_1$, and $T_4$ means normal plus $T_1$.
+
+\begin{definition}[Regularity and Normality]
+Let $X$ be a topological space.
+\begin{enumerate}
+    \item $X$ is \textbf{regular} if whenever $x\in X$ and $F\subseteq X$ is closed with $x\notin F$, there exist disjoint open sets $U,V$ such that $x\in U$ and $F\subseteq V$.
+    \item $X$ is \textbf{completely regular} if whenever $x\notin F$ and $F$ is closed, there exists a continuous function $f:X\to[0,1]$ such that $f(x)=0$ and $f|_F=1$.
+    \item $X$ is \textbf{normal} if whenever $A,B\subseteq X$ are disjoint closed sets, there exist disjoint open sets $U,V$ such that $A\subseteq U$ and $B\subseteq V$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[The Separation Hierarchy]
+A space is called
+\[
+\begin{array}{c|l}
+T_0 & \text{Kolmogorov},\\
+T_1 & \text{all singleton sets are closed},\\
+T_2 & \text{Hausdorff},\\
+T_3 & \text{regular and }T_1,\\
+T_{3\frac12} & \text{completely regular and }T_1,\\
+T_4 & \text{normal and }T_1.
+\end{array}
+\]
+A $T_{3\frac12}$ space is also called a \textbf{Tychonoff space}.
+\end{definition}
+
+\begin{proposition}[Closure Form of Regularity]
+A space $X$ is regular if and only if for every point $x$ and every open set $U$ containing $x$, there exists an open set $V$ such that
+\[
+    x\in V\subseteq \overline{V}\subseteq U.
+\]
+\end{proposition}
+
+\begin{proof}
+Assume first that $X$ is regular. The set $F=X\setminus U$ is closed and does not contain $x$. Choose disjoint open sets $V,W$ with $x\in V$ and $F\subseteq W$. Since $V\cap W=\emptyset$, no point of $W$ lies in $\overline{V}$. Therefore $\overline{V}\subseteq X\setminus W\subseteq U$.
+
+Conversely, suppose the closure condition holds. Let $F$ be closed and $x\notin F$. Apply the condition to $U=X\setminus F$ and choose $V$ with $x\in V\subseteq\overline{V}\subseteq U$. Then $V$ and $X\setminus\overline{V}$ are disjoint open sets containing $x$ and $F$, respectively.
+\end{proof}
+
+\begin{theorem}[Metric Spaces Are Normal]
+Every metric space is normal. Consequently, every metric space is $T_4$ and hence also $T_{3\frac12}$, $T_3$, $T_2$, $T_1$, and $T_0$.
+\end{theorem}
+
+\begin{proof}
+Let $A$ and $B$ be disjoint closed subsets of a metric space $(X,d)$. Define
+\[
+    d(x,A)=\inf_{a\in A}d(x,a),\qquad d(x,B)=\inf_{b\in B}d(x,b).
+\]
+Both functions are continuous. Set
+\[
+    U=\{x:d(x,A)<d(x,B)\},\qquad
+    V=\{x:d(x,B)<d(x,A)\}.
+\]
+These sets are open and disjoint. If $a\in A$, then $d(a,A)=0$, while $d(a,B)>0$ because $B$ is closed and $a\notin B$. Thus $A\subseteq U$, and similarly $B\subseteq V$.
+\end{proof}
+
+\begin{example}[Why the Hypotheses Matter]
+The cofinite topology on an infinite set is $T_1$ but not Hausdorff: any two non-empty open sets intersect. Thus the implication $T_1\Rightarrow T_2$ fails. The Sierpinski space $X=\{0,1\}$ with topology $\{\emptyset,\{1\},X\}$ is $T_0$ but not $T_1$. These examples show that the lower separation axioms are genuinely distinct.
+\end{example}
+
+\begin{theorem}[Urysohn's Lemma]
+Let $X$ be a normal space and let $A,B\subseteq X$ be disjoint closed sets. Then there exists a continuous function $f:X\to[0,1]$ such that
+\[
+    f|_A=0,\qquad f|_B=1.
+\]
+\end{theorem}
+
+\begin{proof}[Construction Outline]
+The proof repeatedly uses normality to insert closures between open sets. For each dyadic rational $r\in[0,1]$, construct an open set $U_r$ so that
+\[
+    A\subseteq U_0,
+    \qquad \overline{U_r}\subseteq U_s\quad(r<s),
+    \qquad X\setminus U_1\supseteq B.
+\]
+Define
+\[
+    f(x)=\inf\{r:x\in U_r\},
+\]
+with the convention that the infimum of the empty set is $1$. The nesting relation implies
+\[
+    f^{-1}([0,a))=\bigcup_{r<a}U_r,
+    \qquad
+    f^{-1}((a,1])=\bigcup_{r>a}(X\setminus\overline{U_r}),
+\]
+so both relevant inverse images are open. Hence $f$ is continuous and has the required boundary values.
+\end{proof}
+
+\begin{theorem}[Tietze Extension Theorem]
+Let $X$ be a normal space, let $A\subseteq X$ be closed, and let $f:A\to[-1,1]$ be continuous. Then there exists a continuous function $F:X\to[-1,1]$ such that $F|_A=f$.
+\end{theorem}
+
+\begin{remark}
+Urysohn's lemma separates two closed sets by a continuous real-valued function. Tietze's theorem extends an already defined continuous function from a closed subspace. The second theorem is deeper, but its proof repeatedly applies the first theorem to approximate the remaining error. These results explain why normality is the natural topological condition for constructing real-valued functions.
+\end{remark}
+
+\section{Components, Local Connectedness, and the Topologist's Sine Curve}
+
+Connectedness is a global condition: the whole space cannot be separated into two non-empty open pieces. Path connectedness is more constructive: every pair of points can be joined by a continuous path. Local connectedness asks for connected neighborhoods near each point. None of these conditions should be confused with the others.
+
+\begin{definition}[Connected and Path Components]
+For $x\in X$, the \textbf{connected component} of $x$ is the union of all connected subsets of $X$ containing $x$. The \textbf{path component} of $x$ is the union of all path connected subsets containing $x$.
+\end{definition}
+
+\begin{proposition}
+Connected components are closed, pairwise disjoint, and maximal connected subsets. Path components are pairwise disjoint and maximal path connected subsets, but they need not be closed in an arbitrary topological space.
+\end{proposition}
+
+\begin{proof}
+If two connected subsets intersect, their union is connected. Hence the union used to define a connected component is connected, and two different components cannot intersect. The closure of a connected set is connected, so maximality forces each connected component to contain its closure and therefore to be closed. The path-component statement follows from the analogous fact that two intersecting path connected sets have path connected union.
+\end{proof}
+
+\begin{definition}[Local Connectedness]
+A space $X$ is \textbf{locally connected at $x$} if every neighborhood of $x$ contains a connected open neighborhood of $x$. It is \textbf{locally path connected at $x$} if every neighborhood of $x$ contains a path connected open neighborhood of $x$. The space is locally connected or locally path connected if the condition holds at every point.
+\end{definition}
+
+\begin{theorem}
+If $X$ is locally path connected, then its connected components and path components coincide, and each component is open.
+\end{theorem}
+
+\begin{proof}
+Fix $x\in X$ and let $P$ be its path component. For each $y\in P$, choose a path connected open neighborhood $U_y$ of $y$. Every point of $U_y$ can be joined to $y$, and $y$ can be joined to $x$, so $U_y\subseteq P$. Hence $P$ is open. The path components form a disjoint open partition. A connected subset cannot meet two different members of such a partition, so the connected component of $x$ is contained in $P$. The reverse containment is automatic because path connected sets are connected.
+\end{proof}
+
+\begin{example}[The Topologist's Sine Curve]
+Let
+\[
+    S=\left\{\left(x,\sin\frac1x\right):0<x\leq 1\right\}
+      \cup\left(\{0\}\times[-1,1]\right)\subseteq\mathbb{R}^2.
+\]
+The graph part
+\[
+    G=\left\{\left(x,\sin\frac1x\right):0<x\leq 1\right\}
+\]
+is the continuous image of the connected interval $(0,1]$, so $G$ is connected. Its closure is exactly $S$, and the closure of a connected set is connected. Therefore $S$ is connected.
+
+However, no path in $S$ joins a point of the vertical segment to a point of $G$. Suppose such a path existed. As the first coordinate approaches $0$ through positive values, the second coordinate would have to follow $\sin(1/x)$, which oscillates infinitely often between values near $-1$ and $1$. Continuity at the first moment when the path leaves the vertical segment would be impossible. Hence $S$ is connected but not path connected. It is also not locally connected at points of the vertical segment.
+\end{example}
+
+\begin{remark}
+This example is valuable because the failure is not caused by disconnected pieces placed far apart. The graph accumulates on the entire vertical segment, so closure creates connectedness without creating paths. It is a model example of why limit behavior in topology can be subtler than geometric intuition suggests.
+\end{remark}
+
+\section{Compactness Beyond Closed and Bounded Sets}
+
+The slogan ``compact means closed and bounded'' is valid in finite-dimensional Euclidean space, but it is not the definition and it fails in many other spaces. The open-cover definition is robust because it is preserved by continuous maps and makes sense without a metric. Several equivalent formulations reveal different ways in which compactness converts infinitely many local conditions into finitely many global conditions.
+
+\subsection{The Finite Intersection Property}
+
+\begin{definition}[Finite Intersection Property]
+A family $\mathcal{F}$ of subsets of $X$ has the \textbf{finite intersection property} if every finite subfamily has non-empty intersection.
+\end{definition}
+
+\begin{theorem}[Closed-Set Characterization of Compactness]
+A topological space $X$ is compact if and only if every family of closed sets with the finite intersection property has non-empty total intersection.
+\end{theorem}
+
+\begin{proof}
+Suppose $X$ is compact and $\{F_i\}_{i\in I}$ is a family of closed sets with empty total intersection. Then $\{X\setminus F_i\}_{i\in I}$ is an open cover of $X$. A finite subcover would imply that the corresponding finite intersection of the $F_i$ is empty, contradicting the finite intersection property.
+
+Conversely, suppose every closed family with the finite intersection property has non-empty intersection. If an open cover $\{U_i\}_{i\in I}$ had no finite subcover, then every finite intersection of the closed sets $X\setminus U_i$ would be non-empty. Their total intersection would therefore be non-empty, contradicting the assumption that the $U_i$ cover $X$.
+\end{proof}
+
+\subsection{Sequential Compactness in Metric Spaces}
+
+\begin{definition}[Sequential Compactness]
+A space is \textbf{sequentially compact} if every sequence has a convergent subsequence whose limit belongs to the space.
+\end{definition}
+
+\begin{theorem}
+For metric spaces, compactness and sequential compactness are equivalent.
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+If a metric space is compact, cover it by finitely many balls of radius $1$. One of these balls contains infinitely many terms of the sequence. Cover that ball by finitely many balls of radius $1/2$ and choose one containing infinitely many of the remaining terms. Continuing inductively gives a nested selection of terms whose mutual distances tend to zero. Compactness supplies a cluster point, and the selected subsequence converges to it.
+
+For the converse, assume sequential compactness. First, the space is totally bounded. Otherwise there would exist $\varepsilon>0$ and a sequence $(x_n)$ with
+\[
+    d(x_m,x_n)\geq\varepsilon\qquad(m\neq n),
+\]
+which has no convergent subsequence.
+
+Now let $\mathcal{U}$ be an open cover. We claim that $\mathcal{U}$ has a Lebesgue number. If not, for each $n$ choose $x_n$ such that $B_{1/n}(x_n)$ is contained in no member of $\mathcal{U}$. Sequential compactness gives a subsequence $x_{n_k}\to x$. Choose $U\in\mathcal{U}$ and $r>0$ with $B_r(x)\subseteq U$. For large $k$, both $d(x_{n_k},x)<r/2$ and $1/n_k<r/2$, so
+\[
+    B_{1/n_k}(x_{n_k})\subseteq B_r(x)\subseteq U,
+\]
+a contradiction. Finally, total boundedness supplies finitely many balls of radius smaller than the Lebesgue number, and one member of $\mathcal{U}$ contains each ball. These finitely many members form a finite subcover.
+\end{proof}
+
+\begin{theorem}[Lebesgue Number Lemma]
+Let $(X,d)$ be a compact metric space and let $\mathcal{U}$ be an open cover of $X$. Then there exists $\delta>0$ such that every subset of diameter less than $\delta$ is contained in some member of $\mathcal{U}$.
+\end{theorem}
+
+\begin{proof}
+For each $x\in X$, choose $U_x\in\mathcal{U}$ containing $x$, and choose $r_x>0$ such that $B_{2r_x}(x)\subseteq U_x$. The balls $B_{r_x}(x)$ cover $X$, so finitely many suffice: $B_{r_1}(x_1),\dots,B_{r_n}(x_n)$. Let $\delta=\min r_i$. If a set $A$ has diameter less than $\delta$ and contains a point $a$, choose $i$ with $a\in B_{r_i}(x_i)$. Then every $y\in A$ satisfies
+\[
+    d(y,x_i)\leq d(y,a)+d(a,x_i)<\delta+r_i\leq 2r_i,
+\]
+so $A\subseteq B_{2r_i}(x_i)\subseteq U_{x_i}$.
+\end{proof}
+
+\begin{corollary}[Uniform Continuity on Compact Spaces]
+Every continuous map from a compact metric space to a metric space is uniformly continuous.
+\end{corollary}
+
+\begin{proof}
+Let $f:X\to Y$ be continuous and fix $\varepsilon>0$. For each $x\in X$, choose an open neighborhood $U_x$ such that $f(U_x)$ lies in the ball of radius $\varepsilon/2$ around $f(x)$. A Lebesgue number $\delta$ for the cover $\{U_x\}$ ensures that whenever $d(p,q)<\delta$, the two-point set $\{p,q\}$ lies in one $U_x$. Hence
+\[
+    d_Y(f(p),f(q))<\varepsilon.
+\]
+\end{proof}
+
+\subsection{Finite Products and the First Form of Tychonoff's Theorem}
+
+\begin{theorem}[Finite Product Theorem]
+If $X$ and $Y$ are compact, then $X\times Y$ is compact in the product topology. Consequently, every finite product of compact spaces is compact.
+\end{theorem}
+
+\begin{proof}[Tube-Lemma Proof]
+Let $\mathcal{U}$ be an open cover of $X\times Y$. Fix $x\in X$. The slice $\{x\}\times Y$ is homeomorphic to $Y$ and hence compact, so finitely many members of $\mathcal{U}$ cover it. Their union is an open set containing $\{x\}\times Y$. By the tube lemma, there exists an open neighborhood $N_x$ of $x$ such that
+\[
+    N_x\times Y
+\]
+is contained in that finite union. The sets $N_x$ cover $X$. Compactness of $X$ gives finitely many of them, and collecting the corresponding finite subfamilies of $\mathcal{U}$ yields a finite cover of $X\times Y$.
+\end{proof}
+
+\begin{lemma}[Tube Lemma]
+Let $Y$ be compact and let $W\subseteq X\times Y$ be open with $\{x_0\}\times Y\subseteq W$. Then there exists an open neighborhood $N$ of $x_0$ such that $N\times Y\subseteq W$.
+\end{lemma}
+
+\begin{proof}
+For each $y\in Y$, choose basic open sets $N_y\subseteq X$ and $V_y\subseteq Y$ such that
+\[
+    (x_0,y)\in N_y\times V_y\subseteq W.
+\]
+The sets $V_y$ cover $Y$, so finitely many $V_{y_1},\dots,V_{y_n}$ suffice. Then
+\[
+    N=N_{y_1}\cap\cdots\cap N_{y_n}
+\]
+is an open neighborhood of $x_0$, and $N\times Y\subseteq W$.
+\end{proof}
+
+\begin{remark}
+The full Tychonoff theorem states that an arbitrary product of compact spaces is compact. Its standard proof uses the axiom of choice, often through ultrafilters or maximal families with the finite intersection property. The finite theorem above contains the geometric core and is sufficient for most elementary applications.
+\end{remark}
+
+\section{Products and Quotients as Universal Constructions}
+
+The definitions of product and quotient topologies can appear asymmetric. The product topology is generated by inverse images under projections, while the quotient topology is tested by inverse images under one surjective map. Their common feature is a universal property: each topology is exactly the one that makes a certain continuity problem as easy as possible.
+
+\begin{theorem}[Universal Property of Products]
+Let $Z$ be a topological space and let $f:Z\to X\times Y$. Write
+\[
+    f(z)=(f_1(z),f_2(z)).
+\]
+Then $f$ is continuous if and only if both coordinate maps $f_1:Z\to X$ and $f_2:Z\to Y$ are continuous.
+\end{theorem}
+
+\begin{proof}
+If $f$ is continuous, then $f_1=\pi_X\circ f$ and $f_2=\pi_Y\circ f$ are continuous. Conversely, for every basic open set $U\times V$,
+\[
+    f^{-1}(U\times V)=f_1^{-1}(U)\cap f_2^{-1}(V),
+\]
+which is open when $f_1$ and $f_2$ are continuous.
+\end{proof}
+
+\begin{theorem}[Universal Property of Quotients]
+Let $q:X\to Y$ be a quotient map and let $g:Y\to Z$ be a function. Then $g$ is continuous if and only if $g\circ q:X\to Z$ is continuous.
+\end{theorem}
+
+\begin{proof}
+One direction follows from composition. Conversely, assume $g\circ q$ is continuous. For every open set $W\subseteq Z$,
+\[
+    q^{-1}(g^{-1}(W))=(g\circ q)^{-1}(W)
+\]
+is open in $X$. By the definition of the quotient topology, $g^{-1}(W)$ is open in $Y$.
+\end{proof}
+
+\begin{example}[The Circle from an Interval]
+Define $q:[0,1]\to S^1$ by
+\[
+    q(t)=e^{2\pi i t}.
+\]
+The map is continuous, surjective, and identifies exactly the endpoints $0$ and $1$. Since $[0,1]$ is compact and $S^1$ is Hausdorff, the induced bijection
+\[
+    [0,1]/(0\sim1)\longrightarrow S^1
+\]
+is a homeomorphism. This argument is stronger than a picture: it proves that the quotient topology is precisely the usual topology on the circle.
+\end{example}
+
+\begin{example}[A Non-Hausdorff Quotient]
+Start with two copies of the real line and identify corresponding points except at the origins. The resulting ``line with two origins'' is locally indistinguishable from $\mathbb{R}$, but the two origins cannot be separated by disjoint open sets. Quotients can therefore destroy the Hausdorff property. Whenever a space is built by gluing, separation axioms must be checked rather than assumed.
+\end{example}
+
 \section{Conclusion}
 
 Topology begins by replacing distance with open sets. From this simple abstraction, we recover the language of continuity, convergence, compactness, and connectedness. The power of topology is that it reveals which theorems of analysis depend on metric quantities and which depend only on the qualitative structure of open sets.

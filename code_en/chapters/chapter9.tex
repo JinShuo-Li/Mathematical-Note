@@ -1,318 +1,1898 @@
 \chapter{Applied Mathematics: Probability Theory}
 
-Probability theory serves as the fundamental mathematical framework for quantifying uncertainty and analyzing random phenomena. While the discipline has evolved into a rigorous branch of analysis built firmly upon the axioms of Measure Theory, its origins lie in the intuitive study of games of chance and discrete outcomes. This chapter is designed to bridge the conceptual gap between these two eras: we begin with the tangible foundations of classical probability and combinatorics, which rely on symmetry and finite sets, before transitioning to the modern, axiomatic approach formalized by Kolmogorov. By first establishing a strong intuition for how probability behaves in simple, discrete systems, we motivate the necessity for the sophisticated machinery of measure theory needed to handle continuous variables, infinite sequences, and complex stochastic processes.
+Probability theory is the mathematical language of uncertainty. It began as the study of games of chance, but its modern form is much broader: it describes random experiments, statistical inference, stochastic processes, information, finance, thermodynamics, and learning from data.
 
-\section{Classical Probability and Combinatorics}
+At the intuitive level, probability measures how likely an event is. At the rigorous level, probability is a special kind of measure defined on a sigma-algebra of events. This transition from counting favorable outcomes to measuring abstract event spaces is one of the major conceptual developments of modern mathematics.
 
-Historically, probability theory began with games of chance. The \textbf{Classical Definition} applies when an experiment has a finite number of outcomes, all of which are \textit{equally likely}.
+The route of this chapter is:
+\[
+    \begin{aligned}
+        &\text{classical probability} \to \text{random variables} \to \text{measure-theoretic probability} \\
+        &\to \text{expectation} \to \text{conditioning} \to \text{limit theorems}.
+    \end{aligned}
+\]
 
-\subsection{The Classical Definition}
+\section{Classical Probability and Counting}
 
-\begin{definition}[Classical Probability]
-Let $\Omega$ be a finite sample space where every elementary outcome $\omega \in \Omega$ has the same likelihood. The probability of an event $A \subseteq \Omega$ is given by:
-\[ P(A) = \frac{|A|}{|\Omega|} = \frac{\text{Number of favorable outcomes}}{\text{Total number of possible outcomes}} \]
+
+Probability theory begins with uncertainty, but it becomes mathematics only after the uncertain outcomes are organized into a sample space. In finite classical problems, this organization is often hidden because the sample space is small and symmetric. We count favorable outcomes, count all equally likely outcomes, and take a ratio. This is the earliest and most concrete form of probability.
+
+The limitation of the classical definition is equally important. It depends on a finite collection of equally likely outcomes. Many real probabilistic models do not have this form: a dart may land anywhere in a continuum, a lifetime may take any positive real value, and a stochastic process may produce an infinite path. The later measure-theoretic framework is designed to keep the successful parts of classical probability while removing this finite symmetry restriction.
+
+\subsection{Random Experiments and Sample Spaces}
+
+\begin{definition}[Random Experiment]
+A \textbf{random experiment} is a procedure whose outcome is uncertain before it is performed, but whose possible outcomes can be described.
 \end{definition}
 
-Calculating these cardinalities often requires \textbf{Combinatorics}.
+\begin{definition}[Sample Space and Event]
+The \textbf{sample space}, denoted $\Omega$, is the set of all possible outcomes of a random experiment. An \textbf{event} is a subset of $\Omega$.
+\end{definition}
 
 \newpage
 
-\begin{theorem}[Fundamental Counting Principles]
-\begin{enumerate}
-    \item \textbf{Permutations (Order matters):} The number of ways to arrange $k$ distinct items from a set of $n$ is:
-    \[ P(n, k) = \frac{n!}{(n-k)!} \]
-    \item \textbf{Combinations (Order does not matter):} The number of ways to choose $k$ items from $n$ is given by the binomial coefficient:
-    \[ C(n, k) = \binom{n}{k} = \frac{n!}{k!(n-k)!} \]
-\end{enumerate}
-\end{theorem}
+\begin{example}
+If a fair coin is tossed once, then
+\[
+    \Omega=\{H,T\}.
+\]
+The event that the coin lands heads is $\{H\}$. If two coins are tossed, then
+\[
+    \Omega=\{HH,HT,TH,TT\}.
+\]
+The event that exactly one head appears is $\{HT,TH\}$.
+\end{example}
 
-\subsection{Conditional Probability and Independence}
+\subsection{Classical Definition of Probability}
 
-A crucial concept in applied mathematics is updating probabilities based on new information.
-
-\begin{definition}[Conditional Probability]
-The probability of event $A$ occurring given that event $B$ has already occurred is:
-\[ P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad \text{provided } P(B) > 0 \]
+\begin{definition}[Classical Probability]
+Suppose $\Omega$ is finite and all outcomes are equally likely. For an event $A\subseteq\Omega$, define
+\[
+    \mathbb{P}(A)=\frac{|A|}{|\Omega|}.
+\]
 \end{definition}
 
-From this definition, we derive the \textbf{Multiplication Rule}: $P(A \cap B) = P(A \mid B)P(B)$. This leads to the definition of independence. Two events are \textbf{independent} if knowing $B$ occurred gives no information about $A$:
-\[ P(A \mid B) = P(A) \iff P(A \cap B) = P(A)P(B) \]
+\begin{example}
+When a fair six-sided die is rolled,
+\[
+    \Omega=\{1,2,3,4,5,6\}.
+\]
+The probability of rolling an even number is
+\[
+    \mathbb{P}(\{2,4,6\})=\frac{3}{6}=\frac12.
+\]
+\end{example}
 
-\subsection{Bayes' Theorem}
+Classical probability is simple and useful, but it depends on two strong assumptions: the sample space must be finite, and all outcomes must be equally likely. Many real problems violate at least one of these assumptions.
 
-In fields like Machine Learning and Signal Processing, we often need to infer the cause from an observed effect. This is formalized by Bayes' Theorem.
+\subsection{Basic Counting Principles}
 
-\begin{theorem}[Law of Total Probability]
-Let $\{H_1, H_2, \dots, H_n\}$ be a partition of the sample space $\Omega$ (i.e., disjoint and exhaustive). Then for any event $E$:
-\[ P(E) = \sum_{i=1}^n P(E \mid H_i)P(H_i) \]
-\end{theorem}
 
-\begin{theorem}[Bayes' Theorem]
-The posterior probability of hypothesis $H_k$ given evidence $E$ is:
-\[ P(H_k \mid E) = \frac{P(E \mid H_k)P(H_k)}{P(E)} = \frac{P(E \mid H_k)P(H_k)}{\sum_{j} P(E \mid H_j)P(H_j)} \]
-\end{theorem}
-Here, $P(H_k)$ is the \textit{prior} probability, and $P(E \mid H_k)$ is the \textit{likelihood}.
+Counting is not a separate topic from probability; it is the computational engine behind finite probability models. The multiplication principle counts ordered choices made in stages. Permutations count arrangements where order matters. Combinations count selections where order is ignored. Many probability errors come from mixing these cases.
 
-\section{Discrete Random Variables}
+A useful habit is to describe explicitly what an outcome is before counting. Are we counting ordered tuples, unordered subsets, sequences with repetition, or sequences without repetition? Once the sample space is correctly specified, the probability calculation usually becomes straightforward.
 
-In the classical setting, random variables map outcomes to discrete values (e.g., integers).
-
-\begin{definition}[Probability Mass Function]
-For a discrete random variable $X$, the \textbf{Probability Mass Function (PMF)} is denoted by $p_X(k)$:
-\[ p_X(k) = P(X = k) \]
-Properties: $0 \le p_X(k) \le 1$ and $\sum_k p_X(k) = 1$.
-\end{definition}
-
-\begin{definition}[Discrete Expectation and Variance]
-The expected value (weighted average) is:
-\[ \mathbb{E}[X] = \sum_{k} k \cdot p_X(k) \]
-The variance is $\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$.
-\end{definition}
-
-\subsection{Common Discrete Distributions}
-
-\begin{enumerate}
-    \item \textbf{Bernoulli Distribution ($X \sim \text{Bern}(p)$):}
-    Models a single trial with success probability $p$.
-    \[ P(X=1) = p, \quad P(X=0) = 1-p \]
-    
-    \item \textbf{Binomial Distribution ($X \sim B(n, p)$):}
-    Models the number of successes in $n$ independent Bernoulli trials.
-    \[ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} \]
-    
-    \item \textbf{Geometric Distribution ($X \sim \text{Geom}(p)$):}
-    Models the number of trials needed to get the first success.
-    \[ P(X = k) = (1-p)^{k-1}p, \quad k=1, 2, \dots \]
-    
-    \item \textbf{Poisson Distribution ($X \sim \text{Pois}(\lambda)$):}
-    Models the number of rare events occurring in a fixed interval. It is the limit of the Binomial distribution as $n \to \infty, p \to 0$ while $np = \lambda$.
-    \[ P(X = k) = e^{-\lambda} \frac{\lambda^k}{k!} \]
-\end{enumerate}
-
-\section{Transition to Modern Probability}
-
-\subsection{Limitations of Classical Probability}
-
-While the classical framework handles dice, coins, and discrete counts perfectly, it fails when dealing with continuous phenomena.
-
-\begin{enumerate}
-    \item \textbf{The Continuum Problem:} If we pick a real number uniformly from $[0, 1]$, the probability of picking exactly $0.5$ (or any specific number) is 0. The classical definition $\frac{\text{favorable}}{\text{total}}$ becomes $\frac{1}{\infty}$, which is ill-defined without limits.
-    
-    \item \textbf{Bertrand's Paradox:} Consider a chord drawn randomly in a circle. What is the probability that the chord is longer than the side of the inscribed equilateral triangle?
-    Depending on how we define "randomly" (random endpoints vs. random midpoint vs. random radius), we get three different answers ($1/3$, $1/2$, $1/4$).
-\end{enumerate}
-
-\textbf{Conclusion:} Classical probability lacks a rigorous way to define "uniformity" and "size" on continuous sets. To resolve these ambiguities and handle continuous variables (like time, mass, or distance) consistently, we need a mathematical theory of "size." This theory is \textbf{Measure Theory}.
-
-The following sections will rebuild probability theory upon the axiomatic foundations laid by Kolmogorov, utilizing measure theory to unify discrete and continuous cases.
-
-\begin{remark}
-In this chapter, we assume the reader is familiar with the basic concepts of Measure Theory (measurable spaces, Lebesgue integration, Radon-Nikodym theorem). We define probability as a normalized measure and random variables as measurable functions.
-\end{remark}
-
-\section{Axiomatic Foundations}
-
-The modern treatment of probability was formalized by Andrey Kolmogorov in 1933. It begins with the concept of a probability space.
-
-\subsection{Probability Space}
-
-\begin{definition}[Probability Space]
-A \textbf{probability space} is a triple $(\Omega, \mathcal{F}, \mathbb{P})$, where:
-\begin{enumerate}
-    \item $\Omega$ is a non-empty set, called the \textbf{sample space}, representing the set of all possible outcomes.
-    \item $\mathcal{F}$ is a $\sigma$-algebra on $\Omega$, called the \textbf{event space}. Elements of $\mathcal{F}$ are called \textbf{events}.
-    \item $\mathbb{P}$ is a measure on $(\Omega, \mathcal{F})$ such that $\mathbb{P}(\Omega) = 1$. This measure is called the \textbf{probability measure}.
-\end{enumerate}
-\end{definition}
-
-Since $\mathbb{P}$ is a finite measure, it satisfies the properties of \textbf{continuity of probability}.
-
-\begin{proposition}[Continuity]
-\begin{enumerate}
-    \item If $\{A_n\}$ is an increasing sequence of events ($A_n \subseteq A_{n+1}$), then $\mathbb{P}(\cup A_n) = \lim_{n \to \infty} \mathbb{P}(A_n)$.
-    \item If $\{A_n\}$ is decreasing ($A_n \supseteq A_{n+1}$), then $\mathbb{P}(\cap A_n) = \lim_{n \to \infty} \mathbb{P}(A_n)$.
-\end{enumerate}
+\begin{proposition}[Addition Principle]
+If a task can be completed in either one of $m$ ways or one of $n$ ways, and these two collections of ways do not overlap, then the task can be completed in $m+n$ ways.
 \end{proposition}
 
-\subsection{Random Variables and Vectors}
+\begin{proposition}[Multiplication Principle]
+If a task consists of two stages, where the first stage can be completed in $m$ ways and the second stage can be completed in $n$ ways for each choice of the first, then the full task can be completed in $mn$ ways.
+\end{proposition}
 
-In applied mathematics, we analyze numerical values associated with outcomes.
-
-\begin{definition}[Random Variable]
-Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space. A \textbf{random variable} (r.v.) $X$ is a measurable function $X: (\Omega, \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
-That is, for every Borel set $B \in \mathcal{B}(\mathbb{R})$, the preimage is an event:
-\[ X^{-1}(B) = \{ \omega \in \Omega \mid X(\omega) \in B \} \in \mathcal{F} \]
+\begin{definition}[Permutation]
+The number of ways to arrange $k$ objects chosen from $n$ distinct objects, with order mattering and without replacement, is
+\[
+    P(n,k)=\frac{n!}{(n-k)!}.
+\]
 \end{definition}
 
-\begin{definition}[Random Vector]
-A \textbf{random vector} is a mapping $\mathbf{X}: \Omega \to \mathbb{R}^n$ such that each component $X_i$ is a random variable.
+\begin{definition}[Combination]
+The number of ways to choose $k$ objects from $n$ distinct objects, with order not mattering, is
+\[
+    \binom{n}{k}=\frac{n!}{k!(n-k)!}.
+\]
 \end{definition}
 
-Every random variable induces a probability measure on $\mathbb{R}$, called its \textbf{distribution} (or law), denoted by $\mu_X(B) = \mathbb{P}(X \in B)$.
+\begin{example}
+A five-card poker hand is a subset of size $5$ from a deck of $52$ cards. Since order does not matter, the number of possible hands is
+\[
+    \binom{52}{5}.
+\]
+\end{example}
 
-\begin{definition}[CDF and PDF]
-The \textbf{Cumulative Distribution Function (CDF)} $F_X(x) = \mathbb{P}(X \le x)$ characterizes the distribution completely.
-If the induced measure is absolutely continuous with respect to the Lebesgue measure $\lambda$ (i.e., $\mu_X \ll \lambda$), then by the Radon-Nikodym theorem, there exists a function $f_X$, called the \textbf{Probability Density Function (PDF)}, such that:
-\[ F_X(x) = \int_{-\infty}^x f_X(t) \, dt \]
-\end{definition}
-
-\section{Expectation and Integration}
-
-\subsection{Mathematical Expectation}
-
-The expectation is simply the Lebesgue integral of the random variable with respect to the measure $\mathbb{P}$.
-
-\begin{definition}[Expectation]
-The \textbf{expectation} of $X$, denoted $\mathbb{E}[X]$, is defined as:
-\[ \mathbb{E}[X] = \int_\Omega X(\omega) \, d\mathbb{P}(\omega) \]
-provided that $\mathbb{E}[|X|] < \infty$ (i.e., $X \in L^1(\Omega, \mathcal{F}, \mathbb{P})$).
-\end{definition}
-
-If $X$ has a density $f_X$, the change of variables theorem allows us to compute expectation on $\mathbb{R}$:
-\[ \mathbb{E}[g(X)] = \int_{\mathbb{R}} g(x) f_X(x) \, dx \]
-
-\begin{definition}[Moments and Variance]
-For $p \ge 1$, if $X \in L^p$, the $p$-th moment is $\mathbb{E}[X^p]$.
-The \textbf{variance} is defined as:
-\[ \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \]
-\end{definition}
-
-\subsection{Fundamental Inequalities}
-
-Inequalities are the primary tools for proving convergence theorems.
-
-\begin{theorem}[Markov's and Chebyshev's Inequalities]
-Let $X$ be a random variable.
-\begin{enumerate}
-    \item \textbf{Markov:} If $X \ge 0$ and $a > 0$, then $\mathbb{P}(X \ge a) \le \frac{\mathbb{E}[X]}{a}$.
-    \item \textbf{Chebyshev:} If $X$ has finite mean $\mu$ and variance $\sigma^2$, for any $k > 0$:
-    \[ \mathbb{P}(|X - \mu| \ge k) \le \frac{\sigma^2}{k^2} \]
-\end{enumerate}
+\begin{theorem}[Binomial Theorem]
+For $n\in\mathbb{N}$,
+\[
+    (x+y)^n=\sum_{k=0}^{n}\binom{n}{k}x^k y^{n-k}.
+\]
 \end{theorem}
 
-\begin{theorem}[Jensen's Inequality]
-If $\phi: \mathbb{R} \to \mathbb{R}$ is a \textbf{convex} function and $X$ is an integrable random variable, then:
-\[ \phi(\mathbb{E}[X]) \le \mathbb{E}[\phi(X)] \]
-\end{theorem}
+\begin{remark}
+The binomial coefficient $\binom{n}{k}$ appears because choosing which $k$ factors contribute $x$ uniquely determines a term $x^k y^{n-k}$ in the expansion.
+\end{remark}
 
-\begin{theorem}[Hölder's and Cauchy-Schwarz Inequalities]
-Let $p, q > 1$ with $1/p + 1/q = 1$. Then:
-\[ \mathbb{E}[|XY|] \le (\mathbb{E}[|X|^p])^{1/p} (\mathbb{E}[|Y|^q])^{1/q} \]
-The case $p=q=2$ yields the \textbf{Cauchy-Schwarz inequality}: $|\mathbb{E}[XY]| \le \sqrt{\mathbb{E}[X^2]\mathbb{E}[Y^2]}$.
-\end{theorem}
+\section{Conditional Probability and Independence}
 
-\section{Independence and Conditioning}
+
+Conditional probability changes the universe of discourse. When we condition on $B$, we restrict attention to the part of the sample space where $B$ has occurred and then renormalize probabilities inside that smaller universe. The formula $P(A\mid B)=P(A\cap B)/P(B)$ is therefore not just an algebraic rule; it is a rule for updating the reference population.
+
+Independence is often misunderstood as mutual exclusiveness. They are nearly opposite ideas. If two events are mutually exclusive and both have positive probability, the occurrence of one rules out the other, so they cannot be independent. Independence means that learning one event occurred does not change the probability of the other. In symbols, conditioning on $B$ leaves the probability of $A$ unchanged.
+
+\subsection{Conditional Probability}
+
+Often we want to update probability after receiving information. If event $B$ has occurred, the relevant sample space is no longer $\Omega$, but $B$.
+
+\begin{definition}[Conditional Probability]
+Let $A$ and $B$ be events with $\mathbb{P}(B)>0$. The \textbf{conditional probability} of $A$ given $B$ is
+\[
+    \mathbb{P}(A\mid B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.
+\]
+\end{definition}
+
+\begin{example}
+Roll a fair die. Let $A$ be the event that the result is even, and let $B$ be the event that the result is at least $4$. Then
+\[
+    A=\{2,4,6\},\qquad B=\{4,5,6\},\qquad A\cap B=\{4,6\}.
+\]
+Therefore
+\[
+    \mathbb{P}(A\mid B)=\frac{2/6}{3/6}=\frac23.
+\]
+\end{example}
+
+\begin{proposition}[Multiplication Rule]
+If $\mathbb{P}(B)>0$, then
+\[
+    \mathbb{P}(A\cap B)=\mathbb{P}(A\mid B)\mathbb{P}(B).
+\]
+More generally,
+\[
+    \mathbb{P}(A_1\cap\cdots\cap A_n)
+    =\mathbb{P}(A_1)\mathbb{P}(A_2\mid A_1)\cdots\mathbb{P}(A_n\mid A_1\cap\cdots\cap A_{n-1}),
+\]
+provided all conditional probabilities are defined.
+\end{proposition}
 
 \subsection{Independence}
 
-\begin{definition}[Independence]
-A family of $\sigma$-algebras $\{\mathcal{G}_i\}_{i \in I}$ is independent if for any distinct indices $i_1, \dots, i_n$ and events $A_k \in \mathcal{G}_{i_k}$:
-\[ \mathbb{P}\left(\bigcap_{k=1}^n A_k\right) = \prod_{k=1}^n \mathbb{P}(A_k) \]
-Random variables $X_i$ are independent if the $\sigma$-algebras generated by them, $\sigma(X_i)$, are independent.
+\begin{definition}[Independence of Events]
+Two events $A$ and $B$ are \textbf{independent} if
+\[
+    \mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B).
+\]
 \end{definition}
 
-\begin{theorem}[Borel-Cantelli Lemmas]
-Let $\{A_n\}$ be a sequence of events.
-\begin{enumerate}
-    \item (BC1) If $\sum \mathbb{P}(A_n) < \infty$, then $\mathbb{P}(\limsup A_n) = 0$.
-    \item (BC2) If $\sum \mathbb{P}(A_n) = \infty$ and events are \textbf{independent}, then $\mathbb{P}(\limsup A_n) = 1$.
-\end{enumerate}
-\end{theorem}
+If $\mathbb{P}(B)>0$, independence is equivalent to
+\[
+    \mathbb{P}(A\mid B)=\mathbb{P}(A).
+\]
+That is, knowing $B$ occurred does not change the probability of $A$.
 
-\subsection{Conditional Expectation}
-
-Classical probability defines $P(A|B) = P(A \cap B)/P(B)$, but this fails when $P(B)=0$. Measure theory provides a general definition using Radon-Nikodym derivatives.
-
-\begin{definition}[Conditional Expectation]
-Let $X$ be an integrable r.v. and $\mathcal{G} \subseteq \mathcal{F}$ be a sub-$\sigma$-algebra. The \textbf{conditional expectation} $\mathbb{E}[X|\mathcal{G}]$ is the unique (a.s.) random variable $Z$ such that:
-\begin{enumerate}
-    \item $Z$ is $\mathcal{G}$-measurable.
-    \item For all $G \in \mathcal{G}$, $\int_G Z \, d\mathbb{P} = \int_G X \, d\mathbb{P}$.
-\end{enumerate}
-\end{definition}
-This concept is fundamental to the theory of Martingales and stochastic processes.
-
-\section{Characteristic Functions}
-
-The characteristic function is the Fourier transform of the probability measure. It is a powerful tool because it uniquely determines the distribution and handles sums of independent variables elegantly.
-
-\begin{definition}[Characteristic Function]
-The characteristic function of a random variable $X$ is $\phi_X: \mathbb{R} \to \mathbb{C}$ defined by:
-\[ \phi_X(t) = \mathbb{E}[e^{itX}] = \int_{-\infty}^\infty e^{itx} \, dF_X(x) \]
+\begin{definition}[Mutual Independence]
+Events $A_1,\dots,A_n$ are \textbf{mutually independent} if for every non-empty subset $I\subseteq\{1,\dots,n\}$,
+\[
+    \mathbb{P}\left(\bigcap_{i\in I}A_i\right)=\prod_{i\in I}\mathbb{P}(A_i).
+\]
 \end{definition}
 
-\begin{theorem}[Properties]
-\begin{enumerate}
-    \item $\phi_X(0) = 1$, $|\phi_X(t)| \le 1$.
-    \item \textbf{Uniqueness:} If $\phi_X(t) = \phi_Y(t)$ for all $t$, then $X$ and $Y$ have the same distribution.
-    \item \textbf{Independence:} If $X$ and $Y$ are independent, $\phi_{X+Y}(t) = \phi_X(t)\phi_Y(t)$.
-\end{enumerate}
-\end{theorem}
-
-\section{Convergence and Limit Theorems}
-
-\subsection{Modes of Convergence}
-
-Let $\{X_n\}$ be a sequence of random variables. We distinguish between four modes of convergence:
-
-\begin{enumerate}
-    \item \textbf{Almost Sure ($X_n \xrightarrow{a.s.} X$):} $\mathbb{P}(\lim_{n \to \infty} X_n = X) = 1$.
-    \item \textbf{In $L^p$ ($X_n \xrightarrow{L^p} X$):} $\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0$.
-    \item \textbf{In Probability ($X_n \xrightarrow{\mathbb{P}} X$):} $\forall \epsilon > 0, \lim_{n \to \infty} \mathbb{P}(|X_n - X| > \epsilon) = 0$.
-    \item \textbf{In Distribution ($X_n \xrightarrow{d} X$):} $\lim_{n \to \infty} F_n(x) = F(x)$ at continuity points of $F$.
-\end{enumerate}
-
-\begin{remark}[Relationships]
-\[ (X_n \xrightarrow{a.s.} X) \implies (X_n \xrightarrow{\mathbb{P}} X) \implies (X_n \xrightarrow{d} X) \]
-\[ (X_n \xrightarrow{L^p} X) \implies (X_n \xrightarrow{\mathbb{P}} X) \]
-Convergence in probability implies almost sure convergence only along a subsequence.
+\begin{remark}
+Pairwise independence is not the same as mutual independence. It is possible for every pair of events to be independent while the full collection is not mutually independent.
 \end{remark}
 
-\subsection{Law of Large Numbers (LLN)}
+\subsection{Bayes' Theorem}
 
-The LLN justifies the use of averages to estimate expectations.
-
-\begin{theorem}[Weak Law (WLLN)]
-If $X_n$ are i.i.d. with finite mean $\mu$, then $\frac{S_n}{n} \xrightarrow{\mathbb{P}} \mu$.
+\begin{theorem}[Law of Total Probability]
+Let $B_1,\dots,B_n$ be pairwise disjoint events whose union is $\Omega$, and suppose $\mathbb{P}(B_i)>0$. Then for any event $A$,
+\[
+    \mathbb{P}(A)=\sum_{i=1}^{n}\mathbb{P}(A\mid B_i)\mathbb{P}(B_i).
+\]
 \end{theorem}
 
-\begin{theorem}[Kolmogorov's Strong Law (SLLN)]
-If $X_n$ are i.i.d. with finite mean $\mu$ (i.e., $\mathbb{E}[|X_1|] < \infty$), then:
-\[ \frac{S_n}{n} \xrightarrow{a.s.} \mu \]
-This is a deeper result, implying that sample paths converge to the mean with probability 1.
-\end{theorem}
-
-\subsection{The Central Limit Theorem (CLT)}
-
-The CLT explains the prevalence of the Gaussian distribution.
-
-\begin{theorem}[Lindeberg-Lévy CLT]
-Let $\{X_n\}$ be i.i.d. with mean $\mu$ and finite variance $\sigma^2$. Let $S_n = \sum X_i$. Then:
-\[ \frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1) \]
-\end{theorem}
-
-\begin{proof}[Proof Sketch using Characteristic Functions]
-Let $Y_i = (X_i - \mu)/\sigma$. Then $\mathbb{E}[Y_i]=0, \text{Var}(Y_i)=1$.
-The Taylor expansion of $\phi_Y(t)$ near 0 is $1 - \frac{t^2}{2} + o(t^2)$.
-The characteristic function of the normalized sum $Z_n = \frac{1}{\sqrt{n}}\sum Y_i$ is:
-\[ \phi_{Z_n}(t) = \left[ \phi_Y\left(\frac{t}{\sqrt{n}}\right) \right]^n \approx \left( 1 - \frac{t^2}{2n} \right)^n \]
-As $n \to \infty$, this converges to $e^{-t^2/2}$, which is the characteristic function of $N(0,1)$. By the \textbf{Lévy Continuity Theorem}, convergence of characteristic functions implies convergence in distribution.
+\begin{proof}
+Since $\Omega$ is the disjoint union of the $B_i$, the event $A$ is the disjoint union of the events $A\cap B_i$. Hence
+\[
+    \mathbb{P}(A)=\sum_{i=1}^{n}\mathbb{P}(A\cap B_i)
+    =\sum_{i=1}^{n}\mathbb{P}(A\mid B_i)\mathbb{P}(B_i).
+\]
 \end{proof}
+
+\begin{theorem}[Bayes' Theorem]
+Under the assumptions of the law of total probability,
+\[
+    \mathbb{P}(B_j\mid A)=
+    \frac{\mathbb{P}(A\mid B_j)\mathbb{P}(B_j)}{\sum_{i=1}^{n}\mathbb{P}(A\mid B_i)\mathbb{P}(B_i)},
+\]
+provided $\mathbb{P}(A)>0$.
+\end{theorem}
+
+\begin{proof}
+By the definition of conditional probability,
+\[
+    \mathbb{P}(B_j\mid A)=\frac{\mathbb{P}(A\cap B_j)}{\mathbb{P}(A)}.
+\]
+The numerator is $\mathbb{P}(A\mid B_j)\mathbb{P}(B_j)$, and the denominator is computed by the law of total probability.
+\end{proof}
+
+\begin{remark}
+Bayes' theorem converts a forward probability $\mathbb{P}(A\mid B)$ into an inverse probability $\mathbb{P}(B\mid A)$. This is the mathematical foundation of Bayesian inference.
+\end{remark}
+
+\section{Discrete Random Variables}
+
+
+A random variable is not a variable that is random in isolation; it is a function that assigns a numerical value to each outcome. This functional viewpoint is important because it separates the underlying randomness from the numerical quantity we choose to observe. The same experiment may produce many random variables: from a dice roll we may record the face value, its parity, or whether it exceeds four.
+
+Distributions allow us to forget irrelevant details of the sample space and focus on the probabilities of numerical values. Two different experiments can produce random variables with the same distribution. This is why probability theory often studies distributions directly: the distribution contains all information needed to compute probabilities and expectations involving that random variable alone.
+
+\subsection{Definition}
+
+\begin{definition}[Discrete Random Variable]
+A \textbf{discrete random variable} is a function $X:\Omega\to\mathbb{R}$ whose range is finite or countable.
+\end{definition}
+
+The event $\{X=x\}$ means
+\[
+    \{\omega\in\Omega:X(\omega)=x\}.
+\]
+
+\begin{definition}[Probability Mass Function]
+The \textbf{probability mass function} (PMF) of a discrete random variable $X$ is
+\[
+    p_X(x)=\mathbb{P}(X=x).
+\]
+It satisfies
+\[
+    p_X(x)\geq 0,
+    \qquad
+    \sum_x p_X(x)=1.
+\]
+\end{definition}
+
+\begin{definition}[Cumulative Distribution Function]
+The \textbf{cumulative distribution function} (CDF) of a random variable $X$ is
+\[
+    F_X(x)=\mathbb{P}(X\leq x).
+\]
+\end{definition}
+
+\subsection{Expectation and Variance in the Discrete Case}
+
+
+Expectation is best understood as a weighted average, not as the value one necessarily expects to see in a single trial. A die roll has expectation $3.5$, even though no face labeled $3.5$ exists. The expectation describes long-run average behavior under repeated independent trials and gives a linear summary of the distribution.
+
+Variance measures spread around the expectation. The use of squared deviation has two advantages: it prevents positive and negative deviations from canceling, and it interacts well with algebra. Standard deviation returns the scale to the original units, while variance is often easier to manipulate in proofs.
+
+\begin{definition}[Expectation]
+If $X$ is a discrete random variable, its \textbf{expectation} is
+\[
+    \mathbb{E}[X]=\sum_x x\mathbb{P}(X=x),
+\]
+provided the series converges absolutely.
+\end{definition}
+
+\begin{definition}[Variance]
+If $\mathbb{E}[X^2]<\infty$, the \textbf{variance} of $X$ is
+\[
+    \operatorname{Var}(X)=\mathbb{E}[(X-\mathbb{E}[X])^2].
+\]
+\end{definition}
+
+\begin{proposition}[Computational Formula for Variance]
+If $\mathbb{E}[X^2]<\infty$, then
+\[
+    \operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Expand the square:
+\[
+    \mathbb{E}[(X-\mu)^2]=\mathbb{E}[X^2-2\mu X+\mu^2]
+    =\mathbb{E}[X^2]-2\mu\mathbb{E}[X]+\mu^2,
+\]
+where $\mu=\mathbb{E}[X]$. Thus the expression equals $\mathbb{E}[X^2]-\mu^2$.
+\end{proof}
+
+\begin{proposition}[Linearity of Expectation]
+For random variables $X$ and $Y$ with finite expectations, and constants $a,b\in\mathbb{R}$,
+\[
+    \mathbb{E}[aX+bY]=a\mathbb{E}[X]+b\mathbb{E}[Y].
+\]
+\end{proposition}
+
+\begin{remark}
+Linearity of expectation does not require independence. This is one of the most useful facts in elementary probability.
+\end{remark}
+
+\subsection{Common Discrete Distributions}
+
+
+The common discrete distributions are templates for recurring mechanisms. The Bernoulli distribution models one yes-or-no trial. The binomial distribution counts successes in a fixed number of independent Bernoulli trials. The geometric distribution records waiting time until the first success. The Poisson distribution often appears as an approximation for rare events occurring in a large number of opportunities.
+
+Remembering the mechanism is more reliable than memorizing formulas alone. Once the story is clear, the probability mass function usually follows from independence, counting, or limiting approximation. This also helps decide which distribution is appropriate in an applied problem.
+
+\begin{definition}[Bernoulli Distribution]
+A random variable $X$ has a \textbf{Bernoulli distribution} with parameter $p$, written $X\sim\operatorname{Bernoulli}(p)$, if
+\[
+    \mathbb{P}(X=1)=p,
+    \qquad
+    \mathbb{P}(X=0)=1-p.
+\]
+Then
+\[
+    \mathbb{E}[X]=p,
+    \qquad
+    \operatorname{Var}(X)=p(1-p).
+\]
+\end{definition}
+
+\begin{definition}[Binomial Distribution]
+A random variable $X$ has a \textbf{binomial distribution} with parameters $n$ and $p$, written $X\sim\operatorname{Bin}(n,p)$, if
+\[
+    \mathbb{P}(X=k)=\binom{n}{k}p^k(1-p)^{n-k},
+    \qquad
+    k=0,1,\dots,n.
+\]
+Then
+\[
+    \mathbb{E}[X]=np,
+    \qquad
+    \operatorname{Var}(X)=np(1-p).
+\]
+\end{definition}
+
+\begin{example}
+If a biased coin lands heads with probability $p$ and is tossed $n$ times independently, then the number of heads has distribution $\operatorname{Bin}(n,p)$.
+\end{example}
+
+\begin{definition}[Geometric Distribution]
+A random variable $X$ has a \textbf{geometric distribution} with parameter $p$, written $X\sim\operatorname{Geom}(p)$, if
+\[
+    \mathbb{P}(X=k)=(1-p)^{k-1}p,
+    \qquad
+    k=1,2,3,\dots.
+\]
+It models the trial number of the first success in independent Bernoulli trials.
+\end{definition}
+
+\begin{definition}[Poisson Distribution]
+A random variable $X$ has a \textbf{Poisson distribution} with parameter $\lambda>0$, written $X\sim\operatorname{Poisson}(\lambda)$, if
+\[
+    \mathbb{P}(X=k)=e^{-\lambda}\frac{\lambda^k}{k!},
+    \qquad
+    k=0,1,2,\dots.
+\]
+Then
+\[
+    \mathbb{E}[X]=\lambda,
+    \qquad
+    \operatorname{Var}(X)=\lambda.
+\]
+\end{definition}
+
+\begin{remark}
+The Poisson distribution often appears as an approximation to rare-event counts. If $n$ is large, $p$ is small, and $np\approx\lambda$, then $\operatorname{Bin}(n,p)$ is close to $\operatorname{Poisson}(\lambda)$.
+\end{remark}
+
+\section{Continuous Random Variables}
+
+
+For continuous random variables, probabilities are assigned to intervals rather than individual points. A density function is not itself a probability; it is probability per unit length. The probability of an interval is obtained by integrating the density over that interval. This is why a density may exceed $1$ at some points without contradiction, provided its total integral is $1$.
+
+The statement $P(X=a)=0$ for a continuous random variable does not mean the value $a$ is impossible in an informal physical sense. It means that single points carry no probability mass. Probability accumulates over sets with positive length, area, or more generally positive measure.
+
+\subsection{Density Functions}
+
+Classical finite probability cannot describe choosing a random point from an interval. If we choose uniformly from $[0,1]$, the probability of any single point should be $0$, yet the total probability of the interval should be $1$. This requires a new language.
+
+\begin{definition}[Probability Density Function]
+A random variable $X$ is said to have a \textbf{density} $f_X$ if
+\[
+    \mathbb{P}(X\in A)=\int_A f_X(x)\,dx
+\]
+for suitable subsets $A\subseteq\mathbb{R}$. The function $f_X$ satisfies
+\[
+    f_X(x)\geq 0,
+    \qquad
+    \int_{-\infty}^{\infty}f_X(x)\,dx=1.
+\]
+\end{definition}
+
+\begin{definition}[CDF for Continuous Variables]
+If $X$ has density $f_X$, then
+\[
+    F_X(x)=\mathbb{P}(X\leq x)=\int_{-\infty}^{x}f_X(t)\,dt.
+\]
+At points where $F_X$ is differentiable,
+\[
+    F_X'(x)=f_X(x).
+\]
+\end{definition}
+
+\begin{definition}[Expectation]
+If $X$ has density $f_X$, then
+\[
+    \mathbb{E}[X]=\int_{-\infty}^{\infty}x f_X(x)\,dx,
+\]
+provided the integral of $|x|f_X(x)$ is finite.
+\end{definition}
+
+\subsection{Common Continuous Distributions}
+
+
+The standard continuous distributions also encode common mechanisms. The uniform distribution represents constant density over an interval. The exponential distribution models memoryless waiting time. The normal distribution arises as the universal limit shape for sums of many small independent effects. The gamma and beta distributions extend these ideas to waiting-time and proportion models.
+
+In applications, choosing a distribution is a modeling decision. One asks which qualitative features are required: bounded support, symmetry, skewness, memorylessness, heavy tails, or additivity. The formula is then interpreted as a compact expression of those modeling assumptions.
+
+\begin{definition}[Uniform Distribution]
+A random variable $X$ has a \textbf{uniform distribution} on $[a,b]$, written $X\sim U[a,b]$, if
+\[
+    f_X(x)=
+    \begin{cases}
+    \frac{1}{b-a},&a\leq x\leq b,\\
+    0,&\text{otherwise}.
+    \end{cases}
+\]
+Then
+\[
+    \mathbb{E}[X]=\frac{a+b}{2},
+    \qquad
+    \operatorname{Var}(X)=\frac{(b-a)^2}{12}.
+\]
+\end{definition}
+
+\begin{definition}[Exponential Distribution]
+A random variable $X$ has an \textbf{exponential distribution} with rate $\lambda>0$, written $X\sim\operatorname{Exp}(\lambda)$, if
+\[
+    f_X(x)=
+    \begin{cases}
+    \lambda e^{-\lambda x},&x\geq 0,\\
+    0,&x<0.
+    \end{cases}
+\]
+Then
+\[
+    \mathbb{E}[X]=\frac{1}{\lambda},
+    \qquad
+    \operatorname{Var}(X)=\frac{1}{\lambda^2}.
+\]
+\end{definition}
+
+\begin{definition}[Normal Distribution]
+A random variable $X$ has a \textbf{normal distribution} with mean $\mu$ and variance $\sigma^2$, written $X\sim N(\mu,\sigma^2)$, if
+\[
+    f_X(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right).
+\]
+The special case $N(0,1)$ is called the \textbf{standard normal distribution}.
+\end{definition}
+
+\begin{remark}
+The normal distribution is central because sums of many small independent random effects often become approximately normal. This phenomenon is made precise by the Central Limit Theorem.
+\end{remark}
+
+\section{The Measure-Theoretic Foundation}
+
+
+The measure-theoretic foundation is introduced because probability needs a precise language for events in infinite spaces. In a finite sample space, every subset can be assigned a probability. In uncountable spaces, assigning probabilities consistently to all subsets is impossible in general. Sigma-algebras specify which subsets are legitimate events.
+
+A probability measure then assigns numbers to those events while respecting countable additivity. Countable additivity is the bridge between finite intuition and limiting processes. It allows probabilities of increasing unions, decreasing intersections, and infinite decompositions to be handled rigorously.
+
+\subsection{Why Classical Probability Is Not Enough}
+
+The classical definition works for finite equally likely sample spaces. But many important probability spaces are infinite:
+\begin{enumerate}
+    \item choosing a random real number in $[0,1]$;
+    \item observing the lifetime of a machine;
+    \item modeling the trajectory of a Brownian particle;
+    \item considering infinitely many coin tosses.
+\end{enumerate}
+
+In such cases, not every subset of the sample space can be assigned a probability consistently. We therefore specify a collection of admissible events.
+
+\subsection{Sigma-Algebras}
+
+\begin{definition}[Sigma-Algebra]
+Let $\Omega$ be a set. A collection $\mathcal{F}\subseteq\mathcal{P}(\Omega)$ is a \textbf{sigma-algebra} if:
+\begin{enumerate}
+    \item $\Omega\in\mathcal{F}$;
+    \item if $A\in\mathcal{F}$, then $A^c\in\mathcal{F}$;
+    \item if $A_1,A_2,\dots\in\mathcal{F}$, then $\bigcup_{n=1}^{\infty}A_n\in\mathcal{F}$.
+\end{enumerate}
+Elements of $\mathcal{F}$ are called \textbf{measurable sets} or \textbf{events}.
+\end{definition}
+
+\begin{proposition}
+If $\mathcal{F}$ is a sigma-algebra, then it is closed under countable intersections.
+\end{proposition}
+
+\begin{proof}
+By De Morgan's law,
+\[
+    \bigcap_{n=1}^{\infty}A_n=\left(\bigcup_{n=1}^{\infty}A_n^c\right)^c.
+\]
+Since each $A_n^c$ is in $\mathcal{F}$, the union is in $\mathcal{F}$, and its complement is also in $\mathcal{F}$.
+\end{proof}
+
+\begin{definition}[Borel Sigma-Algebra]
+The \textbf{Borel sigma-algebra} on $\mathbb{R}$, denoted $\mathcal{B}(\mathbb{R})$, is the smallest sigma-algebra containing all open subsets of $\mathbb{R}$.
+\end{definition}
+
+\subsection{Probability Spaces}
+
+\begin{definition}[Probability Measure]
+Let $(\Omega,\mathcal{F})$ be a measurable space. A function $\mathbb{P}:\mathcal{F}\to[0,1]$ is a \textbf{probability measure} if:
+\begin{enumerate}
+    \item $\mathbb{P}(\Omega)=1$;
+    \item if $A_1,A_2,\dots$ are pairwise disjoint events, then
+    \[
+        \mathbb{P}\left(\bigcup_{n=1}^{\infty}A_n\right)=\sum_{n=1}^{\infty}\mathbb{P}(A_n).
+    \]
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Probability Space]
+A \textbf{probability space} is a triple
+\[
+    (\Omega,\mathcal{F},\mathbb{P}),
+\]
+where $\Omega$ is a sample space, $\mathcal{F}$ is a sigma-algebra of events, and $\mathbb{P}$ is a probability measure.
+\end{definition}
+
+\begin{proposition}[Basic Properties]
+For events $A,B\in\mathcal{F}$:
+\begin{enumerate}
+    \item $\mathbb{P}(\emptyset)=0$;
+    \item $\mathbb{P}(A^c)=1-\mathbb{P}(A)$;
+    \item if $A\subseteq B$, then $\mathbb{P}(A)\leq\mathbb{P}(B)$;
+    \item $\mathbb{P}(A\cup B)=\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A\cap B)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+These follow from countable additivity. For example, $\Omega=A\cup A^c$ is a disjoint union, so $1=\mathbb{P}(A)+\mathbb{P}(A^c)$. If $A\subseteq B$, then $B=A\cup(B\setminus A)$ disjointly, so $\mathbb{P}(B)=\mathbb{P}(A)+\mathbb{P}(B\setminus A)\geq\mathbb{P}(A)$.
+\end{proof}
+
+\begin{proposition}[Continuity of Probability]
+Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space.
+\begin{enumerate}
+    \item If $A_1\subseteq A_2\subseteq\cdots$, then
+    \[
+        \mathbb{P}\left(\bigcup_{n=1}^{\infty}A_n\right)=\lim_{n\to\infty}\mathbb{P}(A_n).
+    \]
+    \item If $A_1\supseteq A_2\supseteq\cdots$, then
+    \[
+        \mathbb{P}\left(\bigcap_{n=1}^{\infty}A_n\right)=\lim_{n\to\infty}\mathbb{P}(A_n).
+    \]
+\end{enumerate}
+\end{proposition}
+
+\section{Random Variables as Measurable Functions}
+
+
+The definition of a random variable as a measurable function ensures that events of the form $\{X\in B\}$ are actually measurable events in the original probability space. Without this condition, the expression $P(X\in B)$ might not be well-defined. Thus measurability is the technical requirement that makes probability statements about $X$ legitimate.
+
+From this perspective, a distribution is the pushforward of the original probability measure through $X$. Instead of measuring subsets of the original outcome space directly, we measure their images on the real line by pulling them back through $X$. This is the conceptual link between abstract probability spaces and familiar probability distributions.
+
+\subsection{Measurability}
+
+In modern probability, a random variable is not fundamentally a variable. It is a measurable function from the sample space to a numerical space.
+
+\begin{definition}[Random Variable]
+Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space. A \textbf{random variable} is a measurable function
+\[
+    X:(\Omega,\mathcal{F})\to(\mathbb{R},\mathcal{B}(\mathbb{R})),
+\]
+meaning that for every Borel set $B\in\mathcal{B}(\mathbb{R})$,
+\[
+    X^{-1}(B)=\{\omega\in\Omega:X(\omega)\in B\}\in\mathcal{F}.
+\]
+\end{definition}
+
+\begin{remark}
+Measurability ensures that events such as $\{X\leq x\}$, $\{a<X<b\}$, and $\{X\in B\}$ have probabilities.
+\end{remark}
+
+\begin{definition}[Distribution]
+The \textbf{distribution} or \textbf{law} of a random variable $X$ is the probability measure $\mu_X$ on $\mathbb{R}$ defined by
+\[
+    \mu_X(B)=\mathbb{P}(X\in B).
+\]
+\end{definition}
+
+\begin{definition}[Random Vector]
+A \textbf{random vector} is a measurable function
+\[
+    X:\Omega\to\mathbb{R}^n.
+\]
+Equivalently, $X=(X_1,\dots,X_n)$ where each component $X_i$ is a random variable.
+\end{definition}
+
+\subsection{Expectation as Integral}
+
+\begin{definition}[Expectation]
+Let $X$ be an integrable random variable. Its \textbf{expectation} is the Lebesgue integral
+\[
+    \mathbb{E}[X]=\int_\Omega X\,d\mathbb{P}.
+\]
+The expectation exists as a finite number if
+\[
+    \mathbb{E}[|X|]<\infty.
+\]
+\end{definition}
+
+\begin{theorem}[Law of the Unconscious Statistician]
+Let $X$ be a random variable and let $g:\mathbb{R}\to\mathbb{R}$ be measurable. If $g(X)$ is integrable, then
+\[
+    \mathbb{E}[g(X)]=\int_{\mathbb{R}}g(x)\,d\mu_X(x).
+\]
+If $X$ has density $f_X$, then
+\[
+    \mathbb{E}[g(X)]=\int_{-\infty}^{\infty}g(x)f_X(x)\,dx.
+\]
+If $X$ is discrete, then
+\[
+    \mathbb{E}[g(X)]=\sum_x g(x)\mathbb{P}(X=x).
+\]
+\end{theorem}
+
+\section{Joint Distributions and Independence}
+
+
+Joint distributions describe several random variables at once. They contain not only the marginal behavior of each variable but also the dependence structure between them. Knowing the marginal distributions of $X$ and $Y$ separately is usually not enough to determine probabilities involving both variables, such as $P(X<Y)$ or $P(X+Y\leq 1)$.
+
+Independence of random variables is stronger than pairwise intuition about individual events. It requires that events determined by one variable do not affect events determined by the other. In the discrete case this appears as factorization of joint probabilities; in the continuous case it appears as factorization of joint densities, when densities exist.
+
+\subsection{Joint Distributions}
+
+\begin{definition}[Joint Distribution]
+For random variables $X$ and $Y$, the \textbf{joint distribution} of $(X,Y)$ is the probability measure on $\mathbb{R}^2$ defined by
+\[
+    \mu_{(X,Y)}(A)=\mathbb{P}((X,Y)\in A).
+\]
+\end{definition}
+
+\begin{definition}[Joint Density]
+If there exists a function $f_{X,Y}$ such that
+\[
+    \mathbb{P}((X,Y)\in A)=\iint_A f_{X,Y}(x,y)\,dx\,dy,
+\]
+then $f_{X,Y}$ is called the \textbf{joint density} of $X$ and $Y$.
+\end{definition}
+
+\begin{definition}[Marginal Density]
+If $(X,Y)$ has joint density $f_{X,Y}$, then the marginal densities are
+\[
+    f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,
+    \qquad
+    f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.
+\]
+\end{definition}
+
+\subsection{Independence of Random Variables}
+
+\begin{definition}[Independence of Random Variables]
+Random variables $X$ and $Y$ are \textbf{independent} if for all Borel sets $A,B\subseteq\mathbb{R}$,
+\[
+    \mathbb{P}(X\in A,Y\in B)=\mathbb{P}(X\in A)\mathbb{P}(Y\in B).
+\]
+\end{definition}
+
+\begin{proposition}[Factorization Criterion]
+If $(X,Y)$ has joint density $f_{X,Y}$, then $X$ and $Y$ are independent if and only if
+\[
+    f_{X,Y}(x,y)=f_X(x)f_Y(y)
+\]
+for almost every $(x,y)$.
+\end{proposition}
+
+\begin{proposition}
+If $X$ and $Y$ are independent and integrable, then
+\[
+    \mathbb{E}[XY]=\mathbb{E}[X]\mathbb{E}[Y].
+\]
+\end{proposition}
+
+\begin{remark}
+The converse is false. The equality of expectations of products does not generally imply independence.
+\end{remark}
+
+\subsection{Covariance and Correlation}
+
+\begin{definition}[Covariance]
+If $X$ and $Y$ have finite second moments, their \textbf{covariance} is
+\[
+    \operatorname{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])].
+\]
+\end{definition}
+
+\begin{definition}[Correlation]
+If $\operatorname{Var}(X)>0$ and $\operatorname{Var}(Y)>0$, the \textbf{correlation coefficient} is
+\[
+    \rho_{X,Y}=\frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}.
+\]
+\end{definition}
+
+\begin{proposition}
+\[
+    |\rho_{X,Y}|\leq 1.
+\]
+\end{proposition}
+
+\begin{proof}
+This follows from the Cauchy-Schwarz inequality applied to $X-\mathbb{E}[X]$ and $Y-\mathbb{E}[Y]$.
+\end{proof}
+
+\section{Conditional Expectation}
+
+
+Conditional expectation is the projection-like operation of probability theory. When conditioning on partial information, we replace a random variable by the best prediction that is measurable with respect to that information. The result is no longer necessarily a number; it may be another random variable depending on the information retained.
+
+This viewpoint is essential in stochastic processes and martingales. As information grows over time, conditional expectations describe how predictions evolve. Many advanced probability theorems are built around the idea that fair games are processes whose future conditional expectation equals their present value.
+
+\subsection{Conditioning on Events}
+
+For an event $B$ with $\mathbb{P}(B)>0$, conditional expectation is defined by
+\[
+    \mathbb{E}[X\mid B]=\frac{1}{\mathbb{P}(B)}\int_B X\,d\mathbb{P}.
+\]
+This is the average value of $X$ restricted to the event $B$.
+
+\subsection{Conditioning on Random Variables}
+
+If $X$ and $Y$ have joint density, then a familiar formula is
+\[
+    f_{Y\mid X=x}(y)=\frac{f_{X,Y}(x,y)}{f_X(x)},
+\]
+when $f_X(x)>0$. Then
+\[
+    \mathbb{E}[Y\mid X=x]=\int_{-\infty}^{\infty}y f_{Y\mid X=x}(y)\,dy.
+\]
+
+However, this formula is not the most general definition. It depends on densities and on conditioning on a point, which may have probability zero. Measure theory gives a more robust definition.
+
+\begin{definition}[Conditional Expectation Given a Sigma-Algebra]
+Let $X$ be integrable and let $\mathcal{G}\subseteq\mathcal{F}$ be a sub-sigma-algebra. The \textbf{conditional expectation} of $X$ given $\mathcal{G}$ is a random variable $\mathbb{E}[X\mid\mathcal{G}]$ such that:
+\begin{enumerate}
+    \item $\mathbb{E}[X\mid\mathcal{G}]$ is $\mathcal{G}$-measurable;
+    \item for every $G\in\mathcal{G}$,
+    \[
+        \int_G \mathbb{E}[X\mid\mathcal{G}]\,d\mathbb{P}=\int_G X\,d\mathbb{P}.
+    \]
+\end{enumerate}
+It is unique up to equality almost surely.
+\end{definition}
+
+\begin{definition}[Conditional Expectation Given a Random Variable]
+We define
+\[
+    \mathbb{E}[Y\mid X]=\mathbb{E}[Y\mid\sigma(X)],
+\]
+where $\sigma(X)$ is the sigma-algebra generated by $X$.
+\end{definition}
+
+\begin{theorem}[Tower Property]
+If $\mathcal{H}\subseteq\mathcal{G}\subseteq\mathcal{F}$ and $X$ is integrable, then
+\[
+    \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]\mid\mathcal{H}]=\mathbb{E}[X\mid\mathcal{H}].
+\]
+In particular,
+\[
+    \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]]=\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{remark}
+Conditional expectation is best understood as the best prediction of $X$ using only the information contained in $\mathcal{G}$. The measurability condition says the prediction only uses that information; the integral condition says it is correct on average over every event visible to $\mathcal{G}$.
+\end{remark}
+
+\section{Inequalities in Probability}
+
+
+Probability inequalities are tools for converting moment information into tail bounds. Often we cannot compute an exact probability, but we can bound it using expectation, variance, or higher moments. Markov's inequality uses only non-negativity and expectation; Chebyshev's inequality uses variance; sharper inequalities use stronger structural assumptions.
+
+These inequalities explain why moments matter. The expectation controls average size, while variance controls typical deviation from the mean. Even when a distribution is unknown, moment bounds can still guarantee that large deviations are rare in a quantitative sense.
+
+Inequalities are essential because probability theory often studies estimates rather than exact values.
+
+\begin{theorem}[Markov's Inequality]
+If $X\geq 0$ and $a>0$, then
+\[
+    \mathbb{P}(X\geq a)\leq \frac{\mathbb{E}[X]}{a}.
+\]
+\end{theorem}
+
+\begin{proof}
+Since $X\geq a\mathbf{1}_{\{X\geq a\}}$,
+\[
+    \mathbb{E}[X]\geq a\mathbb{P}(X\geq a).
+\]
+Dividing by $a$ gives the result.
+\end{proof}
+
+\begin{theorem}[Chebyshev's Inequality]
+If $X$ has finite mean $\mu$ and variance $\sigma^2$, then for every $\varepsilon>0$,
+\[
+    \mathbb{P}(|X-\mu|\geq\varepsilon)\leq\frac{\sigma^2}{\varepsilon^2}.
+\]
+\end{theorem}
+
+\newpage
+
+\begin{theorem}[Jensen's Inequality]
+If $\varphi$ is convex and $X$ is integrable, then
+\[
+    \varphi(\mathbb{E}[X])\leq\mathbb{E}[\varphi(X)],
+\]
+provided the right-hand side exists.
+\end{theorem}
+
+\begin{theorem}[Cauchy-Schwarz Inequality]
+If $X,Y\in L^2$, then
+\[
+    |\mathbb{E}[XY]|\leq \sqrt{\mathbb{E}[X^2]\mathbb{E}[Y^2]}.
+\]
+\end{theorem}
+
+\section{Generating Functions and Characteristic Functions}
+
+
+Generating functions convert probability questions into algebraic questions about functions. Instead of working directly with a sequence of probabilities or moments, we package that sequence into a single function. Operations on random variables then often become operations on generating functions.
+
+Characteristic functions are especially important because they always exist and uniquely determine distributions. They turn sums of independent random variables into products, which is the same structural simplification provided by logarithms in multiplication problems. This is why characteristic functions are central in proofs of limit theorems.
+
+\subsection{Probability Generating Functions}
+
+\begin{definition}[Probability Generating Function]
+If $X$ is a non-negative integer-valued random variable, its \textbf{probability generating function} is
+\[
+    G_X(s)=\mathbb{E}[s^X]=\sum_{k=0}^{\infty}\mathbb{P}(X=k)s^k.
+\]
+\end{definition}
+
+\begin{proposition}
+If $X$ and $Y$ are independent non-negative integer-valued random variables, then
+\[
+    G_{X+Y}(s)=G_X(s)G_Y(s).
+\]
+\end{proposition}
+
+\subsection{Moment Generating Functions}
+
+\begin{definition}[Moment Generating Function]
+The \textbf{moment generating function} of $X$ is
+\[
+    M_X(t)=\mathbb{E}[e^{tX}],
+\]
+when this expectation is finite for $t$ in a neighborhood of $0$.
+\end{definition}
+
+\begin{remark}
+If $M_X$ exists near $0$, then differentiating gives moments:
+\[
+    M_X^{(n)}(0)=\mathbb{E}[X^n].
+\]
+\end{remark}
+
+\subsection{Characteristic Functions}
+
+\begin{definition}[Characteristic Function]
+The \textbf{characteristic function} of a random variable $X$ is
+\[
+    \varphi_X(t)=\mathbb{E}[e^{itX}],
+    \qquad t\in\mathbb{R}.
+\]
+\end{definition}
+
+Unlike moment generating functions, characteristic functions always exist because $|e^{itX}|=1$.
+
+\begin{proposition}[Basic Properties]
+For every random variable $X$:
+\begin{enumerate}
+    \item $\varphi_X(0)=1$;
+    \item $|\varphi_X(t)|\leq 1$;
+    \item if $X$ and $Y$ are independent, then
+    \[
+        \varphi_{X+Y}(t)=\varphi_X(t)\varphi_Y(t).
+    \]
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Uniqueness Theorem]
+If $\varphi_X(t)=\varphi_Y(t)$ for every $t\in\mathbb{R}$, then $X$ and $Y$ have the same distribution.
+\end{theorem}
+
+\section{Modes of Convergence}
+
+
+Different modes of convergence express different levels of probabilistic stability. Almost sure convergence follows individual outcomes except on a null set. Convergence in probability allows exceptional outcomes to occur but requires their probability to vanish. Convergence in distribution is weaker still: it only requires the distribution functions to converge at continuity points.
+
+The hierarchy matters because limit theorems often naturally produce one mode rather than another. The law of large numbers is usually a statement about convergence in probability or almost surely. The central limit theorem is a statement about convergence in distribution after centering and scaling. Confusing these modes can lead to incorrect conclusions about sample paths or numerical approximations.
+
+Probability theory has several notions of convergence. They are not interchangeable, because random variables carry both numerical and probabilistic structure.
+
+\begin{definition}[Almost Sure Convergence]
+A sequence $X_n$ converges to $X$ \textbf{almost surely}, written
+\[
+    X_n\xrightarrow{a.s.}X,
+\]
+if
+\[
+    \mathbb{P}\left(\{\omega:X_n(\omega)\to X(\omega)\}\right)=1.
+\]
+\end{definition}
+
+\begin{definition}[Convergence in Probability]
+A sequence $X_n$ converges to $X$ \textbf{in probability}, written
+\[
+    X_n\xrightarrow{\mathbb{P}}X,
+\]
+if for every $\varepsilon>0$,
+\[
+    \mathbb{P}(|X_n-X|>\varepsilon)\to 0.
+\]
+\end{definition}
+
+\begin{definition}[$L^p$ Convergence]
+For $p\geq 1$, $X_n$ converges to $X$ in $L^p$, written
+\[
+    X_n\xrightarrow{L^p}X,
+\]
+if
+\[
+    \mathbb{E}[|X_n-X|^p]\to 0.
+\]
+\end{definition}
+
+\begin{definition}[Convergence in Distribution]
+A sequence $X_n$ converges to $X$ \textbf{in distribution}, written
+\[
+    X_n\xrightarrow{d}X,
+\]
+if
+\[
+    F_{X_n}(x)\to F_X(x)
+\]
+for every continuity point $x$ of $F_X$.
+\end{definition}
+
+
+\begin{theorem}[Relations Between Convergence Modes]
+\[
+    X_n\xrightarrow{a.s.}X\quad\Longrightarrow\quad X_n\xrightarrow{\mathbb{P}}X\quad\Longrightarrow\quad X_n\xrightarrow{d}X.
+\]
+Also,
+\[
+    X_n\xrightarrow{L^p}X\quad\Longrightarrow\quad X_n\xrightarrow{\mathbb{P}}X.
+\]
+\end{theorem}
+
+\begin{proof}[Proof of $L^p$ Implies Probability]
+By Markov's inequality,
+\[
+    \mathbb{P}(|X_n-X|>\varepsilon)
+    =\mathbb{P}(|X_n-X|^p>\varepsilon^p)
+    \leq\frac{\mathbb{E}[|X_n-X|^p]}{\varepsilon^p}.
+\]
+If the numerator tends to $0$, then the probability tends to $0$.
+\end{proof}
+
+\begin{remark}
+Convergence in distribution is the weakest among the common modes above. It describes convergence of laws, not necessarily convergence of random variables on the same sample space.
+\end{remark}
+
+\section{Limit Theorems}
+
+
+The law of large numbers formalizes the stabilization of averages. Under suitable assumptions, repeated independent observations average out randomness and converge toward the expected value. This theorem explains why empirical frequencies and sample means are meaningful estimators in statistics.
+
+The central limit theorem describes the shape of fluctuations around that average. After subtracting the mean and scaling by the square root of the sample size, sums of many independent contributions often approach a normal distribution. The theorem is powerful because the limiting normal shape appears under broad conditions, even when the original variables are not normally distributed.
+
+\subsection{Law of Large Numbers}
+
+The Law of Large Numbers explains why averages stabilize. It is the mathematical justification for interpreting probability as long-run frequency.
+
+\begin{theorem}[Weak Law of Large Numbers]
+Let $X_1,X_2,\dots$ be i.i.d. random variables with finite mean $\mu$ and finite variance $\sigma^2$. Let
+\[
+    \overline{X}_n=\frac{1}{n}\sum_{k=1}^{n}X_k.
+\]
+Then
+\[
+    \overline{X}_n\xrightarrow{\mathbb{P}}\mu.
+\]
+\end{theorem}
+
+\begin{proof}
+By linearity of expectation,
+\[
+    \mathbb{E}[\overline{X}_n]=\mu.
+\]
+By independence,
+\[
+    \operatorname{Var}(\overline{X}_n)=\frac{1}{n^2}\sum_{k=1}^{n}\operatorname{Var}(X_k)=\frac{\sigma^2}{n}.
+\]
+Chebyshev's inequality gives
+\[
+    \mathbb{P}(|\overline{X}_n-\mu|\geq\varepsilon)
+    \leq\frac{\sigma^2}{n\varepsilon^2}\to 0.
+\]
+\end{proof}
+
+\begin{lemma}[Kolmogorov Convergence Criterion]
+Let $Z_1,Z_2,\dots$ be independent random variables with $\mathbb{E}[Z_n]=0$ and
+\[
+    \sum_{n=1}^{\infty}\operatorname{Var}(Z_n)<\infty.
+\]
+Then the series $\sum_{n=1}^{\infty}Z_n$ converges almost surely.
+\end{lemma}
+
+\begin{proof}
+Set
+\[
+    r_m:=\sum_{j=m+1}^{\infty}\operatorname{Var}(Z_j),
+\]
+so that $r_m\to0$. Choose an increasing sequence of integers $(n_k)$ such that
+$r_{n_k}<2^{-3k}$. For every $N>n_k$, Kolmogorov's maximal inequality gives
+\[
+    \mathbb{P}\left(
+    \max_{n_k<n\leq N}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|>2^{-k}
+    \right)
+    \leq
+    2^{2k}\sum_{j=n_k+1}^{N}\operatorname{Var}(Z_j)
+    \leq 2^{2k}r_{n_k}<2^{-k}.
+\]
+Letting $N\to\infty$ and using continuity of probability for increasing events, we obtain
+\[
+    \mathbb{P}\left(
+    \sup_{n>n_k}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|>2^{-k}
+    \right)<2^{-k}.
+\]
+These probabilities are summable. Hence the Borel--Cantelli lemma implies that, almost surely, for all sufficiently large $k$,
+\[
+    \sup_{n>n_k}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|\leq2^{-k}.
+\]
+Consequently, if $p,q>n_k$, then
+\[
+    \left|\sum_{j=1}^{p}Z_j-\sum_{j=1}^{q}Z_j\right|
+    \leq 2^{1-k}.
+\]
+Thus the sequence of partial sums is almost surely Cauchy and therefore converges almost surely.
+\end{proof}
+
+\begin{lemma}[Kronecker's Lemma]
+If the numerical series
+\[
+    \sum_{n=1}^{\infty}\frac{a_n}{n}
+\]
+converges, then
+\[
+    \frac1n\sum_{k=1}^{n}a_k\longrightarrow0.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $s_n=\sum_{k=1}^{n}a_k/k$. Summation by parts gives
+\[
+    \frac1n\sum_{k=1}^{n}a_k
+    =s_n-\frac1n\sum_{k=1}^{n-1}s_k.
+\]
+If $s_n\to s$, then its Cesaro means also converge to $s$, so the difference tends to $0$.
+\end{proof}
+
+\begin{theorem}[Strong Law of Large Numbers]
+Let $X_1,X_2,\dots$ be i.i.d. random variables with $\mathbb{E}[|X_1|]<\infty$ and mean $\mu$. Then
+\[
+    \overline{X}_n=\frac1n\sum_{k=1}^{n}X_k
+    \xrightarrow{a.s.}\mu.
+\]
+\end{theorem}
+
+\begin{proof}
+Define the truncated variables
+\[
+    Y_n=X_n\mathbf{1}_{\{|X_n|\leq n\}}.
+\]
+The tail-sum formula implies
+\[
+    \sum_{n=1}^{\infty}\mathbb{P}(|X_n|>n)
+    =\sum_{n=1}^{\infty}\mathbb{P}(|X_1|>n)
+    \leq \mathbb{E}[|X_1|]<\infty.
+\]
+By the first Borel--Cantelli lemma, $X_n=Y_n$ for all sufficiently large $n$, almost surely.
+
+Next, the variables $Y_n$ are independent and
+\[
+\begin{aligned}
+    \sum_{n=1}^{\infty}
+    \frac{\operatorname{Var}(Y_n)}{n^2}
+    &\leq
+    \sum_{n=1}^{\infty}
+    \frac{\mathbb{E}[X_1^2\mathbf{1}_{\{|X_1|\leq n\}}]}{n^2}\\
+    &=\mathbb{E}\left[
+    X_1^2\sum_{n\geq |X_1|}\frac1{n^2}
+    \right]
+    \leq C\mathbb{E}[|X_1|]<\infty
+\end{aligned}
+\]
+for an absolute constant $C$. Apply the Kolmogorov convergence criterion to
+\[
+    Z_n=\frac{Y_n-\mathbb{E}[Y_n]}{n}.
+\]
+The series $\sum Z_n$ converges almost surely, so Kronecker's lemma yields
+\[
+    \frac1n\sum_{k=1}^{n}
+    \left(Y_k-\mathbb{E}[Y_k]\right)
+    \longrightarrow0
+    \qquad\text{almost surely}.
+\]
+Since $Y_n\to X_n$ in the sense that the truncation threshold tends to infinity and all $X_n$ have the same law,
+\[
+    \mathbb{E}[Y_n]\to\mathbb{E}[X_1]=\mu
+\]
+by dominated convergence. Hence Cesaro averaging gives
+\[
+    \frac1n\sum_{k=1}^{n}\mathbb{E}[Y_k]\to\mu.
+\]
+Finally, the averages of $X_k$ and $Y_k$ differ only in finitely many terms almost surely, so their difference tends to $0$. Combining the three limits proves the theorem.
+\end{proof}
+
+\begin{remark}
+The weak law controls one probability for each $n$. The strong law controls an entire infinite sample path: outside one null set, the averages converge for all sufficiently large $n$. The truncation step is what allows the theorem to require only a finite first moment rather than a finite variance.
+\end{remark}
+
+\subsection{Central Limit Theorem}
+
+The Central Limit Theorem explains why the normal distribution appears so frequently.
+
+\begin{theorem}[Levy's Continuity Theorem]
+If characteristic functions $\varphi_n(t)$ converge pointwise to a function $\varphi(t)$ that is continuous at $0$ and is itself a characteristic function, then the corresponding distributions converge weakly to the distribution with characteristic function $\varphi$.
+\end{theorem}
+
+\begin{theorem}[Lindeberg--Levy Central Limit Theorem]
+Let $X_1,X_2,\dots$ be i.i.d. random variables with mean $\mu$ and variance $\sigma^2>0$. Let $S_n=X_1+\cdots+X_n$. Then
+\[
+    \frac{S_n-n\mu}{\sigma\sqrt{n}}\xrightarrow{d}N(0,1).
+\]
+\end{theorem}
+
+\begin{proof}
+Set
+\[
+    Y_k=\frac{X_k-\mu}{\sigma}.
+\]
+Then $\mathbb{E}[Y_k]=0$ and $\mathbb{E}[Y_k^2]=1$. The elementary expansion
+\[
+    e^{iu}=1+iu-\frac{u^2}{2}+u^2\eta(u),
+    \qquad \eta(u)\to0\quad(u\to0),
+\]
+together with dominated convergence gives
+\[
+\begin{aligned}
+    \varphi_Y(t)
+    &=\mathbb{E}[e^{itY}]\\
+    &=1+it\mathbb{E}[Y]-\frac{t^2}{2}\mathbb{E}[Y^2]+o(t^2)\\
+    &=1-\frac{t^2}{2}+o(t^2).
+\end{aligned}
+\]
+Indeed, after dividing the remainder by $t^2$, it is bounded by a constant multiple of $Y^2$, which is integrable.
+
+Now define
+\[
+    Z_n=\frac1{\sqrt n}\sum_{k=1}^{n}Y_k.
+\]
+Independence gives
+\[
+    \varphi_{Z_n}(t)
+    =\prod_{k=1}^{n}\varphi_Y\left(\frac{t}{\sqrt n}\right)
+    =\left(\varphi_Y\left(\frac{t}{\sqrt n}\right)\right)^n.
+\]
+Using the expansion at the scale $t/\sqrt n$,
+\[
+    \varphi_Y\left(\frac{t}{\sqrt n}\right)
+    =1-\frac{t^2}{2n}+o\left(\frac1n\right).
+\]
+Therefore
+\[
+    \log\varphi_{Z_n}(t)
+    =n\log\left(1-\frac{t^2}{2n}+o\left(\frac1n\right)\right)
+    \longrightarrow-\frac{t^2}{2},
+\]
+and hence
+\[
+    \varphi_{Z_n}(t)\longrightarrow e^{-t^2/2}.
+\]
+The limit is the characteristic function of $N(0,1)$ and is continuous at $0$. Levy's continuity theorem completes the proof.
+\end{proof}
+
+\begin{definition}[Lindeberg Condition]
+For each $n$, let $X_{n,1},\dots,X_{n,k_n}$ be independent random variables with zero means. Put
+\[
+    s_n^2=\sum_{k=1}^{k_n}\operatorname{Var}(X_{n,k}).
+\]
+The triangular array satisfies the \textbf{Lindeberg condition} if for every $\varepsilon>0$,
+\[
+    \frac1{s_n^2}\sum_{k=1}^{k_n}
+    \mathbb{E}\left[
+    X_{n,k}^2\mathbf{1}_{\{|X_{n,k}|>\varepsilon s_n\}}
+    \right]
+    \longrightarrow0.
+\]
+\end{definition}
+
+\begin{theorem}[Lindeberg--Feller Central Limit Theorem]
+If the triangular array above satisfies the Lindeberg condition and $s_n^2>0$, then
+\[
+    \frac1{s_n}\sum_{k=1}^{k_n}X_{n,k}
+    \xrightarrow{d}N(0,1).
+\]
+\end{theorem}
+
+\begin{remark}
+The Lindeberg condition says that no small collection of exceptionally large summands contributes a non-negligible fraction of the total variance. The i.i.d. central limit theorem is recovered by taking
+\[
+    X_{n,k}=\frac{X_k-\mu}{\sigma\sqrt n},
+    \qquad 1\leq k\leq n.
+\]
+The Law of Large Numbers describes first-order behavior: averages approach the mean. The Central Limit Theorem describes second-order fluctuations: deviations of order $\sqrt n$ approach a universal Gaussian shape.
+\end{remark}
+
+\section{Borel-Cantelli Lemmas}
+
+
+The Borel-Cantelli lemmas answer a repeated-event question: if events $A_1,A_2,\dots$ occur over time, what can be said about the probability that infinitely many of them occur? The sum $\sum P(A_n)$ measures the total expected frequency of occurrence. If this sum is finite, infinitely many occurrences are impossible with probability one.
+
+With independence, the converse direction becomes available: if the total probability mass diverges, then infinitely many of the independent events occur almost surely. These lemmas are powerful because they transform an infinite qualitative statement into a summability condition.
+
+The Borel-Cantelli lemmas describe whether events happen infinitely often.
+
+\begin{definition}[Limit Superior of Events]
+For events $A_1,A_2,\dots$, define
+\[
+    \limsup_{n\to\infty}A_n=\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}A_k.
+\]
+This is the event that infinitely many of the $A_n$ occur.
+\end{definition}
+
+\begin{theorem}[First Borel-Cantelli Lemma]
+If
+\[
+    \sum_{n=1}^{\infty}\mathbb{P}(A_n)<\infty,
+\]
+then
+\[
+    \mathbb{P}(\limsup A_n)=0.
+\]
+\end{theorem}
+
+\begin{proof}
+For every $N$,
+\[
+    \limsup A_n\subseteq\bigcup_{n=N}^{\infty}A_n.
+\]
+Hence, by countable subadditivity,
+\[
+    \mathbb{P}(\limsup A_n)\leq\sum_{n=N}^{\infty}\mathbb{P}(A_n).
+\]
+Letting $N\to\infty$, the tail of the convergent series tends to $0$.
+\end{proof}
+
+\begin{theorem}[Second Borel-Cantelli Lemma]
+If the events $A_n$ are independent and
+\[
+    \sum_{n=1}^{\infty}\mathbb{P}(A_n)=\infty,
+\]
+then
+\[
+    \mathbb{P}(\limsup A_n)=1.
+\]
+\end{theorem}
 
 \section{Introduction to Stochastic Processes}
 
-A stochastic process is a collection of random variables $\{X_t\}_{t \in T}$ indexed by time.
 
-\begin{definition}[Martingale]
-A discrete-time sequence $\{X_n\}$ is a \textbf{martingale} with respect to a filtration $\{\mathcal{F}_n\}$ if:
-\begin{enumerate}
-    \item $\mathbb{E}[|X_n|] < \infty$.
-    \item $X_n$ is $\mathcal{F}_n$-measurable.
-    \item $\mathbb{E}[X_{n+1} \mid \mathcal{F}_n] = X_n$.
-\end{enumerate}
-Martingales model "fair games" and are essential in modern financial mathematics (e.g., option pricing).
+A stochastic process is a family of random variables indexed by time or another parameter. Instead of modeling one uncertain quantity, we model an evolving random system. Examples include random walks, stock prices, queues, branching populations, Brownian motion, and Markov chains.
+
+The main new feature is dependence across time. One must describe not only the distribution at each time but also how values at different times are related. This is why filtrations, transition probabilities, covariance functions, and sample paths become central objects in the study of stochastic processes.
+
+A stochastic process is a family of random variables indexed by time or space.
+
+\begin{definition}[Stochastic Process]
+A \textbf{stochastic process} is a collection
+\[
+    \{X_t:t\in T\}
+\]
+of random variables defined on the same probability space. The index set $T$ is often interpreted as time.
 \end{definition}
 
+\begin{example}
+If $T=\mathbb{N}$, the process is a discrete-time process. If $T=[0,\infty)$, it is a continuous-time process.
+\end{example}
+
+\begin{definition}[Filtration]
+A \textbf{filtration} is an increasing family of sigma-algebras
+\[
+    \mathcal{F}_0\subseteq\mathcal{F}_1\subseteq\mathcal{F}_2\subseteq\cdots.
+\]
+The sigma-algebra $\mathcal{F}_n$ represents the information available up to time $n$.
+\end{definition}
+
+\begin{definition}[Martingale]
+A discrete-time stochastic process $\{X_n\}_{n\geq 0}$ is a \textbf{martingale} with respect to a filtration $\{\mathcal{F}_n\}$ if:
+\begin{enumerate}
+    \item $X_n$ is $\mathcal{F}_n$-measurable;
+    \item $\mathbb{E}[|X_n|]<\infty$;
+    \item $\mathbb{E}[X_{n+1}\mid\mathcal{F}_n]=X_n$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+A martingale formalizes the idea of a fair game: given all current information, the expected future value equals the present value.
+\end{remark}
+
+\begin{example}[Simple Random Walk]
+Let $\xi_1,\xi_2,\dots$ be independent random variables with
+\[
+    \mathbb{P}(\xi_i=1)=\mathbb{P}(\xi_i=-1)=\frac12.
+\]
+Define
+\[
+    S_n=\xi_1+\cdots+\xi_n.
+\]
+Then $\{S_n\}$ is a martingale with respect to the natural filtration generated by $\xi_1,\dots,\xi_n$.
+\end{example}
+
+
+\section{Distribution Functions and Transformations}
+
+A probability distribution can be described in several equivalent ways. Discrete laws are often specified by probability masses, continuous laws by densities, and general real-valued laws by cumulative distribution functions. The distribution function is the most universal of these descriptions because it exists even when a law is neither purely discrete nor purely continuous.
+
+\begin{definition}[Cumulative Distribution Function]
+For a real-valued random variable $X$, the \textbf{cumulative distribution function} is
+\[
+    F_X(x)=\mathbb{P}(X\leq x).
+\]
+\end{definition}
+
+\begin{theorem}[Characterization of Distribution Functions]
+A function $F:\mathbb{R}\to[0,1]$ is the distribution function of some real-valued random variable if and only if:
+\begin{enumerate}
+    \item $F$ is non-decreasing;
+    \item $F$ is right-continuous;
+    \item $\lim_{x\to-\infty}F(x)=0$ and $\lim_{x\to\infty}F(x)=1$.
+\end{enumerate}
+Moreover,
+\[
+    \mathbb{P}(X=x)=F_X(x)-F_X(x^-),
+\]
+so jumps of the distribution function are exactly point masses.
+\end{theorem}
+
+\begin{example}[A Mixed Distribution]
+Suppose $X=0$ with probability $1/2$, while with probability $1/2$ it is uniformly distributed on $[0,1]$. Then
+\[
+F_X(x)=
+\begin{cases}
+0,&x<0,\\
+\frac12+\frac{x}{2},&0\leq x<1,\\
+1,&x\geq1.
+\end{cases}
+\]
+The jump at $0$ records the atom, while the linear part records the continuous component. No single ordinary density describes the entire law.
+\end{example}
+
+\subsection{Functions of One Random Variable}
+
+\begin{theorem}[Monotone Change of Variables]
+Let $X$ have density $f_X$, and let $Y=g(X)$, where $g$ is strictly monotone and continuously differentiable. Then
+\[
+    f_Y(y)=f_X(g^{-1}(y))
+    \left|\frac{d}{dy}g^{-1}(y)\right|
+\]
+on the range of $g$.
+\end{theorem}
+
+\begin{proof}
+If $g$ is increasing, then
+\[
+    F_Y(y)=\mathbb{P}(g(X)\leq y)
+    =\mathbb{P}(X\leq g^{-1}(y))
+    =F_X(g^{-1}(y)).
+\]
+Differentiate and apply the chain rule. The decreasing case reverses the inequality and produces the same absolute-value formula.
+\end{proof}
+
+\begin{example}[Squaring a Standard Normal Variable]
+Let $X\sim N(0,1)$ and set $Y=X^2$. The map $x\mapsto x^2$ is not one-to-one, so both inverse branches contribute:
+\[
+    f_Y(y)
+    =\frac{f_X(\sqrt y)}{2\sqrt y}
+     +\frac{f_X(-\sqrt y)}{2\sqrt y}
+    =\frac{1}{\sqrt{2\pi y}}e^{-y/2},
+    \qquad y>0.
+\]
+Thus $X^2$ has a chi-square distribution with one degree of freedom.
+\end{example}
+
+\begin{theorem}[Expectation by the Tail Formula]
+If $X\geq0$, then
+\[
+    \mathbb{E}[X]=\int_0^\infty\mathbb{P}(X>t)\,dt,
+\]
+where both sides may be infinite.
+\end{theorem}
+
+\begin{proof}
+Pointwise,
+\[
+    X(\omega)=\int_0^\infty
+    \mathbf{1}_{\{X(\omega)>t\}}\,dt.
+\]
+Tonelli's theorem allows the order of integration to be exchanged:
+\[
+    \mathbb{E}[X]
+    =\int_0^\infty
+    \mathbb{E}[\mathbf{1}_{\{X>t\}}]dt
+    =\int_0^\infty\mathbb{P}(X>t)dt.
+\]
+\end{proof}
+
+\section{Joint Densities, Convolution, and Conditioning}
+
+For several random variables, marginal distributions describe each coordinate separately, but they do not determine dependence. The joint distribution contains the complete information. Marginalization integrates out unwanted coordinates, conditioning renormalizes along a coordinate, and convolution describes sums of independent variables.
+
+\begin{definition}[Joint Density]
+A pair $(X,Y)$ has joint density $f_{X,Y}$ if for every suitable Borel set $A\subseteq\mathbb{R}^2$,
+\[
+    \mathbb{P}((X,Y)\in A)
+    =\iint_A f_{X,Y}(x,y)\,dx\,dy.
+\]
+The marginal densities are
+\[
+    f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,
+    \qquad
+    f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.
+\]
+\end{definition}
+
+\begin{theorem}[Density Criterion for Independence]
+If $(X,Y)$ has a joint density, then $X$ and $Y$ are independent if and only if
+\[
+    f_{X,Y}(x,y)=f_X(x)f_Y(y)
+\]
+for almost every $(x,y)$.
+\end{theorem}
+
+\begin{definition}[Conditional Density]
+If $f_Y(y)>0$, define
+\[
+    f_{X\mid Y}(x\mid y)
+    =\frac{f_{X,Y}(x,y)}{f_Y(y)}.
+\]
+For fixed $y$, this is a density in $x$ and represents the distribution of $X$ conditioned on $Y=y$.
+\end{definition}
+
+\begin{example}[Uniform Distribution on a Triangle]
+Let $(X,Y)$ be uniformly distributed on
+\[
+    T=\{(x,y):0<y<x<1\}.
+\]
+Since the area of $T$ is $1/2$, the joint density is $2$ on $T$. For $0<x<1$,
+\[
+    f_X(x)=\int_0^x2\,dy=2x.
+\]
+For fixed $x$, the conditional density of $Y$ given $X=x$ is
+\[
+    f_{Y\mid X}(y\mid x)=\frac{2}{2x}=\frac1x,
+    \qquad0<y<x.
+\]
+Thus, conditioned on $X=x$, the variable $Y$ is uniform on $(0,x)$.
+\end{example}
+
+\begin{theorem}[Convolution Formula]
+If $X$ and $Y$ are independent continuous random variables with densities $f_X$ and $f_Y$, then $S=X+Y$ has density
+\[
+    f_S(s)=\int_{-\infty}^{\infty}f_X(x)f_Y(s-x)\,dx.
+\]
+\end{theorem}
+
+\begin{proof}
+The change of variables $(x,y)\mapsto(x,s=x+y)$ has Jacobian determinant $1$. Since independence gives joint density $f_X(x)f_Y(y)$, integrating out $x$ yields the stated formula.
+\end{proof}
+
+\begin{example}[Sum of Two Uniform Variables]
+Let $X,Y$ be independent and uniform on $[0,1]$. Then
+\[
+    f_{X+Y}(s)
+    =\int_{\max(0,s-1)}^{\min(1,s)}1\,dx
+    =
+    \begin{cases}
+    s,&0<s<1,\\
+    2-s,&1\leq s<2,\\
+    0,&\text{otherwise}.
+    \end{cases}
+\]
+The triangular density reflects the increasing and then decreasing length of the line segment $x+y=s$ inside the unit square.
+\end{example}
+
+\section{Convergence Theorems for Expectations}
+
+Limits of random variables are useful only if they can be passed through probabilities or expectations. Measure theory supplies precise hypotheses for doing so. Monotone convergence handles increasing non-negative approximations; dominated convergence handles signed variables controlled by one integrable bound.
+
+\begin{theorem}[Monotone Convergence Theorem]
+If $0\leq X_1\leq X_2\leq\cdots$ and $X_n\to X$ almost surely, then
+\[
+    \mathbb{E}[X_n]\uparrow\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{theorem}[Fatou's Lemma]
+If $X_n\geq0$, then
+\[
+    \mathbb{E}\left[\liminf_{n\to\infty}X_n\right]
+    \leq
+    \liminf_{n\to\infty}\mathbb{E}[X_n].
+\]
+\end{theorem}
+
+\begin{theorem}[Dominated Convergence Theorem]
+Suppose $X_n\to X$ almost surely and there exists an integrable random variable $Y$ such that
+\[
+    |X_n|\leq Y
+\]
+almost surely for every $n$. Then $X$ is integrable and
+\[
+    \mathbb{E}[X_n]\to\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{example}[Why Pointwise Convergence Is Not Enough]
+On $(0,1)$ with Lebesgue probability measure, let
+\[
+    X_n=n\mathbf{1}_{(0,1/n)}.
+\]
+Then $X_n\to0$ almost surely, but
+\[
+    \mathbb{E}[X_n]=1
+\]
+for every $n$. There is no single integrable random variable dominating all $X_n$. This example shows why an interchange of limit and expectation requires more than pointwise convergence.
+\end{example}
+
+\begin{corollary}[Continuity of Characteristic Functions]
+For every random variable $X$, its characteristic function
+\[
+    \varphi_X(t)=\mathbb{E}[e^{itX}]
+\]
+is continuous in $t$.
+\end{corollary}
+
+\begin{proof}
+If $t_n\to t$, then $e^{it_nX}\to e^{itX}$ almost surely, while
+\[
+    |e^{it_nX}|=1.
+\]
+Apply dominated convergence with the integrable bound $1$.
+\end{proof}
+
+\section{Conditional Expectation as Information}
+
+Conditioning on an event produces a number. Conditioning on a sigma-algebra produces a random variable, because the information available may lead to different predictions in different states. The conditional expectation $\mathbb{E}[X\mid\mathcal{G}]$ is the best $\mathcal{G}$-measurable summary of $X$ in an average sense.
+
+\begin{definition}[Conditional Expectation]
+Let $X$ be integrable and let $\mathcal{G}\subseteq\mathcal{F}$ be a sub-sigma-algebra. A random variable $Y$ is a version of $\mathbb{E}[X\mid\mathcal{G}]$ if:
+\begin{enumerate}
+    \item $Y$ is $\mathcal{G}$-measurable;
+    \item $Y$ is integrable;
+    \item for every $G\in\mathcal{G}$,
+    \[
+        \int_GY\,d\mathbb{P}=\int_GX\,d\mathbb{P}.
+    \]
+\end{enumerate}
+It is unique up to equality almost surely.
+\end{definition}
+
+\begin{theorem}[Basic Properties]
+For integrable random variables $X,Y$ and constants $a,b$:
+\begin{enumerate}
+    \item \textbf{Linearity}:
+    \[
+        \mathbb{E}[aX+bY\mid\mathcal{G}]
+        =a\mathbb{E}[X\mid\mathcal{G}]
+        +b\mathbb{E}[Y\mid\mathcal{G}].
+    \]
+    \item \textbf{Taking out known factors}: if $Z$ is bounded and $\mathcal{G}$-measurable, then
+    \[
+        \mathbb{E}[ZX\mid\mathcal{G}]
+        =Z\mathbb{E}[X\mid\mathcal{G}].
+    \]
+    \item \textbf{Tower property}: if $\mathcal{H}\subseteq\mathcal{G}$, then
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]\mid\mathcal{H}]
+        =\mathbb{E}[X\mid\mathcal{H}].
+    \]
+    \item \textbf{Total expectation}:
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]]=\mathbb{E}[X].
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Conditioning on a Finite Partition]
+Suppose $\mathcal{G}$ is generated by a partition $A_1,\dots,A_n$ with positive probabilities. Then
+\[
+    \mathbb{E}[X\mid\mathcal{G}]
+    =\sum_{k=1}^n
+    \frac{\mathbb{E}[X\mathbf{1}_{A_k}]}{\mathbb{P}(A_k)}
+    \mathbf{1}_{A_k}.
+\]
+The conditional expectation is constant on each information cell $A_k$, because $\mathcal{G}$ cannot distinguish outcomes within the same cell.
+\end{example}
+
+\begin{theorem}[Least-Squares Characterization]
+If $X\in L^2$ and $Y=\mathbb{E}[X\mid\mathcal{G}]$, then for every square-integrable $\mathcal{G}$-measurable random variable $Z$,
+\[
+    \mathbb{E}[(X-Y)^2]
+    \leq
+    \mathbb{E}[(X-Z)^2].
+\]
+\end{theorem}
+
+\begin{proof}
+The defining property of conditional expectation implies
+\[
+    \mathbb{E}[(X-Y)(Y-Z)]=0.
+\]
+Therefore
+\[
+    \mathbb{E}[(X-Z)^2]
+    =\mathbb{E}[(X-Y)^2]
+     +\mathbb{E}[(Y-Z)^2],
+\]
+which proves the claim.
+\end{proof}
+
+\begin{remark}
+This is the probabilistic analogue of orthogonal projection in an inner-product space. The sigma-algebra $\mathcal{G}$ determines which random variables are observable, and conditional expectation projects $X$ onto that information.
+\end{remark}
+
+\section{Martingales and Stopping Times}
+
+A martingale models a process with zero conditional drift. The definition does not say that the process is constant or that its sample paths are stable. It says only that, given the present information, the expected next value equals the current value. This distinction is essential: a fair game may fluctuate dramatically even though no predictable profit is available.
+
+\begin{example}[Centered Partial Sums]
+Let $X_1,X_2,\dots$ be independent integrable random variables with common mean $\mu$, and define
+\[
+    M_n=\sum_{k=1}^n(X_k-\mu).
+\]
+With the natural filtration $\mathcal{F}_n=\sigma(X_1,\dots,X_n)$,
+\[
+    \mathbb{E}[M_{n+1}\mid\mathcal{F}_n]
+    =M_n+\mathbb{E}[X_{n+1}-\mu]
+    =M_n.
+\]
+Hence $(M_n)$ is a martingale.
+\end{example}
+
+\begin{example}[A Transformed Random Walk]
+For the simple symmetric random walk $S_n$, the process
+\[
+    M_n=S_n^2-n
+\]
+is a martingale. Indeed,
+\[
+    S_{n+1}^2=(S_n+\xi_{n+1})^2
+    =S_n^2+2S_n\xi_{n+1}+1,
+\]
+and conditioning on the past gives
+\[
+    \mathbb{E}[S_{n+1}^2-(n+1)\mid\mathcal{F}_n]
+    =S_n^2-n.
+\]
+\end{example}
+
+\begin{definition}[Stopping Time]
+A random time $\tau:\Omega\to\{0,1,2,\dots,\infty\}$ is a \textbf{stopping time} with respect to $(\mathcal{F}_n)$ if
+\[
+    \{\tau\leq n\}\in\mathcal{F}_n
+\]
+for every $n$. Thus, using information available at time $n$, one can determine whether stopping has already occurred.
+\end{definition}
+
+\begin{theorem}[Optional Stopping for Bounded Times]
+Let $(M_n)$ be a martingale and let $\tau$ be a stopping time bounded by a deterministic integer $N$. Then
+\[
+    \mathbb{E}[M_\tau]=\mathbb{E}[M_0].
+\]
+\end{theorem}
+
+\begin{proof}
+Write
+\[
+    M_\tau=M_0+\sum_{k=1}^N
+    (M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}.
+\]
+The event $\{\tau\geq k\}$ belongs to $\mathcal{F}_{k-1}$, so
+\[
+\mathbb{E}[(M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}]
+=\mathbb{E}\left[
+\mathbf{1}_{\{\tau\geq k\}}
+\mathbb{E}[M_k-M_{k-1}\mid\mathcal{F}_{k-1}]
+\right]=0.
+\]
+Summing proves the theorem.
+\end{proof}
+
+\begin{note}
+Optional stopping is not valid for every unbounded stopping time. Additional hypotheses such as bounded increments, integrability, or uniform integrability are needed. The informal slogan ``a fair game remains fair when one chooses when to stop'' is correct only when the stopping rule satisfies appropriate conditions.
+\end{note}
+
+\section{Markov Chains}
+
+A Markov chain is a stochastic process whose future depends on the past only through the present state. This is not the same as independence: successive states are usually dependent. The Markov property says that the current state contains all information from the past that is relevant for predicting the next state.
+
+\begin{definition}[Time-Homogeneous Markov Chain]
+A discrete-time process $(X_n)_{n\geq0}$ on a countable state space $S$ is a \textbf{time-homogeneous Markov chain} if
+\[
+\mathbb{P}(X_{n+1}=j\mid X_n=i,X_{n-1}=i_{n-1},\dots,X_0=i_0)
+=p_{ij}
+\]
+whenever the conditional probability is defined. The matrix
+\[
+    P=(p_{ij})_{i,j\in S}
+\]
+is the \textbf{transition matrix}.
+\end{definition}
+
+\begin{proposition}[Chapman--Kolmogorov Equations]
+Let $p_{ij}^{(n)}=\mathbb{P}(X_n=j\mid X_0=i)$. Then
+\[
+    p_{ij}^{(m+n)}=
+    \sum_{k\in S}p_{ik}^{(m)}p_{kj}^{(n)}.
+\]
+In matrix form,
+\[
+    P^{(m+n)}=P^{(m)}P^{(n)},
+\]
+so for a time-homogeneous chain $P^{(n)}=P^n$.
+\end{proposition}
+
+\begin{definition}[Stationary Distribution]
+A probability vector $\pi$ on $S$ is \textbf{stationary} if
+\[
+    \pi P=\pi.
+\]
+If $X_0$ has distribution $\pi$, then every $X_n$ has distribution $\pi$.
+\end{definition}
+
+\begin{example}[Two-State Chain]
+Let
+\[
+P=
+\begin{pmatrix}
+1-a&a\\
+b&1-b
+\end{pmatrix},
+\qquad a,b\in(0,1).
+\]
+Solving $\pi P=\pi$ with $\pi_0+\pi_1=1$ gives
+\[
+    \pi=\left(\frac{b}{a+b},\frac{a}{a+b}\right).
+\]
+The larger the transition rate into a state relative to the rate out, the larger its long-run stationary weight.
+\end{example}
+
+\begin{theorem}[Finite Irreducible Aperiodic Chains]
+A finite Markov chain that is irreducible and aperiodic has a unique stationary distribution $\pi$, and for every initial state $i$,
+\[
+    p_{ij}^{(n)}\to\pi_j
+\]
+as $n\to\infty$.
+\end{theorem}
+
+\begin{remark}
+Irreducibility means every state can eventually reach every other state. Aperiodicity excludes a forced cyclic rhythm. Together they ensure that the chain forgets its initial state and converges to equilibrium.
+\end{remark}
+
+\section{Poisson Processes and Brownian Motion}
+
+Two continuous-time processes appear throughout probability and applications. The Poisson process models randomly occurring events with a constant average rate. Brownian motion models continuous random fluctuation. Their sample paths look completely different: Poisson paths jump by integers, while Brownian paths are continuous but almost surely nowhere differentiable.
+
+\subsection{The Poisson Process}
+
+\begin{definition}[Poisson Process]
+A process $(N_t)_{t\geq0}$ is a \textbf{Poisson process with rate $\lambda>0$} if:
+\begin{enumerate}
+    \item $N_0=0$;
+    \item it has independent increments;
+    \item it has stationary increments;
+    \item for $s,t\geq0$,
+    \[
+        N_{t+s}-N_s\sim\operatorname{Poisson}(\lambda t).
+    \]
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+For a Poisson process,
+\[
+    \mathbb{E}[N_t]=\lambda t,
+    \qquad
+    \operatorname{Var}(N_t)=\lambda t.
+\]
+Moreover, the waiting time $T_1$ to the first event is exponential with parameter $\lambda$:
+\[
+    \mathbb{P}(T_1>t)=\mathbb{P}(N_t=0)=e^{-\lambda t}.
+\]
+\end{proposition}
+
+\begin{example}
+If calls arrive according to a Poisson process at rate $3$ per hour, then the probability of exactly five calls in two hours is
+\[
+    \mathbb{P}(N_2=5)=e^{-6}\frac{6^5}{5!}.
+\]
+The probability of waiting more than twenty minutes for the next call is
+\[
+    e^{-3(1/3)}=e^{-1}.
+\]
+\end{example}
+
+\subsection{Brownian Motion}
+
+\begin{definition}[Standard Brownian Motion]
+A process $(B_t)_{t\geq0}$ is a \textbf{standard Brownian motion} if:
+\begin{enumerate}
+    \item $B_0=0$ almost surely;
+    \item it has independent increments;
+    \item $B_t-B_s\sim N(0,t-s)$ for $0\leq s<t$;
+    \item its sample paths are continuous almost surely.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+For Brownian motion,
+\[
+    \mathbb{E}[B_t]=0,
+    \qquad
+    \operatorname{Var}(B_t)=t,
+    \qquad
+    \operatorname{Cov}(B_s,B_t)=\min(s,t).
+\]
+\end{proposition}
+
+\begin{proof}
+Assume $s\leq t$. Since $B_t=B_s+(B_t-B_s)$ and the increment is independent of $B_s$ with mean zero,
+\[
+    \mathbb{E}[B_sB_t]
+    =\mathbb{E}[B_s^2]
+     +\mathbb{E}[B_s]\mathbb{E}[B_t-B_s]
+    =s.
+\]
+Thus the covariance is $s=\min(s,t)$.
+\end{proof}
+
+\begin{example}[A Brownian Martingale]
+The process $(B_t)$ is a martingale with respect to its natural filtration. Another important martingale is
+\[
+    B_t^2-t.
+\]
+The subtraction of $t$ compensates for the variance accumulated over time, just as $S_n^2-n$ does for the simple random walk.
+\end{example}
+
+\begin{remark}
+The scaling property
+\[
+    (B_{ct})_{t\geq0}
+    \overset{d}{=}
+    (\sqrt{c}B_t)_{t\geq0}
+\]
+shows that time scales quadratically relative to space. This same scaling appears in the heat equation and explains the close relation between Brownian motion and diffusion.
+\end{remark}
+
 \section{Conclusion}
-We have traversed from the axioms of measure theory to the powerful limit theorems. The rigorous definitions of conditional expectation and convergence modes provided here form the necessary background for advanced topics such as Stochastic Calculus, Brownian Motion, and High-Dimensional Statistics.
-\end{document}
+
+Probability theory begins with simple counting, but its rigorous foundation is measure theory. Events are measurable sets, probabilities are measures, and random variables are measurable functions. This viewpoint unifies discrete and continuous probability and makes it possible to study infinite sequences, conditioning, convergence, and stochastic processes.
+
+The major conceptual shift is from asking only ``how many outcomes are favorable?'' to asking ``what measurable structure carries uncertainty, and how does probability behave on that structure?'' Once this foundation is established, expectation becomes integration, independence becomes factorization of measures, conditioning becomes projection onto information, and the Law of Large Numbers and Central Limit Theorem explain why random systems exhibit stable macroscopic behavior.

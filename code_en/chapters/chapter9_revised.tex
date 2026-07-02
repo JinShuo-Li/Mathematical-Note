@@ -1019,54 +1019,225 @@ Chebyshev's inequality gives
 \]
 \end{proof}
 
+\begin{lemma}[Kolmogorov Convergence Criterion]
+Let $Z_1,Z_2,\dots$ be independent random variables with $\mathbb{E}[Z_n]=0$ and
+\[
+    \sum_{n=1}^{\infty}\operatorname{Var}(Z_n)<\infty.
+\]
+Then the series $\sum_{n=1}^{\infty}Z_n$ converges almost surely.
+\end{lemma}
+
+\begin{proof}
+Set
+\[
+    r_m:=\sum_{j=m+1}^{\infty}\operatorname{Var}(Z_j),
+\]
+so that $r_m\to0$. Choose an increasing sequence of integers $(n_k)$ such that
+$r_{n_k}<2^{-3k}$. For every $N>n_k$, Kolmogorov's maximal inequality gives
+\[
+    \mathbb{P}\left(
+    \max_{n_k<n\leq N}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|>2^{-k}
+    \right)
+    \leq
+    2^{2k}\sum_{j=n_k+1}^{N}\operatorname{Var}(Z_j)
+    \leq 2^{2k}r_{n_k}<2^{-k}.
+\]
+Letting $N\to\infty$ and using continuity of probability for increasing events, we obtain
+\[
+    \mathbb{P}\left(
+    \sup_{n>n_k}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|>2^{-k}
+    \right)<2^{-k}.
+\]
+These probabilities are summable. Hence the Borel--Cantelli lemma implies that, almost surely, for all sufficiently large $k$,
+\[
+    \sup_{n>n_k}
+    \left|\sum_{j=n_k+1}^{n}Z_j\right|\leq2^{-k}.
+\]
+Consequently, if $p,q>n_k$, then
+\[
+    \left|\sum_{j=1}^{p}Z_j-\sum_{j=1}^{q}Z_j\right|
+    \leq 2^{1-k}.
+\]
+Thus the sequence of partial sums is almost surely Cauchy and therefore converges almost surely.
+\end{proof}
+
+\begin{lemma}[Kronecker's Lemma]
+If the numerical series
+\[
+    \sum_{n=1}^{\infty}\frac{a_n}{n}
+\]
+converges, then
+\[
+    \frac1n\sum_{k=1}^{n}a_k\longrightarrow0.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $s_n=\sum_{k=1}^{n}a_k/k$. Summation by parts gives
+\[
+    \frac1n\sum_{k=1}^{n}a_k
+    =s_n-\frac1n\sum_{k=1}^{n-1}s_k.
+\]
+If $s_n\to s$, then its Cesaro means also converge to $s$, so the difference tends to $0$.
+\end{proof}
+
 \begin{theorem}[Strong Law of Large Numbers]
 Let $X_1,X_2,\dots$ be i.i.d. random variables with $\mathbb{E}[|X_1|]<\infty$ and mean $\mu$. Then
 \[
-    \overline{X}_n\xrightarrow{a.s.}\mu.
+    \overline{X}_n=\frac1n\sum_{k=1}^{n}X_k
+    \xrightarrow{a.s.}\mu.
 \]
 \end{theorem}
 
+\begin{proof}
+Define the truncated variables
+\[
+    Y_n=X_n\mathbf{1}_{\{|X_n|\leq n\}}.
+\]
+The tail-sum formula implies
+\[
+    \sum_{n=1}^{\infty}\mathbb{P}(|X_n|>n)
+    =\sum_{n=1}^{\infty}\mathbb{P}(|X_1|>n)
+    \leq \mathbb{E}[|X_1|]<\infty.
+\]
+By the first Borel--Cantelli lemma, $X_n=Y_n$ for all sufficiently large $n$, almost surely.
+
+Next, the variables $Y_n$ are independent and
+\[
+\begin{aligned}
+    \sum_{n=1}^{\infty}
+    \frac{\operatorname{Var}(Y_n)}{n^2}
+    &\leq
+    \sum_{n=1}^{\infty}
+    \frac{\mathbb{E}[X_1^2\mathbf{1}_{\{|X_1|\leq n\}}]}{n^2}\\
+    &=\mathbb{E}\left[
+    X_1^2\sum_{n\geq |X_1|}\frac1{n^2}
+    \right]
+    \leq C\mathbb{E}[|X_1|]<\infty
+\end{aligned}
+\]
+for an absolute constant $C$. Apply the Kolmogorov convergence criterion to
+\[
+    Z_n=\frac{Y_n-\mathbb{E}[Y_n]}{n}.
+\]
+The series $\sum Z_n$ converges almost surely, so Kronecker's lemma yields
+\[
+    \frac1n\sum_{k=1}^{n}
+    \left(Y_k-\mathbb{E}[Y_k]\right)
+    \longrightarrow0
+    \qquad\text{almost surely}.
+\]
+Since $Y_n\to X_n$ in the sense that the truncation threshold tends to infinity and all $X_n$ have the same law,
+\[
+    \mathbb{E}[Y_n]\to\mathbb{E}[X_1]=\mu
+\]
+by dominated convergence. Hence Cesaro averaging gives
+\[
+    \frac1n\sum_{k=1}^{n}\mathbb{E}[Y_k]\to\mu.
+\]
+Finally, the averages of $X_k$ and $Y_k$ differ only in finitely many terms almost surely, so their difference tends to $0$. Combining the three limits proves the theorem.
+\end{proof}
+
 \begin{remark}
-The weak law says that large deviations from the mean become unlikely. The strong law says something stronger: with probability one, the sample average along an infinite sequence actually converges to the mean.
+The weak law controls one probability for each $n$. The strong law controls an entire infinite sample path: outside one null set, the averages converge for all sufficiently large $n$. The truncation step is what allows the theorem to require only a finite first moment rather than a finite variance.
 \end{remark}
 
 \subsection{Central Limit Theorem}
 
 The Central Limit Theorem explains why the normal distribution appears so frequently.
 
-\begin{theorem}[Lindeberg-Levy Central Limit Theorem]
+\begin{theorem}[Levy's Continuity Theorem]
+If characteristic functions $\varphi_n(t)$ converge pointwise to a function $\varphi(t)$ that is continuous at $0$ and is itself a characteristic function, then the corresponding distributions converge weakly to the distribution with characteristic function $\varphi$.
+\end{theorem}
+
+\begin{theorem}[Lindeberg--Levy Central Limit Theorem]
 Let $X_1,X_2,\dots$ be i.i.d. random variables with mean $\mu$ and variance $\sigma^2>0$. Let $S_n=X_1+\cdots+X_n$. Then
 \[
     \frac{S_n-n\mu}{\sigma\sqrt{n}}\xrightarrow{d}N(0,1).
 \]
 \end{theorem}
 
-\begin{proof}[Proof Sketch Using Characteristic Functions]
-Let
+\begin{proof}
+Set
 \[
     Y_k=\frac{X_k-\mu}{\sigma}.
 \]
-Then $\mathbb{E}[Y_k]=0$ and $\operatorname{Var}(Y_k)=1$. For small $t$,
+Then $\mathbb{E}[Y_k]=0$ and $\mathbb{E}[Y_k^2]=1$. The elementary expansion
 \[
-    \varphi_Y(t)=1-\frac{t^2}{2}+o(t^2).
+    e^{iu}=1+iu-\frac{u^2}{2}+u^2\eta(u),
+    \qquad \eta(u)\to0\quad(u\to0),
 \]
-The characteristic function of
+together with dominated convergence gives
 \[
-    Z_n=\frac{1}{\sqrt{n}}\sum_{k=1}^{n}Y_k
+\begin{aligned}
+    \varphi_Y(t)
+    &=\mathbb{E}[e^{itY}]\\
+    &=1+it\mathbb{E}[Y]-\frac{t^2}{2}\mathbb{E}[Y^2]+o(t^2)\\
+    &=1-\frac{t^2}{2}+o(t^2).
+\end{aligned}
 \]
-is
+Indeed, after dividing the remainder by $t^2$, it is bounded by a constant multiple of $Y^2$, which is integrable.
+
+Now define
 \[
-    \varphi_{Z_n}(t)=\left(\varphi_Y\left(\frac{t}{\sqrt{n}}\right)\right)^n.
+    Z_n=\frac1{\sqrt n}\sum_{k=1}^{n}Y_k.
 \]
-Using the expansion,
+Independence gives
 \[
-    \varphi_{Z_n}(t)=\left(1-\frac{t^2}{2n}+o\left(\frac{1}{n}\right)\right)^n\to e^{-t^2/2}.
+    \varphi_{Z_n}(t)
+    =\prod_{k=1}^{n}\varphi_Y\left(\frac{t}{\sqrt n}\right)
+    =\left(\varphi_Y\left(\frac{t}{\sqrt n}\right)\right)^n.
 \]
-This is the characteristic function of $N(0,1)$. By Levy's continuity theorem, $Z_n\to N(0,1)$ in distribution.
+Using the expansion at the scale $t/\sqrt n$,
+\[
+    \varphi_Y\left(\frac{t}{\sqrt n}\right)
+    =1-\frac{t^2}{2n}+o\left(\frac1n\right).
+\]
+Therefore
+\[
+    \log\varphi_{Z_n}(t)
+    =n\log\left(1-\frac{t^2}{2n}+o\left(\frac1n\right)\right)
+    \longrightarrow-\frac{t^2}{2},
+\]
+and hence
+\[
+    \varphi_{Z_n}(t)\longrightarrow e^{-t^2/2}.
+\]
+The limit is the characteristic function of $N(0,1)$ and is continuous at $0$. Levy's continuity theorem completes the proof.
 \end{proof}
 
+\begin{definition}[Lindeberg Condition]
+For each $n$, let $X_{n,1},\dots,X_{n,k_n}$ be independent random variables with zero means. Put
+\[
+    s_n^2=\sum_{k=1}^{k_n}\operatorname{Var}(X_{n,k}).
+\]
+The triangular array satisfies the \textbf{Lindeberg condition} if for every $\varepsilon>0$,
+\[
+    \frac1{s_n^2}\sum_{k=1}^{k_n}
+    \mathbb{E}\left[
+    X_{n,k}^2\mathbf{1}_{\{|X_{n,k}|>\varepsilon s_n\}}
+    \right]
+    \longrightarrow0.
+\]
+\end{definition}
+
+\begin{theorem}[Lindeberg--Feller Central Limit Theorem]
+If the triangular array above satisfies the Lindeberg condition and $s_n^2>0$, then
+\[
+    \frac1{s_n}\sum_{k=1}^{k_n}X_{n,k}
+    \xrightarrow{d}N(0,1).
+\]
+\end{theorem}
+
 \begin{remark}
-The Law of Large Numbers describes the first-order behavior of sums: averages approach the mean. The Central Limit Theorem describes second-order fluctuations: deviations of size $\sqrt{n}$ from the mean become approximately normal.
+The Lindeberg condition says that no small collection of exceptionally large summands contributes a non-negligible fraction of the total variance. The i.i.d. central limit theorem is recovered by taking
+\[
+    X_{n,k}=\frac{X_k-\mu}{\sigma\sqrt n},
+    \qquad 1\leq k\leq n.
+\]
+The Law of Large Numbers describes first-order behavior: averages approach the mean. The Central Limit Theorem describes second-order fluctuations: deviations of order $\sqrt n$ approach a universal Gaussian shape.
 \end{remark}
 
 \section{Borel-Cantelli Lemmas}
@@ -1173,6 +1344,556 @@ Define
 \]
 Then $\{S_n\}$ is a martingale with respect to the natural filtration generated by $\xi_1,\dots,\xi_n$.
 \end{example}
+
+
+\section{Distribution Functions and Transformations}
+
+A probability distribution can be described in several equivalent ways. Discrete laws are often specified by probability masses, continuous laws by densities, and general real-valued laws by cumulative distribution functions. The distribution function is the most universal of these descriptions because it exists even when a law is neither purely discrete nor purely continuous.
+
+\begin{definition}[Cumulative Distribution Function]
+For a real-valued random variable $X$, the \textbf{cumulative distribution function} is
+\[
+    F_X(x)=\mathbb{P}(X\leq x).
+\]
+\end{definition}
+
+\begin{theorem}[Characterization of Distribution Functions]
+A function $F:\mathbb{R}\to[0,1]$ is the distribution function of some real-valued random variable if and only if:
+\begin{enumerate}
+    \item $F$ is non-decreasing;
+    \item $F$ is right-continuous;
+    \item $\lim_{x\to-\infty}F(x)=0$ and $\lim_{x\to\infty}F(x)=1$.
+\end{enumerate}
+Moreover,
+\[
+    \mathbb{P}(X=x)=F_X(x)-F_X(x^-),
+\]
+so jumps of the distribution function are exactly point masses.
+\end{theorem}
+
+\begin{example}[A Mixed Distribution]
+Suppose $X=0$ with probability $1/2$, while with probability $1/2$ it is uniformly distributed on $[0,1]$. Then
+\[
+F_X(x)=
+\begin{cases}
+0,&x<0,\\
+\frac12+\frac{x}{2},&0\leq x<1,\\
+1,&x\geq1.
+\end{cases}
+\]
+The jump at $0$ records the atom, while the linear part records the continuous component. No single ordinary density describes the entire law.
+\end{example}
+
+\subsection{Functions of One Random Variable}
+
+\begin{theorem}[Monotone Change of Variables]
+Let $X$ have density $f_X$, and let $Y=g(X)$, where $g$ is strictly monotone and continuously differentiable. Then
+\[
+    f_Y(y)=f_X(g^{-1}(y))
+    \left|\frac{d}{dy}g^{-1}(y)\right|
+\]
+on the range of $g$.
+\end{theorem}
+
+\begin{proof}
+If $g$ is increasing, then
+\[
+    F_Y(y)=\mathbb{P}(g(X)\leq y)
+    =\mathbb{P}(X\leq g^{-1}(y))
+    =F_X(g^{-1}(y)).
+\]
+Differentiate and apply the chain rule. The decreasing case reverses the inequality and produces the same absolute-value formula.
+\end{proof}
+
+\begin{example}[Squaring a Standard Normal Variable]
+Let $X\sim N(0,1)$ and set $Y=X^2$. The map $x\mapsto x^2$ is not one-to-one, so both inverse branches contribute:
+\[
+    f_Y(y)
+    =\frac{f_X(\sqrt y)}{2\sqrt y}
+     +\frac{f_X(-\sqrt y)}{2\sqrt y}
+    =\frac{1}{\sqrt{2\pi y}}e^{-y/2},
+    \qquad y>0.
+\]
+Thus $X^2$ has a chi-square distribution with one degree of freedom.
+\end{example}
+
+\begin{theorem}[Expectation by the Tail Formula]
+If $X\geq0$, then
+\[
+    \mathbb{E}[X]=\int_0^\infty\mathbb{P}(X>t)\,dt,
+\]
+where both sides may be infinite.
+\end{theorem}
+
+\begin{proof}
+Pointwise,
+\[
+    X(\omega)=\int_0^\infty
+    \mathbf{1}_{\{X(\omega)>t\}}\,dt.
+\]
+Tonelli's theorem allows the order of integration to be exchanged:
+\[
+    \mathbb{E}[X]
+    =\int_0^\infty
+    \mathbb{E}[\mathbf{1}_{\{X>t\}}]dt
+    =\int_0^\infty\mathbb{P}(X>t)dt.
+\]
+\end{proof}
+
+\section{Joint Densities, Convolution, and Conditioning}
+
+For several random variables, marginal distributions describe each coordinate separately, but they do not determine dependence. The joint distribution contains the complete information. Marginalization integrates out unwanted coordinates, conditioning renormalizes along a coordinate, and convolution describes sums of independent variables.
+
+\begin{definition}[Joint Density]
+A pair $(X,Y)$ has joint density $f_{X,Y}$ if for every suitable Borel set $A\subseteq\mathbb{R}^2$,
+\[
+    \mathbb{P}((X,Y)\in A)
+    =\iint_A f_{X,Y}(x,y)\,dx\,dy.
+\]
+The marginal densities are
+\[
+    f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,
+    \qquad
+    f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.
+\]
+\end{definition}
+
+\begin{theorem}[Density Criterion for Independence]
+If $(X,Y)$ has a joint density, then $X$ and $Y$ are independent if and only if
+\[
+    f_{X,Y}(x,y)=f_X(x)f_Y(y)
+\]
+for almost every $(x,y)$.
+\end{theorem}
+
+\begin{definition}[Conditional Density]
+If $f_Y(y)>0$, define
+\[
+    f_{X\mid Y}(x\mid y)
+    =\frac{f_{X,Y}(x,y)}{f_Y(y)}.
+\]
+For fixed $y$, this is a density in $x$ and represents the distribution of $X$ conditioned on $Y=y$.
+\end{definition}
+
+\begin{example}[Uniform Distribution on a Triangle]
+Let $(X,Y)$ be uniformly distributed on
+\[
+    T=\{(x,y):0<y<x<1\}.
+\]
+Since the area of $T$ is $1/2$, the joint density is $2$ on $T$. For $0<x<1$,
+\[
+    f_X(x)=\int_0^x2\,dy=2x.
+\]
+For fixed $x$, the conditional density of $Y$ given $X=x$ is
+\[
+    f_{Y\mid X}(y\mid x)=\frac{2}{2x}=\frac1x,
+    \qquad0<y<x.
+\]
+Thus, conditioned on $X=x$, the variable $Y$ is uniform on $(0,x)$.
+\end{example}
+
+\begin{theorem}[Convolution Formula]
+If $X$ and $Y$ are independent continuous random variables with densities $f_X$ and $f_Y$, then $S=X+Y$ has density
+\[
+    f_S(s)=\int_{-\infty}^{\infty}f_X(x)f_Y(s-x)\,dx.
+\]
+\end{theorem}
+
+\begin{proof}
+The change of variables $(x,y)\mapsto(x,s=x+y)$ has Jacobian determinant $1$. Since independence gives joint density $f_X(x)f_Y(y)$, integrating out $x$ yields the stated formula.
+\end{proof}
+
+\begin{example}[Sum of Two Uniform Variables]
+Let $X,Y$ be independent and uniform on $[0,1]$. Then
+\[
+    f_{X+Y}(s)
+    =\int_{\max(0,s-1)}^{\min(1,s)}1\,dx
+    =
+    \begin{cases}
+    s,&0<s<1,\\
+    2-s,&1\leq s<2,\\
+    0,&\text{otherwise}.
+    \end{cases}
+\]
+The triangular density reflects the increasing and then decreasing length of the line segment $x+y=s$ inside the unit square.
+\end{example}
+
+\section{Convergence Theorems for Expectations}
+
+Limits of random variables are useful only if they can be passed through probabilities or expectations. Measure theory supplies precise hypotheses for doing so. Monotone convergence handles increasing non-negative approximations; dominated convergence handles signed variables controlled by one integrable bound.
+
+\begin{theorem}[Monotone Convergence Theorem]
+If $0\leq X_1\leq X_2\leq\cdots$ and $X_n\to X$ almost surely, then
+\[
+    \mathbb{E}[X_n]\uparrow\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{theorem}[Fatou's Lemma]
+If $X_n\geq0$, then
+\[
+    \mathbb{E}\left[\liminf_{n\to\infty}X_n\right]
+    \leq
+    \liminf_{n\to\infty}\mathbb{E}[X_n].
+\]
+\end{theorem}
+
+\begin{theorem}[Dominated Convergence Theorem]
+Suppose $X_n\to X$ almost surely and there exists an integrable random variable $Y$ such that
+\[
+    |X_n|\leq Y
+\]
+almost surely for every $n$. Then $X$ is integrable and
+\[
+    \mathbb{E}[X_n]\to\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{example}[Why Pointwise Convergence Is Not Enough]
+On $(0,1)$ with Lebesgue probability measure, let
+\[
+    X_n=n\mathbf{1}_{(0,1/n)}.
+\]
+Then $X_n\to0$ almost surely, but
+\[
+    \mathbb{E}[X_n]=1
+\]
+for every $n$. There is no single integrable random variable dominating all $X_n$. This example shows why an interchange of limit and expectation requires more than pointwise convergence.
+\end{example}
+
+\begin{corollary}[Continuity of Characteristic Functions]
+For every random variable $X$, its characteristic function
+\[
+    \varphi_X(t)=\mathbb{E}[e^{itX}]
+\]
+is continuous in $t$.
+\end{corollary}
+
+\begin{proof}
+If $t_n\to t$, then $e^{it_nX}\to e^{itX}$ almost surely, while
+\[
+    |e^{it_nX}|=1.
+\]
+Apply dominated convergence with the integrable bound $1$.
+\end{proof}
+
+\section{Conditional Expectation as Information}
+
+Conditioning on an event produces a number. Conditioning on a sigma-algebra produces a random variable, because the information available may lead to different predictions in different states. The conditional expectation $\mathbb{E}[X\mid\mathcal{G}]$ is the best $\mathcal{G}$-measurable summary of $X$ in an average sense.
+
+\begin{definition}[Conditional Expectation]
+Let $X$ be integrable and let $\mathcal{G}\subseteq\mathcal{F}$ be a sub-sigma-algebra. A random variable $Y$ is a version of $\mathbb{E}[X\mid\mathcal{G}]$ if:
+\begin{enumerate}
+    \item $Y$ is $\mathcal{G}$-measurable;
+    \item $Y$ is integrable;
+    \item for every $G\in\mathcal{G}$,
+    \[
+        \int_GY\,d\mathbb{P}=\int_GX\,d\mathbb{P}.
+    \]
+\end{enumerate}
+It is unique up to equality almost surely.
+\end{definition}
+
+\begin{theorem}[Basic Properties]
+For integrable random variables $X,Y$ and constants $a,b$:
+\begin{enumerate}
+    \item \textbf{Linearity}:
+    \[
+        \mathbb{E}[aX+bY\mid\mathcal{G}]
+        =a\mathbb{E}[X\mid\mathcal{G}]
+        +b\mathbb{E}[Y\mid\mathcal{G}].
+    \]
+    \item \textbf{Taking out known factors}: if $Z$ is bounded and $\mathcal{G}$-measurable, then
+    \[
+        \mathbb{E}[ZX\mid\mathcal{G}]
+        =Z\mathbb{E}[X\mid\mathcal{G}].
+    \]
+    \item \textbf{Tower property}: if $\mathcal{H}\subseteq\mathcal{G}$, then
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]\mid\mathcal{H}]
+        =\mathbb{E}[X\mid\mathcal{H}].
+    \]
+    \item \textbf{Total expectation}:
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]]=\mathbb{E}[X].
+    \]
+\end{enumerate}
+\end{theorem}
+
+\newpage
+
+\begin{example}[Conditioning on a Finite Partition]
+Suppose $\mathcal{G}$ is generated by a partition $A_1,\dots,A_n$ with positive probabilities. Then
+\[
+    \mathbb{E}[X\mid\mathcal{G}]
+    =\sum_{k=1}^n
+    \frac{\mathbb{E}[X\mathbf{1}_{A_k}]}{\mathbb{P}(A_k)}
+    \mathbf{1}_{A_k}.
+\]
+The conditional expectation is constant on each information cell $A_k$, because $\mathcal{G}$ cannot distinguish outcomes within the same cell.
+\end{example}
+
+\begin{theorem}[Least-Squares Characterization]
+If $X\in L^2$ and $Y=\mathbb{E}[X\mid\mathcal{G}]$, then for every square-integrable $\mathcal{G}$-measurable random variable $Z$,
+\[
+    \mathbb{E}[(X-Y)^2]
+    \leq
+    \mathbb{E}[(X-Z)^2].
+\]
+\end{theorem}
+
+\begin{proof}
+The defining property of conditional expectation implies
+\[
+    \mathbb{E}[(X-Y)(Y-Z)]=0.
+\]
+Therefore
+\[
+    \mathbb{E}[(X-Z)^2]
+    =\mathbb{E}[(X-Y)^2]
+     +\mathbb{E}[(Y-Z)^2],
+\]
+which proves the claim.
+\end{proof}
+
+\begin{remark}
+This is the probabilistic analogue of orthogonal projection in an inner-product space. The sigma-algebra $\mathcal{G}$ determines which random variables are observable, and conditional expectation projects $X$ onto that information.
+\end{remark}
+
+\section{Martingales and Stopping Times}
+
+A martingale models a process with zero conditional drift. The definition does not say that the process is constant or that its sample paths are stable. It says only that, given the present information, the expected next value equals the current value. This distinction is essential: a fair game may fluctuate dramatically even though no predictable profit is available.
+
+\begin{example}[Centered Partial Sums]
+Let $X_1,X_2,\dots$ be independent integrable random variables with common mean $\mu$, and define
+\[
+    M_n=\sum_{k=1}^n(X_k-\mu).
+\]
+With the natural filtration $\mathcal{F}_n=\sigma(X_1,\dots,X_n)$,
+\[
+    \mathbb{E}[M_{n+1}\mid\mathcal{F}_n]
+    =M_n+\mathbb{E}[X_{n+1}-\mu]
+    =M_n.
+\]
+Hence $(M_n)$ is a martingale.
+\end{example}
+
+\begin{example}[A Transformed Random Walk]
+For the simple symmetric random walk $S_n$, the process
+\[
+    M_n=S_n^2-n
+\]
+is a martingale. Indeed,
+\[
+    S_{n+1}^2=(S_n+\xi_{n+1})^2
+    =S_n^2+2S_n\xi_{n+1}+1,
+\]
+and conditioning on the past gives
+\[
+    \mathbb{E}[S_{n+1}^2-(n+1)\mid\mathcal{F}_n]
+    =S_n^2-n.
+\]
+\end{example}
+
+\begin{definition}[Stopping Time]
+A random time $\tau:\Omega\to\{0,1,2,\dots,\infty\}$ is a \textbf{stopping time} with respect to $(\mathcal{F}_n)$ if
+\[
+    \{\tau\leq n\}\in\mathcal{F}_n
+\]
+for every $n$. Thus, using information available at time $n$, one can determine whether stopping has already occurred.
+\end{definition}
+
+\begin{theorem}[Optional Stopping for Bounded Times]
+Let $(M_n)$ be a martingale and let $\tau$ be a stopping time bounded by a deterministic integer $N$. Then
+\[
+    \mathbb{E}[M_\tau]=\mathbb{E}[M_0].
+\]
+\end{theorem}
+
+\begin{proof}
+Write
+\[
+    M_\tau=M_0+\sum_{k=1}^N
+    (M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}.
+\]
+The event $\{\tau\geq k\}$ belongs to $\mathcal{F}_{k-1}$, so
+\[
+\mathbb{E}[(M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}]
+=\mathbb{E}\left[
+\mathbf{1}_{\{\tau\geq k\}}
+\mathbb{E}[M_k-M_{k-1}\mid\mathcal{F}_{k-1}]
+\right]=0.
+\]
+Summing proves the theorem.
+\end{proof}
+
+\begin{note}
+Optional stopping is not valid for every unbounded stopping time. Additional hypotheses such as bounded increments, integrability, or uniform integrability are needed. The informal slogan ``a fair game remains fair when one chooses when to stop'' is correct only when the stopping rule satisfies appropriate conditions.
+\end{note}
+
+\section{Markov Chains}
+
+A Markov chain is a stochastic process whose future depends on the past only through the present state. This is not the same as independence: successive states are usually dependent. The Markov property says that the current state contains all information from the past that is relevant for predicting the next state.
+
+\begin{definition}[Time-Homogeneous Markov Chain]
+A discrete-time process $(X_n)_{n\geq0}$ on a countable state space $S$ is a \textbf{time-homogeneous Markov chain} if
+\[
+\mathbb{P}(X_{n+1}=j\mid X_n=i,X_{n-1}=i_{n-1},\dots,X_0=i_0)
+=p_{ij}
+\]
+whenever the conditional probability is defined. The matrix
+\[
+    P=(p_{ij})_{i,j\in S}
+\]
+is the \textbf{transition matrix}.
+\end{definition}
+
+\begin{proposition}[Chapman--Kolmogorov Equations]
+Let $p_{ij}^{(n)}=\mathbb{P}(X_n=j\mid X_0=i)$. Then
+\[
+    p_{ij}^{(m+n)}=
+    \sum_{k\in S}p_{ik}^{(m)}p_{kj}^{(n)}.
+\]
+In matrix form,
+\[
+    P^{(m+n)}=P^{(m)}P^{(n)},
+\]
+so for a time-homogeneous chain $P^{(n)}=P^n$.
+\end{proposition}
+
+\begin{definition}[Stationary Distribution]
+A probability vector $\pi$ on $S$ is \textbf{stationary} if
+\[
+    \pi P=\pi.
+\]
+If $X_0$ has distribution $\pi$, then every $X_n$ has distribution $\pi$.
+\end{definition}
+
+\begin{example}[Two-State Chain]
+Let
+\[
+P=
+\begin{pmatrix}
+1-a&a\\
+b&1-b
+\end{pmatrix},
+\qquad a,b\in(0,1).
+\]
+Solving $\pi P=\pi$ with $\pi_0+\pi_1=1$ gives
+\[
+    \pi=\left(\frac{b}{a+b},\frac{a}{a+b}\right).
+\]
+The larger the transition rate into a state relative to the rate out, the larger its long-run stationary weight.
+\end{example}
+
+\begin{theorem}[Finite Irreducible Aperiodic Chains]
+A finite Markov chain that is irreducible and aperiodic has a unique stationary distribution $\pi$, and for every initial state $i$,
+\[
+    p_{ij}^{(n)}\to\pi_j
+\]
+as $n\to\infty$.
+\end{theorem}
+
+\begin{remark}
+Irreducibility means every state can eventually reach every other state. Aperiodicity excludes a forced cyclic rhythm. Together they ensure that the chain forgets its initial state and converges to equilibrium.
+\end{remark}
+
+\section{Poisson Processes and Brownian Motion}
+
+Two continuous-time processes appear throughout probability and applications. The Poisson process models randomly occurring events with a constant average rate. Brownian motion models continuous random fluctuation. Their sample paths look completely different: Poisson paths jump by integers, while Brownian paths are continuous but almost surely nowhere differentiable.
+
+\subsection{The Poisson Process}
+
+\begin{definition}[Poisson Process]
+A process $(N_t)_{t\geq0}$ is a \textbf{Poisson process with rate $\lambda>0$} if:
+\begin{enumerate}
+    \item $N_0=0$;
+    \item it has independent increments;
+    \item it has stationary increments;
+    \item for $s,t\geq0$,
+    \[
+        N_{t+s}-N_s\sim\operatorname{Poisson}(\lambda t).
+    \]
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+For a Poisson process,
+\[
+    \mathbb{E}[N_t]=\lambda t,
+    \qquad
+    \operatorname{Var}(N_t)=\lambda t.
+\]
+Moreover, the waiting time $T_1$ to the first event is exponential with parameter $\lambda$:
+\[
+    \mathbb{P}(T_1>t)=\mathbb{P}(N_t=0)=e^{-\lambda t}.
+\]
+\end{proposition}
+
+\begin{example}
+If calls arrive according to a Poisson process at rate $3$ per hour, then the probability of exactly five calls in two hours is
+\[
+    \mathbb{P}(N_2=5)=e^{-6}\frac{6^5}{5!}.
+\]
+The probability of waiting more than twenty minutes for the next call is
+\[
+    e^{-3(1/3)}=e^{-1}.
+\]
+\end{example}
+
+\subsection{Brownian Motion}
+
+\begin{definition}[Standard Brownian Motion]
+A process $(B_t)_{t\geq0}$ is a \textbf{standard Brownian motion} if:
+\begin{enumerate}
+    \item $B_0=0$ almost surely;
+    \item it has independent increments;
+    \item $B_t-B_s\sim N(0,t-s)$ for $0\leq s<t$;
+    \item its sample paths are continuous almost surely.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+For Brownian motion,
+\[
+    \mathbb{E}[B_t]=0,
+    \qquad
+    \operatorname{Var}(B_t)=t,
+    \qquad
+    \operatorname{Cov}(B_s,B_t)=\min(s,t).
+\]
+\end{proposition}
+
+\begin{proof}
+Assume $s\leq t$. Since $B_t=B_s+(B_t-B_s)$ and the increment is independent of $B_s$ with mean zero,
+\[
+    \mathbb{E}[B_sB_t]
+    =\mathbb{E}[B_s^2]
+     +\mathbb{E}[B_s]\mathbb{E}[B_t-B_s]
+    =s.
+\]
+Thus the covariance is $s=\min(s,t)$.
+\end{proof}
+
+\newpage
+
+\begin{example}[A Brownian Martingale]
+The process $(B_t)$ is a martingale with respect to its natural filtration. Another important martingale is
+\[
+    B_t^2-t.
+\]
+The subtraction of $t$ compensates for the variance accumulated over time, just as $S_n^2-n$ does for the simple random walk.
+\end{example}
+
+\begin{remark}
+The scaling property
+\[
+    (B_{ct})_{t\geq0}
+    \overset{d}{=}
+    (\sqrt{c}B_t)_{t\geq0}
+\]
+shows that time scales quadratically relative to space. This same scaling appears in the heat equation and explains the close relation between Brownian motion and diffusion.
+\end{remark}
 
 \section{Conclusion}
 
