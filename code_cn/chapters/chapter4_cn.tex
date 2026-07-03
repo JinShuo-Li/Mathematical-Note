@@ -1148,6 +1148,339 @@ $K$ 的所有 $F$-自同构组成的集合记作
 把 $V$ 变成一个 $F[x]$-模。PID $F[x]$ 上有限生成模的结构定理，是通向有理标准形和 Jordan 标准形的一条路线。
 \end{example}
 
+\section{具体群模型与分类原则}
+
+抽象定义只有在能够重新联系到具体的群时，才真正显示出其作用。循环群刻画同一运算的反复施行，置换群刻画有限对象的对称性，直积则把彼此独立的系统组合起来。这些构造也体现了代数学中反复出现的目标：把对象约化为标准构件，从而实现分类。
+
+\subsection{循环群}
+
+\begin{definition}[循环群]
+如果存在 $g\in G$，使得
+\[
+    G=\langle g\rangle=\{g^n:n\in\mathbb{Z}\},
+\]
+则称群 $G$ 是\textbf{循环群}。元素 $g$ 称为 $G$ 的一个\textbf{生成元}。
+\end{definition}
+
+\begin{theorem}[循环群的分类]
+每个循环群都同构于 $(\mathbb{Z},+)$，或者同构于某个正整数 $n$ 对应的 $(\mathbb{Z}/n\mathbb{Z},+)$。
+\end{theorem}
+
+\begin{proof}
+设 $G=\langle g\rangle$，定义 $\varphi:\mathbb{Z}\to G$ 为 $\varphi(k)=g^k$。这是一个满同态。由第一同构定理，
+\[
+    G\cong\mathbb{Z}/\ker\varphi.
+\]
+$\mathbb{Z}$ 的每个子群都具有 $n\mathbb{Z}$ 的形式。如果核为 $\{0\}$，则 $G\cong\mathbb{Z}$。否则 $\ker\varphi=n\mathbb{Z}$，其中 $n$ 是 $g$ 的阶，于是 $G\cong\mathbb{Z}/n\mathbb{Z}$。
+\end{proof}
+
+\begin{corollary}
+循环群的每个子群仍然是循环群。如果 $G$ 的有限阶为 $n$，那么对每个因数 $d\mid n$，$G$ 中恰有一个阶为 $d$ 的子群。
+\end{corollary}
+
+\begin{proof}
+设 $G=\langle g\rangle$。在上述商群描述下，$G$ 的子群对应于 $\mathbb{Z}$ 的子群。在有限情形中，阶为 $d$ 的子群由 $g^{n/d}$ 生成。
+\end{proof}
+
+\begin{example}[有限循环群的生成元]
+加法群 $\mathbb{Z}/n\mathbb{Z}$ 由剩余类 $[k]$ 生成，当且仅当 $\gcd(k,n)=1$。因此它共有
+\[
+    \varphi(n)
+\]
+个生成元，其中 $\varphi$ 是 Euler 函数。
+\end{example}
+
+\subsection{置换与轮换分解}
+
+\begin{theorem}[不相交轮换分解]
+$S_n$ 中的每个置换都可以写成若干个两两不相交轮换的乘积。除轮换之间的排列次序以及每个轮换内部的循环移位外，这种分解是唯一的。
+\end{theorem}
+
+\begin{proof}
+从任意元素 $a$ 出发，反复施行该置换，直到第一次出现重复。由于置换是双射，第一次重复的元素必然是 $a$，从而得到一个轮换。移去这些元素，再对剩余集合重复这一过程。不同轨道彼此不交，而每个元素恰好属于一个轨道。
+\end{proof}
+
+\begin{definition}[置换的符号]
+对换交换两个元素并固定其余所有元素。每个置换都可以写成若干个对换的乘积。其\textbf{符号}定义为
+\[
+    \operatorname{sgn}(\sigma)=(-1)^r,
+\]
+其中 $r$ 是任意一种对换分解中对换的个数。
+\end{definition}
+
+\begin{theorem}
+$r$ 的奇偶性与所选取的对换分解无关。因此
+\[
+    \operatorname{sgn}:S_n\to\{1,-1\}
+\]
+是良定义的满同态，其核为交错群 $A_n$。
+\end{theorem}
+
+\begin{remark}
+线性代数中的行列式公式包含同一个符号同态。公式
+\[
+    \det A=\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)
+    a_{1\sigma(1)}\cdots a_{n\sigma(n)}
+\]
+中的正负号并不是任意约定，而是在编码对称群的奇偶结构。
+\end{remark}
+
+\subsection{直积}
+
+\begin{definition}[群的直积]
+设 $G$ 与 $H$ 是群。它们的\textbf{直积}是集合 $G\times H$，其运算定义为
+\[
+    (g_1,h_1)(g_2,h_2)=(g_1g_2,h_1h_2).
+\]
+\end{definition}
+
+\begin{proposition}
+当两个分量的阶都有限时，$(g,h)\in G\times H$ 的阶为
+\[
+    \operatorname{lcm}(|g|,|h|).
+\]
+\end{proposition}
+
+\begin{example}[中国剩余结构]
+如果 $\gcd(m,n)=1$，那么
+\[
+    \mathbb{Z}/mn\mathbb{Z}
+    \cong
+    \mathbb{Z}/m\mathbb{Z}\times\mathbb{Z}/n\mathbb{Z}
+\]
+不仅作为加法群同构，而且作为环同构。该同构把
+\[
+    [a]_{mn}\longmapsto([a]_m,[a]_n).
+\]
+因此，模一个合数的算术可以分解为模其两两互素因子的独立算术。
+\end{example}
+
+\section{欧几里得整环、主理想整环与唯一分解}
+
+整数环和域上的多项式环具有一个重要的共同计算特征：带余除法。把这一特征抽象出来，便得到 欧几里得整环、主理想整环和唯一分解整环。蕴含关系
+\[
+    \text{欧几里得整环}\Longrightarrow\text{PID}\Longrightarrow\text{UFD}
+\]
+说明了为什么最大公因数算法、Bezout 等式和素因数分解能够在这些结构中成立。
+
+\begin{definition}[欧几里得整环]
+如果整环 $R$ 上存在函数
+\[
+    \delta:R\setminus\{0\}\to\mathbb{N},
+\]
+使得对任意 $a,b\in R$ 且 $b\neq0$，都存在 $q,r\in R$ 满足
+\[
+    a=bq+r,
+\]
+其中或者 $r=0$，或者 $\delta(r)<\delta(b)$，则称 $R$ 是\textbf{欧几里得整环}。
+\end{definition}
+
+\begin{example}
+环 $\mathbb{Z}$ 是 欧几里得整环，可以取 $\delta(n)=|n|$。如果 $F$ 是域，那么 $F[x]$ 是 欧几里得整环，可以取 $\delta(f)=\deg f$。高斯整数环 $\mathbb{Z}[i]$ 也是 欧几里得整环，其范数为
+\[
+    N(a+bi)=a^2+b^2.
+\]
+\end{example}
+
+\begin{theorem}[欧几里得整环是 PID]
+欧几里得整环中的每个理想都是主理想。
+\end{theorem}
+
+\begin{proof}
+设 $I$ 是非零理想，选取 $d\in I\setminus\{0\}$，使其 欧几里得函数值最小。对任意 $a\in I$，写成
+\[
+    a=dq+r,
+\]
+其中 $r=0$ 或 $\delta(r)<\delta(d)$。由于 $r=a-dq\in I$，极小性迫使 $r=0$。因此 $d$ 整除 $I$ 的每个元素，所以 $I=(d)$。
+\end{proof}
+
+\begin{theorem}[PID 中的 Bezout 等式]
+设 $R$ 是 PID，$a,b\in R$。则 $a$ 与 $b$ 的一个最大公因数 $d$ 可以写成
+\[
+    d=ax+by
+\]
+的形式，其中 $x,y\in R$。
+\end{theorem}
+
+\begin{proof}
+由 $a,b$ 生成的理想 $(a,b)$ 是主理想，设 $(a,b)=(d)$。由于 $d\in(a,b)$，它可以写成 $ax+by$。又因为 $a,b\in(d)$，所以 $d$ 同时整除 $a$ 和 $b$。而 $a,b$ 的任意公因子都整除它们的每个线性组合，因而也整除 $d$。
+\end{proof}
+
+\begin{definition}[不可约元与素元]
+设 $R$ 是整环，$p\in R$ 是非零非单位元。
+\begin{enumerate}
+    \item 如果 $p=ab$ 蕴含 $a$ 或 $b$ 是单位元，则称 $p$ 是\textbf{不可约元}；
+    \item 如果 $p\mid ab$ 蕴含 $p\mid a$ 或 $p\mid b$，则称 $p$ 是\textbf{素元}。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+每个素元都是不可约元。在 PID 中，每个不可约元都是素元。
+\end{proposition}
+
+\begin{proof}
+第一个结论只需把素性用于分解 $p=ab$。对第二个结论，设 $p$ 不可约且 $p\mid ab$。理想 $(p,a)$ 由某个整除 $p$ 的元素 $d$ 生成。由于 $p$ 不可约，或者 $d$ 是单位元，或者 $d$ 与 $p$ 相伴。在后一种情形中 $p\mid a$。在前一种情形中，Bezout 等式给出 $1=px+ay$；两边乘以 $b$，得到
+\[
+    b=pbx+aby,
+\]
+所以 $p\mid b$。
+\end{proof}
+
+\begin{theorem}[PID 中的唯一分解]
+每个 PID 都是唯一分解整环：每个非零非单位元都可以分解为不可约元的乘积，并且除去因子次序以及乘以单位元之外，这种分解是唯一的。
+\end{theorem}
+
+\begin{remark}
+在 UFD 之外，不可约元与素元的区别非常重要。例如在 $\mathbb{Z}[\sqrt{-5}]$ 中，
+\[
+    6=2\cdot3=(1+\sqrt{-5})(1-\sqrt{-5}),
+\]
+而这两个分解并不等价。唯一分解的失效，是代数数论中理想比元素更为基本的原因之一。
+\end{remark}
+
+\section{中国剩余定理与插值}
+
+中国剩余定理是一个结构分解定理。它说明：当若干理想彼此充分独立时，对它们交集取商，等价于分别取商后再作直积。在算术中，它根据余数重构整数；在多项式代数中，它则表现为插值。
+
+\begin{definition}[互素理想]
+理想 $I,J\trianglelefteq R$ 称为\textbf{互素的}，如果
+\[
+    I+J=R.
+\]
+等价地，存在 $a\in I$ 和 $b\in J$，使得 $a+b=1$。
+\end{definition}
+
+\begin{theorem}[中国剩余定理]
+设 $I_1,\dots,I_n$ 是交换环 $R$ 中两两互素的理想，则映射
+\[
+    \Phi:R\to R/I_1\times\cdots\times R/I_n,
+    \qquad
+    r\mapsto(r+I_1,\dots,r+I_n)
+\]
+是满射，并且其核为
+\[
+    I_1\cap\cdots\cap I_n=I_1\cdots I_n.
+\]
+因此
+\[
+    R/(I_1\cdots I_n)
+    \cong
+    R/I_1\times\cdots\times R/I_n.
+\]
+\end{theorem}
+
+\begin{proof}[两个理想的情形]
+对互素理想 $I,J$，选取 $a\in I$ 与 $b\in J$，使得 $a+b=1$。给定剩余类 $x+I$ 与 $y+J$，令
+\[
+    r=xb+ya.
+\]
+由于 $b\equiv1\pmod I$ 且 $a\equiv1\pmod J$，有
+\[
+    r\equiv x\pmod I,
+    \qquad
+    r\equiv y\pmod J.
+\]
+故该映射是满射。其核为 $I\cap J$，而互素性给出 $I\cap J=IJ$。一般情形由归纳法得到。
+\end{proof}
+
+\begin{example}[求解联立同余]
+求解
+\[
+    x\equiv2\pmod3,
+    \qquad
+    x\equiv3\pmod5.
+\]
+由于 $2\cdot3+(-1)\cdot5=1$，一种方便的重构方式是
+\[
+    x\equiv2\cdot(-5)+3\cdot6=8\pmod{15}.
+\]
+确实，$8\equiv2\pmod3$ 且 $8\equiv3\pmod5$。
+\end{example}
+
+\begin{theorem}[Lagrange 插值]
+设 $F$ 是域，$a_1,\dots,a_n\in F$ 两两不同。对任意 $b_1,\dots,b_n\in F$，存在唯一的次数小于 $n$ 的多项式 $p\in F[x]$，满足
+\[
+    p(a_i)=b_i\qquad(1\leq i\leq n).
+\]
+它由下式给出：
+\[
+    p(x)=\sum_{i=1}^n b_i
+    \prod_{j\neq i}\frac{x-a_j}{a_i-a_j}.
+\]
+\end{theorem}
+
+\begin{remark}
+这正是把中国剩余定理应用于两两互素理想 $(x-a_i)$ 时得到的多项式形式。在各点 $a_i$ 处取值，就是商映射
+\[
+    F[x]\longrightarrow
+    \prod_{i=1}^n F[x]/(x-a_i)
+    \cong F^n.
+\]
+因此，插值不是一个孤立公式，而是商环分解的体现。
+\end{remark}
+
+\section{不可约性与域扩张的构造}
+
+多项式扩张 $F(\alpha)$ 由 $\alpha$ 的最小多项式所控制。因此，识别不可约多项式的能力是域论的核心。不可约性在多项式环中所扮演的角色，与素性在整数环中所扮演的角色相同。
+
+\begin{theorem}[Gauss 引理]
+$\mathbb{Z}[x]$ 中的本原多项式在 $\mathbb{Z}$ 上不可约，当且仅当它在 $\mathbb{Q}$ 上不可约。更一般地，设 $R$ 是 UFD，$K$ 是其分式域，则本原多项式在 $R[x]$ 中不可约，当且仅当它在 $K[x]$ 中不可约。
+\end{theorem}
+
+\begin{theorem}[Eisenstein 判别法]
+设
+\[
+    f(x)=a_nx^n+\cdots+a_1x+a_0\in\mathbb{Z}[x].
+\]
+如果存在素数 $p$，使得
+\[
+    p\nmid a_n,
+    \qquad
+    p\mid a_k\quad(0\leq k<n),
+    \qquad
+    p^2\nmid a_0,
+\]
+那么 $f$ 在 $\mathbb{Q}$ 上不可约。
+\end{theorem}
+
+\begin{proof}
+假设 $f=gh$，其中 $g,h$ 是非常数本原整系数多项式。模 $p$ 约化后得到
+\[
+    \overline{f}(x)=\overline{a_n}x^n.
+\]
+因此 $\overline{g}$ 与 $\overline{h}$ 都是单项式，于是 $g,h$ 的常数项都被 $p$ 整除。它们的乘积是常数项 $a_0$，这将推出 $p^2\mid a_0$，矛盾。
+\end{proof}
+
+\begin{example}
+对每个素数 $p$，多项式
+\[
+    x^{p-1}+x^{p-2}+\cdots+x+1
+\]
+在 $\mathbb{Q}$ 上不可约。作代换 $x\mapsto x+1$ 后，对
+\[
+    \frac{(x+1)^p-1}{x}
+\]
+应用 Eisenstein 判别法即可：除首项外的所有系数都被 $p$ 整除，而常数项为 $p$，不被 $p^2$ 整除。
+\end{example}
+
+\begin{example}[一个有限域]
+多项式 $x^2+x+1$ 在 $\mathbb{F}_2$ 中没有根，所以它不可约。因此
+\[
+    \mathbb{F}_2[x]/(x^2+x+1)
+\]
+是一个含四个元素的域。设 $\alpha$ 表示 $x$ 的剩余类，则在特征 $2$ 下，
+\[
+    \alpha^2+\alpha+1=0,
+    \qquad
+    \alpha^2=\alpha+1.
+\]
+它的元素为
+\[
+    0,\quad1,\quad\alpha,\quad\alpha+1.
+\]
+\end{example}
+
+
 \section{总结}
 
 抽象代数用结构代替计算。群编码可逆运算和对称性。环编码带有加法和乘法的算术。域提供线性代数和多项式方程所需要的标量系统。Galois 理论把域扩张与对称群联系起来。模推广了向量空间，并揭示当标量不再构成域时，线性代数会如何改变。

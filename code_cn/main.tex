@@ -12,6 +12,7 @@
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usepackage{float}
 \usetikzlibrary{calc, decorations.pathreplacing, positioning}
 \usepackage{microtype}
 \usepackage[most]{tcolorbox}
@@ -29,8 +30,13 @@
     \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}
     \setCJKmonofont{SimSun}
   }{
-    \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolSong-Regular}
-    \setCJKmonofont{FandolSong-Regular}
+    \IfFontExistsTF{Noto Serif CJK SC}{
+      \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Serif CJK SC}
+      \setCJKmonofont{Noto Serif CJK SC}
+    }{
+      \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolSong-Regular}
+      \setCJKmonofont{FandolSong-Regular}
+    }
   }
 }
 
@@ -40,7 +46,11 @@
   \IfFontExistsTF{SimHei}{
     \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}
   }{
-    \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolHei-Regular}
+    \IfFontExistsTF{Noto Sans CJK SC}{
+      \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Sans CJK SC}
+    }{
+      \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolHei-Regular}
+    }
   }
 }
 
@@ -51,7 +61,11 @@
   \IfFontExistsTF{Times New Roman}{
     \setmainfont{Times New Roman}
   }{
-    \setmainfont{Latin Modern Roman}
+    \IfFontExistsTF{DejaVu Serif}{
+      \setmainfont{DejaVu Serif}
+    }{
+      \setmainfont{Latin Modern Roman}
+    }
   }
 }
 
@@ -61,7 +75,11 @@
   \IfFontExistsTF{Arial}{
     \setsansfont{Arial}
   }{
-    \setsansfont{Latin Modern Sans}
+    \IfFontExistsTF{DejaVu Sans}{
+      \setsansfont{DejaVu Sans}
+    }{
+      \setsansfont{Latin Modern Sans}
+    }
   }
 }
 
@@ -71,7 +89,11 @@
   \IfFontExistsTF{Consolas}{
     \setmonofont{Consolas}
   }{
-    \setmonofont{Courier New}
+    \IfFontExistsTF{DejaVu Sans Mono}{
+      \setmonofont{DejaVu Sans Mono}
+    }{
+      \setmonofont{Courier New}
+    }
   }
 }
 
@@ -261,7 +283,7 @@
         at ($(current page.south west)+(1.02in,0.86in)$)
         {\rmfamily\fontsize{13.5}{21}\selectfont\bfseries 李谨硕\\[0.13in]
         \rmfamily\fontsize{9.6}{15}\selectfont\color{covermuted!93}上海交通大学\\[0.08in]
-        \rmfamily\fontsize{8.8}{14}\selectfont\color{covercream!86}2026.5.23，于上海};
+        \rmfamily\fontsize{8.8}{14}\selectfont\color{covercream!86}2026.7.2，于上海};
 
     % Bottom motto in Chinese to make the cover feel native rather than translated.
     \node[anchor=south, text=covercream!62, inner sep=0pt]
@@ -303,5 +325,7 @@
 \input{chapters/chapter8_cn.tex}
 
 \input{chapters/chapter9_cn.tex}
+
+\input{chapters/afterword_cn.tex}
 
 \end{document}

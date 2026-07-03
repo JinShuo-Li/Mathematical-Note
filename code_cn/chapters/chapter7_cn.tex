@@ -623,6 +623,444 @@ Laurent 级数中负幂部分
 这些定理显示出复分析的刚性：全纯函数的局部性质会强烈影响其整体行为。有界性、边界值、零点分布和奇点结构之间存在深刻联系。
 \end{remark}
 
+\section{Cauchy 理论的更完整形式}
+
+Cauchy 定理的简单形式已经足以完成许多计算，但它掩盖了两个重要事实。第一，定理并不要求导函数 $f'$ 连续；仅有复可微性已经足够。第二，围道积分的取值并不只取决于哪些奇点位于曲线“内部”，还取决于曲线绕每个奇点转过多少圈。这些细化自然引出 Goursat 定理与绕数。
+
+\subsection{Goursat 定理}
+
+\begin{theorem}[三角形上的 Cauchy--Goursat 定理]
+设 $f$ 在包含三角形 $T$ 及其内部的开集上全纯，则
+\[
+    \int_{\partial T} f(z)\,dz=0.
+\]
+这里不需要假设 $f'$ 连续。
+\end{theorem}
+
+\begin{proof}[嵌套三角形论证]
+把 $T$ 分成四个全等三角形。内部边上的积分彼此抵消，因此 $\partial T$ 上的积分等于四个小三角形边界积分之和。其中至少有一个小三角形，记为 $T_1$，满足
+\[
+    \left|\int_{\partial T_1}f(z)\,dz\right|
+    \geq \frac14\left|\int_{\partial T}f(z)\,dz\right|.
+\]
+重复这一构造，得到嵌套三角形列
+\[
+    T\supseteq T_1\supseteq T_2\supseteq\cdots,
+\]
+其直径趋于零，而边界积分至少保留原积分相应比例。由紧致性，所有三角形共有唯一一点 $z_0$。
+
+由于 $f$ 在 $z_0$ 处可微，
+\[
+    f(z)=f(z_0)+f'(z_0)(z-z_0)+\varepsilon(z)(z-z_0),
+\]
+其中当 $z\to z_0$ 时，$\varepsilon(z)\to0$。常数项与线性项都存在原函数，因此它们沿 $\partial T_n$ 的积分为零。剩余积分的绝对值不超过
+\[
+    \sup_{z\in T_n}|\varepsilon(z)|\cdot
+    \operatorname{diam}(T_n)\cdot\operatorname{length}(\partial T_n),
+\]
+它趋于零的速度快于由第一个三角形继承下来的尺度变化。因此原积分只能为零。
+\end{proof}
+
+\begin{theorem}[单连通域上的 Cauchy 定理]
+设 $\Omega$ 单连通，$f$ 在 $\Omega$ 上全纯。则 $\Omega$ 中每条闭的分段光滑围道 $\gamma$ 都满足
+\[
+    \int_\gamma f(z)\,dz=0.
+\]
+等价地，$f$ 在 $\Omega$ 上存在原函数。
+\end{theorem}
+
+\begin{remark}
+与原函数存在性的等价关系值得记住。闭围道积分为零意味着积分与路径无关：如果 $\gamma_1$ 与 $\gamma_2$ 都从 $z_0$ 连接到 $z$，沿 $\gamma_1$ 前进再沿 $\gamma_2$ 反向返回便得到一条闭围道。因此可以定义
+\[
+    F(z)=\int_{z_0}^{z}f(\zeta)\,d\zeta,
+\]
+而路径无关性保证 $F$ 良定义。再用局部差商论证即可得到 $F'=f$。
+\end{remark}
+
+\subsection{绕数与一般 Cauchy 积分公式}
+
+\begin{definition}[绕数]
+设 $\gamma$ 是闭的分段光滑围道，且点 $a$ 不在其像上。$\gamma$ 关于 $a$ 的\textbf{绕数}定义为
+\[
+    \operatorname{Ind}(\gamma,a)
+    =\frac{1}{2\pi i}\int_\gamma\frac{dz}{z-a}.
+\]
+\end{definition}
+
+\begin{proposition}
+绕数是整数。当 $a$ 在 $\mathbb{C}\setminus\gamma$ 的任一连通分支内移动时，绕数保持常数；在无界分支上，绕数为 $0$。
+\end{proposition}
+
+\begin{theorem}[一般 Cauchy 积分公式]
+设 $f$ 在一个包含闭围道 $\gamma$ 以及所有被 $\gamma$ 以非零绕数围绕之点的区域上全纯。如果 $a$ 不在 $\gamma$ 上，则
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{f(z)}{z-a}\,dz
+    =\operatorname{Ind}(\gamma,a)f(a).
+\]
+\end{theorem}
+
+\begin{example}
+如果 $\gamma(t)=e^{3it}$，$0\leq t\leq2\pi$，那么 $\gamma$ 逆时针绕单位圆三周。因此
+\[
+    \operatorname{Ind}(\gamma,0)=3,
+    \qquad
+    \int_\gamma\frac{e^z}{z}\,dz=6\pi i.
+\]
+曲线围成的几何区域没有改变，但积分会记录重数。
+\end{example}
+
+\begin{theorem}[Morera 定理]
+设 $f$ 在域 $\Omega$ 上连续。如果对每个闭包包含于 $\Omega$ 的三角形 $T$，都有
+\[
+    \int_{\partial T}f(z)\,dz=0,
+\]
+则 $f$ 在 $\Omega$ 上全纯。
+\end{theorem}
+
+\begin{proof}
+在包含于 $\Omega$ 的一个圆盘中固定 $z_0$，定义
+\[
+    F(z)=\int_{[z_0,z]}f(\zeta)\,d\zeta.
+\]
+三角形积分条件保证该定义在圆盘内与路径无关。由 $f$ 的连续性可得 $F'=f$，因此 $f$ 在局部是一个全纯函数的导函数，从而自身全纯。
+\end{proof}
+
+\section{奇点：判别准则与局部行为}
+
+Laurent 级数给出的分类是精确的，但在应用中，我们往往无需计算完整级数就能识别奇点。有界性判别可去奇点，倒数的行为判别极点，而两者都不成立时则指向本性奇点。这些判据把代数展开与异常点附近的几何行为联系起来。
+
+\begin{theorem}[Riemann 可去奇点定理]
+设 $f$ 在 $0<|z-z_0|<R$ 上全纯。下列条件等价：
+\begin{enumerate}
+    \item $f$ 可以全纯延拓到 $z_0$；
+    \item $f$ 在 $z_0$ 的某个去心邻域内有界；
+    \item $\displaystyle \lim_{z\to z_0}(z-z_0)f(z)=0$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[主要思路]
+如果 $f$ 在 $z_0$ 附近有界，定义
+\[
+    g(z)=
+    \begin{cases}
+    (z-z_0)^2f(z),&z\neq z_0,\\
+    0,&z=z_0.
+    \end{cases}
+\]
+则 $g$ 在 $z_0$ 处复可微，并且 $g'(z_0)=0$。由于 $g$ 在 $z_0$ 处至少有二阶零点，$g(z)/(z-z_0)^2$ 可以全纯延拓，从而给出 $f$ 的所需延拓。其他蕴含可直接由延拓或 Cauchy 公式得到。
+\end{proof}
+
+\begin{theorem}[极点的刻画]
+设函数在 $z_0$ 的某个去心邻域内全纯。下列条件等价：
+\begin{enumerate}
+    \item $z_0$ 是 $f$ 的极点；
+    \item 当 $z\to z_0$ 时，$|f(z)|\to\infty$；
+    \item $1/f$ 可以全纯延拓到 $z_0$，并且在那里有零点。
+\end{enumerate}
+如果 $1/f$ 的零点阶数为 $m$，那么 $f$ 的极点阶数也为 $m$。
+\end{theorem}
+
+\begin{proposition}[$m$ 阶极点处的留数]
+如果 $z_0$ 是 $m$ 阶极点，则
+\[
+    \operatorname{Res}(f,z_0)
+    =\frac{1}{(m-1)!}
+    \lim_{z\to z_0}
+    \frac{d^{m-1}}{dz^{m-1}}
+    \left[(z-z_0)^m f(z)\right].
+\]
+\end{proposition}
+
+\begin{example}
+对
+\[
+    f(z)=\frac{e^z}{(z-1)^3},
+\]
+点 $z=1$ 是三阶极点。因此
+\[
+    \operatorname{Res}(f,1)
+    =\frac{1}{2!}\left.\frac{d^2}{dz^2}e^z\right|_{z=1}
+    =\frac{e}{2}.
+\]
+\end{example}
+
+\begin{theorem}[Casorati--Weierstrass 定理]
+如果 $z_0$ 是 $f$ 的本性奇点，那么 $z_0$ 的每个去心邻域在 $f$ 下的像都在 $\mathbb{C}$ 中稠密。
+\end{theorem}
+
+\begin{proof}
+假设在 $z_0$ 附近遗漏了某个圆盘 $D(w_0,\varepsilon)$。则
+\[
+    g(z)=\frac{1}{f(z)-w_0}
+\]
+在 $z_0$ 附近全纯且有界，因此 $g$ 在 $z_0$ 处是可去奇点。如果延拓后 $g(z_0)\neq0$，那么 $f=w_0+1/g$ 也可延拓，于是 $z_0$ 是可去奇点。如果 $g(z_0)=0$，则 $1/g$ 有极点，从而 $f$ 有极点。两种结论都与本性奇点相矛盾。
+\end{proof}
+
+\begin{remark}
+函数 $e^{1/z}$ 展示了该定理。沿着使 $1/z$ 的实部充分大的正值序列，其模可以任意大；沿着实部充分大的负值序列，其模趋于 $0$；改变虚部时，其辐角又会快速旋转。因此，本性奇点并不只是比极点“发散得更厉害”，而是具有本质上更无序的局部行为。
+\end{remark}
+
+\section{实积分中的留数方法}
+
+当一个实积分能够嵌入围道积分时，留数定理尤为有用。所选围道的一部分应当重现目标实积分，而其余部分要么趋于零，要么可以与同一个未知量联系起来。因此，真正的主要工作通常不是计算留数，而是设计合适的围道。
+
+\subsection{实轴上的有理函数}
+
+\begin{example}[基本 Cauchy 积分]
+设 $a>0$，考虑
+\[
+    I=\int_{-\infty}^{\infty}\frac{dx}{x^2+a^2}.
+\]
+在上半平面半径为 $R$ 的半圆围道上积分 $1/(z^2+a^2)$。上半平面内唯一的极点是 $z=ia$，其留数为
+\[
+    \operatorname{Res}\left(\frac{1}{z^2+a^2},ia\right)
+    =\frac{1}{2ia}.
+\]
+半圆弧上的积分绝对值不超过
+\[
+    \frac{\pi R}{R^2-a^2}\longrightarrow0.
+\]
+因此
+\[
+    I=2\pi i\cdot\frac{1}{2ia}=\frac{\pi}{a}.
+\]
+\end{example}
+
+\begin{example}[四次分母]
+考虑
+\[
+    I=\int_{-\infty}^{\infty}\frac{dx}{x^4+1}.
+\]
+上半平面内的极点为
+\[
+    z_1=e^{i\pi/4},\qquad z_2=e^{3i\pi/4}.
+\]
+由于它们都是单极点，
+\[
+    \operatorname{Res}\left(\frac{1}{z^4+1},z_k\right)
+    =\frac{1}{4z_k^3}.
+\]
+二者之和为
+\[
+    \frac{1}{4e^{3i\pi/4}}+\frac{1}{4e^{9i\pi/4}}
+    =-\frac{i}{2\sqrt2}.
+\]
+上半圆弧的贡献趋于零，因此
+\[
+    I=2\pi i\left(-\frac{i}{2\sqrt2}\right)
+    =\frac{\pi}{\sqrt2}.
+\]
+\end{example}
+
+\subsection{三角积分与单位圆}
+
+对 $[0,2\pi]$ 上的积分，代换
+\[
+    z=e^{i\theta},\qquad
+    d\theta=\frac{dz}{iz},\qquad
+    \cos\theta=\frac12\left(z+\frac1z\right)
+\]
+把三角积分转化为沿 $|z|=1$ 的围道积分。
+
+\newpage
+
+\begin{example}
+设 $a>|b|>0$。则
+\[
+    I=\int_0^{2\pi}\frac{d\theta}{a+b\cos\theta}
+\]
+可化为
+\[
+    I=\frac{2}{i}\int_{|z|=1}
+    \frac{dz}{bz^2+2az+b}.
+\]
+分母的根为
+\[
+    z_{\pm}=\frac{-a\pm\sqrt{a^2-b^2}}{b},
+\]
+其中恰有一个位于单位圆内。计算该根处的留数，得到
+\[
+    I=\frac{2\pi}{\sqrt{a^2-b^2}}.
+\]
+\end{example}
+
+\begin{note}
+一个完整的围道论证必须检查三件事：哪些极点位于围道内部；为什么辅助围道部分趋于零或相互抵消；围道方向是否为正向。留数计算中的大多数符号错误，都来自跳过其中某一项检查。
+\end{note}
+
+\section{辐角原理与 Rouche 定理}
+
+全纯函数沿围道同时改变模与辐角。当围道闭合时，辐角的总变化量计算像曲线绕原点的圈数。零点与极点恰好是这种绕行次数能够产生或消失的地方。辐角原理把这一关系精确化。
+
+\begin{theorem}[辐角原理]
+设 $f$ 在一个包含正向简单闭围道 $\gamma$ 及其内部的区域上亚纯，并且 $f$ 在 $\gamma$ 上没有零点或极点。设 $N$ 与 $P$ 分别表示 $\gamma$ 内部零点和极点的个数，均按重数计算，则
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{f'(z)}{f(z)}\,dz=N-P.
+\]
+\end{theorem}
+
+\begin{proof}
+在 $m$ 阶零点 $a$ 附近，可写 $f(z)=(z-a)^m g(z)$，其中 $g(a)\neq0$。于是
+\[
+    \frac{f'}{f}=\frac{m}{z-a}+\frac{g'}{g},
+\]
+所以该点处留数为 $m$。在 $m$ 阶极点附近，同样计算得到留数为 $-m$。现在由留数定理即得所需公式。
+\end{proof}
+
+\begin{corollary}[辐角变化量]
+在相同假设下，当 $z$ 沿 $\gamma$ 运动一周时，连续选取的 $\arg f(z)$ 的总变化量为
+\[
+    2\pi(N-P).
+\]
+\end{corollary}
+
+\begin{theorem}[Rouche 定理]
+设 $f,g$ 在简单闭围道 $\gamma$ 上及其内部全纯。如果对每个 $z\in\gamma$ 都有
+\[
+    |g(z)|<|f(z)|,
+\]
+那么 $f$ 与 $f+g$ 在 $\gamma$ 内部具有相同数目的零点，均按重数计算。
+\end{theorem}
+
+\begin{proof}
+对 $0\leq t\leq1$，定义 $F_t=f+tg$。在 $\gamma$ 上，
+\[
+    |tg|\leq|g|<|f|,
+\]
+所以 $F_t$ 从不为零。整数
+\[
+    \frac{1}{2\pi i}\int_\gamma\frac{F_t'}{F_t}\,dz
+\]
+关于 $t$ 连续，因而必须保持常数。当 $t=0$ 时，它计算 $f$ 的零点数；当 $t=1$ 时，它计算 $f+g$ 的零点数。
+\end{proof}
+
+\begin{example}
+求多项式
+\[
+    p(z)=z^7+4z^3+1
+\]
+在 $|z|=2$ 内部的零点个数。在圆周上，
+\[
+    |z^7|=128,
+    \qquad
+    |4z^3+1|\leq33<128.
+\]
+由 Rouche 定理，$p$ 与 $z^7$ 在圆盘内具有相同数目的零点。因此，$p$ 的七个零点按重数计算全部位于 $|z|<2$ 内。
+\end{example}
+
+\begin{example}
+求
+\[
+    q(z)=z^5+10z+3
+\]
+在 $|z|=1$ 内部的零点个数。在单位圆上，
+\[
+    |z^5+3|\leq4<10=|10z|.
+\]
+因此 $q$ 与 $10z$ 在单位圆盘内具有相同数目的零点，即一个。
+\end{example}
+
+\section{最大值原理、开映射定理与 Schwarz 引理}
+
+最大模原理不是一个孤立结论。它属于一组表达相同刚性的结果：非常数全纯函数把开集映为开集，不能在内部取得模的极值，并且当它把单位圆盘映入自身时会受到极强限制。
+
+\begin{theorem}[平均值性质]
+如果 $f$ 在闭圆盘 $\overline{D(z_0,r)}$ 的某个邻域内全纯，则
+\[
+    f(z_0)=\frac{1}{2\pi}\int_0^{2\pi}f(z_0+re^{it})\,dt.
+\]
+\end{theorem}
+
+\begin{proof}
+在 Cauchy 积分公式中令圆周参数化为 $z=z_0+re^{it}$。由于 $dz=ire^{it}dt$，其中的 $re^{it}$ 因子相互消去。
+\end{proof}
+
+\begin{theorem}[最小模原理]
+设 $f$ 在一个域上全纯且处处不为零。如果 $|f|$ 在某个内点取得局部最小值，则 $f$ 为常数。
+\end{theorem}
+
+\begin{proof}
+倒数 $1/f$ 全纯。$|f|$ 的局部最小值就是 $|1/f|$ 的局部最大值，因此最大模原理迫使 $1/f$，进而迫使 $f$ 为常数。
+\end{proof}
+
+\begin{theorem}[开映射定理]
+非常数全纯函数把开集映为开集。
+\end{theorem}
+
+\begin{proof}[证明思路]
+令 $w_0=f(z_0)$。取围绕 $z_0$ 的一个充分小圆周，使得 $f(z)-w_0$ 在圆周上没有零点。其模在圆周上有正的最小值 $m$。如果 $|w-w_0|<m$，则在该圆周上
+\[
+    |w-w_0|<|f(z)-w_0|.
+\]
+由 Rouche 定理，$f(z)-w$ 与 $f(z)-w_0$ 在内部具有相同数目的零点。第二个函数在 $z_0$ 处为零，所以第一个函数也在内部有零点。因此，所有充分接近 $w_0$ 的 $w$ 都属于像集。
+\end{proof}
+
+\begin{theorem}[Schwarz 引理]
+设 $f$ 在单位圆盘 $\mathbb{D}$ 上全纯，$f(0)=0$，并且对所有 $z\in\mathbb{D}$ 都有 $|f(z)|\leq1$。则
+\[
+    |f(z)|\leq|z|,
+    \qquad
+    |f'(0)|\leq1.
+\]
+如果在某个非零点处取等号，或者 $|f'(0)|=1$，那么存在实数 $\theta$，使得
+\[
+    f(z)=e^{i\theta}z.
+\]
+\end{theorem}
+
+\begin{proof}
+对 $z\neq0$ 定义 $g(z)=f(z)/z$，并令 $g(0)=f'(0)$。$0$ 处奇点可去，因此 $g$ 全纯。在 $|z|=r<1$ 上，
+\[
+    |g(z)|\leq\frac1r.
+\]
+由最大模原理，对 $|z|\leq r$ 有 $|g(z)|\leq1/r$。令 $r\to1$，得到 $|g(z)|\leq1$，从而两个不等式均成立。若取等号，则 $g$ 在内部取得最大模，因此 $g$ 必为模为 $1$ 的常数。
+\end{proof}
+
+\section{几何可视化}
+
+追踪曲线与区域在映射下如何运动，往往能使复分析公式更容易理解。在导数不为零的点附近，全纯映射局部表现为旋转与伸缩；相反，奇点与留数则通过围道如何绕异常点旋转来检测。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.05]
+    \draw[->] (-2.2,0)--(2.2,0) node[right] {$\Re z$};
+    \draw[->] (0,-2.2)--(0,2.2) node[above] {$\Im z$};
+    \draw[thick] (0,0) circle (1.35);
+    \draw[->,thick] (1.35,0) arc (0:70:1.35);
+    \node at (0,-2.55) {定义域：$z=e^{it}$};
+
+    \begin{scope}[xshift=5.4cm]
+    \draw[->] (-2.2,0)--(2.2,0) node[right] {$\Re w$};
+    \draw[->] (0,-2.2)--(0,2.2) node[above] {$\Im w$};
+    \draw[thick] (0,0) circle (1.35);
+    \draw[->,thick] (1.35,0) arc (0:140:1.35);
+    \node at (0,-2.55) {$w=z^2$ 下的像};
+    \end{scope}
+    \draw[->,very thick] (2.05,1.55)--(3.35,1.55) node[midway,above] {$z\mapsto z^2$};
+\end{tikzpicture}
+\caption{映射 $z\mapsto z^2$ 使辐角加倍。$z$ 平面中一段圆弧的一次运动，会在 $w$ 平面中产生两倍的角度变化。}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-3.2,0)--(3.2,0) node[right] {$\Re z$};
+    \draw[->] (0,-2.5)--(0,2.5) node[above] {$\Im z$};
+    \draw[thick,->] (2.5,0) arc (0:350:2.5);
+    \fill (0.8,0.7) circle (2pt) node[above right] {$z_1$};
+    \fill (-0.9,0.4) circle (2pt) node[above left] {$z_2$};
+    \fill (3.0,1.1) circle (2pt) node[right] {$z_3$};
+    \draw[dashed] (0.8,0.7) circle (0.35);
+    \draw[dashed] (-0.9,0.4) circle (0.35);
+\end{tikzpicture}
+\caption{留数围道包含 $z_1$ 与 $z_2$，但不包含 $z_3$。围道积分等于所包围奇点留数之和的 $2\pi i$ 倍，其中还要计入绕数。}
+\end{figure}
+
+\begin{remark}
+第一幅图刻画保角性：在 $f'(z_0)\neq0$ 的点附近，微小方向被旋转 $\arg f'(z_0)$，并按 $|f'(z_0)|$ 伸缩。第二幅图刻画留数的局部性：整体围道积分由各个被包围奇点任意小邻域内的数据拼合而成。
+\end{remark}
+
+
 \section{结语}
 
 复分析的核心思想可以概括为：复可微性远强于实可微性。Cauchy 积分公式把边界值与内部值联系起来；Taylor 和 Laurent 展开把函数转化为级数；留数定理则把复杂的积分计算化为有限个局部系数的求和。这些工具不仅在纯数学中具有基础地位，也广泛应用于微分方程、物理、信号处理和概率理论。

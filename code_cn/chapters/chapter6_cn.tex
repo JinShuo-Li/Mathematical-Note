@@ -513,6 +513,304 @@ $\mathbb{R}^n$ 中任意有界序列都有收敛子列。
 不是每个拓扑空间都可度量化。度量空间具有许多额外性质，例如 Hausdorff 性、第一可数性等。可度量化定理研究的是哪些拓扑条件足以保证一个拓扑来自某个度量。
 \end{remark}
 
+\section{Hausdorff 条件之外的分离公理}
+
+公理 $T_0$、$T_1$ 与 $T_2$ 比较点的邻域。进一步的分离公理则先比较点与闭集，再比较两个闭集。这种递进并非只是形式上的安排。分析学中的许多构造都需要用连续函数区分不同集合，而仅凭 Hausdorff 条件无法保证这类函数的存在。
+
+不同文献采用的约定并不完全一致。在本书中，除非特别说明，\emph{正则空间}和\emph{正规空间}并不预先假定满足 $T_1$。因此，$T_3$ 表示正则且满足 $T_1$，$T_4$ 表示正规且满足 $T_1$。
+
+\begin{definition}[正则性与正规性]
+设 $X$ 是拓扑空间。
+\begin{enumerate}
+    \item 如果对任意 $x\in X$ 和不含 $x$ 的闭集 $F\subseteq X$，都存在不相交开集 $U,V$，使得 $x\in U$ 且 $F\subseteq V$，则称 $X$ 是\textbf{正则的}；
+    \item 如果对任意闭集 $F$ 和任意 $x\notin F$，都存在连续函数 $f:X\to[0,1]$，满足 $f(x)=0$ 且 $f|_F=1$，则称 $X$ 是\textbf{完全正则的}；
+    \item 如果对任意两个不相交闭集 $A,B\subseteq X$，都存在不相交开集 $U,V$，使得 $A\subseteq U$ 且 $B\subseteq V$，则称 $X$ 是\textbf{正规的}。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[分离公理的层级]
+空间按下表命名：
+\[
+\begin{array}{c|l}
+T_0 & \text{Kolmogorov 空间},\\
+T_1 & \text{所有单点集均为闭集},\\
+T_2 & \text{Hausdorff 空间},\\
+T_3 & \text{正则且满足 }T_1,\\
+T_{3\frac12} & \text{完全正则且满足 }T_1,\\
+T_4 & \text{正规且满足 }T_1.
+\end{array}
+\]
+$T_{3\frac12}$ 空间也称为 \textbf{Tychonoff 空间}。
+\end{definition}
+
+\begin{proposition}[正则性的闭包刻画]
+空间 $X$ 正则，当且仅当对每个点 $x$ 及每个包含 $x$ 的开集 $U$，都存在开集 $V$，使得
+\[
+    x\in V\subseteq \overline{V}\subseteq U.
+\]
+\end{proposition}
+
+\begin{proof}
+先设 $X$ 正则。集合 $F=X\setminus U$ 是不含 $x$ 的闭集。取不相交开集 $V,W$，使得 $x\in V$ 且 $F\subseteq W$。由于 $V\cap W=\emptyset$，$W$ 中没有点属于 $\overline{V}$。因此 $\overline{V}\subseteq X\setminus W\subseteq U$。
+
+反过来，设上述闭包条件成立。令 $F$ 为闭集且 $x\notin F$。对 $U=X\setminus F$ 应用该条件，取 $V$ 满足 $x\in V\subseteq\overline{V}\subseteq U$。于是 $V$ 与 $X\setminus\overline{V}$ 是两个不相交开集，分别包含 $x$ 与 $F$。
+\end{proof}
+
+\begin{theorem}[度量空间是正规空间]
+每个度量空间都是正规空间。因此每个度量空间都是 $T_4$ 空间，进而也是 $T_{3\frac12}$、$T_3$、$T_2$、$T_1$ 与 $T_0$ 空间。
+\end{theorem}
+
+\begin{proof}
+设 $A,B$ 是度量空间 $(X,d)$ 中两个不相交闭集。定义
+\[
+    d(x,A)=\inf_{a\in A}d(x,a),\qquad d(x,B)=\inf_{b\in B}d(x,b).
+\]
+这两个函数都是连续的。令
+\[
+    U=\{x:d(x,A)<d(x,B)\},\qquad
+    V=\{x:d(x,B)<d(x,A)\}.
+\]
+$U,V$ 都是开集且彼此不交。如果 $a\in A$，则 $d(a,A)=0$；由于 $B$ 闭且 $a\notin B$，有 $d(a,B)>0$。因此 $A\subseteq U$，同理 $B\subseteq V$。
+\end{proof}
+
+\begin{example}[为什么假设不可省略]
+无限集上的余有限拓扑满足 $T_1$，但不是 Hausdorff 的，因为任意两个非空开集都有交。因此蕴含 $T_1\Rightarrow T_2$ 不成立。Sierpinski 空间 $X=\{0,1\}$ 取拓扑 $\{\emptyset,\{1\},X\}$，它满足 $T_0$，但不满足 $T_1$。这些例子说明较低层级的分离公理确实彼此不同。
+\end{example}
+
+\begin{theorem}[Urysohn 引理]
+设 $X$ 是正规空间，$A,B\subseteq X$ 是两个不相交闭集。则存在连续函数 $f:X\to[0,1]$，使得
+\[
+    f|_A=0,\qquad f|_B=1.
+\]
+\end{theorem}
+
+\begin{proof}[构造概要]
+证明反复利用正规性，在开集之间插入闭包。对每个二进有理数 $r\in[0,1]$，构造开集 $U_r$，使得
+\[
+    A\subseteq U_0,
+    \qquad \overline{U_r}\subseteq U_s\quad(r<s),
+    \qquad X\setminus U_1\supseteq B.
+\]
+定义
+\[
+    f(x)=\inf\{r:x\in U_r\},
+\]
+并约定空集的下确界为 $1$。嵌套关系推出
+\[
+    f^{-1}([0,a))=\bigcup_{r<a}U_r,
+    \qquad
+    f^{-1}((a,1])=\bigcup_{r>a}(X\setminus\overline{U_r}),
+\]
+所以相关原像都是开集。故 $f$ 连续，并具有所要求的边界取值。
+\end{proof}
+
+\begin{theorem}[Tietze 延拓定理]
+设 $X$ 是正规空间，$A\subseteq X$ 是闭集，$f:A\to[-1,1]$ 连续。则存在连续函数 $F:X\to[-1,1]$，使得 $F|_A=f$。
+\end{theorem}
+
+\begin{remark}
+Urysohn 引理用一个连续实值函数分离两个闭集；Tietze 定理则把闭子空间上已经定义的连续函数延拓到整个空间。后一个定理更深，但其证明本质上是反复应用前一个定理来逼近尚未消去的误差。这些结果解释了为什么正规性是构造实值连续函数时自然出现的拓扑条件。
+\end{remark}
+
+\section{分支、局部连通性与拓扑学家的正弦曲线}
+
+连通性是一个整体条件：整个空间不能分成两个非空开部分。道路连通性更具构造性：任意两点都能由连续道路连接。局部连通性则要求每一点附近存在连通邻域。这些条件彼此都不应混淆。
+
+\begin{definition}[连通分支与道路分支]
+对 $x\in X$，包含 $x$ 的所有连通子集之并称为 $x$ 的\textbf{连通分支}；包含 $x$ 的所有道路连通子集之并称为 $x$ 的\textbf{道路分支}。
+\end{definition}
+
+\begin{proposition}
+连通分支是闭集、两两不交，并且是极大的连通子集。道路分支两两不交，并且是极大的道路连通子集，但在任意拓扑空间中未必是闭集。
+\end{proposition}
+
+\begin{proof}
+如果两个连通子集有交，则它们的并仍然连通。因此，用来定义连通分支的并是连通的，而两个不同连通分支不能相交。连通集的闭包仍然连通，所以极大性迫使每个连通分支包含其闭包，因而它是闭集。道路分支的结论来自类似事实：两个相交道路连通集的并仍然道路连通。
+\end{proof}
+
+\begin{definition}[局部连通性]
+如果 $x$ 的每个邻域都包含一个含 $x$ 的连通开邻域，则称空间 $X$ 在 $x$ 处\textbf{局部连通}。如果 $x$ 的每个邻域都包含一个含 $x$ 的道路连通开邻域，则称 $X$ 在 $x$ 处\textbf{局部道路连通}。若相应条件在每一点成立，则称空间局部连通或局部道路连通。
+\end{definition}
+
+\begin{theorem}
+如果 $X$ 局部道路连通，那么它的连通分支与道路分支重合，并且每个分支都是开集。
+\end{theorem}
+
+\begin{proof}
+固定 $x\in X$，设 $P$ 是它的道路分支。对每个 $y\in P$，取 $y$ 的一个道路连通开邻域 $U_y$。$U_y$ 中每一点都能与 $y$ 连接，而 $y$ 又能与 $x$ 连接，因此 $U_y\subseteq P$。故 $P$ 是开集。道路分支构成一个由不相交开集组成的划分。连通子集不可能同时与该划分中的两个不同部分相交，所以 $x$ 的连通分支包含于 $P$。反向包含关系由道路连通集必为连通集立即得到。
+\end{proof}
+
+\begin{example}[拓扑学家的正弦曲线]
+令
+\[
+    S=\left\{\left(x,\sin\frac1x\right):0<x\leq 1\right\}
+      \cup\left(\{0\}\times[-1,1]\right)\subseteq\mathbb{R}^2.
+\]
+图像部分
+\[
+    G=\left\{\left(x,\sin\frac1x\right):0<x\leq 1\right\}
+\]
+是连通区间 $(0,1]$ 的连续像，因此 $G$ 连通。它的闭包恰好是 $S$，而连通集的闭包仍连通，所以 $S$ 连通。
+
+但是，$S$ 中不存在一条道路把竖直线段上的点与 $G$ 中的点连接起来。假设这样的道路存在。当第一坐标沿正值趋于 $0$ 时，第二坐标必须跟随 $\sin(1/x)$，从而在接近 $-1$ 与 $1$ 的值之间无限振荡。在道路第一次离开竖直线段的时刻，连续性将不可能成立。因此 $S$ 连通但不道路连通，并且它在竖直线段上的各点处也不局部连通。
+\end{example}
+
+\begin{remark}
+这个例子的价值在于：失败并不是由彼此相距很远的不连通部分造成的。图像在整条竖直线段上聚集，因此取闭包创造了连通性，却没有创造道路。它典型地说明，拓扑中的极限行为可能比几何直觉所暗示的更加微妙。
+\end{remark}
+
+\section{超越“闭且有界”的紧致性}
+
+“紧致就是闭且有界”这一说法在有限维欧氏空间中成立，但它不是紧致性的定义，并且在许多其他空间中失效。开覆盖定义更加稳健，因为它在连续映射下保持不变，而且不依赖度量。若干等价刻画从不同角度揭示了紧致性如何把无穷多个局部条件转化为有限个整体条件。
+
+\subsection{有限交性质}
+
+\begin{definition}[有限交性质]
+如果集合族 $\mathcal{F}$ 的每个有限子族都有非空交集，则称 $\mathcal{F}$ 具有\textbf{有限交性质}。
+\end{definition}
+
+\begin{theorem}[紧致性的闭集刻画]
+拓扑空间 $X$ 紧致，当且仅当每个具有有限交性质的闭集族都有非空的全体交集。
+\end{theorem}
+
+\begin{proof}
+设 $X$ 紧致，$\{F_i\}_{i\in I}$ 是全体交为空的闭集族。则 $\{X\setminus F_i\}_{i\in I}$ 是 $X$ 的开覆盖。若它有有限子覆盖，则相应有限多个 $F_i$ 的交为空，这与有限交性质矛盾。
+
+反过来，设每个具有有限交性质的闭集族都有非空交。若某个开覆盖 $\{U_i\}_{i\in I}$ 没有有限子覆盖，则闭集 $X\setminus U_i$ 的任意有限交都非空。于是它们的全体交也应非空，这与 $U_i$ 覆盖 $X$ 矛盾。
+\end{proof}
+
+\subsection{度量空间中的列紧性}
+
+\begin{definition}[列紧性]
+如果每个序列都有一个收敛子列，并且其极限属于该空间，则称该空间是\textbf{列紧的}。
+\end{definition}
+
+\begin{theorem}
+对度量空间而言，紧致性与列紧性等价。
+\end{theorem}
+
+\begin{proof}[证明思路]
+若度量空间紧致，用有限多个半径为 $1$ 的球覆盖它。其中至少有一个球包含序列的无穷多项。再用有限多个半径为 $1/2$ 的球覆盖该球，并选择一个包含剩余项中无穷多项的球。如此归纳，便得到一列嵌套选取的项，它们之间的距离趋于 $0$。紧致性保证存在聚点，而选出的子列收敛到该点。
+
+反过来，设空间列紧。首先，它必然全有界。否则存在 $\varepsilon>0$ 和序列 $(x_n)$，使得
+\[
+    d(x_m,x_n)\geq\varepsilon\qquad(m\neq n),
+\]
+而该序列不可能有收敛子列。
+
+现在设 $\mathcal{U}$ 是一个开覆盖。我们断言 $\mathcal{U}$ 存在 Lebesgue 数。否则，对每个 $n$ 可选取 $x_n$，使得 $B_{1/n}(x_n)$ 不包含于 $\mathcal{U}$ 的任何一个成员。由列紧性，存在子列 $x_{n_k}\to x$。取 $U\in\mathcal{U}$ 和 $r>0$，使得 $B_r(x)\subseteq U$。当 $k$ 充分大时，同时有 $d(x_{n_k},x)<r/2$ 和 $1/n_k<r/2$，于是
+\[
+    B_{1/n_k}(x_{n_k})\subseteq B_r(x)\subseteq U,
+\]
+矛盾。最后，全有界性给出有限多个半径小于 Lebesgue 数的球，而每个球都包含于 $\mathcal{U}$ 的某个成员。这有限多个成员便构成有限子覆盖。
+\end{proof}
+
+\begin{theorem}[Lebesgue 数引理]
+设 $(X,d)$ 是紧度量空间，$\mathcal{U}$ 是 $X$ 的开覆盖。则存在 $\delta>0$，使得每个直径小于 $\delta$ 的子集都包含于 $\mathcal{U}$ 的某个成员。
+\end{theorem}
+
+\begin{proof}
+对每个 $x\in X$，取包含 $x$ 的 $U_x\in\mathcal{U}$，并取 $r_x>0$，使得 $B_{2r_x}(x)\subseteq U_x$。球族 $B_{r_x}(x)$ 覆盖 $X$，所以其中有限多个已经足够，记为 $B_{r_1}(x_1),\dots,B_{r_n}(x_n)$。令 $\delta=\min r_i$。若集合 $A$ 的直径小于 $\delta$，并取 $a\in A$，选取 $i$ 使得 $a\in B_{r_i}(x_i)$。则对每个 $y\in A$，
+\[
+    d(y,x_i)\leq d(y,a)+d(a,x_i)<\delta+r_i\leq 2r_i,
+\]
+所以 $A\subseteq B_{2r_i}(x_i)\subseteq U_{x_i}$。
+\end{proof}
+
+\begin{corollary}[紧致空间上的一致连续性]
+从紧度量空间到度量空间的每个连续映射都是一致连续的。
+\end{corollary}
+
+\begin{proof}
+设 $f:X\to Y$ 连续，固定 $\varepsilon>0$。对每个 $x\in X$，选取开邻域 $U_x$，使得 $f(U_x)$ 包含于以 $f(x)$ 为中心、半径为 $\varepsilon/2$ 的球。覆盖 $\{U_x\}$ 的一个 Lebesgue 数 $\delta$ 保证：只要 $d(p,q)<\delta$，二点集 $\{p,q\}$ 就包含于某个 $U_x$。因此
+\[
+    d_Y(f(p),f(q))<\varepsilon.
+\]
+\end{proof}
+
+\subsection{有限乘积与 Tychonoff 定理的初等形式}
+
+\begin{theorem}[有限乘积定理]
+如果 $X$ 与 $Y$ 都紧致，那么 $X\times Y$ 在积拓扑下紧致。因此，紧致空间的任意有限乘积仍然紧致。
+\end{theorem}
+
+\begin{proof}[利用管状引理的证明]
+设 $\mathcal{U}$ 是 $X\times Y$ 的一个开覆盖。固定 $x\in X$。切片 $\{x\}\times Y$ 与 $Y$ 同胚，因而紧致，所以 $\mathcal{U}$ 中有限多个成员即可覆盖该切片。它们的并是一个包含 $\{x\}\times Y$ 的开集。由管状引理，存在 $x$ 的开邻域 $N_x$，使得
+\[
+    N_x\times Y
+\]
+包含于上述有限并中。集合 $N_x$ 覆盖 $X$。由 $X$ 的紧致性，其中有限多个已经覆盖 $X$；收集与它们对应的 $\mathcal{U}$ 中有限子族，即得 $X\times Y$ 的有限覆盖。
+\end{proof}
+
+\begin{lemma}[管状引理]
+设 $Y$ 紧致，$W\subseteq X\times Y$ 是开集，且 $\{x_0\}\times Y\subseteq W$。则存在 $x_0$ 的开邻域 $N$，使得 $N\times Y\subseteq W$。
+\end{lemma}
+
+\begin{proof}
+对每个 $y\in Y$，选取基本开集 $N_y\subseteq X$ 和 $V_y\subseteq Y$，使得
+\[
+    (x_0,y)\in N_y\times V_y\subseteq W.
+\]
+集合 $V_y$ 覆盖 $Y$，故有限多个 $V_{y_1},\dots,V_{y_n}$ 已经足够。于是
+\[
+    N=N_{y_1}\cap\cdots\cap N_{y_n}
+\]
+是 $x_0$ 的开邻域，并且 $N\times Y\subseteq W$。
+\end{proof}
+
+\begin{remark}
+完整的 Tychonoff 定理断言：紧致空间的任意乘积都是紧致的。其标准证明使用选择公理，通常借助超滤子或具有有限交性质的极大家族。上面的有限乘积定理包含了其中的几何核心，并足以应对大多数初等应用。
+\end{remark}
+
+\section{作为泛构造的积与商}
+
+积拓扑与商拓扑的定义看起来并不对称：积拓扑由投影映射的原像生成，而商拓扑则通过一个满射的原像来检验。它们的共同特征是泛性质：每种拓扑都恰好使某类连续性问题变得尽可能容易。
+
+\begin{theorem}[积的泛性质]
+设 $Z$ 是拓扑空间，$f:Z\to X\times Y$，写成
+\[
+    f(z)=(f_1(z),f_2(z)).
+\]
+则 $f$ 连续，当且仅当两个坐标映射 $f_1:Z\to X$ 与 $f_2:Z\to Y$ 都连续。
+\end{theorem}
+
+\begin{proof}
+如果 $f$ 连续，则 $f_1=\pi_X\circ f$ 与 $f_2=\pi_Y\circ f$ 都连续。反过来，对每个基本开集 $U\times V$，有
+\[
+    f^{-1}(U\times V)=f_1^{-1}(U)\cap f_2^{-1}(V),
+\]
+当 $f_1,f_2$ 连续时，它是开集。
+\end{proof}
+
+\begin{theorem}[商的泛性质]
+设 $q:X\to Y$ 是商映射，$g:Y\to Z$ 是函数。则 $g$ 连续，当且仅当 $g\circ q:X\to Z$ 连续。
+\end{theorem}
+
+\begin{proof}
+一个方向由连续映射的复合立即得到。反过来，设 $g\circ q$ 连续。对每个开集 $W\subseteq Z$，
+\[
+    q^{-1}(g^{-1}(W))=(g\circ q)^{-1}(W)
+\]
+在 $X$ 中是开集。由商拓扑的定义，$g^{-1}(W)$ 在 $Y$ 中是开集。
+\end{proof}
+
+\begin{example}[由区间得到圆周]
+定义 $q:[0,1]\to S^1$ 为
+\[
+    q(t)=e^{2\pi i t}.
+\]
+该映射连续、满射，并且恰好把端点 $0$ 与 $1$ 识别。由于 $[0,1]$ 紧致而 $S^1$ 是 Hausdorff 空间，诱导出的双射
+\[
+    [0,1]/(0\sim1)\longrightarrow S^1
+\]
+是同胚。这一论证比图形直观更强：它证明了该商拓扑恰好就是圆周上的通常拓扑。
+\end{example}
+
+\begin{example}[一个非 Hausdorff 商空间]
+取两份实直线，并把除原点外的对应点逐一识别，所得空间称为“双原点直线”。它在局部与 $\mathbb{R}$ 无法区分，但两个原点不能被不相交开集分离。因此，取商可能破坏 Hausdorff 性。每当通过粘合构造空间时，都必须检验分离公理，而不能默认它们成立。
+\end{example}
+
+
 \section{结语}
 
 拓扑学把“接近”“连续”“边界”“整体连通”等观念从坐标和距离中解放出来。它提供了一种高度抽象但非常稳定的语言：只要知道开集，就能重建大量分析学中熟悉的概念。后续的复分析、微分几何、泛函分析乃至现代物理中的空间理论，都离不开这种拓扑语言。

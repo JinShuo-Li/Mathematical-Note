@@ -934,6 +934,557 @@ $\mathcal{F}$ 中的集合称为可测事件。
 则 $\{S_n\}$ 是一维简单对称随机游走，并且相对于自然滤过是鞅。
 \end{example}
 
+\section{分布函数与随机变量变换}
+
+概率分布可以用若干种等价方式描述。离散分布通常由概率质量函数给出，连续分布通常由密度函数给出，而一般的实值分布则可由累积分布函数给出。在这些描述中，分布函数最为普适，因为即使一个分布既非纯离散也非纯连续，它仍然存在。
+
+\begin{definition}[累积分布函数]
+对实值随机变量 $X$，其\textbf{累积分布函数}定义为
+\[
+    F_X(x)=\mathbb{P}(X\leq x).
+\]
+\end{definition}
+
+\begin{theorem}[分布函数的刻画]
+函数 $F:\mathbb{R}\to[0,1]$ 是某个实值随机变量的分布函数，当且仅当：
+\begin{enumerate}
+    \item $F$ 单调不减；
+    \item $F$ 右连续；
+    \item $\lim_{x\to-\infty}F(x)=0$ 且 $\lim_{x\to\infty}F(x)=1$。
+\end{enumerate}
+此外，
+\[
+    \mathbb{P}(X=x)=F_X(x)-F_X(x^-),
+\]
+所以分布函数的跳跃恰好对应点质量。
+\end{theorem}
+
+\begin{example}[混合分布]
+设 $X$ 以概率 $1/2$ 取值 $0$，而以概率 $1/2$ 在 $[0,1]$ 上服从均匀分布。则
+\[
+F_X(x)=
+\begin{cases}
+0,&x<0,\\
+\frac12+\frac{x}{2},&0\leq x<1,\\
+1,&x\geq1.
+\end{cases}
+\]
+在 $0$ 处的跳跃记录原子质量，线性部分则记录连续分量。不存在一个通常意义下的密度函数能够描述整个分布。
+\end{example}
+
+\subsection{单个随机变量的函数}
+
+\begin{theorem}[单调变量变换]
+设 $X$ 的密度为 $f_X$，令 $Y=g(X)$，其中 $g$ 严格单调且连续可微。则在 $g$ 的值域上，
+\[
+    f_Y(y)=f_X(g^{-1}(y))
+    \left|\frac{d}{dy}g^{-1}(y)\right|.
+\]
+\end{theorem}
+
+\begin{proof}
+如果 $g$ 单调递增，则
+\[
+    F_Y(y)=\mathbb{P}(g(X)\leq y)
+    =\mathbb{P}(X\leq g^{-1}(y))
+    =F_X(g^{-1}(y)).
+\]
+对其求导并应用链式法则。若 $g$ 单调递减，不等号方向反转，最终得到同一个含绝对值的公式。
+\end{proof}
+
+\begin{example}[标准正态随机变量的平方]
+设 $X\sim N(0,1)$，令 $Y=X^2$。映射 $x\mapsto x^2$ 不是一一映射，因此两个反函数分支都要贡献：
+\[
+    f_Y(y)
+    =\frac{f_X(\sqrt y)}{2\sqrt y}
+     +\frac{f_X(-\sqrt y)}{2\sqrt y}
+    =\frac{1}{\sqrt{2\pi y}}e^{-y/2},
+    \qquad y>0.
+\]
+因此 $X^2$ 服从自由度为 $1$ 的卡方分布。
+\end{example}
+
+\begin{theorem}[尾积分公式]
+如果 $X\geq0$，则
+\[
+    \mathbb{E}[X]=\int_0^\infty\mathbb{P}(X>t)\,dt,
+\]
+其中等式两边都允许取无穷大。
+\end{theorem}
+
+\begin{proof}
+逐点有
+\[
+    X(\omega)=\int_0^\infty
+    \mathbf{1}_{\{X(\omega)>t\}}\,dt.
+\]
+由 Tonelli 定理可以交换积分次序：
+\[
+    \mathbb{E}[X]
+    =\int_0^\infty
+    \mathbb{E}[\mathbf{1}_{\{X>t\}}]dt
+    =\int_0^\infty\mathbb{P}(X>t)dt.
+\]
+\end{proof}
+
+\section{联合密度、卷积与条件化}
+
+对多个随机变量而言，边缘分布分别描述各个坐标，却不能决定它们之间的依赖关系；联合分布才包含完整信息。边缘化通过积分消去不需要的坐标，条件化沿某个坐标重新归一化，而卷积描述独立随机变量之和的分布。
+
+\begin{definition}[联合密度]
+如果对每个适当的 Borel 集 $A\subseteq\mathbb{R}^2$，都有
+\[
+    \mathbb{P}((X,Y)\in A)
+    =\iint_A f_{X,Y}(x,y)\,dx\,dy,
+\]
+则称随机向量 $(X,Y)$ 具有联合密度 $f_{X,Y}$。其边缘密度为
+\[
+    f_X(x)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dy,
+    \qquad
+    f_Y(y)=\int_{-\infty}^{\infty}f_{X,Y}(x,y)\,dx.
+\]
+\end{definition}
+
+\begin{theorem}[独立性的密度判据]
+如果 $(X,Y)$ 具有联合密度，那么 $X$ 与 $Y$ 独立，当且仅当
+\[
+    f_{X,Y}(x,y)=f_X(x)f_Y(y)
+\]
+对几乎处处的 $(x,y)$ 成立。
+\end{theorem}
+
+\begin{definition}[条件密度]
+如果 $f_Y(y)>0$，定义
+\[
+    f_{X\mid Y}(x\mid y)
+    =\frac{f_{X,Y}(x,y)}{f_Y(y)}.
+\]
+对固定的 $y$，这是关于 $x$ 的密度，表示在条件 $Y=y$ 下 $X$ 的分布。
+\end{definition}
+
+\begin{example}[三角形上的均匀分布]
+设 $(X,Y)$ 在
+\[
+    T=\{(x,y):0<y<x<1\}
+\]
+上均匀分布。由于 $T$ 的面积为 $1/2$，联合密度在 $T$ 上等于 $2$。当 $0<x<1$ 时，
+\[
+    f_X(x)=\int_0^x2\,dy=2x.
+\]
+对固定的 $x$，给定 $X=x$ 时 $Y$ 的条件密度为
+\[
+    f_{Y\mid X}(y\mid x)=\frac{2}{2x}=\frac1x,
+    \qquad0<y<x.
+\]
+因此，在条件 $X=x$ 下，$Y$ 在 $(0,x)$ 上均匀分布。
+\end{example}
+
+\begin{theorem}[卷积公式]
+如果 $X,Y$ 是相互独立的连续随机变量，密度分别为 $f_X,f_Y$，那么 $S=X+Y$ 的密度为
+\[
+    f_S(s)=\int_{-\infty}^{\infty}f_X(x)f_Y(s-x)\,dx.
+\]
+\end{theorem}
+
+\begin{proof}
+变量变换 $(x,y)\mapsto(x,s=x+y)$ 的 Jacobian 行列式为 $1$。由于独立性给出联合密度 $f_X(x)f_Y(y)$，对 $x$ 积分消元即得到上述公式。
+\end{proof}
+
+\begin{example}[两个均匀随机变量之和]
+设 $X,Y$ 相互独立，且都在 $[0,1]$ 上均匀分布。则
+\[
+    f_{X+Y}(s)
+    =\int_{\max(0,s-1)}^{\min(1,s)}1\,dx
+    =
+    \begin{cases}
+    s,&0<s<1,\\
+    2-s,&1\leq s<2,\\
+    0,&\text{其他情形}.
+    \end{cases}
+\]
+这个三角形密度反映了直线段 $x+y=s$ 在单位正方形内部的长度先增大后减小。
+\end{example}
+
+\section{期望的收敛定理}
+
+随机变量的极限只有在能够穿过概率或期望时才真正有用。测度论给出了这样做的精确条件。单调收敛定理处理递增的非负逼近，控制收敛定理则处理被某个可积函数统一控制的带符号随机变量。
+
+\begin{theorem}[单调收敛定理]
+如果 $0\leq X_1\leq X_2\leq\cdots$，且 $X_n\to X$ 几乎处处成立，那么
+\[
+    \mathbb{E}[X_n]\uparrow\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{theorem}[Fatou 引理]
+如果 $X_n\geq0$，则
+\[
+    \mathbb{E}\left[\liminf_{n\to\infty}X_n\right]
+    \leq
+    \liminf_{n\to\infty}\mathbb{E}[X_n].
+\]
+\end{theorem}
+
+\begin{theorem}[控制收敛定理]
+设 $X_n\to X$ 几乎处处，并且存在可积随机变量 $Y$，使得对每个 $n$ 都几乎处处有
+\[
+    |X_n|\leq Y.
+\]
+则 $X$ 可积，并且
+\[
+    \mathbb{E}[X_n]\to\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{example}[为什么逐点收敛还不够]
+在带 Lebesgue 概率测度的 $(0,1)$ 上，令
+\[
+    X_n=n\mathbf{1}_{(0,1/n)}.
+\]
+则 $X_n\to0$ 几乎处处，但对每个 $n$，
+\[
+    \mathbb{E}[X_n]=1.
+\]
+不存在一个可积随机变量同时控制所有 $X_n$。这个例子说明，要交换极限与期望，仅有逐点收敛并不够。
+\end{example}
+
+\begin{corollary}[特征函数的连续性]
+对任意随机变量 $X$，其特征函数
+\[
+    \varphi_X(t)=\mathbb{E}[e^{itX}]
+\]
+关于 $t$ 连续。
+\end{corollary}
+
+\begin{proof}
+如果 $t_n\to t$，则 $e^{it_nX}\to e^{itX}$ 几乎处处，同时
+\[
+    |e^{it_nX}|=1.
+\]
+以可积函数 $1$ 为控制函数，应用控制收敛定理即可。
+\end{proof}
+
+\section{作为信息的条件期望}
+
+对事件进行条件化得到一个数；对 $\sigma$-代数进行条件化则得到一个随机变量，因为可用信息可能在不同状态下产生不同预测。条件期望 $\mathbb{E}[X\mid\mathcal{G}]$ 是平均意义下对 $X$ 的最佳 $\mathcal{G}$-可测概括。
+
+\begin{definition}[条件期望]
+设 $X$ 可积，$\mathcal{G}\subseteq\mathcal{F}$ 是子 $\sigma$-代数。如果随机变量 $Y$ 满足：
+\begin{enumerate}
+    \item $Y$ 是 $\mathcal{G}$-可测的；
+    \item $Y$ 可积；
+    \item 对每个 $G\in\mathcal{G}$，
+    \[
+        \int_GY\,d\mathbb{P}=\int_GX\,d\mathbb{P},
+    \]
+\end{enumerate}
+则称 $Y$ 是 $\mathbb{E}[X\mid\mathcal{G}]$ 的一个版本。它在几乎处处相等的意义下唯一。
+\end{definition}
+
+\begin{theorem}[基本性质]
+对可积随机变量 $X,Y$ 和常数 $a,b$：
+\begin{enumerate}
+    \item \textbf{线性性}：
+    \[
+        \mathbb{E}[aX+bY\mid\mathcal{G}]
+        =a\mathbb{E}[X\mid\mathcal{G}]
+        +b\mathbb{E}[Y\mid\mathcal{G}].
+    \]
+    \item \textbf{提出已知因子}：如果 $Z$ 有界且 $\mathcal{G}$-可测，则
+    \[
+        \mathbb{E}[ZX\mid\mathcal{G}]
+        =Z\mathbb{E}[X\mid\mathcal{G}].
+    \]
+    \item \textbf{塔式性质}：如果 $\mathcal{H}\subseteq\mathcal{G}$，则
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]\mid\mathcal{H}]
+        =\mathbb{E}[X\mid\mathcal{H}].
+    \]
+    \item \textbf{全期望公式}：
+    \[
+        \mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]]=\mathbb{E}[X].
+    \]
+\end{enumerate}
+\end{theorem}
+
+\newpage
+
+\begin{example}[对有限划分条件化]
+设 $\mathcal{G}$ 由概率均为正的划分 $A_1,\dots,A_n$ 生成。则
+\[
+    \mathbb{E}[X\mid\mathcal{G}]
+    =\sum_{k=1}^n
+    \frac{\mathbb{E}[X\mathbf{1}_{A_k}]}{\mathbb{P}(A_k)}
+    \mathbf{1}_{A_k}.
+\]
+条件期望在每个信息单元 $A_k$ 上为常数，因为 $\mathcal{G}$ 无法区分同一单元内部的不同结果。
+\end{example}
+
+\begin{theorem}[最小二乘刻画]
+如果 $X\in L^2$，且 $Y=\mathbb{E}[X\mid\mathcal{G}]$，那么对每个平方可积的 $\mathcal{G}$-可测随机变量 $Z$，都有
+\[
+    \mathbb{E}[(X-Y)^2]
+    \leq
+    \mathbb{E}[(X-Z)^2].
+\]
+\end{theorem}
+
+\begin{proof}
+条件期望的定义性质推出
+\[
+    \mathbb{E}[(X-Y)(Y-Z)]=0.
+\]
+因此
+\[
+    \mathbb{E}[(X-Z)^2]
+    =\mathbb{E}[(X-Y)^2]
+     +\mathbb{E}[(Y-Z)^2],
+\]
+从而得到结论。
+\end{proof}
+
+\begin{remark}
+这就是内积空间中正交投影的概率论对应物。$\sigma$-代数 $\mathcal{G}$ 决定哪些随机变量是可观测的，而条件期望把 $X$ 投影到这些信息上。
+\end{remark}
+
+\section{鞅与停时}
+
+鞅刻画条件漂移为零的随机过程。它并不意味着过程保持常数，也不意味着样本路径稳定；它只意味着在给定当前信息后，下一时刻取值的条件期望等于当前取值。这一区别非常重要：公平博弈可以剧烈波动，尽管其中不存在可预测的获利机会。
+
+\begin{example}[中心化部分和]
+设 $X_1,X_2,\dots$ 是相互独立的可积随机变量，具有共同均值 $\mu$，定义
+\[
+    M_n=\sum_{k=1}^n(X_k-\mu).
+\]
+对自然滤过 $\mathcal{F}_n=\sigma(X_1,\dots,X_n)$，有
+\[
+    \mathbb{E}[M_{n+1}\mid\mathcal{F}_n]
+    =M_n+\mathbb{E}[X_{n+1}-\mu]
+    =M_n.
+\]
+因此 $(M_n)$ 是鞅。
+\end{example}
+
+\begin{example}[变换后的随机游走]
+对简单对称随机游走 $S_n$，过程
+\[
+    M_n=S_n^2-n
+\]
+是鞅。事实上，
+\[
+    S_{n+1}^2=(S_n+\xi_{n+1})^2
+    =S_n^2+2S_n\xi_{n+1}+1,
+\]
+对过去信息条件化得到
+\[
+    \mathbb{E}[S_{n+1}^2-(n+1)\mid\mathcal{F}_n]
+    =S_n^2-n.
+\]
+\end{example}
+
+\begin{definition}[停时]
+随机时刻 $\tau:\Omega\to\{0,1,2,\dots,\infty\}$ 称为关于 $(\mathcal{F}_n)$ 的\textbf{停时}，如果对每个 $n$，
+\[
+    \{\tau\leq n\}\in\mathcal{F}_n.
+\]
+也就是说，利用时刻 $n$ 已经获得的信息，可以判断停止是否已经发生。
+\end{definition}
+
+\begin{theorem}[有界停时的可选停止定理]
+设 $(M_n)$ 是鞅，$\tau$ 是被某个确定整数 $N$ 控制的停时。则
+\[
+    \mathbb{E}[M_\tau]=\mathbb{E}[M_0].
+\]
+\end{theorem}
+
+\begin{proof}
+写成
+\[
+    M_\tau=M_0+\sum_{k=1}^N
+    (M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}.
+\]
+事件 $\{\tau\geq k\}$ 属于 $\mathcal{F}_{k-1}$，所以
+\[
+\mathbb{E}[(M_k-M_{k-1})\mathbf{1}_{\{\tau\geq k\}}]
+=\mathbb{E}\left[
+\mathbf{1}_{\{\tau\geq k\}}
+\mathbb{E}[M_k-M_{k-1}\mid\mathcal{F}_{k-1}]
+\right]=0.
+\]
+求和即得定理。
+\end{proof}
+
+\begin{note}
+可选停止定理并不对任意无界停时成立。还需要有界增量、可积性或一致可积性等附加条件。“公平博弈在自行选择停止时刻后仍然公平”这一非正式说法，只有在停止规则满足适当条件时才正确。
+\end{note}
+
+\section{Markov 链}
+
+Markov 链是一类未来只通过当前状态依赖过去的随机过程。这并不等同于独立性：相邻状态通常是相关的。Markov 性质的含义是，当前状态已经包含了过去信息中所有与预测下一状态有关的部分。
+
+\begin{definition}[时齐 Markov 链]
+取值于可数状态空间 $S$ 的离散时间过程 $(X_n)_{n\geq0}$ 称为\textbf{时齐 Markov 链}，如果在条件概率有定义时，
+\[
+\mathbb{P}(X_{n+1}=j\mid X_n=i,X_{n-1}=i_{n-1},\dots,X_0=i_0)
+=p_{ij}.
+\]
+矩阵
+\[
+    P=(p_{ij})_{i,j\in S}
+\]
+称为\textbf{转移矩阵}。
+\end{definition}
+
+\begin{proposition}[Chapman--Kolmogorov 方程]
+令 $p_{ij}^{(n)}=\mathbb{P}(X_n=j\mid X_0=i)$，则
+\[
+    p_{ij}^{(m+n)}=
+    \sum_{k\in S}p_{ik}^{(m)}p_{kj}^{(n)}.
+\]
+矩阵形式为
+\[
+    P^{(m+n)}=P^{(m)}P^{(n)},
+\]
+因此对时齐链有 $P^{(n)}=P^n$。
+\end{proposition}
+
+\begin{definition}[平稳分布]
+状态空间 $S$ 上的概率向量 $\pi$ 称为\textbf{平稳分布}，如果
+\[
+    \pi P=\pi.
+\]
+如果 $X_0$ 的分布为 $\pi$，那么每个 $X_n$ 的分布都为 $\pi$。
+\end{definition}
+
+\begin{example}[两状态链]
+设
+\[
+P=
+\begin{pmatrix}
+1-a&a\\
+b&1-b
+\end{pmatrix},
+\qquad a,b\in(0,1).
+\]
+联立 $\pi P=\pi$ 与 $\pi_0+\pi_1=1$，得到
+\[
+    \pi=\left(\frac{b}{a+b},\frac{a}{a+b}\right).
+\]
+某状态的流入转移率相对于流出转移率越大，它的长期平稳权重就越大。
+\end{example}
+
+\begin{theorem}[有限不可约非周期链]
+有限 Markov 链若不可约且非周期，则存在唯一平稳分布 $\pi$，并且对每个初始状态 $i$，
+\[
+    p_{ij}^{(n)}\to\pi_j
+\]
+当 $n\to\infty$ 时成立。
+\end{theorem}
+
+\begin{remark}
+不可约意味着每个状态最终都能到达其他任意状态；非周期则排除了被迫遵循的循环节律。二者共同保证该链逐渐遗忘初始状态并收敛到平衡。
+\end{remark}
+
+\section{Poisson 过程与 Brownian 运动}
+
+两类连续时间过程在概率论及其应用中反复出现。Poisson 过程刻画以恒定平均速率随机发生的事件，Brownian 运动刻画连续的随机涨落。它们的样本路径外观完全不同：Poisson 路径以整数幅度跳跃，而 Brownian 路径几乎处处连续，却几乎必然处处不可微。
+
+\subsection{Poisson 过程}
+
+\begin{definition}[Poisson 过程]
+如果过程 $(N_t)_{t\geq0}$ 满足：
+\begin{enumerate}
+    \item $N_0=0$；
+    \item 具有独立增量；
+    \item 具有平稳增量；
+    \item 对 $s,t\geq0$，
+    \[
+        N_{t+s}-N_s\sim\operatorname{Poisson}(\lambda t),
+    \]
+\end{enumerate}
+则称它是速率为 $\lambda>0$ 的\textbf{Poisson 过程}。
+\end{definition}
+
+\begin{proposition}
+对 Poisson 过程，
+\[
+    \mathbb{E}[N_t]=\lambda t,
+    \qquad
+    \operatorname{Var}(N_t)=\lambda t.
+\]
+此外，等待第一次事件发生的时间 $T_1$ 服从参数为 $\lambda$ 的指数分布：
+\[
+    \mathbb{P}(T_1>t)=\mathbb{P}(N_t=0)=e^{-\lambda t}.
+\]
+\end{proposition}
+
+\begin{example}
+如果电话以每小时 $3$ 次的速率按照 Poisson 过程到达，那么两小时内恰好接到五个电话的概率为
+\[
+    \mathbb{P}(N_2=5)=e^{-6}\frac{6^5}{5!}.
+\]
+等待下一个电话超过二十分钟的概率为
+\[
+    e^{-3(1/3)}=e^{-1}.
+\]
+\end{example}
+
+\subsection{Brownian 运动}
+
+\begin{definition}[标准 Brownian 运动]
+如果过程 $(B_t)_{t\geq0}$ 满足：
+\begin{enumerate}
+    \item $B_0=0$ 几乎必然成立；
+    \item 具有独立增量；
+    \item 对 $0\leq s<t$，有 $B_t-B_s\sim N(0,t-s)$；
+    \item 样本路径几乎必然连续，
+\end{enumerate}
+则称它是\textbf{标准 Brownian 运动}。
+\end{definition}
+
+\begin{proposition}
+对 Brownian 运动，
+\[
+    \mathbb{E}[B_t]=0,
+    \qquad
+    \operatorname{Var}(B_t)=t,
+    \qquad
+    \operatorname{Cov}(B_s,B_t)=\min(s,t).
+\]
+\end{proposition}
+
+\begin{proof}
+设 $s\leq t$。由于 $B_t=B_s+(B_t-B_s)$，且增量与 $B_s$ 独立并具有零均值，
+\[
+    \mathbb{E}[B_sB_t]
+    =\mathbb{E}[B_s^2]
+     +\mathbb{E}[B_s]\mathbb{E}[B_t-B_s]
+    =s.
+\]
+因此协方差为 $s=\min(s,t)$。
+\end{proof}
+
+\newpage
+
+\begin{example}[Brownian 鞅]
+过程 $(B_t)$ 关于其自然滤过是鞅。另一个重要鞅是
+\[
+    B_t^2-t.
+\]
+减去 $t$ 补偿了随时间累积的方差，正如简单随机游走中 $S_n^2-n$ 的作用一样。
+\end{example}
+
+\begin{remark}
+尺度性质
+\[
+    (B_{ct})_{t\geq0}
+    \overset{d}{=}
+    (\sqrt{c}B_t)_{t\geq0}
+\]
+表明时间相对于空间按平方尺度变化。同样的尺度关系也出现在热方程中，并解释了 Brownian 运动与扩散之间的密切联系。
+\end{remark}
+
+
 \section{结语}
 
 概率论从有限样本空间中的计数问题出发，最终发展为建立在测度论基础上的严密理论。随机变量是可测函数，期望是积分，独立性是乘积分布结构，条件期望是给定信息下的最佳预测。大数定律和中心极限定理解释了随机现象中的稳定性与正态近似，而随机过程则把概率论推向时间演化和动态系统。
