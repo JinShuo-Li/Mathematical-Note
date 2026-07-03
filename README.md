@@ -6,23 +6,23 @@
 
 ## 📖 Introduction
 
-This repository contains my personal lecture notes and study summaries on **Mathematics and Axiomatization**. The project is typeset in $\LaTeX$ and covers a rigorous restructuring of mathematical foundations, ranging from logic and set theory to advanced analysis and algebra.
+This repository contains my personal lecture notes and study summaries on **Mathematics and Axiomatization**. The English edition is typeset in $\LaTeX$ and covers a rigorous restructuring of mathematical foundations, ranging from logic and set theory to advanced analysis and algebra.
 
 The goal of this project is to build a cohesive mathematical framework starting from the most basic axioms.
 
 ## 🗂️ Table of Contents
 
-The notes are organized into the following chapters:
+The English notes are organized into the following chapters:
 
 * **Preface**
-* **Chapter 0: Basic Knowledge and Notations**
+* **Chapter 0: Fundamentals**
     * Propositional Logic
     * Predicate Logic
 * **Chapter 1: The Axioms of ALL**
     * The Naive Set Theory
     * The Axiomatic Set Theory (ZFC)
     * Extensions of Axiomatic Set Theory
-* **Chapter 2: Mathematical Analysis: Part I**
+* **Chapter 2: Mathematical Analysis I**
     * Extension of the Number System
     * Sequence Limit and the Properties of Real Numbers
     * Derivatives and Related Theorem
@@ -63,62 +63,34 @@ The notes are organized into the following chapters:
     * Discrete and Continuous Random Variables
     * The Measure-Theoretic Foundation
     * Limit Theorems and Stochastic Processes
-* **More**: More content will be coming soon.
 
-## 📦 Versions & Layout
+## 📦 Layout
 
-This repository keeps multiple versions of the notes:
+The current workspace keeps the English edition in `code_en/`:
 
-- `code/splited_version/code/` is the main working directory (split files).
-- `code/original_vertion/` stores the archived single-file source.
-- `code/beutified_version/` stores the archived beautified build.
-- `code/Mathematics and Axiomatization.docx` is a Word export.
+- `code_en/main.tex` is the main entry point.
+- `code_en/assets/` contains figures and other static assets.
+- `code_en/chapters/` contains the chapter source files.
+- `code_en/main.pdf` is the compiled English PDF.
+- `docs/index.html` provides a simple web preview.
 
-## 🛠️ Usage & Compilation
+## 🛠️ Compilation
 
-This project has been split into multiple files for faster compilation. The main entry point is located at `code/splited_version/code/main.tex`.
+You need a standard TeX distribution such as TeX Live, MiKTeX, or MacTeX.
 
-### File Structure
-```text
-.
-├── code/
-│   ├── beutified_version/
-│   │   ├── M&A.tex
-│   │   └── M&A.pdf
-│   ├── original_vertion/
-│   │   ├── code_of_Mathematics_and_Axiomatization.tex
-│   │   └── code_of_Mathematics_and_Axiomatization.pdf
-│   ├── splited_version/
-│   │   └── code/
-│   │       ├── main.tex
-│   │       ├── main.pdf
-│   │       ├── assets/
-│   │       └── chapters/
-│   │           ├── preface.tex
-│   │           ├── chapter0.tex
-│   │           ├── chapter1.tex
-│   │           └── ...
-│   └── Mathematics and Axiomatization.docx
-├── LICENSE
-└── README.md
-```
+To compile the English edition:
 
-### How to Compile
-
-You need a standard TeX distribution (TeX Live, MiKTeX, or MacTeX).
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/JinShuo-Li/Mathematical-Note
-```
-2. Compile using `xelatex` (run twice to update the TOC):
-```bash
-cd code/splited_version/code
+cd code_en
 xelatex main.tex
 xelatex main.tex
 ```
 
+Run XeLaTeX twice so the table of contents and references are updated.
 
+## 📝 Chinese Version
+
+We also provide a Chinese edition of the notes, which can be found in the `code_cn/` directory. The structure is similar to the English version, and it is typeset in $\LaTeX$ as well.
 
 ## ⚠️ License & Disclaimer (Important)
 
@@ -142,5 +114,22 @@ To view a copy of this license, visit [http://creativecommons.org/licenses/by-nc
 * Using the content in paid courses, books, or training materials.
 * Hosting the files on a website that charges for access or generates revenue from ads.
 
-
 3. **Attribution**: If you share or adapt this material for non-commercial educational purposes, you must give appropriate credit to the original author.
+
+## Release Notes
+
+### v1.2.0 (2026-07-03)
+
+This time, we are releasing v1.2.0 of the note.
+
+The main update is a substantial extension and revision of Chapters 4, 6, 7, and 9 in the English version. These chapters focus on abstract algebra, point-set topology, complex analysis, and probability theory.
+
+A considerable amount of new material has been added, including more complete definitions, proofs, examples, counterexamples, and explanations of the motivations behind important concepts. The organization and writing style of these chapters have also been revised to make them more consistent with the earlier and more developed parts of the note.
+
+In addition, a new afterword has been added to reflect on the process of studying, organizing, and writing mathematics.
+
+Please note that Chapters 0, 1, 2, 3, 5, and 8 remain unchanged in this release.
+
+If you find any errors in the note, whether mathematical, typographical, or related to formatting, you can open an issue or simply @ me in the discussion section.
+
+Hope you like it!
