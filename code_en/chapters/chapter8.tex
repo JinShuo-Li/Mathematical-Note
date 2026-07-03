@@ -1,5 +1,16 @@
 \chapter{Applied Mathematics: Graph Theory}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item model a discrete system as a graph and choose an appropriate graph representation;
+    \item analyze degrees, connectivity, paths, cycles, trees, planarity, and coloring;
+    \item execute basic traversal and shortest-path algorithms;
+    \item distinguish deterministic graph theorems from probabilistic threshold statements;
+    \item connect graph models with routing, networks, scheduling, and graph-based learning.
+\end{itemize}
+\end{learningobjectives}
+
 \section{Introduction to Graph Theory}
 
 Graph theory is the study of mathematical structures used to model pairwise relations between objects. It provides the theoretical foundation for analyzing networks, data structures, scheduling, optimization, and computational complexity. This chapter establishes rigorous definitions of graph-theoretic structures and provides detailed proofs for central theorems concerning connectivity, planarity, and traversability.
@@ -309,7 +320,7 @@ A graph $H$ is a \textbf{homeomorphism} of a graph $G$ if $H$ can be obtained fr
 \end{definition}
 
 \begin{theorem}[Kuratowski's Theorem]
-A graph is planar if and only if it does not contain a subgraph that is homeomorphism $K_5$ or $K_{3,3}$.
+A finite graph is planar if and only if it contains no subgraph that is a subdivision of $K_5$ or $K_{3,3}$.
 \end{theorem}
 
 After all, why do we care about planar graphs? One of the most famous problems in graph theory is the Four Color Theorem, which states that any planar graph can be colored using at most four colors such that no two adjacent vertices share the same color. This theorem has important applications in map coloring, scheduling, and network design.
@@ -354,11 +365,15 @@ An \textbf{Euler path} in a graph is a trail that visits every edge exactly once
 
 Similarly, we can define whether a graph has an Euler path or not.
 
-\begin{theorem}
-A connected graph $G$ has an Euler path (a trail covering every edge exactly once) if and only if exactly two vertices in $G$ have odd degree.(Except there is a trivial case that all vertices have even degree, which means there is an Eulerian circuit.)
+\begin{theorem}[Euler Trail Criterion]
+A connected graph $G$ has an Euler trail if and only if it has either zero or two vertices of odd degree. The trail is closed precisely when there are no odd-degree vertices; when there are exactly two, every Euler trail starts at one odd vertex and ends at the other.
 \end{theorem}
 
-The proof is similar to the previous theorem, so we omit it here.
+\begin{proof}
+In any trail, every internal visit to a vertex uses one entering and one leaving edge. Hence all vertices other than the two possible endpoints are incident with an even number of used edges. If the trail uses every edge, the graph can therefore have only zero or two odd-degree vertices.
+
+Conversely, if every degree is even, the preceding Euler-circuit theorem applies. If exactly two vertices $u$ and $v$ have odd degree, add one temporary edge joining $u$ to $v$. Every degree in the enlarged connected graph is now even, so it has an Euler circuit. Removing the temporary edge breaks that circuit into an Euler trail in the original graph, beginning at one of $u,v$ and ending at the other.
+\end{proof}
 
 \subsection{Hamiltonian Cycles}
 
@@ -867,6 +882,8 @@ In $G(n,p)$, the degree of each vertex follows a binomial distribution $\text{Bi
 \paragraph{Threshold Functions and Phase Transitions}
 Many properties in random graphs exhibit threshold phenomena: as the parameter $p$ crosses a critical threshold $p_c$, the property changes from almost surely not holding to almost surely holding.
 
+\newpage
+
 \begin{theorem}[Connectivity Threshold]
 For $G(n,p)$, the threshold function for connectivity is $p_c = \frac{\ln n}{n}$. More precisely:
 \begin{itemize}
@@ -876,59 +893,94 @@ For $G(n,p)$, the threshold function for connectivity is $p_c = \frac{\ln n}{n}$
 \end{itemize}
 \end{theorem}
 
-\begin{theorem}[Emergence of the Giant Component]
-In $G(n,p)$, there is a critical value $p_c = 1/n$:
+\begin{remark}[With high probability]
+For a sequence of random graphs, an event occurs \textbf{with high probability} if its probability tends to $1$ as $n\to\infty$.
+\end{remark}
+
+\begin{theorem}[Giant-Component Phase Transition]
+Fix $c>0$ and let $G\sim G(n,c/n)$.
 \begin{itemize}
-\item For $p < 1/n$, the largest connected component has size $O(\log n)$.
-\item For $p = 1/n$, the largest component has size $\Theta(n^{2/3})$.
-\item For $p > 1/n$, a "giant component" emerges with size approximately $yn$, where $y$ is the nonzero solution to $y = 1 - e^{-c y}$ with $c = pn$.
+    \item If $0<c<1$, then with high probability every connected component has order $O(\log n)$.
+    \item If $c=1$, the largest components have order $n^{2/3}$ in the critical scale.
+    \item If $c>1$, then with high probability there is a unique giant component of order
+    \[
+        \rho n+o(n),
+    \]
+    where $\rho\in(0,1)$ is the nonzero solution of
+    \[
+        \rho=1-e^{-c\rho}.
+    \]
+    All remaining components have order $O(\log n)$.
 \end{itemize}
 \end{theorem}
 
-\paragraph{Diameter and Average Distance}
-\begin{theorem}[Diameter of $G(n,p)$]
-For $p$ such that $np \to \infty$ and $p$ not too large, the diameter of $G(n,p)$ is approximately $\frac{\ln n}{\ln(np)}$.
-\end{theorem}
+\paragraph{Distances}
+When the expected degree $np$ grows, a breadth-first search initially behaves like a branching process with approximately $np$ children per discovered vertex. This gives the useful heuristic
+\[
+    \text{typical distance}\approx\frac{\log n}{\log(np)}.
+\]
+Exact diameter statements depend on the regime of $p$ and require additional correction terms, so the heuristic should not be quoted as a universal theorem.
 
 \paragraph{Clustering Coefficient}
 \begin{definition}[Local Clustering Coefficient]
-The local clustering coefficient of vertex $i$ is defined as
-\begin{equation}
-C_i = \frac{2 \times \text{number of edges between neighbors of } i}{k_i(k_i-1)}
-\end{equation}
-where $k_i$ is the degree of vertex $i$.
+For a vertex $i$ of degree $k_i\ge2$, the local clustering coefficient is
+\[
+C_i = \frac{2e_i}{k_i(k_i-1)},
+\]
+where $e_i$ is the number of edges between neighbors of $i$.
 \end{definition}
 
-\begin{theorem}[Clustering Coefficient of $G(n,p)$]
-In $G(n,p)$, the average clustering coefficient is $p$, independent of network size. This contrasts with many real-world networks where clustering coefficients typically scale inversely with $n$.
-\end{theorem}
+\begin{proposition}[Clustering in $G(n,p)$]
+Conditional on the neighbor set of a vertex with degree at least two, every possible edge between two of its neighbors is present independently with probability $p$. Consequently,
+\[
+    \mathbb{E}[C_i\mid k_i\ge2]=p.
+\]
+This is one reason the basic Erdős--Rényi model often underestimates the high clustering observed in empirical networks.
+\end{proposition}
 
 \subsection{Important Theorems in Random Graph Theory}
 
-\paragraph{Zero-One Laws}
-\begin{theorem}[Zero-One Law]
-For any monotone graph property $\mathcal{P}$ (a property preserved by adding edges) in $G(n,p)$, there exists a threshold function $p^*(n)$ such that
+\paragraph{Thresholds for Monotone Properties}
+\begin{theorem}[Existence of a Threshold Function]
+Let $\mathcal{P}$ be a nontrivial monotone increasing graph property. There is a function $p^*(n)$ such that
 \[
-\lim_{n\to\infty} \mathbb{P}(G(n,p) \in \mathcal{P}) = 
+\mathbb{P}(G(n,p)\in\mathcal{P})\longrightarrow
 \begin{cases}
-0, & \text{if } p/p^* \to 0 \\
-1, & \text{if } p/p^* \to \infty
+0, & p/p^*(n)\to0,\\
+1, & p/p^*(n)\to\infty.
 \end{cases}
 \]
+The theorem asserts the existence of a transition scale; determining its location and width is a separate problem.
 \end{theorem}
 
 \paragraph{Subgraph Appearance}
-\begin{theorem}[Subgraph Threshold]
-Let $H$ be a fixed graph with $v_H$ vertices and $e_H$ edges. Define $\rho(H) = e_H/v_H$. In $G(n,p)$:
-\begin{itemize}
-\item If $p \ll n^{-1/\rho(H)}$, then $G(n,p)$ almost surely does not contain $H$ as a subgraph.
-\item If $p \gg n^{-1/\rho(H)}$, then $G(n,p)$ almost surely contains $H$ as a subgraph.
-\end{itemize}
+\begin{theorem}[Threshold for a Fixed Subgraph]
+For a fixed graph $H$, define
+\[
+    m(H)=\max_{H'\subseteq H,\,v(H')\ge1}\frac{e(H')}{v(H')}.
+\]
+Then the threshold for $G(n,p)$ to contain a copy of $H$ is
+\[
+    p^*(n)=n^{-1/m(H)}.
+\]
+Thus the probability tends to $0$ when $p\ll p^*(n)$ and to $1$ when $p\gg p^*(n)$. If $H$ is strictly balanced, then $m(H)=e(H)/v(H)$.
 \end{theorem}
 
 \paragraph{Hamiltonicity}
-\begin{theorem}[Hamiltonian Cycles]
-For $G(n,p)$, the threshold for the existence of a Hamiltonian cycle is approximately $p \approx \frac{\ln n + \ln \ln n}{n}$. When $p$ exceeds this threshold, $G(n,p)$ is almost surely Hamiltonian.
+\begin{theorem}[Hamiltonicity Threshold]
+Let
+\[
+    p=\frac{\log n+\log\log n+c_n}{n}.
+\]
+Then
+\[
+\mathbb{P}(G(n,p)\text{ is Hamiltonian})\longrightarrow
+\begin{cases}
+0, & c_n\to-\infty,\\
+1, & c_n\to+\infty.
+\end{cases}
+\]
+The threshold coincides asymptotically with the disappearance of vertices of degree $0$ or $1$.
 \end{theorem}
 
 \subsection{Algorithmic Generation of Random Graphs}
@@ -940,7 +992,7 @@ The $G(n,p)$ model can be generated using a simple algorithm that considers each
 Random graph models provide foundational frameworks for modeling social networks, the Internet, biological networks, and other complex systems. While classical models like $G(n,p)$ differ from real networks in certain statistical properties, they serve as the basis for developing more accurate models.
 
 \paragraph{Network Robustness}
-By studying connectivity in random graphs, we can analyze network robustness against random failures. Research shows that many complex systems exhibit remarkable robustness to random failures.
+Connectivity thresholds in random graphs provide baseline models for robustness under independent vertex or edge failures. Real networks may behave differently because degree distributions, clustering, and dependencies are not captured by $G(n,p)$.
 
 \paragraph{Epidemic Spread}
 Random graph models are used to study disease spread in populations, where vertices represent individuals and edges represent contacts.

@@ -1,5 +1,16 @@
 \chapter{Mathematical Analysis II}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item distinguish pointwise, uniform, absolute, and conditional convergence;
+    \item compute derivatives and Taylor approximations for multivariable functions;
+    \item use the implicit-function theorem and constrained optimization;
+    \item evaluate multiple, line, and surface integrals with appropriate coordinates;
+    \item interpret Green, Gauss, and Stokes theorems and analyze Fourier expansions.
+\end{itemize}
+\end{learningobjectives}
+
 Now we will move on to another part of the analysis, which is Mathematical Analysis II. In this chapter, we will study the properties of functions of several variables, including limits, continuity, differentiability, and integrability. We will also introduce the concept of vector-valued functions and study their properties. This chapter will provide a solid foundation for further studies in multivariable calculus, differential equations, and mathematical physics.
 
 \section{Series}
@@ -148,7 +159,7 @@ Here is some applications of the integral test:
 
 Also, we can use the integral test to determine the convergence of improper integrals:
 
-\newpage
+
 
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$. \\
@@ -167,7 +178,7 @@ Also, we can use the integral test to determine the convergence of improper inte
     Therefore, $a_n > \frac{1}{2(n+1)\pi}$. Since the series $\sum \frac{1}{n}$ diverges, by the comparison test, the series $\sum a_n$ diverges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^2 \sin^2 x}$ diverges.
 \end{example}
 
-\newpage
+
 
 \begin{example}
     Determine the convergence of the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$. \\
@@ -208,7 +219,7 @@ The proof of this theorem relies on:
 \liminf_{n \to \infty} \frac{x_{n+1}}{x_n} \leq \liminf_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \sqrt[n]{x_n} \leq \limsup_{n \to \infty} \frac{x_{n+1}}{x_n}
 \]
 
-\newpage
+
 
 \begin{theorem}[Cauchy's Root Test]
 Let $\sum a_n$ be a positive series and let
@@ -235,6 +246,8 @@ Let $a_n > 0$. Consider the limit:
 
 \subsubsection{Alternating Series}
 An alternating series has the form $\sum_{n=1}^{\infty} (-1)^{n-1} a_n$ where $a_n > 0$.
+
+\newpage
 
 \begin{theorem}[Leibniz Test]
 If the sequence $\{a_n\}$ satisfies:
@@ -331,7 +344,31 @@ Under certain conditions, both arrangements converge to the same sum. This is fo
     Assume we have two series $\sum_{n=1}^{\infty} a_n = A$ and $\sum_{n=1}^{\infty} b_n = B$. If all of them converges absolutely, then their Cauchy product converges to $AB$, regardless of the arrangement used.
 \end{theorem}
 
-The proof of this theorem is omitted here for brevity, but it can be found in standard analysis textbooks.
+\begin{proof}
+Let
+\[
+    c_n=\sum_{k=1}^{n-1}a_kb_{n-k},\qquad n\ge2.
+\]
+Absolute convergence gives
+\[
+\sum_{i=1}^{\infty}\sum_{j=1}^{\infty}|a_i b_j|
+=\left(\sum_{i=1}^{\infty}|a_i|\right)
+ \left(\sum_{j=1}^{\infty}|b_j|\right)<\infty.
+\]
+Therefore the double series may be summed in any order. Summing by diagonals gives
+\[
+\sum_{n=2}^{\infty}c_n
+=\sum_{n=2}^{\infty}\sum_{k=1}^{n-1}a_kb_{n-k}
+=\sum_{i=1}^{\infty}\sum_{j=1}^{\infty}a_i b_j.
+\]
+Summing first in $j$ and then in $i$ gives
+\[
+\sum_{i=1}^{\infty}\sum_{j=1}^{\infty}a_i b_j
+=\sum_{i=1}^{\infty}a_i\left(\sum_{j=1}^{\infty}b_j\right)
+=BA=AB.
+\]
+Thus the Cauchy product converges absolutely to $AB$, and every rearrangement has the same sum.
+\end{proof}
 
 \subsubsection{Infinite Product}
 \begin{definition}
@@ -528,6 +565,8 @@ Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and ab
 
 Just like numerical series, when absolute convergence (M-Test) isn't an option, we have to rely on the dynamic duo: Abel and Dirichlet.
 
+\newpage
+
 \begin{theorem}[A-D Tests for Uniform Convergence]
 Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$. It converges uniformly on $E$ if either of the following conditions hold:
 \begin{enumerate}
@@ -559,6 +598,8 @@ Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, 
 \end{theorem}
 
 There is also a powerful theorem that guarantees uniform convergence under specific conditions:
+
+\newpage
 
 \begin{theorem}[Dini's Theorem]
 Let $\{S_n(x)\}$ be a sequence of continuous functions defined on a compact interval $[a, b]$. If:
@@ -617,6 +658,8 @@ By the ratio test, this series has $R=1$. At $x=1$, the series is the alternatin
 
 Here are some standard examples for calculating the sum function of a power series using term-by-term calculus:
 
+\newpage
+
 \begin{example}
 Find the sum function $S(x)$ of the power series $\sum_{n=1}^{\infty} \frac{x^n}{n!}$.
 \\ \textbf{Solution:} Using the ratio test, the radius of convergence is $R = +\infty$. For $x \in (-\infty, +\infty)$, we differentiate term-by-term:
@@ -636,7 +679,7 @@ Since the power series converges uniformly within its interval of convergence, w
 For $x = 0$, the series yields $S(0) = 1$. Notice that $\lim_{x \to 0} -\frac{\ln(1-x)}{x} = 1$, so the function is continuous at $x = 0$.
 \end{example}
 
-\subsection{Taylor and Maclaurin Series}
+\textbf{Taylor and Maclaurin Series}
 
 We have seen that every power series represents a $C^\infty$ function inside its interval of convergence. We now ask the inverse question: given an infinitely differentiable function $f(x)$, can it be represented by a power series? And if so, what must the coefficients $a_n$ be?
 
@@ -646,6 +689,8 @@ If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n 
 \[ a_n = \frac{f^{(n)}(x_0)}{n!} \]
 The resulting series $\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n$ is called the \textbf{Taylor Series} of $f$ centered at $x_0$. If $x_0=0$, it is specifically called the \textbf{Maclaurin Series}.
 \end{theorem}
+
+\newpage
 
 \begin{remark}[Analyticity]
 It is crucial to note that simply being $C^\infty$ (having derivatives of all orders) is not enough to guarantee that the Taylor series of $f(x)$ actually converges to $f(x)$. The series might only converge at $x_0$, or it might converge to a completely different function. Functions that are equal to their Taylor series on an open interval are called \textbf{real analytic functions}. A famous example of a smooth but non-analytic function is $f(x) = e^{-1/x^2}$ for $x \neq 0$ and $f(0) = 0$, where all derivatives at $0$ vanish, making its Maclaurin series identically zero.
@@ -672,6 +717,8 @@ Repeating this process $n-1$ more times gives:
 This completes the proof.
 \end{proof}
 
+\newpage
+
 \begin{example}[Standard Maclaurin Expansions]
 The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
 \begin{align*}
@@ -693,7 +740,7 @@ The norm, inner product, open balls, closed sets, compactness, and connectedness
 
 Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
 
-\subsection{The Structure of Euclidean Space $\mathbb{R}^n$}
+\subsection{The Structure of Euclidean Space \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
 The space $\mathbb{R}^n$ is the set of all ordered $n$-tuples of real numbers. An element $\mathbf{x} \in \mathbb{R}^n$ is written as $\mathbf{x} = (x_1, x_2, \dots, x_n)$, where $x_i$ are the components.
 
@@ -733,7 +780,7 @@ By the Cauchy-Schwarz inequality:
 Taking the square root of both sides gives the desired inequality.
 \end{proof}
 
-\subsection{Basic Topology of $\mathbb{R}^n$}
+\subsection{Basic Topology of \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
 To define limits rigorously, we need the language of point set topology. The concept of an "open interval" in $\mathbb{R}$ generalizes to an "open ball" (or neighborhood) in $\mathbb{R}^n$.
 
@@ -780,7 +827,7 @@ By De Morgan's laws, any intersection of closed sets is closed, and any finite u
 \textbf{Counterexample for infinite intersection of open sets:} The sets $S_i = (-1 - 1/i, 1 + 1/i)$ are open, but their infinite intersection $\bigcap_{i=1}^{\infty} S_i = [-1, 1]$ is closed, not open.
 \end{property}
 
-\subsubsection{Fundamental Theorems of $\mathbb{R}^n$}
+\subsubsection{Fundamental Theorems of \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
 The real numbers $\mathbb{R}$ rely on the completeness axiom. In $\mathbb{R}^n$, the equivalent completeness properties are formulated through the following equivalent theorems:
 
@@ -825,7 +872,7 @@ If $\lim_{\mathbf{x} \to \mathbf{a}} f(\mathbf{x}) = L$, then for any continuous
 Consequently, if $f(\mathbf{x})$ approaches different values along two different paths ending at $\mathbf{a}$, the limit \textbf{does not exist}.
 \end{theorem}
 
-\newpage
+
 
 \begin{example}
 Consider the function $f(x, y) = \frac{xy}{x^2 + y^2}$. We investigate the limit at $(0,0)$.
@@ -1026,6 +1073,8 @@ Equivalently, there exist constants $A_1,\dots,A_n$ such that
     \Delta f=A_1\Delta x_1+\cdots+A_n\Delta x_n+o\left(\sqrt{\Delta x_1^2+\cdots+\Delta x_n^2}\right).
 \]
 \end{definition}
+
+\newpage
 
 \begin{theorem}[Coefficients of the Differential]
 If $f$ is differentiable at $\mathbf{x}_0$, then all partial derivatives $\partial f/\partial x_i$ exist at $\mathbf{x}_0$, and
@@ -1758,6 +1807,8 @@ where
         y_u & y_v
     \end{vmatrix}.
 \]
+
+\newpage
 
 \begin{example}[Polar Coordinates]
 The polar transformation is

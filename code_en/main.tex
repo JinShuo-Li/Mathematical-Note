@@ -8,10 +8,9 @@
 \usepackage{mathtools}
 \usepackage{listings}
 \usepackage[svgnames]{xcolor}
-\usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{caption}
-\usepackage[bookmarks=false, unicode]{hyperref}
+\usepackage[unicode,bookmarksopen=true,bookmarksnumbered=true,hidelinks]{hyperref}
 \usepackage{float}
 \usetikzlibrary{calc, decorations.pathreplacing, positioning}
 \usepackage{parskip}
@@ -21,6 +20,9 @@
 \usepackage[most]{tcolorbox}
 \usepackage{xparse}
 \usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{needspace}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -193,6 +195,64 @@
   {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
   {\end{mythm}}
 
+
+% Global readability and navigation settings
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\setlist{itemsep=0.25em, topsep=0.4em}
+\setlength{\emergencystretch}{3em}
+\hypersetup{pdfauthor={Jinshuo Li},pdftitle={Mathematics Axiomatization}}
+\urlstyle{same}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\rightmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\newtcolorbox{learningobjectives}{
+    enhanced,
+    breakable,
+    colback=cyan!4!white,
+    colframe=cyan!55!black,
+    title={\textbf{Learning objectives}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newtcolorbox{workedexample}[1]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!65!black,
+    title={\textbf{Worked example: #1}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newtcolorbox{applicationbox}[1]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!65!black,
+    title={\textbf{Application: #1}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newenvironment{chapterexercises}
+  {\section{Exercises}\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=0.7em]}
+  {\end{enumerate}}
+
+\newenvironment{selectedhints}
+  {\subsection*{Selected hints and answers}\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=0.55em]}
+  {\end{enumerate}}
+
 \begin{document}
 
 \setlength{\hfuzz}{4pt}
@@ -244,34 +304,41 @@
 \restoregeometry
 \thispagestyle{empty}
 
-\cleardoublepage
-
-\pagenumbering{gobble}
+\frontmatter
 \tableofcontents
-\thispagestyle{empty}
-
-\cleardoublepage
-% Preface content should be in chapters/preface.tex
 \input{chapters/preface}
-\thispagestyle{empty}
+\input{chapters/readers_guide}
 
-\cleardoublepage
-\pagenumbering{arabic}
-\setcounter{page}{1}
-
-% Chapter 0 content should be in chapters/chapter0.tex
+\mainmatter
+\part{Optional Foundations}
 \input{chapters/chapter0.tex}
-
-% Chapter 1 content should be in chapters/chapter1.tex
+\input{chapters/supplements/chapter0_practice.tex}
 \input{chapters/chapter1.tex}
+\input{chapters/supplements/chapter1_practice.tex}
+
+\part{Core Undergraduate Mathematics}
 \input{chapters/chapter2.tex}
+\input{chapters/supplements/chapter2_practice.tex}
 \input{chapters/chapter3.tex}
+\input{chapters/supplements/chapter3_practice.tex}
 \input{chapters/chapter4_revised.tex}
+\input{chapters/supplements/chapter4_practice.tex}
 \input{chapters/chapter5_revised.tex}
+\input{chapters/supplements/chapter5_practice.tex}
+
+\part{Spaces and Complex Structure}
 \input{chapters/chapter6_revised.tex}
+\input{chapters/supplements/chapter6_practice.tex}
 \input{chapters/chapter7_revised.tex}
+\input{chapters/supplements/chapter7_practice.tex}
+
+\part{Discrete and Probabilistic Models}
 \input{chapters/chapter8.tex}
+\input{chapters/supplements/chapter8_practice.tex}
 \input{chapters/chapter9_revised.tex}
+\input{chapters/supplements/chapter9_practice.tex}
+
+\backmatter
 \input{chapters/afterword.tex}
 
 \end{document}

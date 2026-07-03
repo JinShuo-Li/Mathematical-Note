@@ -1,0 +1,45 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Constrained optimization with a geometric check}
+Maximize $f(x,y)=xy$ subject to $x^2+y^2=1$. The Lagrange equations are
+\[
+    y=2\lambda x,
+    \qquad
+    x=2\lambda y,
+    \qquad
+    x^2+y^2=1.
+\]
+At a nonzero solution, $4\lambda^2=1$, so $y=\pm x$. The constraint gives $x^2=y^2=1/2$. Therefore the maximum is $1/2$ and the minimum is $-1/2$. Geometrically, the level curves $xy=c$ are tangent to the unit circle at the extrema, which is exactly the condition $\nabla f=\lambda\nabla g$.
+\end{workedexample}
+
+\begin{applicationbox}{Optimization and automatic differentiation}
+For a loss function $L(\theta)$, gradient-based algorithms use the first-order model
+\[
+    L(\theta+h)\approx L(\theta)+\nabla L(\theta)^Th.
+\]
+The chain rule on Jacobian matrices is the mathematical core of reverse-mode automatic differentiation. Hessians and quadratic Taylor models describe curvature and motivate Newton and quasi-Newton methods.
+\end{applicationbox}
+
+\begin{applicationbox}{Fourier representation and compression}
+A periodic signal can be approximated by a small number of Fourier modes. Keeping the largest coefficients replaces time-domain samples by coordinates in an orthogonal frequency basis. The same projection principle appears in audio compression, spectral numerical methods, and the analysis of linear partial differential equations.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Determine whether $\sum_{n=1}^\infty x^n/n$ converges uniformly on $[0,1/2]$ and on $[0,1)$.
+    \item Find the gradient and Hessian of $f(x,y)=x^2+xy+2y^2$ and classify its critical point.
+    \item Evaluate $\iint_D(x+y)\,dA$ over the triangle $D=\{x\ge0,y\ge0,x+y\le1\}$.
+    \item Use polar coordinates to evaluate $\iint_{x^2+y^2\le1}(x^2+y^2)\,dA$.
+    \item Determine whether $F(x,y)=(-y/(x^2+y^2),x/(x^2+y^2))$ is conservative on $\mathbb{R}^2\setminus\{0\}$.
+    \item Find the Fourier coefficients of the $2\pi$-periodic function $f(x)=x$ on $(-\pi,\pi)$.
+    \item Give an example of pointwise convergence that is not uniform convergence.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item The Weierstrass test gives uniform convergence on $[0,1/2]$. It is not uniform on $[0,1)$ because the sum $-\log(1-x)$ is unbounded there.
+    \item $\nabla f=(2x+y,x+4y)$; the Hessian is positive definite, so the origin is a strict global minimum.
+    \item Integrate $0\le y\le1-x$, $0\le x\le1$; the value is $1/3$.
+    \item The integral is $\int_0^{2\pi}\int_0^1 r^2 r\,dr\,d\theta=\pi/2$.
+    \item Its curl vanishes away from the origin, but the integral around the unit circle is $2\pi$, so it is not conservative on this non-simply-connected domain.
+    \item The function is odd: $a_n=0$, and $b_n=2(-1)^{n+1}/n$.
+    \item On $[0,1]$, $f_n(x)=x^n$ converges pointwise to a discontinuous limit and therefore not uniformly.
+\end{selectedhints}

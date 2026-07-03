@@ -1,0 +1,54 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Least squares as orthogonal projection}
+Fit a line through the origin, $y=ax$, to the data $(1,1)$, $(2,2)$, and $(3,2)$. In matrix form,
+\[
+    A=\begin{pmatrix}1\\2\\3\end{pmatrix},
+    \qquad
+    b=\begin{pmatrix}1\\2\\2\end{pmatrix}.
+\]
+The least-squares coefficient satisfies the normal equation
+\[
+    A^{T}A\,a=A^{T}b,
+\]
+so
+\[
+    14a=11,
+    \qquad a=\frac{11}{14}.
+\]
+The residual $r=b-Aa$ is orthogonal to the column space of $A$ because $A^Tr=0$. The computation is therefore a projection, not merely a formula for fitting data.
+\end{workedexample}
+
+\begin{applicationbox}{Principal component analysis}
+After centering a data matrix $X$, the eigenvectors of $X^TX$ give directions of maximal sample variance. Equivalently, the right singular vectors of $X$ provide orthogonal coordinates ordered by singular value. Truncating the singular-value decomposition produces a low-rank approximation and is used in compression, denoising, visualization, and latent-feature extraction.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Row-reduce $\begin{pmatrix}1&2&1\\2&4&0\\1&2&3\end{pmatrix}$ and find its rank and nullity.
+    \item Find an orthonormal basis for the span of $(1,1,0)$ and $(1,0,1)$.
+    \item Determine the eigenvalues and eigenvectors of $\begin{pmatrix}2&1\\1&2\end{pmatrix}$.
+    \item Prove that eigenvectors corresponding to distinct eigenvalues of a real symmetric matrix are orthogonal.
+    \item Find the least-squares solution of $x\approx1$, $x\approx2$, $x\approx6$.
+    \item Explain why a matrix and the linear map it represents are not literally the same object.
+    \item Find a basis for the column space and null space of $\begin{pmatrix}1&0&2\\0&1&3\\0&1&3\end{pmatrix}$.
+    \item Compute the standard matrix of the linear transformation $T(x,y)=(x+y,\,x-y)$.
+    \item Decide whether $\{(1,0,0),(0,1,0),(1,1,0)\}$ is linearly independent.
+    \item Diagonalize $\begin{pmatrix}3&0\\0&1\end{pmatrix}$ and interpret its eigenvalues.
+    \item Use Gram-Schmidt to orthogonalize $(1,1)$ and $(1,0)$ in $\mathbb{R}^2$.
+    \item Verify directly that $\operatorname{rank}(A)+\operatorname{nullity}(A)=n$ for $A=\begin{pmatrix}1&2\\2&4\end{pmatrix}$.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item The second column is twice the first; elimination gives rank $2$ and nullity $1$.
+    \item Normalize the first vector, subtract its projection from the second, then normalize.
+    \item The eigenvalues are $3$ and $1$, with directions $(1,1)$ and $(1,-1)$.
+    \item Compare $\langle Av,w\rangle$ with $\langle v,Aw\rangle$.
+    \item Minimize $(x-1)^2+(x-2)^2+(x-6)^2$; the answer is the mean, $x=3$.
+    \item A matrix depends on chosen bases; the abstract map does not. A change of basis changes the matrix by similarity or by left/right coordinate transformations.
+    \item The pivot columns form a basis for $\operatorname{Col}(A)$; solve $A\mathbf{x}=\mathbf{0}$ for $\operatorname{Nul}(A)$.
+    \item Apply $T$ to the standard basis vectors $e_1=(1,0)$ and $e_2=(0,1)$.
+    \item Check whether one vector is a linear combination of the others, or row-reduce the matrix with these vectors as columns.
+    \item The matrix is already diagonal, so the eigenvalues are its diagonal entries and the eigenvectors are the coordinate axes.
+    \item Subtract the projection of the second vector onto the first, then normalize the resulting orthogonal pair.
+    \item This matrix has one pivot column, so its rank is $1$ and its nullity is $1$.
+\end{selectedhints}

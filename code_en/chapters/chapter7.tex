@@ -1,5 +1,16 @@
 \chapter{Complex Analysis}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item compute with complex numbers and elementary holomorphic functions;
+    \item use the Cauchy--Riemann equations without confusing necessity and sufficiency;
+    \item evaluate contour integrals using antiderivatives, Cauchy's formula, and residues;
+    \item classify isolated singularities through Laurent series;
+    \item apply the argument principle, maximum principles, and conformal viewpoints.
+\end{itemize}
+\end{learningobjectives}
+
 Complex analysis studies functions of a complex variable. At first glance, it may look like ordinary calculus performed on the complex plane. However, this impression is misleading. Complex differentiability is far more rigid than real differentiability. A function that is differentiable once in the complex sense is automatically infinitely differentiable and locally represented by a power series. This is one of the most beautiful phenomena in mathematics.
 
 The central reason is that complex numbers contain both algebraic and geometric information. Multiplication by a complex number combines scaling and rotation. Therefore, a complex derivative is not merely a rate of change; it is a local similarity transformation. This geometric constraint forces complex differentiable functions to have strong structure.
@@ -676,7 +687,7 @@ An isolated singularity $z_0$ is:
 \end{enumerate}
 \end{definition}
 
-\newpage
+
 
 \begin{example}
 The function $\sin z/z$ has a removable singularity at $0$, because
@@ -775,7 +786,7 @@ we have
 The sum of residues is $0$, so the integral is $0$.
 \end{example}
 
-\newpage
+
 
 \begin{example}
 For the unit circle,
@@ -823,7 +834,7 @@ Every non-constant polynomial with complex coefficients has at least one complex
 Suppose $p(z)$ is a non-constant polynomial with no zeros. Then $1/p(z)$ is entire. Since $|p(z)|\to\infty$ as $|z|\to\infty$, the function $1/p(z)$ is bounded outside a large disk. It is also bounded on the closed disk by continuity. Hence $1/p$ is bounded entire, so it is constant by Liouville's theorem. Thus $p$ is constant, a contradiction.
 \end{proof}
 
-\newpage
+
 
 \begin{theorem}[Maximum Modulus Principle]
 Let $f$ be holomorphic on a domain $\Omega$. If $|f|$ attains a local maximum at an interior point and $f$ is not constant, then this is impossible. Therefore a non-constant holomorphic function cannot attain its maximum modulus in the interior of a domain.
@@ -1072,6 +1083,8 @@ For integrals over $[0,2\pi]$, the substitution
     \cos\theta=\frac12\left(z+\frac1z\right)
 \]
 turns a trigonometric integral into a contour integral around $|z|=1$.
+
+
 
 \begin{example}
 Assume $a>|b|>0$. Then

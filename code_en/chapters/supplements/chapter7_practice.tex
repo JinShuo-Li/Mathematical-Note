@@ -1,0 +1,43 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{A real integral from residues}
+Evaluate
+\[
+    I=\int_{-\infty}^{\infty}\frac{dx}{x^2+1}.
+\]
+Integrate $1/(z^2+1)$ over the upper semicircle. The only enclosed pole is $z=i$, with residue
+\[
+    \operatorname{Res}_{z=i}\frac1{(z-i)(z+i)}=\frac1{2i}.
+\]
+The semicircular contribution tends to zero, so the residue theorem gives
+\[
+    I=2\pi i\cdot\frac1{2i}=\pi.
+\]
+The method succeeds because the complex extension converts a real integral into local information at an isolated singularity.
+\end{workedexample}
+
+\begin{applicationbox}{Potential flow and two-dimensional fields}
+If $f(z)=\phi(x,y)+i\psi(x,y)$ is holomorphic, the Cauchy--Riemann equations imply that $\phi$ and $\psi$ are harmonic and that their level curves meet orthogonally. In two-dimensional electrostatics and ideal fluid flow, $\phi$ may represent a potential and $\psi$ a stream function. Conformal maps transport simple geometries to more complicated domains while preserving local angles.
+\end{applicationbox}
+
+\begin{applicationbox}{Frequency response}
+Rational transfer functions are studied through their poles and zeros in the complex plane. Pole locations govern growth, decay, resonance, and stability; contour methods recover inverse transforms and asymptotic behavior. Complex analysis therefore provides the natural language for linear systems and signal processing.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Verify the Cauchy--Riemann equations for $f(z)=z^2$ and identify its real and imaginary parts.
+    \item Evaluate $\int_{|z|=2}\frac{e^z}{z-1}\,dz$.
+    \item Find the Laurent series of $1/[z(z-1)]$ valid in $0<|z|<1$.
+    \item Classify the singularity of $\sin z/z^3$ at $0$ and compute its residue.
+    \item Use the argument principle to count the zeros of $z^3-2$ inside $|z|=2$.
+    \item Explain why a nonconstant holomorphic function cannot attain an interior maximum of its modulus.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item $u=x^2-y^2$ and $v=2xy$; check $u_x=v_y$ and $u_y=-v_x$.
+    \item Cauchy's integral formula gives $2\pi i e$.
+    \item Write $1/[z(z-1)]=-z^{-1}(1+z+z^2+\cdots)$.
+    \item The expansion is $z^{-2}-1/6+\cdots$; the singularity is a pole of order $2$ and the residue is $0$.
+    \item All three zeros have modulus $2^{1/3}<2$.
+    \item The maximum-modulus principle follows from Cauchy's integral formula or the mean-value property; equality forces local constancy and hence global constancy on a connected domain.
+\end{selectedhints}

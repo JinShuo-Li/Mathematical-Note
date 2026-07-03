@@ -1,4 +1,15 @@
 \chapter{Linear Algebra}
+
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item solve linear systems and interpret row reduction structurally;
+    \item connect matrices with linear maps, coordinates, rank, and nullity;
+    \item construct bases and orthogonal projections in finite-dimensional spaces;
+    \item analyze eigenvalues, diagonalization, quadratic forms, and singular values;
+    \item formulate least-squares, data-compression, and dynamical problems in linear-algebraic language.
+\end{itemize}
+\end{learningobjectives}
 \begin{quote}
 \emph{
 So long after we finished the first part of the analysis section, we will now move on to the new chapter: Linear Algebra. It's a completely new part of mathematics.
@@ -206,7 +217,7 @@ Let $A, B, C$ be $m \times n$ matrices and $c, d$ be scalars.
 These 8 properties, plus closure, are precisely the axioms of a \textbf{Vector Space}. The set $M_{m \times n}$ of all $m \times n$ matrices is a prime example of a vector space.
 \end{remark}
 
-\newpage
+
 
 \paragraph{Matrix Multiplication}
 This operation is more complex and profoundly important.
@@ -529,24 +540,23 @@ The augmented matrix is:
 2 & 3 & 4 & 7
 \end{array}\right)
 \]
-\textbf{Step 1: (Forward Phase - Get to REF)}
-We need a pivot in the top-left (1,1) position. Swap with R2.
+This matrix is already in RREF, so the system is
 \[
-\left(\begin{array}{ccc|c}
-1 & 1 & 1 & 1 \\
-0 & 1 & 3 & 4 \\
-2 & 3 & 4 & 7
-\end{array}\right) \quad (R_1 \leftrightarrow R_2)
+\begin{cases}
+x_1 - 5x_3 = 1 \\
+x_2 + x_3 = 4
+\end{cases}
 \]
-Create zeros below the first pivot.
+Here $x_1$ and $x_2$ are basic variables, and $x_3$ is free. Let $x_3=t$. Then
 \[
-\left(\begin{array}{ccc|c}
-1 & 1 & 1 & 1 \\
-0 & 1 & 3 & 4 \\
-0 & 1 & 2 & 5
-\end{array}\right) \quad (R_3 \to R_3 - 2R_1)
+x_1=1+5t, \qquad x_2=4-t,
 \]
-Now, move to the second pivot (2,2). It's already 1. Create a zero below it.
+so
+\[
+\mathbf{x}=\begin{pmatrix}1+5t\\4-t\\t\end{pmatrix}
+=\begin{pmatrix}1\\4\\0\end{pmatrix}+t\begin{pmatrix}5\\-1\\1\end{pmatrix}.
+\]
+This is a line in $\mathbb{R}^3$ through $(1,4,0)$ and parallel to $(5,-1,1)$.
 \[
 \left(\begin{array}{ccc|c}
 1 & 1 & 1 & 1 \\
@@ -596,7 +606,7 @@ x_3 = -1
 \]
 This immediately gives the solution.
 
-\newpage
+
 
 \paragraph{Rank of a Matrix}
 A key concept emerges from the echelon form.
@@ -687,8 +697,6 @@ Now, we express the basic variables in terms of the free variables:
 \[ x_3 = t \]
 The general solution $\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ x_3 \end{pmatrix}$ is:
 \[ \mathbf{x} = \begin{pmatrix} 1 + 5t \\ 4 - t \\ t \end{pmatrix} = \begin{pmatrix} 1 \\ 4 \\ 0 \end{pmatrix} + t \begin{pmatrix} 5 \\ -1 \\ 1 \end{pmatrix} \]
-This is the \textbf{parametric vector form}.
-Geometrically, this is the equation of a \textbf{line} in $\mathbb{R}^3$ passing through the point $(1, 4, 0)$ and parallel to the vector $(5, -1, 1)$.
 \end{example}
 
 \subsubsection{Homogeneous and Non-homogeneous Systems}
@@ -773,6 +781,8 @@ The determinant of an $n \times n$ matrix $A$ can be found by expanding along \t
 Alternatively, we can expand down \textbf{any} column $j$:
 \[ \det(A) = a_{1j}C_{1j} + a_{2j}C_{2j} + \cdots + a_{nj}C_{nj} = \sum_{i=1}^{n} a_{ij}C_{ij} \]
 \end{theorem}
+
+\newpage
 
 \begin{example}[Cofactor Expansion of 3x3]
 Let $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix}$. Let's expand along Row 1.
@@ -901,7 +911,7 @@ If $A$ is a triangular matrix (upper or lower), its determinant is the product o
 Expand cofactors along the first row (if lower triangular) or first column (if upper triangular) repeatedly.
 \end{proof}
 
-\newpage
+
 
 \begin{example}[Calculating $\det$ with EROs]
 \[ A = \begin{pmatrix} 0 & 1 & 5 \\ 3 & -6 & 9 \\ 2 & 6 & 1 \end{pmatrix} \]
@@ -912,6 +922,8 @@ Expand cofactors along the first row (if lower triangular) or first column (if u
 The matrix is now triangular.
 \[ \det(A) = -3 \cdot (1 \cdot 1 \cdot -55) = 165 \]
 \end{example}
+
+\newpage
 
 \begin{property}[More Properties of Determinants]
 Let $A, B$ be $n \times n$ matrices.
@@ -996,7 +1008,7 @@ Let $A$ be a square $n \times n$ matrix. The following statements are equivalent
 
 This theorem is a powerful diagnostic tool. To check if a square matrix is invertible, we only need to verify \emph{one} of these conditions. For example, checking if $\det(A) \neq 0$ is often the fastest way.
 
-\section{Vectors in $\mathbb{R}^n$}
+\section{Vectors in \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
 We now introduce a new and fundamental object: the vector. This allows us to re-interpret systems of equations in a powerful, geometric way.
 
@@ -1116,7 +1128,7 @@ Geometrically, the span has a simple interpretation:
 \end{itemize}
 %
 
-\subsection{The Matrix Equation $A\mathbf{x} = \mathbf{b}$}
+\subsection{The Matrix Equation \texorpdfstring{$A\mathbf{x}=\mathbf{b}$}{Ax=b}}
 
 We can now connect our topics.
 Let $A$ be an $m \times n$ matrix. We can view its columns as $n$ vectors in $\mathbb{R}^m$:
@@ -1294,7 +1306,7 @@ By the definition of $A\mathbf{x}$, this is exactly:
 \[ T(\mathbf{x}) = \begin{pmatrix} T(\mathbf{e}_1) & T(\mathbf{e}_2) & \cdots & T(\mathbf{e}_n) \end{pmatrix} \begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix} = A\mathbf{x} \]
 \end{proof}
 
-\subsection{Geometric Transformations in $\mathbb{R}^2$}
+\subsection{Geometric Transformations in \texorpdfstring{$\mathbb{R}^2$}{R2}}
 This section allows us to find the matrix for geometric operations.
 
 \begin{example}[Rotation]
@@ -1533,7 +1545,8 @@ In our last example, $n=3$. $\operatorname{rank}(A) = 2$, $\operatorname{nullity
 $2 + 1 = 3$. The theorem holds.
 This theorem beautifully ties together the dimensions of the two fundamental subspaces associated with a matrix.
 
-\subsection{Coordinate Systems}
+\textbf{Coordinate Systems}
+
 A basis $\mathcal{B} = \{\mathbf{b}_1, \ldots, \mathbf{b}_n\}$ for $\mathbb{R}^n$ acts like a new coordinate system.
 Because $\mathcal{B}$ spans $\mathbb{R}^n$ and is linearly independent, every $\mathbf{x} \in \mathbb{R}^n$ can be written \emph{uniquely} as
 \[ \mathbf{x} = c_1\mathbf{b}_1 + \cdots + c_n\mathbf{b}_n \]
@@ -1625,7 +1638,7 @@ A^k = (PDP^{-1})^k = PD^k P^{-1}
 \]
 since $D^k$ is simply obtained by raising each diagonal element to the $k$th power.
 
-\subsection{Inner Product Spaces}
+\textbf{Inner Product Spaces}
 
 An inner product generalizes the dot product and provides a framework for defining lengths, angles, and orthogonality in vector spaces.
 
@@ -1724,7 +1737,7 @@ Quadratic forms are classified based on the signs of their eigenvalues:
 This classification has important applications in optimization and the study of critical points in multivariable calculus.
 
 
-\subsection{Singular Value Decomposition (SVD)}
+\textbf{Singular Value Decomposition (SVD)}
 The Diagonalization Theorem ($A = PDP^{-1}$) applies only to square, diagonalizable matrices. The Spectral Theorem applies only to symmetric matrices. The SVD is the ultimate generalization: it applies to \textbf{any} $m \times n$ matrix.
 
 \begin{theorem}[Singular Value Decomposition]
@@ -1827,85 +1840,26 @@ Consider the homogeneous system $A\mathbf{x} = \mathbf{0}$, where $A$ is $m \tim
     \item If $r < m$ (for the augmented system $A\mathbf{x}=\mathbf{b}$), existence of solutions depends on column space consistency.
 \end{itemize}
 
-\subsection{The Axiom of Linear Algebra}
-Afterall, we need to answer the question: what is the core axiom of the linear algebra? We believe it is \textbf{Axiomatic Definition of a Vector Space}.
+\subsection{A Unifying Viewpoint: The Vector-Space Axioms}
 
-The axiomatic definition of vector space is central to linear algebra because it captures the essence of linearity through just two fundamental operations—addition and scalar multiplication—and the eight axioms that govern them. This simple yet powerful abstract framework unifies countless mathematical objects, from geometric vectors to functions and matrices, and provides the common foundation for all core theories, such as linear transformations and solving linear systems. In this way, it serves as the universal language that bridges mathematical theory and scientific application.
+There is no single universally accepted ``axiom of linear algebra.'' The subject can be organized computationally around elimination, geometrically around transformations, or abstractly around vector spaces and linear maps. Each organization highlights different questions.
 
-We shall present the definition again here.
+The vector-space axioms are nevertheless one especially powerful unifying framework. They isolate two operations---addition and scalar multiplication---and state the rules needed for linear combination. Once these rules are available, concepts such as span, linear independence, basis, dimension, and linear transformation apply simultaneously to geometric vectors, matrices, polynomials, functions, and solution spaces of differential equations.
 
-Let $V$ be a nonempty set whose elements are called \textbf{vectors}, and let $\mathbb{F}$ be a \textbf{field} (such as the real numbers $\mathbb{R}$ or the complex numbers $\mathbb{C}$). Two operations are defined on $V$:
+This should be read as a pedagogical viewpoint rather than a claim of exclusivity. For numerical work, matrix factorizations may be the most effective language. For geometry, invariant subspaces and orthogonality may be more natural. For functional analysis, the topology and norm on a vector space become as important as the algebraic axioms. The appropriate foundation depends on the problem being studied.
 
-\begin{itemize}
-    \item \textbf{Vector addition}: $+ : V \times V \to V$, denoted by $(\mathbf{u}, \mathbf{v}) \mapsto \mathbf{u} + \mathbf{v}$
-    \item \textbf{Scalar multiplication}: $\cdot : \mathbb{F} \times V \to V$, denoted by $(c, \mathbf{v}) \mapsto c \mathbf{v}$
-\end{itemize}
+For reference, the abstract definition is repeated below.
 
-These operations must satisfy the following $8$ axioms (sometimes listed as $10$ by including closure explicitly):
-
-\subsubsection*{1. Axioms for Vector Addition}
+\begin{definition}[Vector Space]
+Let $F$ be a field. A \textbf{vector space over $F$} is a set $V$ equipped with vector addition and scalar multiplication such that, for all $u,v,w\in V$ and $a,b\in F$,
 \begin{enumerate}
-    \item \textbf{Closure under addition}: For all $\mathbf{u}, \mathbf{v} \in V$, $\mathbf{u} + \mathbf{v} \in V$.
-    \item \textbf{Associativity of addition}: For all $\mathbf{u}, \mathbf{v}, \mathbf{w} \in V$,
-    \[
-    \mathbf{u} + (\mathbf{v} + \mathbf{w}) = (\mathbf{u} + \mathbf{v}) + \mathbf{w}.
-    \]
-    \item \textbf{Commutativity of addition}: For all $\mathbf{u}, \mathbf{v} \in V$,
-    \[
-    \mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}.
-    \]
-    \item \textbf{Existence of a zero vector}: There exists a vector $\mathbf{0} \in V$ such that for all $\mathbf{v} \in V$,
-    \[
-    \mathbf{v} + \mathbf{0} = \mathbf{v}.
-    \]
-    \item \textbf{Existence of additive inverses}: For each $\mathbf{v} \in V$, there exists a vector $-\mathbf{v} \in V$ such that
-    \[
-    \mathbf{v} + (-\mathbf{v}) = \mathbf{0}.
-    \]
+    \item $u+v=v+u$ and $(u+v)+w=u+(v+w)$;
+    \item there is a zero vector $0$ with $v+0=v$;
+    \item every $v$ has an additive inverse $-v$;
+    \item $a(u+v)=au+av$ and $(a+b)v=av+bv$;
+    \item $(ab)v=a(bv)$ and $1v=v$.
 \end{enumerate}
-
-\subsubsection*{2. Axioms for Scalar Multiplication}
-\begin{enumerate}
-    \setcounter{enumi}{5}
-    \item \textbf{Closure under scalar multiplication}: For all $c \in \mathbb{F}$ and $\mathbf{v} \in V$, $c \mathbf{v} \in V$.
-    \item \textbf{Associativity of scalar multiplication}: For all $a, b \in \mathbb{F}$ and $\mathbf{v} \in V$,
-    \[
-    a (b \mathbf{v}) = (ab) \mathbf{v}.
-    \]
-    \item \textbf{Multiplicative identity}: For all $\mathbf{v} \in V$,
-    \[
-    1 \mathbf{v} = \mathbf{v},
-    \]
-    where $1$ is the multiplicative identity in $\mathbb{F}$.
-\end{enumerate}
-
-\subsubsection*{3. Distributive Laws}
-\begin{enumerate}
-    \setcounter{enumi}{8}
-    \item \textbf{Distributivity of scalar multiplication over vector addition}: For all $a \in \mathbb{F}$ and $\mathbf{u}, \mathbf{v} \in V$,
-    \[
-    a (\mathbf{u} + \mathbf{v}) = a \mathbf{u} + a \mathbf{v}.
-    \]
-    \item \textbf{Distributivity of scalar multiplication over scalar addition}: For all $a, b \in \mathbb{F}$ and $\mathbf{v} \in V$,
-    \[
-    (a + b) \mathbf{v} = a \mathbf{v} + b \mathbf{v}.
-    \]
-\end{enumerate}
-
-Then $V$ is called a \textbf{vector space} (or \textbf{linear space}) over the field $\mathbb{F}$.
-
-That's what make the whole system works perfectly.
-
-\section{Summary and Outlook}
-
-As we close this chapter on linear algebra, we recognize that we have acquired more than just a collection of techniques for solving equations or manipulating matrices. We have learned a new language—the language of linearity—that reveals hidden structures throughout mathematics and science. From the elegant abstraction of vector spaces to the powerful diagonalization of transformations, linear algebra provides a universal framework for understanding relationships that are, at their heart, proportional and additive. The concepts of basis, dimension, and linear transformation form a conceptual toolkit that will serve as indispensable preparation for the deeper mathematical landscapes ahead—from the infinite-dimensional spaces of functional analysis to the curved geometries of differential manifolds. Linear algebra reminds us that simplicity and structure often underlie apparent complexity, and that the most powerful mathematics is that which provides not just answers, but clarity.
-
-Linear algebra is fundamental not only for its elegant theoretical structure but also as a universal languagewith ubiquitous applications across science and engineering. In computer science, it underpins 3D graphics and search algorithms; in data science, techniques like PCA and SVD are core to data reduction. In physics, quantum mechanics is formulated on Hilbert spaces, and in economics, models rely on linear systems. This cross-disciplinary relevance makes linear algebra an indispensable foundation.
-
-Theoretical development in mathematics deeply relies on linear algebraic concepts. Vector spaces generalize to modules, manifolds, and Banach spaces; linear transformations lead to operator and representation theory. Eigenvalues and eigenvectors form the basis for stability analysis in dynamical systems, network science, and quantum mechanics. Mastering linear algebra provides a key to understanding modern mathematics and theoretical science.
-
-In advanced studies, these ideas extend into numerical linear algebra (solving large-scale systems), abstract algebra (modules over rings), and calculus (Jacobian matrices as linear approximations). From signal processing to control theory, linear algebra offers essential models and tools. Ultimately, it represents a mindsetfor uncovering linear structure within complexity, providing a powerful language for modeling, analysis, and solving problems across disciplines.
-
+\end{definition}
 
 \vspace{1cm}
 \noindent

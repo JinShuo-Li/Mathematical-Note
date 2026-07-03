@@ -1,0 +1,55 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{An explicit epsilon--delta estimate}
+Prove that $x^2\to4$ as $x\to2$. We need to control
+\[
+    |x^2-4|=|x-2||x+2|.
+\]
+First restrict $|x-2|<1$, which implies $1<x<3$ and therefore $|x+2|<5$. It is then enough to require $5|x-2|<\varepsilon$. Thus
+\[
+    \delta=\min\left\{1,\frac{\varepsilon}{5}\right\}
+\]
+works. The preliminary bound is not cosmetic: it converts the moving factor $|x+2|$ into a fixed constant.
+\end{workedexample}
+
+\begin{applicationbox}{Numerical error and conditioning}
+If a differentiable function is evaluated with a small input error $\Delta x$, then
+\[
+    \Delta f\approx f'(x)\Delta x.
+\]
+The derivative therefore measures local sensitivity. For relative errors, the dimensionless condition number
+\[
+    \kappa_f(x)=\left|\frac{x f'(x)}{f(x)}\right|
+\]
+predicts how many digits may be lost. This connects the differential to numerical analysis rather than treating it only as symbolic notation.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Give an epsilon proof that $3x-1\to5$ as $x\to2$.
+    \item Determine whether $a_n=(-1)^n/n$ converges, and whether $\sum a_n$ converges absolutely.
+    \item Use the mean value theorem to prove $|\sin x-\sin y|\le|x-y|$.
+    \item Evaluate $\displaystyle\lim_{x\to\infty}\frac{x+\sin x}{x}$ without L'Hopital's rule.
+    \item Find the second-order Taylor approximation of $e^x$ at $0$ and bound the remainder on $[-0.1,0.1]$.
+    \item Determine for which $p$ the improper integral $\displaystyle\int_1^\infty x^{-p}\,dx$ converges.
+    \item Prove that $x^2\to9$ as $x\to3$ using an epsilon--delta argument.
+    \item Decide whether the sequence $b_n=\frac{n}{n+1}$ converges, and find its limit if it does.
+    \item Show that $\displaystyle\lim_{x\to0}\frac{\tan x}{x}=1$ without using L'Hopital's rule.
+    \item Test the series $\displaystyle\sum_{n=1}^\infty \frac{1}{n^2}$ for convergence and absolute convergence.
+    \item Compute the first-order Taylor polynomial of $\ln(1+x)$ at $0$ and estimate the error for $|x|\le0.1$.
+    \item Determine whether $\displaystyle\int_0^1 x^{-p}\,dx$ converges, and specify the values of $p$ for which it does.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item Since $|(3x-1)-5|=3|x-2|$, take $\delta=\varepsilon/3$.
+    \item The sequence tends to $0$. The series is conditionally convergent by the alternating-series test, but not absolutely because $\sum1/n$ diverges.
+    \item Apply the mean value theorem to $\sin t$ on the interval between $x$ and $y$, then use $|\cos\xi|\le1$.
+    \item Write the ratio as $1+\sin x/x$ and squeeze the second term.
+    \item $1+x+x^2/2$; the Lagrange remainder has magnitude at most $e^{0.1}|x|^3/6$.
+    \item It converges exactly when $p>1$.
+    \item Factor $|x^2-9|=|x-3||x+3|$ and first bound $|x+3|$ by restricting $x$ near $3$.
+    \item Rewrite $\frac{n}{n+1}=1-\frac{1}{n+1}$ and pass to the limit.
+    \item Use $\tan x=\sin x/\cos x$ and the known limits for $\sin x/x$ and $\cos x$.
+    \item Compare $1/n^2$ with a $p$-series, or use the integral test.
+    \item The polynomial is $1+x$; the remainder is controlled by a second derivative bound for $\ln(1+x)$ on $|x|\le0.1$.
+    \item It converges exactly when $p<1$.
+\end{selectedhints}

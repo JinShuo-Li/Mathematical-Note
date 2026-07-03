@@ -1,5 +1,16 @@
 \chapter{Applied Mathematics: Probability Theory}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item construct probability spaces and compute conditional probabilities;
+    \item work with discrete, continuous, and jointly distributed random variables;
+    \item interpret expectation, conditional expectation, and independence structurally;
+    \item compare modes of convergence and apply laws of large numbers and the central limit theorem;
+    \item analyze introductory martingales, Markov chains, Poisson processes, and Brownian motion.
+\end{itemize}
+\end{learningobjectives}
+
 Probability theory is the mathematical language of uncertainty. It began as the study of games of chance, but its modern form is much broader: it describes random experiments, statistical inference, stochastic processes, information, finance, thermodynamics, and learning from data.
 
 At the intuitive level, probability measures how likely an event is. At the rigorous level, probability is a special kind of measure defined on a sigma-algebra of events. This transition from counting favorable outcomes to measuring abstract event spaces is one of the major conceptual developments of modern mathematics.
@@ -29,7 +40,7 @@ A \textbf{random experiment} is a procedure whose outcome is uncertain before it
 The \textbf{sample space}, denoted $\Omega$, is the set of all possible outcomes of a random experiment. An \textbf{event} is a subset of $\Omega$.
 \end{definition}
 
-\newpage
+
 
 \begin{example}
 If a fair coin is tossed once, then
@@ -553,6 +564,8 @@ For events $A,B\in\mathcal{F}$:
 These follow from countable additivity. For example, $\Omega=A\cup A^c$ is a disjoint union, so $1=\mathbb{P}(A)+\mathbb{P}(A^c)$. If $A\subseteq B$, then $B=A\cup(B\setminus A)$ disjointly, so $\mathbb{P}(B)=\mathbb{P}(A)+\mathbb{P}(B\setminus A)\geq\mathbb{P}(A)$.
 \end{proof}
 
+\newpage
+
 \begin{proposition}[Continuity of Probability]
 Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space.
 \begin{enumerate}
@@ -817,7 +830,7 @@ If $X$ has finite mean $\mu$ and variance $\sigma^2$, then for every $\varepsilo
 \]
 \end{theorem}
 
-\newpage
+
 
 \begin{theorem}[Jensen's Inequality]
 If $\varphi$ is convex and $X$ is integrable, then
@@ -1129,11 +1142,15 @@ The series $\sum Z_n$ converges almost surely, so Kronecker's lemma yields
     \longrightarrow0
     \qquad\text{almost surely}.
 \]
-Since $Y_n\to X_n$ in the sense that the truncation threshold tends to infinity and all $X_n$ have the same law,
+Because the $X_n$ are identically distributed,
 \[
-    \mathbb{E}[Y_n]\to\mathbb{E}[X_1]=\mu
+    \mathbb{E}[Y_n]
+    =\mathbb{E}\!\left[X_1\mathbf{1}_{\{|X_1|\le n\}}\right].
 \]
-by dominated convergence. Hence Cesaro averaging gives
+The integrand converges pointwise to $X_1$ and is dominated in absolute value by the integrable random variable $|X_1|$. Therefore dominated convergence gives
+\[
+    \mathbb{E}[Y_n]\to\mathbb{E}[X_1]=\mu.
+\] Hence Cesaro averaging gives
 \[
     \frac1n\sum_{k=1}^{n}\mathbb{E}[Y_k]\to\mu.
 \]
@@ -1333,6 +1350,8 @@ A discrete-time stochastic process $\{X_n\}_{n\geq 0}$ is a \textbf{martingale} 
 A martingale formalizes the idea of a fair game: given all current information, the expected future value equals the present value.
 \end{remark}
 
+\newpage
+
 \begin{example}[Simple Random Walk]
 Let $\xi_1,\xi_2,\dots$ be independent random variables with
 \[
@@ -1502,6 +1521,8 @@ If $X$ and $Y$ are independent continuous random variables with densities $f_X$ 
 \begin{proof}
 The change of variables $(x,y)\mapsto(x,s=x+y)$ has Jacobian determinant $1$. Since independence gives joint density $f_X(x)f_Y(y)$, integrating out $x$ yields the stated formula.
 \end{proof}
+
+\newpage
 
 \begin{example}[Sum of Two Uniform Variables]
 Let $X,Y$ be independent and uniform on $[0,1]$. Then
@@ -1875,7 +1896,7 @@ Assume $s\leq t$. Since $B_t=B_s+(B_t-B_s)$ and the increment is independent of 
 Thus the covariance is $s=\min(s,t)$.
 \end{proof}
 
-\newpage
+
 
 \begin{example}[A Brownian Martingale]
 The process $(B_t)$ is a martingale with respect to its natural filtration. Another important martingale is

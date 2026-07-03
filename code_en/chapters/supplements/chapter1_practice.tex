@@ -1,0 +1,29 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{From an equivalence relation to a quotient set}
+On $\mathbb{Z}$ define $a\sim b$ when $a-b$ is divisible by $3$. Reflexivity follows from $a-a=0$; symmetry from $3\mid(a-b)\Rightarrow3\mid(b-a)$; and transitivity from addition. The quotient set has three equivalence classes:
+\[
+    \mathbb{Z}/\!\sim=\{[0],[1],[2]\}.
+\]
+Addition of classes is well defined because replacing $a$ and $b$ by congruent representatives does not change the class of $a+b$. This elementary construction is the model for quotient groups, quotient rings, and many identification spaces in topology.
+\end{workedexample}
+
+\begin{applicationbox}{Relations in databases}
+A database table may be viewed as a finite relation, while a key constraint asserts that a coordinate projection is injective on the stored rows. Joins are built from Cartesian products followed by selection conditions. This viewpoint explains why set operations and maps are not merely foundational notation: they are the algebra of structured data.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Prove $A\setminus(B\cup C)=(A\setminus B)\cap(A\setminus C)$.
+    \item Let $f:X\to Y$. Prove $f^{-1}(U\cap V)=f^{-1}(U)\cap f^{-1}(V)$, and give an example showing that $f(A\cap B)=f(A)\cap f(B)$ can fail.
+    \item On $\mathbb{R}$ define $x\sim y$ if $x-y\in\mathbb{Z}$. Describe the quotient classes geometrically.
+    \item Decide whether divisibility is a partial order on the positive integers.
+    \item Explain in one paragraph why Russell's paradox challenges unrestricted set formation but does not prevent ordinary finite set calculations.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item Use element chasing: $x$ belongs to the left side exactly when $x\in A$, $x\notin B$, and $x\notin C$.
+    \item Inverse images preserve all unions, intersections, and complements. For the failure of direct images, use a non-injective map.
+    \item Each class is $x+\mathbb{Z}$; choosing representatives in $[0,1)$ identifies the quotient with a circle after the endpoints are glued.
+    \item Yes: divisibility is reflexive, antisymmetric, and transitive on positive integers, but it is not a total order.
+    \item The paradox concerns allowing every predicate to define a set. ZFC restricts set formation; finite sets used in elementary work can be constructed without the problematic unrestricted principle.
+\end{selectedhints}

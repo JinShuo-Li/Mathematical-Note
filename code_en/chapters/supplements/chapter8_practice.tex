@@ -1,0 +1,39 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Breadth-first search and shortest unweighted paths}
+Suppose an unweighted graph is explored from a source $s$ by breadth-first search. Vertices are placed in layers
+\[
+    L_k=\{v:d(s,v)=k\}.
+\]
+When a vertex in $L_k$ is processed, every previously undiscovered neighbor is assigned to $L_{k+1}$. No shorter path can be discovered later, because all vertices at distance at most $k$ have already been processed. Thus breadth-first search computes shortest-path distance in $O(|V|+|E|)$ time when adjacency lists are used.
+\end{workedexample}
+
+\begin{applicationbox}{Graph neural networks}
+A message-passing graph neural network updates a vertex representation by aggregating features from its neighbors. After $k$ layers, the representation depends on a $k$-hop neighborhood, paralleling repeated multiplication by an adjacency-derived operator. Graph symmetry matters: aggregation should be invariant to the ordering of neighbors, while the overall model should transform consistently under relabeling of vertices.
+\end{applicationbox}
+
+\begin{applicationbox}{Network design}
+Spanning trees model minimum-cost connection without cycles; shortest paths model routing; cuts measure vulnerability and capacity; matchings model assignment; and colorings model conflict-free scheduling. The graph abstraction is useful because the same theorem or algorithm applies to many systems once vertices and edges have been chosen correctly.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Prove the handshaking identity $\sum_{v\in V}\deg(v)=2|E|$.
+    \item Run breadth-first search on a graph of your choice with at least six vertices and record the layers and parent tree.
+    \item Prove that a tree with $n$ vertices has $n-1$ edges.
+    \item Determine the chromatic number of an odd cycle and an even cycle.
+    \item Show that every planar simple graph with $n\ge3$ vertices has at most $3n-6$ edges.
+    \item In $G(n,p)$, compute the expected number of triangles.
+    \item For $G(n,c/n)$, use a branching-process heuristic to explain why $c=1$ is a critical value.
+    \item Give one network question for which $G(n,p)$ is an inadequate model and identify the missing structural feature.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item Count incidences $(v,e)$ in two ways.
+    \item Check that each non-source vertex receives a parent in the preceding layer.
+    \item Remove a leaf and use induction, or use connectedness plus acyclicity.
+    \item Odd cycles require three colors; even cycles are bipartite and require two.
+    \item Combine Euler's formula $n-m+f=2$ with $3f\le2m$.
+    \item There are $\binom n3$ possible triangles, each present with probability $p^3$.
+    \item The expected number of newly discovered neighbors is approximately $c$; a branching process dies out for mean below $1$ and may survive above $1$.
+    \item Examples include social networks with heavy-tailed degrees, spatial networks with geometry, or networks with high clustering and community structure.
+\end{selectedhints}

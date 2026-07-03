@@ -1,0 +1,52 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Bayesian classification}
+A test has sensitivity $0.95$ and specificity $0.90$. Suppose the prevalence of the condition is $0.01$. If $D$ is the condition and $+$ is a positive result, then
+\[
+\mathbb{P}(D\mid +)
+=\frac{\mathbb{P}(+\mid D)\mathbb{P}(D)}
+{\mathbb{P}(+\mid D)\mathbb{P}(D)+\mathbb{P}(+\mid D^c)\mathbb{P}(D^c)}.
+\]
+Substitution gives
+\[
+\mathbb{P}(D\mid +)=\frac{0.95\cdot0.01}{0.95\cdot0.01+0.10\cdot0.99}\approx0.0876.
+\]
+A highly sensitive test can still have a modest positive predictive value when the base rate is small.
+\end{workedexample}
+
+\begin{applicationbox}{Monte Carlo integration}
+If $U_1,\dots,U_n$ are independent uniform samples on $[0,1]$, then
+\[
+    \widehat I_n=\frac1n\sum_{k=1}^n f(U_k)
+\]
+estimates $\int_0^1f(x)\,dx$. The law of large numbers gives consistency, while the central limit theorem gives an approximate error scale
+\[
+    \frac{\sqrt{\operatorname{Var}(f(U))}}{\sqrt n}.
+\]
+The method extends to high-dimensional integrals where deterministic grids become prohibitively expensive.
+\end{applicationbox}
+
+\begin{applicationbox}{Markov models and ranking}
+A finite Markov chain evolves a probability vector by multiplication with a stochastic matrix. Stationary distributions describe long-run occupancy and underlie models of queues, population movement, and ranking on directed networks. Linear algebra determines invariant distributions; probability determines how sample paths approach them.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item Two fair dice are rolled. Compute the conditional probability that the sum is $8$ given that at least one die is $3$.
+    \item Let $X\sim\mathrm{Binomial}(n,p)$. Derive $\mathbb{E}X$ and $\operatorname{Var}(X)$ using indicator variables.
+    \item If $X$ has density $f(x)=2x$ on $[0,1]$, find its distribution function, mean, and variance.
+    \item Give an example showing that pairwise independence need not imply mutual independence.
+    \item Prove Markov's inequality and derive Chebyshev's inequality from it.
+    \item Explain the difference between convergence in probability and almost-sure convergence.
+    \item A Markov chain has transition matrix $P=\begin{pmatrix}0.8&0.2\\0.3&0.7\end{pmatrix}$. Find its stationary distribution.
+    \item For a Poisson process of rate $\lambda$, derive the distribution of the waiting time to the first arrival.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item The conditioning event has $11$ ordered outcomes; two of them, $(3,5)$ and $(5,3)$, have sum $8$, so the probability is $2/11$.
+    \item Write $X=I_1+\cdots+I_n$ with independent Bernoulli indicators.
+    \item $F(x)=x^2$ on $[0,1]$; $\mathbb{E}X=2/3$ and $\operatorname{Var}(X)=1/18$.
+    \item Let two fair bits $A,B$ be independent and set $C=A\oplus B$.
+    \item Apply Markov to the nonnegative random variable $(X-\mu)^2$.
+    \item Almost-sure convergence controls entire sample paths outside one null set; convergence in probability controls the probability of a deviation separately for each $n$.
+    \item Solve $\pi P=\pi$ with $\pi_1+\pi_2=1$; the answer is $(3/5,2/5)$.
+\end{selectedhints}

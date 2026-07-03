@@ -1,0 +1,27 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Negating a quantified statement}
+Consider the statement
+\[
+    \forall x\in\mathbb{R}\;\exists n\in\mathbb{N}\quad n>x.
+\]
+Its negation is obtained by reversing each quantifier and negating the final predicate:
+\[
+    \exists x\in\mathbb{R}\;\forall n\in\mathbb{N}\quad n\le x.
+\]
+The original statement is the Archimedean property; its negation asserts the existence of a real upper bound for all natural numbers. Notice that merely inserting the word ``not'' at the beginning does not produce a usable mathematical formula.
+\end{workedexample}
+
+\begin{chapterexercises}
+    \item Construct a truth table for $(p\to q)\leftrightarrow(\neg q\to\neg p)$.
+    \item Negate: ``For every $\varepsilon>0$ there exists $N\in\mathbb{N}$ such that for every $n\ge N$, $|a_n-L|<\varepsilon$.''
+    \item Determine whether $(p\lor q)\land\neg p$ logically implies $q$.
+    \item Write the converse and contrapositive of: ``If an integer is divisible by $4$, then it is even.'' State which forms are true.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item The two columns agree in all four rows; this is the logical equivalence underlying proof by contrapositive.
+    \item The negation is: there exists $\varepsilon>0$ such that for every $N$ there exists $n\ge N$ with $|a_n-L|\ge\varepsilon$.
+    \item Yes. The first conjunct says at least one of $p,q$ is true, while the second rules out $p$.
+    \item Converse: even $\Rightarrow$ divisible by $4$ (false). Contrapositive: not even $\Rightarrow$ not divisible by $4$ (true).
+\end{selectedhints}

@@ -1,0 +1,35 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Arithmetic in a quotient ring}
+In $\mathbb{F}_2[x]/(x^2+x+1)$, let $\alpha=[x]$. The defining relation gives
+\[
+    \alpha^2=\alpha+1.
+\]
+Hence
+\[
+    \alpha(\alpha+1)=\alpha^2+\alpha=(\alpha+1)+\alpha=1.
+\]
+Thus $\alpha+1$ is the multiplicative inverse of $\alpha$. The quotient contains four elements and every nonzero element is invertible, so it is a field. Computation in an extension field is polynomial reduction modulo an irreducible polynomial.
+\end{workedexample}
+
+\begin{applicationbox}{Error-correcting codes}
+A binary linear code is a subspace $C\subseteq\mathbb{F}_2^n$. A generator matrix encodes messages, while a parity-check matrix tests whether a received vector lies in the code. The syndrome identifies a coset of $C$ and can locate likely error patterns. Finite fields and quotient polynomials therefore provide the arithmetic used by practical communication and storage systems.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item List all subgroups of $\mathbb{Z}_{12}$.
+    \item Compute the units and zero divisors in $\mathbb{Z}_{10}$.
+    \item Prove that the kernel of a group homomorphism is normal.
+    \item Determine whether $x^3+x+1$ is irreducible over $\mathbb{F}_2$.
+    \item Use the Chinese remainder theorem to solve $x\equiv2\pmod3$ and $x\equiv3\pmod5$.
+    \item Explain why a module over a ring need not possess a basis.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item A cyclic group has one subgroup for each divisor of its order.
+    \item The units are classes coprime to $10$: $1,3,7,9$. The nonzero zero divisors are $2,4,5,6,8$.
+    \item If $k\in\ker\varphi$, then $\varphi(gkg^{-1})=\varphi(g)e\varphi(g)^{-1}=e$.
+    \item A cubic over a field is reducible exactly when it has a root. Test $0$ and $1$.
+    \item The solution is $8\pmod{15}$.
+    \item Over a ring, torsion can prevent linear independence and spanning from behaving as they do over a field; $\mathbb{Z}/2\mathbb{Z}$ as a $\mathbb{Z}$-module is a basic example.
+\end{selectedhints}

@@ -1,5 +1,16 @@
 \chapter{Abstract Algebra}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item recognize groups, rings, fields, and modules in concrete examples;
+    \item use homomorphisms, kernels, images, cosets, ideals, and quotient structures;
+    \item apply the isomorphism theorems as classification tools;
+    \item work with polynomial rings, irreducibility, and finite field extensions;
+    \item connect algebraic structure with symmetry, coding, and cryptographic arithmetic.
+\end{itemize}
+\end{learningobjectives}
+
 Abstract algebra studies mathematical structures by extracting the rules that govern operations. In elementary algebra, one usually starts from numbers and equations. In abstract algebra, the order is reversed: we first specify a set, then specify operations on that set, and finally ask what can be deduced from the axioms alone.
 
 This change of viewpoint is important. The same algebraic pattern appears in many places: integers under addition, non-zero real numbers under multiplication, rotations of a polygon, invertible matrices, permutations, polynomials, quotient arithmetic, and vector spaces. Abstract algebra is the language that recognizes these different objects as instances of the same structure.
@@ -301,7 +312,7 @@ Let $N\leq G$. The following are equivalent:
 \end{enumerate}
 \end{proposition}
 
-\newpage
+
 
 \begin{definition}[Quotient Group]
 If $N\trianglelefteq G$, then the set of left cosets
@@ -654,6 +665,8 @@ Let $\varphi:R\to S$ be a ring homomorphism. Then
     R/\ker\varphi\cong \operatorname{im}\varphi.
 \]
 \end{theorem}
+
+\newpage
 
 \begin{example}[Evaluation Homomorphism]
 Let $F$ be a field and $a\in F$. Define
@@ -1118,6 +1131,8 @@ for some $r_1,\dots,r_n\in R$.
 \begin{definition}[Torsion Element]
 Let $M$ be an $R$-module over an integral domain $R$. An element $m\in M$ is a \textbf{torsion element} if there exists non-zero $r\in R$ such that $rm=0$.
 \end{definition}
+
+\newpage
 
 \begin{theorem}[Structure Theorem for Finitely Generated Modules over a PID]
 Let $R$ be a PID and let $M$ be a finitely generated $R$-module. Then

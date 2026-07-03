@@ -1,0 +1,31 @@
+\section{Chapter Workshop}
+
+\begin{workedexample}{Why quotient topology constructs a circle}
+Let $q:[0,1]\to S^1$ be $q(t)=e^{2\pi it}$. It is continuous and identifies exactly the endpoints $0$ and $1$. Because $[0,1]$ is compact and $S^1$ is Hausdorff, the induced continuous bijection
+\[
+    [0,1]/(0\sim1)\longrightarrow S^1
+\]
+is a homeomorphism. The quotient topology is therefore the precise operation of gluing endpoints, not merely a suggestive picture.
+\end{workedexample}
+
+\begin{applicationbox}{Topology of data representations}
+A data representation is often useful only up to a transformation: phase may be periodic, rotations may be equivalent, or permutations may not change the object. Quotient spaces formalize these identifications. In manifold learning and topological data analysis, connected components, loops, and higher-dimensional holes are used as features that are stable under continuous deformation rather than under exact coordinates.
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item In the usual topology on $\mathbb{R}$, find the interior, closure, boundary, and set of limit points of $\{0\}\cup\{1/n:n\in\mathbb{N}\}$.
+    \item Prove that the continuous image of a connected space is connected.
+    \item Give an open cover of $(0,1)$ with no finite subcover.
+    \item Show that a finite subset of a Hausdorff space is closed.
+    \item Compare the product topology and box topology on $\mathbb{R}^{\mathbb{N}}$ by giving a box-open set that is not product-open.
+    \item Explain why compactness, rather than closed-and-bounded language, is the topological property preserved by homeomorphisms.
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item The interior is empty; the closure and set itself coincide; the boundary is the whole set; $0$ is the only limit point.
+    \item If the image were separated into two disjoint nonempty open subsets, their inverse images would separate the domain.
+    \item Use $U_n=(1/n,1)$ together with a suitable indexing shift, or $U_n=(0,1-1/n)$ for $n\ge2$.
+    \item Singletons are closed in a Hausdorff space; use a finite union.
+    \item The set $\prod_{n=1}^\infty(-1/n,1/n)$ is box-open but contains no basic product neighborhood of the zero sequence.
+    \item ``Closed and bounded'' depends on a metric and is special to Euclidean spaces; compactness is defined purely by open covers and is preserved by continuous maps and homeomorphisms.
+\end{selectedhints}

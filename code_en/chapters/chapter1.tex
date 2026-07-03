@@ -1,7 +1,22 @@
-\chapter{The Axioms of ALL}
+\chapter{Sets, Relations, and Axiomatic Foundations}
 \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}} % Reset section numbering for Chapter 1 onwards
 
-In modern mathematics, is there any single axiom that can be called “The Axioms of all Branches”? It’s quite a tricky question because researchers in different fields have different answers for it. But if we take the intersection of the answers from most of them, we would find only one element in this set: The Set Theory.
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item work fluently with sets, Cartesian products, relations, functions, and orders;
+    \item distinguish equivalence relations from partial and total orders;
+    \item construct quotient sets and interpret fibers, images, and inverse images;
+    \item explain why naive set formation leads to paradoxes and what role ZFC plays;
+    \item decide when axiomatic set theory is relevant and when ordinary set notation is sufficient.
+\end{itemize}
+\end{learningobjectives}
+
+\begin{mynote}
+The ZFC material is a foundations module, not a prerequisite for ordinary calculus or linear algebra. Readers interested primarily in those subjects may read the sections on sets, functions, and relations, then continue to Chapter 2.
+\end{mynote}
+
+Set theory supplies a common language for modern mathematics, but it is not the only possible starting point and it should not be confused with the working content of every subject. In most undergraduate calculations, naive set notation is sufficient. Axiomatic set theory becomes important when we ask which collections are legitimate sets, how constructions are justified, or why unrestricted set formation leads to paradoxes. This chapter therefore separates practical set language from the optional study of its formal foundations.
 
 \section{The Naïve Set Theory}
 Actually, if you are a student majoring in engineering or applied mathematics, learning naïve set theory is enough for you to cover the math you need during your work and study. But we need to know that the naïve theory is basically an intuitive definition, which is not included as a part of the modern axiomatic set theory. Although we say that the naïve set theory is a really clear and useful definition of the concept “set”, we have to declare that the naïve set theory is incomplete because naïve set theory itself cannot resolve Russell's paradox. We will introduce the paradox that causes the third mathematical crisis to readers later.

@@ -1,5 +1,20 @@
 \chapter{Mathematical Analysis I}
 
+\begin{learningobjectives}
+By the end of this chapter, you should be able to:
+\begin{itemize}
+    \item explain how completeness distinguishes the real numbers from the rationals;
+    \item prove and compute limits of sequences and functions;
+    \item use derivatives, mean-value theorems, Taylor expansion, and L'Hopital's rule with their hypotheses visible;
+    \item construct and evaluate Riemann and improper integrals;
+    \item select convergence tests and justify limiting operations rigorously.
+\end{itemize}
+\end{learningobjectives}
+
+\begin{mynote}
+For a first pass focused on calculus, the construction of the number systems may be skimmed. The operational core begins with sequence limits, while the earlier sections explain why the real-number framework supports those arguments.
+\end{mynote}
+
 \begin{quote}
 \emph{
 We now embark on a great undertaking: building a rigorous framework for calculus. Our journey through logic and set theory has provided the tools; the ordered structures of Chapter 1 have revealed a critical insight—the rational numbers, though dense, are incomplete. They possess gaps, like the legendary irrational $\sqrt{2}$, which defy representation as a ratio.
@@ -18,7 +33,7 @@ Upon this unshakable foundation, we will erect the central pillars of analysis: 
 If asked about the foundation of mathematical analysis, the answer is clear: the axiom of real numbers. In this part, we will start from Peano Axioms to form the axioms of natural numbers. And for practical purposes, we extend it to integers and rational numbers. Then, to support theorems of calculus, we construct the axioms of real numbers and complex numbers.
 
 Before we officially start this part, we need to clarify three simple principles:
-\begin{description}
+\begin{description}[style=nextline,leftmargin=2.5em]
     \item[Motivation Principle (Solving a Limitation)] Each expansion is driven by the need to perform an operation that is not always possible within the smaller number system. The primary goal is to achieve \textbf{closure} under this new operation.
     \item[Embedding Principle (Preserving the Original Structure)] The smaller, original number system must be isomorphic to a subsystem of the new, larger number system. This is achieved by constructing an \textbf{injective embedding} that preserves all the essential operations (like addition and multiplication) and properties of the original system.
     \item[Minimality Principle (The "Smallest" Extension)] The new number system should be the "smallest" or "most economical" extension that satisfies the first two principles. It should introduce \emph{only} the elements necessary to solve the limitation, without any superfluous structure.
@@ -252,7 +267,7 @@ Between any two distinct real numbers, there exists a rational number. That is, 
 
 While $\mathbb{R}$ solves the completeness problem of $\mathbb{Q}$, it is not \textbf{algebraically closed}. There are polynomial equations with real coefficients that have no real solutions, such as $x^2 + 1 = 0$. This motivates the extension to complex numbers.
 
-\newpage
+
 
 \paragraph{Construction of Complex Numbers}
 
@@ -420,7 +435,7 @@ According to the definition of limit, we take $\epsilon = \frac{a-b}{2}$, and we
 Thus we have: $x_n > (a+b)/2 >y_n$ , pick $N = max \{N_1,N_2\}$, then we have $\forall n > N, x_n>y_n$. Finally we can claim that the limits have the property of isotonicity.
 \end{proof}
 
-\newpage
+
 
 \begin{theorem}[the calculations' law of limits]
 
@@ -762,7 +777,7 @@ If a function $f$ is continuous on a \textbf{closed and bounded} interval $[a, b
 $f(x) = x^2$ is uniformly continuous on $[0, 1]$ but \emph{not} uniformly continuous on $[0, \infty)$. As $x$ gets larger, we need a smaller and smaller $\delta$ to keep the change in $f(x)$ bounded, so no single $\delta$ works for the whole infinite domain.
 \end{example}
 
-\newpage
+
 
 \begin{example}[Continuous but not Differentiable]
 The converse is false. The function $f(x) = |x|$ is continuous at $x=0$, but not differentiable.
@@ -1079,7 +1094,7 @@ Therefore,
 The proofs for $x \to c^-$ and $x \to \infty$ are similar.
 \end{proof}
 
-\newpage
+
 
 \begin{theorem}[L'Hôpital's Rule ($\frac{\infty}{\infty}$ form)]
 \label{thm:lhopital_inf_en}
@@ -1096,30 +1111,55 @@ Then
 \end{theorem}
 
 \begin{proof}
-(Sketch) This proof is more complex than the $\frac{0}{0}$ form. We consider $x \to c^+$ and $L$ finite.
-By condition (2), $\forall \epsilon > 0, \exists \delta > 0$ such that $\forall x \in (c, c+\delta): |\frac{f'(x)}{g'(x)} - L| < \frac{\epsilon}{2}$.
-We pick an $x_0 \in (c, c+\delta)$.
-Now, for any $x \in (c, x_0)$, we apply Cauchy's MVT on $[x, x_0]$. There exists $\xi \in (x, x_0)$ such that
+We prove the right-hand limit for a finite value $L$; the left-hand case is identical. Limits at $\pm\infty$ follow after the substitution $x=1/t$ or $x=-1/t$. The cases $L=\pm\infty$ are treated at the end.
+
+Fix $\varepsilon>0$. Because
 \[
-\frac{f(x) - f(x_0)}{g(x) - g(x_0)} = \frac{f'(\xi)}{g'(\xi)}
+\frac{f'(x)}{g'(x)}\longrightarrow L,
 \]
-Since $\xi \in (x, x_0) \subset (c, c+\delta)$, we know $|\frac{f'(\xi)}{g'(\xi)} - L| < \frac{\epsilon}{2}$.
+there is a punctured interval $I=(c,c+\delta)$ on which
 \[
-\left| \frac{f(x) - f(x_0)}{g(x) - g(x_0)} - L \right| < \frac{\epsilon}{2}
+\left|\frac{f'(x)}{g'(x)}-L\right|<\eta,
+\qquad
+\left|\frac{f'(x)}{g'(x)}\right|\le |L|+1,
 \]
-We perform an algebraic manipulation of $\frac{f(x)}{g(x)}$:
+where $\eta>0$ will be chosen below. Because derivatives have the intermediate-value property and $g'$ never vanishes on $I$, the derivative $g'$ has a constant sign there; hence $g$ is strictly monotone. Fix one point $y\in I$. For $x\in(c,y)$, the denominator $g(x)-g(y)$ is nonzero, and Cauchy's mean value theorem gives a point $\xi_x\in(x,y)$ such that
 \[
-\frac{f(x)}{g(x)} = \frac{f(x) - f(x_0)}{g(x) - g(x_0)} \cdot \frac{g(x) - g(x_0)}{g(x)} + \frac{f(x_0)}{g(x)}
+A_x:=\frac{f(x)-f(y)}{g(x)-g(y)}
+     =\frac{f'(\xi_x)}{g'(\xi_x)}.
 \]
+Hence $|A_x-L|<\eta$ and $|A_x|\le |L|+1$.
+
+Rewrite the desired ratio as
 \[
-\frac{f(x)}{g(x)} = \frac{f(x) - f(x_0)}{g(x) - g(x_0)} \cdot \left(1 - \frac{g(x_0)}{g(x)}\right) + \frac{f(x_0)}{g(x)}
+\frac{f(x)}{g(x)}
+=A_x\left(1-\frac{g(y)}{g(x)}\right)
+ +\frac{f(y)}{g(x)}.
 \]
-We want to show $\frac{f(x)}{g(x)} \to L$ as $x \to c^+$.
-As $x \to c^+$, we know $f(x) \to \infty$ and $g(x) \to \infty$. The terms $f(x_0)$ and $g(x_0)$ are fixed constants.
-Thus, $\frac{g(x_0)}{g(x)} \to 0$ and $\frac{f(x_0)}{g(x)} \to 0$.
-This means $\left(1 - \frac{g(x_0)}{g(x)}\right) \to 1$.
-The limit behavior of $\frac{f(x)}{g(x)}$ is dominated by $\frac{f(x) - f(x_0)}{g(x) - g(x_0)}$, which we know is within $\epsilon/2$ of $L$.
-By choosing $x$ sufficiently close to $c$ (i.e., $x \to c^+$), the error terms $\frac{g(x_0)}{g(x)}$ and $\frac{f(x_0)}{g(x)}$ can be made arbitrarily small, and the full expression $\left| \frac{f(x)}{g(x)} - L \right|$ can be shown to be less than $\epsilon$.
+Subtracting $L$ yields
+\[
+\frac{f(x)}{g(x)}-L
+=(A_x-L)-A_x\frac{g(y)}{g(x)}+\frac{f(y)}{g(x)}.
+\]
+Since $|g(x)|\to\infty$, the last two terms tend to $0$. Choose $\eta=\varepsilon/3$, and then choose $x$ sufficiently close to $c$ that
+\[
+(|L|+1)\left|\frac{g(y)}{g(x)}\right|<\frac{\varepsilon}{3},
+\qquad
+\left|\frac{f(y)}{g(x)}\right|<\frac{\varepsilon}{3}.
+\]
+The triangle inequality now gives
+\[
+\left|\frac{f(x)}{g(x)}-L\right|<\varepsilon.
+\]
+Thus $f(x)/g(x)\to L$.
+
+If $L=+\infty$, fix $M>0$ and choose the interval so that $f'(x)/g'(x)>2M+1$. The same mean-value argument gives $A_x>2M+1$, while
+\[
+1-\frac{g(y)}{g(x)}\longrightarrow1,
+\qquad
+\frac{f(y)}{g(x)}\longrightarrow0.
+\]
+For $x$ sufficiently close to $c$, the displayed decomposition implies $f(x)/g(x)>M$. Hence the ratio tends to $+\infty$. The case $L=-\infty$ follows by applying the same argument to $-f$.
 \end{proof}
 
 \begin{example}
@@ -1182,7 +1222,7 @@ Thus, $f(x) = P_n(x) + R_n(x)$.
 
 Taylor's Theorem gives us a precise formula for this remainder.
 
-\newpage
+
 
 \begin{theorem}[Taylor's Theorem with Lagrange Remainder]
 \label{thm:taylor_en}
@@ -1908,7 +1948,7 @@ Similarly, we can define integrals for other infinite intervals:
 \]
 
 For the integral from $-\infty$ to $+\infty$ to converge, \textbf{both} constituent integrals must converge independently. The choice of the splitting point $c$ does not affect the convergence.
-\subsubsection{Benchmark: The $p$-Integral (Type I)}
+\subsubsection{Benchmark: The \texorpdfstring{$p$}{p}-Integral (Type I)}
 To determine the convergence of complex functions, we compare them to the power function $1/x^p$.
 
 \begin{theorem}
@@ -1937,7 +1977,7 @@ If $f$ is continuous on $[a, b)$ and discontinuous at $b$ (e.g., $\lim_{x \to b^
 \]
 \end{definition}
 
-\subsubsection{Benchmark: The $p$-Integral (Type II)}
+\subsubsection{Benchmark: The \texorpdfstring{$p$}{p}-Integral (Type II)}
 Be careful: the convergence condition for singularities is the \textit{reverse} of infinite intervals.
 
 \begin{theorem}
