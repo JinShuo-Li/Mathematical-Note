@@ -2,7 +2,7 @@
 
 ![LaTeX](https://img.shields.io/badge/Language-LaTeX-008080.svg)
 ![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)
-![Status](https://img.shields.io/badge/Status-Work%20in%20Progress-orange.svg)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen.svg)
 
 ## 📖 Introduction
 
