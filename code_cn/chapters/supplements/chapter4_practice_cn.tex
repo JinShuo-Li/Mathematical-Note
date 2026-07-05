@@ -1,0 +1,35 @@
+\section{本章训练}
+
+\begin{workedexample}{商环中的运算}
+在 $\mathbb{F}_2[x]/(x^2+x+1)$ 中，令 $\alpha=[x]$。定义关系给出
+\[
+    \alpha^2=\alpha+1.
+\]
+于是
+\[
+    \alpha(\alpha+1)=\alpha^2+\alpha=(\alpha+1)+\alpha=1.
+\]
+因此 $\alpha+1$ 是 $\alpha$ 的乘法逆元。这个商环含有四个元素，并且每个非零元素都可逆，所以它是一个域。扩域中的计算可以理解为对不可约多项式取模后的多项式化简。
+\end{workedexample}
+
+\begin{applicationbox}{纠错码}
+二元线性码是子空间 $C\subseteq\mathbb{F}_2^n$。生成矩阵用于编码信息，校验矩阵用于测试接收向量是否落在码中。伴随式确定 $C$ 的一个陪集，并可用于定位可能的错误模式。因此，有限域与商多项式提供了实际通信和存储系统中使用的算术。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 列出 $\mathbb{Z}_{12}$ 的所有子群。
+    \item 计算 $\mathbb{Z}_{10}$ 中的单位元和零因子。
+    \item 证明群同态的核是正规子群。
+    \item 判断 $x^3+x+1$ 在 $\mathbb{F}_2$ 上是否不可约。
+    \item 用中国剩余定理求解 $x\equiv2\pmod3$ 且 $x\equiv3\pmod5$。
+    \item 解释为什么环上的模不一定有基。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 循环群的每个阶数因子对应唯一一个子群。
+    \item 单位元是与 $10$ 互素的剩余类：$1,3,7,9$。非零零因子为 $2,4,5,6,8$。
+    \item 若 $k\in\ker\varphi$，则 $\varphi(gkg^{-1})=\varphi(g)e\varphi(g)^{-1}=e$。
+    \item 域上的三次多项式可约，当且仅当它有根。测试 $0$ 和 $1$。
+    \item 解为 $8\pmod{15}$。
+    \item 在环上，挠元会破坏线性无关与张成的向量空间式行为；$\mathbb{Z}/2\mathbb{Z}$ 作为 $\mathbb{Z}$-模是基本例子。
+\end{selectedhints}

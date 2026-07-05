@@ -1,0 +1,45 @@
+\section{本章训练}
+
+\begin{workedexample}{带几何检查的约束优化}
+在约束 $x^2+y^2=1$ 下最大化 $f(x,y)=xy$。Lagrange 方程为
+\[
+    y=2\lambda x,
+    \qquad
+    x=2\lambda y,
+    \qquad
+    x^2+y^2=1.
+\]
+在非零解处，$4\lambda^2=1$，所以 $y=\pm x$。约束给出 $x^2=y^2=1/2$。因此最大值为 $1/2$，最小值为 $-1/2$。从几何上看，水平曲线 $xy=c$ 在极值点处与单位圆相切，这正是条件 $\nabla f=\lambda\nabla g$ 的含义。
+\end{workedexample}
+
+\begin{applicationbox}{优化与自动微分}
+对损失函数 $L(\theta)$，基于梯度的算法使用一阶模型
+\[
+    L(\theta+h)\approx L(\theta)+\nabla L(\theta)^Th.
+\]
+Jacobian 矩阵上的链式法则是反向模式自动微分的数学核心。Hessian 矩阵和二次 Taylor 模型描述曲率，并引出 Newton 与拟 Newton 方法。
+\end{applicationbox}
+
+\begin{applicationbox}{Fourier 表示与压缩}
+周期信号可以由少量 Fourier 模近似。保留最大的系数，就是把时域样本替换为正交频率基下的坐标。同样的投影原则也出现在音频压缩、谱数值方法以及线性偏微分方程分析中。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 判断 $\sum_{n=1}^\infty x^n/n$ 是否在 $[0,1/2]$ 上一致收敛，以及是否在 $[0,1)$ 上一致收敛。
+    \item 求 $f(x,y)=x^2+xy+2y^2$ 的梯度与 Hessian，并分类其临界点。
+    \item 在三角形 $D=\{x\ge0,y\ge0,x+y\le1\}$ 上计算 $\iint_D(x+y)\,dA$。
+    \item 用极坐标计算 $\iint_{x^2+y^2\le1}(x^2+y^2)\,dA$。
+    \item 判断 $F(x,y)=(-y/(x^2+y^2),x/(x^2+y^2))$ 在 $\mathbb{R}^2\setminus\{0\}$ 上是否保守。
+    \item 求 $(-\pi,\pi)$ 上 $2\pi$-周期函数 $f(x)=x$ 的 Fourier 系数。
+    \item 给出一个逐点收敛但不一致收敛的例子。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item Weierstrass 判别法给出在 $[0,1/2]$ 上一致收敛；在 $[0,1)$ 上不一致收敛，因为和函数 $-\log(1-x)$ 在该区间上无界。
+    \item $\nabla f=(2x+y,x+4y)$；Hessian 正定，所以原点是严格全局最小点。
+    \item 按 $0\le y\le1-x$、$0\le x\le1$ 积分，结果为 $1/3$。
+    \item 积分为 $\int_0^{2\pi}\int_0^1 r^2 r\,dr\,d\theta=\pi/2$。
+    \item 它在原点外旋度为零，但沿单位圆的积分为 $2\pi$，因此在这个非单连通区域上不是保守场。
+    \item 函数为奇函数：$a_n=0$，且 $b_n=2(-1)^{n+1}/n$。
+    \item 在 $[0,1]$ 上，$f_n(x)=x^n$ 逐点收敛到一个不连续极限，因此不可能一致收敛。
+\end{selectedhints}

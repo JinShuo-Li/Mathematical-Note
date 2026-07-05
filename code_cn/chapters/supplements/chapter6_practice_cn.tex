@@ -1,0 +1,31 @@
+\section{本章训练}
+
+\begin{workedexample}{为什么商拓扑会构造出圆}
+令 $q:[0,1]\to S^1$ 为 $q(t)=e^{2\pi it}$。它连续，并且恰好把端点 $0$ 与 $1$ 识别在一起。由于 $[0,1]$ 紧而 $S^1$ 是 Hausdorff 空间，诱导出的连续双射
+\[
+    [0,1]/(0\sim1)\longrightarrow S^1
+\]
+是同胚。因此，商拓扑并不只是一个形象图示，而是“粘合端点”这一操作的精确定义。
+\end{workedexample}
+
+\begin{applicationbox}{数据表示的拓扑}
+数据表示通常只在某种变换意义下有用：相位可能是周期的，旋转可能等价，置换也可能不改变对象。商空间形式化地描述这些识别。在流形学习和拓扑数据分析中，连通分支、环路以及高维孔洞被用作特征；这些特征在连续变形下稳定，而不依赖精确坐标。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 在 $\mathbb{R}$ 的通常拓扑中，求 $\{0\}\cup\{1/n:n\in\mathbb{N}\}$ 的内部、闭包、边界和聚点集。
+    \item 证明连通空间的连续像仍然连通。
+    \item 给出 $(0,1)$ 的一个没有有限子覆盖的开覆盖。
+    \item 证明 Hausdorff 空间中的有限子集是闭集。
+    \item 比较 $\mathbb{R}^{\mathbb{N}}$ 上的积拓扑与盒拓扑，给出一个盒开但不是积开的集合。
+    \item 解释为什么同胚保持的是紧致性，而不是“闭且有界”这种表述。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 内部为空；闭包就是集合本身；边界为整个集合；唯一聚点是 $0$。
+    \item 若像能分成两个不交的非空开子集，则它们的原像会分离定义域。
+    \item 可使用 $U_n=(1/n,1)$ 并适当调整指标，或对 $n\ge2$ 使用 $U_n=(0,1-1/n)$。
+    \item Hausdorff 空间中的单点集是闭集；再使用有限并。
+    \item 集合 $\prod_{n=1}^\infty(-1/n,1/n)$ 是盒开集，但不包含零序列的任何基本积邻域。
+    \item “闭且有界”依赖于度量，并且是 Euclidean 空间中的特殊表述；紧致性由开覆盖定义，并且被连续映射和同胚保持。
+\end{selectedhints}

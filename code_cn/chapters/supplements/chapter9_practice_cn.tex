@@ -1,0 +1,54 @@
+\section{本章训练}
+
+\begin{workedexample}{Bayes 分类}
+某检测的灵敏度为 $0.95$，特异度为 $0.90$。设某疾病的患病率为 $0.01$。若 $D$ 表示患病，$+$ 表示阳性结果，则
+\[
+\mathbb{P}(D\mid +)
+=\frac{\mathbb{P}(+\mid D)\mathbb{P}(D)}
+{\mathbb{P}(+\mid D)\mathbb{P}(D)+\mathbb{P}(+\mid D^c)\mathbb{P}(D^c)}.
+\]
+代入得到
+\[
+\mathbb{P}(D\mid +)=\frac{0.95\cdot0.01}{0.95\cdot0.01+0.10\cdot0.99}\approx0.0876.
+\]
+当基础率很小时，即使检测具有较高灵敏度，阳性预测值仍然可能并不高。
+\end{workedexample}
+
+\newpage
+
+\begin{applicationbox}{Monte Carlo 积分}
+若 $U_1,\dots,U_n$ 是 $[0,1]$ 上独立均匀样本，则
+\[
+    \widehat I_n=\frac1n\sum_{k=1}^n f(U_k)
+\]
+估计 $\int_0^1f(x)\,dx$。大数定律给出相合性，中心极限定理给出近似误差尺度
+\[
+    \frac{\sqrt{\operatorname{Var}(f(U))}}{\sqrt n}.
+\]
+该方法可推广到高维积分，在那里确定性网格往往代价过高。
+\end{applicationbox}
+
+\begin{applicationbox}{Markov 模型与排序}
+有限 Markov 链通过随机矩阵乘法演化概率向量。平稳分布描述长期占有比例，并支撑队列、人口迁移以及有向网络排序等模型。线性代数决定不变分布，概率论决定样本路径如何趋近它们。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 掷两枚公平骰子。已知至少有一枚为 $3$，求点数和为 $8$ 的条件概率。
+    \item 设 $X\sim\mathrm{Binomial}(n,p)$。用指示变量推出 $\mathbb{E}X$ 和 $\operatorname{Var}(X)$。
+    \item 若 $X$ 在 $[0,1]$ 上具有密度 $f(x)=2x$，求其分布函数、均值和方差。
+    \item 给出一个例子说明两两独立不必推出相互独立。
+    \item 证明 Markov 不等式，并由它推出 Chebyshev 不等式。
+    \item 解释依概率收敛与几乎处处收敛的区别。
+    \item 一个 Markov 链的转移矩阵为 $P=\begin{pmatrix}0.8&0.2\\0.3&0.7\end{pmatrix}$。求其平稳分布。
+    \item 对速率为 $\lambda$ 的 Poisson 过程，推出首次到达等待时间的分布。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 条件事件有 $11$ 个有序结果；其中 $(3,5)$ 和 $(5,3)$ 两个结果的和为 $8$，故概率为 $2/11$。
+    \item 写作 $X=I_1+\cdots+I_n$，其中 $I_i$ 为相互独立的 Bernoulli 指示变量。
+    \item 在 $[0,1]$ 上 $F(x)=x^2$；$\mathbb{E}X=2/3$，$\operatorname{Var}(X)=1/18$。
+    \item 取两个独立公平比特 $A,B$，并令 $C=A\oplus B$。
+    \item 对非负随机变量 $(X-\mu)^2$ 应用 Markov 不等式。
+    \item 几乎处处收敛控制的是一个零测集之外的整条样本路径；依概率收敛则分别控制每个 $n$ 下偏离事件的概率。
+    \item 解 $\pi P=\pi$ 且 $\pi_1+\pi_2=1$；答案为 $(3/5,2/5)$。
+\end{selectedhints}

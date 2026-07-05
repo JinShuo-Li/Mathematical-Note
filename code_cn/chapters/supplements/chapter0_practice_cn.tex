@@ -1,0 +1,27 @@
+\section{本章训练}
+
+\begin{workedexample}{否定一个含量词命题}
+考虑命题
+\[
+    \forall x\in\mathbb{R}\;\exists n\in\mathbb{N}\quad n>x.
+\]
+它的否定需要逐个反转量词，并否定最后的谓词：
+\[
+    \exists x\in\mathbb{R}\;\forall n\in\mathbb{N}\quad n\le x.
+\]
+原命题是 Archimedes 性质；其否定断言存在一个实数可以作为所有自然数的上界。注意，仅仅在句首加上“并非”并不会得到一个真正可用的数学公式。
+\end{workedexample}
+
+\begin{chapterexercises}
+    \item 为 $(p\to q)\leftrightarrow(\neg q\to\neg p)$ 构造真值表。
+    \item 否定下列命题：“对每个 $\varepsilon>0$，存在 $N\in\mathbb{N}$，使得对每个 $n\ge N$，都有 $|a_n-L|<\varepsilon$。”
+    \item 判断 $(p\lor q)\land\neg p$ 是否逻辑蕴含 $q$。
+    \item 写出命题“如果一个整数能被 $4$ 整除，那么它是偶数”的逆命题和逆否命题，并判断哪些形式为真。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 四行中的两列完全一致；这正是反证法中“逆否命题等价”的逻辑基础。
+    \item 否定为：存在 $\varepsilon>0$，使得对每个 $N$，存在 $n\ge N$ 满足 $|a_n-L|\ge\varepsilon$。
+    \item 是。第一个合取支说明 $p,q$ 至少有一个为真，第二个合取支排除了 $p$。
+    \item 逆命题：偶数 $\Rightarrow$ 能被 $4$ 整除（假）。逆否命题：不是偶数 $\Rightarrow$ 不能被 $4$ 整除（真）。
+\end{selectedhints}

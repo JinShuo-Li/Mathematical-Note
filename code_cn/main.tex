@@ -4,98 +4,35 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{epigraph}
 \usepackage{mathtools}
+\usepackage{listings}
 \usepackage{geometry}
 \geometry{margin=1in}
-\usepackage[unicode,bookmarks=false]{hyperref}
+\usepackage[unicode,bookmarksopen=true,bookmarksnumbered=true,hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{booktabs}
-\usepackage{xcolor}
+\usepackage[svgnames]{xcolor}
 \usepackage{tikz}
+\usepackage{caption}
 \usepackage{float}
+\usepackage{parskip}
 \usetikzlibrary{calc, decorations.pathreplacing, positioning}
 \usepackage{microtype}
 \usepackage[most]{tcolorbox}
 \usepackage{xparse}
+\usepackage{fancyhdr}
+\usepackage{needspace}
 \allowdisplaybreaks
 
-% CJK font settings with fallbacks.
-% This avoids hard failure when a specific Noto/Source Han font is not installed.
-% Compile with XeLaTeX.
-\IfFontExistsTF{Source Han Serif SC}{
-  \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Source Han Serif SC}
-  \setCJKmonofont{Source Han Serif SC}
-}{
-  \IfFontExistsTF{SimSun}{
-    \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}
-    \setCJKmonofont{SimSun}
-  }{
-    \IfFontExistsTF{Noto Serif CJK SC}{
-      \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Serif CJK SC}
-      \setCJKmonofont{Noto Serif CJK SC}
-    }{
-      \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolSong-Regular}
-      \setCJKmonofont{FandolSong-Regular}
-    }
-  }
-}
+% Font settings for XeLaTeX on Windows.
+\setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}
+\setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}
+\setCJKmonofont{SimSun}
 
-\IfFontExistsTF{Source Han Sans SC}{
-  \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Source Han Sans SC}
-}{
-  \IfFontExistsTF{SimHei}{
-    \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}
-  }{
-    \IfFontExistsTF{Noto Sans CJK SC}{
-      \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Sans CJK SC}
-    }{
-      \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{FandolHei-Regular}
-    }
-  }
-}
-
-% Latin font fallbacks for XeLaTeX when fontset=none.
-\IfFontExistsTF{TeX Gyre Termes}{
-  \setmainfont{TeX Gyre Termes}
-}{
-  \IfFontExistsTF{Times New Roman}{
-    \setmainfont{Times New Roman}
-  }{
-    \IfFontExistsTF{DejaVu Serif}{
-      \setmainfont{DejaVu Serif}
-    }{
-      \setmainfont{Latin Modern Roman}
-    }
-  }
-}
-
-\IfFontExistsTF{TeX Gyre Heros}{
-  \setsansfont{TeX Gyre Heros}
-}{
-  \IfFontExistsTF{Arial}{
-    \setsansfont{Arial}
-  }{
-    \IfFontExistsTF{DejaVu Sans}{
-      \setsansfont{DejaVu Sans}
-    }{
-      \setsansfont{Latin Modern Sans}
-    }
-  }
-}
-
-\IfFontExistsTF{Latin Modern Mono}{
-  \setmonofont{Latin Modern Mono}
-}{
-  \IfFontExistsTF{Consolas}{
-    \setmonofont{Consolas}
-  }{
-    \IfFontExistsTF{DejaVu Sans Mono}{
-      \setmonofont{DejaVu Sans Mono}
-    }{
-      \setmonofont{Courier New}
-    }
-  }
-}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
 
 \DeclareMathOperator{\arcsec}{arcsec}
 \DeclareMathOperator{\arccot}{arccot}
@@ -227,6 +164,65 @@
     {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
     {\end{mythm}}
 
+
+% Global readability and navigation settings, aligned with the English version.
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\setlist{itemsep=0.25em, topsep=0.4em}
+\setlength{\emergencystretch}{3em}
+\setlength{\headheight}{13pt}
+\hypersetup{pdfauthor={Jinshuo Li},pdftitle={数学与公理化}}
+\urlstyle{same}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\rightmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\newtcolorbox{learningobjectives}{
+    enhanced,
+    breakable,
+    colback=cyan!4!white,
+    colframe=cyan!55!black,
+    title={\textbf{学习目标}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newtcolorbox{workedexample}[1]{
+    enhanced,
+    breakable,
+    colback=teal!4!white,
+    colframe=teal!65!black,
+    title={\textbf{例题：#1}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newtcolorbox{applicationbox}[1]{
+    enhanced,
+    breakable,
+    colback=purple!4!white,
+    colframe=purple!65!black,
+    title={\textbf{应用：#1}},
+    fonttitle=\bfseries,
+    sharp corners=south,
+}
+
+\newenvironment{chapterexercises}
+  {\section{习题}\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=0.7em]}
+  {\end{enumerate}}
+
+\newenvironment{selectedhints}
+  {\subsection*{提示与答案选摘}\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=0.55em]}
+  {\end{enumerate}}
+
 \newcommand{\prefacechapter}{%
   \cleardoublepage
   \chapter*{序言}
@@ -241,9 +237,10 @@
   \renewcommand{\thesection}{0.\arabic{section}}
 }
 
+
 \begin{document}
 
-
+\setlength{\hfuzz}{4pt}
 \begin{titlepage}
 \newgeometry{margin=0pt}
 \thispagestyle{empty}
@@ -294,38 +291,41 @@
 \restoregeometry
 \thispagestyle{empty}
 
-\cleardoublepage
-\pagenumbering{gobble}
+\frontmatter
 \tableofcontents
-\thispagestyle{empty}
+\input{chapters/preface_cn.tex}
+\input{chapters/readers_guide_cn.tex}
 
-\input{chapters/perface.tex}
-
-\cleardoublepage
-\pagenumbering{arabic}
-\setcounter{page}{1}
-
+\mainmatter
+\part{可选基础}
 \input{chapters/chapter0_cn.tex}
-
-\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\input{chapters/supplements/chapter0_practice_cn.tex}
 \input{chapters/chapter1_cn.tex}
+\input{chapters/supplements/chapter1_practice_cn.tex}
 
+\part{本科数学核心内容}
 \input{chapters/chapter2_cn.tex}
-
+\input{chapters/supplements/chapter2_practice_cn.tex}
 \input{chapters/chapter3_cn.tex}
+\input{chapters/supplements/chapter3_practice_cn.tex}
+\input{chapters/chapter4_revised_cn.tex}
+\input{chapters/supplements/chapter4_practice_cn.tex}
+\input{chapters/chapter5_revised_cn.tex}
+\input{chapters/supplements/chapter5_practice_cn.tex}
 
-\input{chapters/chapter4_cn.tex}
+\part{空间与复结构}
+\input{chapters/chapter6_revised_cn.tex}
+\input{chapters/supplements/chapter6_practice_cn.tex}
+\input{chapters/chapter7_revised_cn.tex}
+\input{chapters/supplements/chapter7_practice_cn.tex}
 
-\input{chapters/chapter5_cn.tex}
-
-\input{chapters/chapter6_cn.tex}
-
-\input{chapters/chapter7_cn.tex}
-
+\part{离散与概率模型}
 \input{chapters/chapter8_cn.tex}
+\input{chapters/supplements/chapter8_practice_cn.tex}
+\input{chapters/chapter9_revised_cn.tex}
+\input{chapters/supplements/chapter9_practice_cn.tex}
 
-\input{chapters/chapter9_cn.tex}
-
+\backmatter
 \input{chapters/afterword_cn.tex}
 
 \end{document}

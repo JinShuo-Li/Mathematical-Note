@@ -1,0 +1,29 @@
+\section{本章训练}
+
+\begin{workedexample}{从等价关系到商集}
+在 $\mathbb{Z}$ 上定义 $a\sim b$ 当且仅当 $a-b$ 能被 $3$ 整除。自反性来自 $a-a=0$；对称性来自 $3\mid(a-b)\Rightarrow3\mid(b-a)$；传递性来自整除关系在加法下的封闭性。商集有三个等价类：
+\[
+    \mathbb{Z}/\!\sim=\{[0],[1],[2]\}.
+\]
+等价类上的加法是良定义的，因为把 $a,b$ 换成同余的代表元，并不会改变 $a+b$ 所属的等价类。这个初等构造正是商群、商环以及拓扑中许多粘合空间的模型。
+\end{workedexample}
+
+\begin{applicationbox}{数据库中的关系}
+数据库中的一张表可以看作一个有限关系，而键约束则断言某个坐标投影在已存储的行上是单射。连接操作可以看成先取笛卡尔积，再按条件筛选。这个观点说明集合运算与映射并不只是基础记号；它们也是结构化数据的代数。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 证明 $A\setminus(B\cup C)=(A\setminus B)\cap(A\setminus C)$。
+    \item 设 $f:X\to Y$。证明 $f^{-1}(U\cap V)=f^{-1}(U)\cap f^{-1}(V)$，并给出一个例子说明 $f(A\cap B)=f(A)\cap f(B)$ 可能失败。
+    \item 在 $\mathbb{R}$ 上定义 $x\sim y$ 当且仅当 $x-y\in\mathbb{Z}$。从几何上描述这些商类。
+    \item 判断整除关系是否是正整数集上的偏序。
+    \item 用一段话解释为什么 Russell 悖论挑战的是无限制的集合生成原则，但并不妨碍普通的有限集合计算。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 用元素追踪：$x$ 属于左侧，当且仅当 $x\in A$、$x\notin B$ 且 $x\notin C$。
+    \item 原像保持任意并、交与补。至于像不保持交，可以使用一个非单射映射构造反例。
+    \item 每个等价类为 $x+\mathbb{Z}$；若取 $[0,1)$ 中的代表元，并把端点粘合，就得到一个圆。
+    \item 是。正整数上的整除关系自反、反对称且传递，但不是全序。
+    \item 悖论针对的是“任意谓词都能定义一个集合”的原则。ZFC 限制了集合生成；初等工作中使用的有限集合可以不依赖这种有问题的无限制原则而构造出来。
+\end{selectedhints}

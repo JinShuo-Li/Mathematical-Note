@@ -1,0 +1,55 @@
+\section{本章训练}
+
+\begin{workedexample}{一个显式的 epsilon--delta 估计}
+证明当 $x\to2$ 时，$x^2\to4$。我们需要控制
+\[
+    |x^2-4|=|x-2||x+2|.
+\]
+先限制 $|x-2|<1$，这推出 $1<x<3$，从而 $|x+2|<5$。于是只需再要求 $5|x-2|<\varepsilon$。因此
+\[
+    \delta=\min\left\{1,\frac{\varepsilon}{5}\right\}
+\]
+即可。这个预先估计不是装饰性的步骤：它把随 $x$ 变化的因子 $|x+2|$ 转化成了固定常数。
+\end{workedexample}
+
+\begin{applicationbox}{数值误差与条件数}
+若一个可微函数在输入端有小误差 $\Delta x$，则
+\[
+    \Delta f\approx f'(x)\Delta x.
+\]
+因此导数衡量局部敏感性。对相对误差，无量纲条件数
+\[
+    \kappa_f(x)=\left|\frac{x f'(x)}{f(x)}\right|
+\]
+可以预测可能损失多少位有效数字。这把微分同数值分析联系起来，而不只是把它看成符号运算。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 用 epsilon 证明 $x\to2$ 时 $3x-1\to5$。
+    \item 判断 $a_n=(-1)^n/n$ 是否收敛，并判断 $\sum a_n$ 是否绝对收敛。
+    \item 用中值定理证明 $|\sin x-\sin y|\le|x-y|$。
+    \item 不使用 L'Hopital 法则，计算 $\displaystyle\lim_{x\to\infty}\frac{x+\sin x}{x}$。
+    \item 求 $e^x$ 在 $0$ 处的二阶 Taylor 近似，并在 $[-0.1,0.1]$ 上估计余项。
+    \item 判断反常积分 $\displaystyle\int_1^\infty x^{-p}\,dx$ 对哪些 $p$ 收敛。
+    \item 用 epsilon--delta 论证证明 $x\to3$ 时 $x^2\to9$。
+    \item 判断数列 $b_n=\frac{n}{n+1}$ 是否收敛，并在收敛时求其极限。
+    \item 不使用 L'Hopital 法则，证明 $\displaystyle\lim_{x\to0}\frac{\tan x}{x}=1$。
+    \item 判别级数 $\displaystyle\sum_{n=1}^\infty \frac{1}{n^2}$ 的收敛性与绝对收敛性。
+    \item 求 $\ln(1+x)$ 在 $0$ 处的一阶 Taylor 多项式，并估计 $|x|\le0.1$ 时的误差。
+    \item 判断 $\displaystyle\int_0^1 x^{-p}\,dx$ 是否收敛，并给出相应的 $p$ 的范围。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 因为 $|(3x-1)-5|=3|x-2|$，取 $\delta=\varepsilon/3$。
+    \item 数列趋于 $0$。级数由交错级数判别法条件收敛，但因 $\sum1/n$ 发散而不绝对收敛。
+    \item 对 $\sin t$ 在 $x,y$ 之间的区间上应用中值定理，再用 $|\cos\xi|\le1$。
+    \item 写成 $1+\sin x/x$，再夹逼第二项。
+    \item 二阶近似为 $1+x+x^2/2$；Lagrange 余项大小不超过 $e^{0.1}|x|^3/6$。
+    \item 当且仅当 $p>1$ 时收敛。
+    \item 分解 $|x^2-9|=|x-3||x+3|$，先把 $x$ 限制在 $3$ 附近以控制 $|x+3|$。
+    \item 写成 $\frac{n}{n+1}=1-\frac{1}{n+1}$ 后取极限。
+    \item 使用 $\tan x=\sin x/\cos x$ 以及 $\sin x/x$ 与 $\cos x$ 的已知极限。
+    \item 与 $p$-级数比较，或使用积分判别法。
+    \item 多项式为 $x$，因为 $\ln(1+x)=x+O(x^2)$；误差可由 $\ln(1+x)$ 在该区间上的二阶导数界控制。
+    \item 当且仅当 $p<1$ 时收敛。
+\end{selectedhints}

@@ -1,0 +1,54 @@
+\section{本章训练}
+
+\begin{workedexample}{最小二乘作为正交投影}
+用过原点的直线 $y=ax$ 拟合数据 $(1,1)$、$(2,2)$ 和 $(3,2)$。写成矩阵形式为
+\[
+    A=\begin{pmatrix}1\\2\\3\end{pmatrix},
+    \qquad
+    b=\begin{pmatrix}1\\2\\2\end{pmatrix}.
+\]
+最小二乘系数满足正规方程
+\[
+    A^{T}A\,a=A^{T}b,
+\]
+因此
+\[
+    14a=11,
+    \qquad a=\frac{11}{14}.
+\]
+残差 $r=b-Aa$ 与 $A$ 的列空间正交，因为 $A^Tr=0$。所以这个计算本质上是一次投影，而不仅仅是拟合数据的公式。
+\end{workedexample}
+
+\begin{applicationbox}{主成分分析}
+对数据矩阵 $X$ 中心化后，$X^TX$ 的特征向量给出样本方差最大的方向。等价地，$X$ 的右奇异向量给出按奇异值排序的正交坐标。截断奇异值分解会产生低秩近似，可用于压缩、去噪、可视化和潜在特征提取。
+\end{applicationbox}
+
+\begin{chapterexercises}
+    \item 对 $\begin{pmatrix}1&2&1\\2&4&0\\1&2&3\end{pmatrix}$ 作行化简，并求其秩与零度。
+    \item 求 $(1,1,0)$ 与 $(1,0,1)$ 张成空间的一组标准正交基。
+    \item 求 $\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 的特征值与特征向量。
+    \item 证明实对称矩阵对应于不同特征值的特征向量彼此正交。
+    \item 求 $x\approx1$、$x\approx2$、$x\approx6$ 的最小二乘解。
+    \item 解释为什么矩阵和它表示的线性映射并不是字面上的同一个对象。
+    \item 求 $\begin{pmatrix}1&0&2\\0&1&3\\0&1&3\end{pmatrix}$ 的列空间与零空间的一组基。
+    \item 计算线性变换 $T(x,y)=(x+y,\,x-y)$ 的标准矩阵。
+    \item 判断 $\{(1,0,0),(0,1,0),(1,1,0)\}$ 是否线性无关。
+    \item 对角化 $\begin{pmatrix}3&0\\0&1\end{pmatrix}$，并解释其特征值。
+    \item 用 Gram--Schmidt 方法正交化 $\mathbb{R}^2$ 中的 $(1,1)$ 与 $(1,0)$。
+    \item 对 $A=\begin{pmatrix}1&2\\2&4\end{pmatrix}$ 直接验证 $\operatorname{rank}(A)+\operatorname{nullity}(A)=n$。
+\end{chapterexercises}
+
+\begin{selectedhints}
+    \item 第二列是第一列的两倍；消元后秩为 $2$，零度为 $1$。
+    \item 先归一化第一个向量，从第二个向量中减去其在第一个方向上的投影，再归一化。
+    \item 特征值为 $3$ 和 $1$，对应方向为 $(1,1)$ 与 $(1,-1)$。
+    \item 比较 $\langle Av,w\rangle$ 与 $\langle v,Aw\rangle$。
+    \item 最小化 $(x-1)^2+(x-2)^2+(x-6)^2$；答案是均值 $x=3$。
+    \item 矩阵依赖于所选基；抽象映射不依赖。换基会通过相似变换或左右坐标变换改变矩阵。
+    \item 主元列给出 $\operatorname{Col}(A)$ 的一组基；解 $A\mathbf{x}=\mathbf{0}$ 得到 $\operatorname{Nul}(A)$。
+    \item 分别把 $T$ 作用在标准基向量 $e_1=(1,0)$ 和 $e_2=(0,1)$ 上。
+    \item 检查某个向量是否是其余向量的线性组合，或把这些向量作为列组成矩阵后行化简。
+    \item 该矩阵已经是对角矩阵，因此特征值就是对角元，特征向量是坐标轴方向。
+    \item 从第二个向量中减去它在第一个向量上的投影，再归一化得到的正交对。
+    \item 这个矩阵只有一个主元列，所以秩为 $1$，零度为 $1$。
+\end{selectedhints}
