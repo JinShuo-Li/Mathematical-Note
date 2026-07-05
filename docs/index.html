@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Mathematics and Axiomatization: a structured mathematical note moving from intuition to formal axioms, then to analysis, algebra, topology, graph theory, and probability." />
+  <meta name="description" content="Mathematics and Axiomatization is a completed bilingual LaTeX note by Jinshuo Li, with synchronized English and Chinese editions, compiled PDFs, chapter exercises, and source files." />
   <title>Mathematics and Axiomatization</title>
   <style>
     :root {
-      --ink: #111827;
-      --muted: #5f6673;
-      --soft: #eef0f4;
+      --ink: #18202f;
+      --muted: #5f6b7d;
       --paper: #fbfaf7;
       --panel: #ffffff;
-      --line: #d9dde5;
+      --line: #d8dde6;
       --accent: #9f7130;
       --accent-dark: #5d421c;
+      --green: #2f6f58;
+      --blue: #315f8d;
       --night: #111827;
     }
 
@@ -27,8 +28,9 @@
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(159,113,48,.12), transparent 32rem),
-        linear-gradient(180deg, #fffdf8 0%, #f5f3ef 55%, #eceff4 100%);
+        radial-gradient(circle at 12% 0%, rgba(159,113,48,.12), transparent 30rem),
+        radial-gradient(circle at 92% 20%, rgba(49,95,141,.12), transparent 28rem),
+        linear-gradient(180deg, #fffdf8 0%, #f6f4ef 52%, #eef2f5 100%);
       line-height: 1.65;
     }
 
@@ -42,17 +44,17 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 5;
+      z-index: 10;
       backdrop-filter: blur(18px);
-      background: rgba(251,250,247,.78);
-      border-bottom: 1px solid rgba(217,221,229,.78);
+      background: rgba(251,250,247,.82);
+      border-bottom: 1px solid rgba(216,221,230,.82);
     }
 
     .nav {
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 72px;
       gap: 24px;
     }
 
@@ -62,19 +64,19 @@
       gap: 12px;
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 13px;
-      letter-spacing: .18em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--night);
     }
 
     .mark {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border: 1px solid var(--night);
       display: grid;
       place-items: center;
       font-family: ui-serif, Georgia, serif;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1;
     }
 
@@ -90,43 +92,45 @@
     .links a:hover { color: var(--ink); }
 
     .hero {
-      padding: 96px 0 72px;
       min-height: 76vh;
+      padding: 90px 0 66px;
       display: grid;
       align-items: center;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 64px;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 58px;
       align-items: center;
     }
 
-    .eyebrow {
-      margin: 0 0 18px;
+    .eyebrow, .kicker, .chapter-code, .tag, .meta-label {
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 12px;
-      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--accent-dark);
-      font-weight: 650;
+      letter-spacing: .18em;
+      font-size: 12px;
+      font-weight: 700;
     }
+
+    .eyebrow, .kicker { color: var(--accent-dark); }
+
+    .eyebrow { margin: 0 0 18px; }
 
     h1 {
       margin: 0;
-      max-width: 860px;
-      font-size: clamp(48px, 8vw, 96px);
-      line-height: .96;
-      letter-spacing: -0.065em;
+      max-width: 900px;
+      font-size: clamp(48px, 7.4vw, 92px);
+      line-height: .98;
+      letter-spacing: -.055em;
       font-weight: 560;
     }
 
     .lead {
-      margin: 32px 0 0;
-      max-width: 720px;
-      font-size: clamp(19px, 2vw, 25px);
-      color: #2b303a;
+      margin: 30px 0 0;
+      max-width: 760px;
+      font-size: clamp(19px, 2vw, 24px);
+      color: #2c3440;
       line-height: 1.55;
     }
 
@@ -134,20 +138,20 @@
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 38px;
+      margin-top: 36px;
     }
 
     .btn {
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
       padding: 0 20px;
       border: 1px solid var(--night);
+      border-radius: 999px;
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 13px;
       letter-spacing: .04em;
-      border-radius: 999px;
       transition: transform .18s ease, background .18s ease, color .18s ease;
     }
 
@@ -158,109 +162,130 @@
 
     .btn:hover { transform: translateY(-1px); }
 
-    .card {
+    .status-panel {
+      border: 1px solid rgba(216,221,230,.95);
       background: rgba(255,255,255,.72);
-      border: 1px solid rgba(217,221,229,.95);
       box-shadow: 0 28px 80px rgba(17,24,39,.08);
-      padding: 36px;
+      padding: 32px;
     }
 
-    .axiom-card {
-      position: relative;
-      overflow: hidden;
+    .release {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 26px;
     }
 
-    .axiom-card:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(159,113,48,.13), transparent 45%);
-      pointer-events: none;
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid rgba(47,111,88,.36);
+      color: var(--green);
+      background: rgba(47,111,88,.08);
+      letter-spacing: .12em;
+      white-space: nowrap;
     }
 
-    .formula {
-      position: relative;
-      margin: 0 0 26px;
-      font-size: 38px;
-      line-height: 1.25;
-      letter-spacing: -.03em;
-    }
-
-    .caption {
-      position: relative;
+    .release h2 {
       margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1;
+      letter-spacing: -.04em;
+      font-weight: 540;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .meta {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-dark);
+      letter-spacing: .14em;
+    }
+
+    .meta strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 560;
+    }
+
+    .meta span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 14px;
-      color: var(--muted);
+      line-height: 1.55;
     }
 
-    section { padding: 86px 0; }
+    section { padding: 84px 0; }
 
     .section-head {
       display: grid;
-      grid-template-columns: .42fr 1fr;
-      gap: 56px;
+      grid-template-columns: .38fr 1fr;
+      gap: 58px;
       align-items: start;
       margin-bottom: 42px;
     }
 
-    .kicker {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      color: var(--accent-dark);
-      font-weight: 700;
-    }
+    .kicker { margin: 0; }
 
     h2 {
       margin: 0;
-      font-size: clamp(32px, 4vw, 54px);
+      font-size: clamp(32px, 4.2vw, 56px);
       line-height: 1.06;
-      letter-spacing: -.045em;
+      letter-spacing: -.04em;
       font-weight: 540;
     }
 
     .body-lg {
-      margin: 24px 0 0;
-      max-width: 780px;
+      margin: 22px 0 0;
+      max-width: 790px;
+      color: #303846;
       font-size: 19px;
-      color: #303642;
     }
 
-    .thesis {
+    .edition-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
-      margin-top: 32px;
     }
 
-    .thesis article {
-      background: rgba(255,255,255,.64);
+    .edition {
       border: 1px solid var(--line);
-      padding: 28px;
-      min-height: 230px;
+      background: rgba(255,255,255,.66);
+      padding: 30px;
+      min-height: 282px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
     }
 
-    .num {
-      display: block;
-      margin-bottom: 28px;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--accent);
-      font-size: 13px;
-      letter-spacing: .12em;
-    }
-
-    h3 {
+    .edition h3, .chapter h3, .part h3 {
       margin: 0 0 12px;
-      font-size: 24px;
-      line-height: 1.15;
-      letter-spacing: -.025em;
+      font-size: 25px;
+      line-height: 1.14;
+      letter-spacing: -.02em;
       font-weight: 560;
     }
 
-    .thesis p, .path p, .note p, footer p {
+    .edition p, .chapter p, .part p, .release-note p, footer p {
       margin: 0;
       color: var(--muted);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -268,27 +293,34 @@
       line-height: 1.75;
     }
 
+    .edition-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .edition .btn { min-height: 40px; padding: 0 15px; }
+
     .path {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
+      grid-template-columns: repeat(4, 1fr);
       border: 1px solid var(--line);
       background: rgba(255,255,255,.58);
     }
 
-    .path article {
+    .part {
       padding: 28px 24px;
+      min-height: 230px;
       border-right: 1px solid var(--line);
-      min-height: 214px;
     }
 
-    .path article:last-child { border-right: 0; }
+    .part:last-child { border-right: 0; }
 
-    .path .symbol {
+    .part .symbol {
       display: block;
-      margin-bottom: 30px;
-      font-size: 26px;
+      margin-bottom: 28px;
       color: var(--accent-dark);
+      font-size: 25px;
     }
 
     .chapters {
@@ -299,7 +331,7 @@
 
     .chapter {
       display: grid;
-      grid-template-columns: 74px 1fr;
+      grid-template-columns: 82px 1fr;
       gap: 20px;
       align-items: start;
       padding: 22px 0;
@@ -309,11 +341,8 @@
     .chapter:last-child { border-bottom: 1px solid var(--line); }
 
     .chapter-code {
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 12px;
-      letter-spacing: .18em;
       color: var(--accent-dark);
-      text-transform: uppercase;
+      letter-spacing: .14em;
     }
 
     .chapter h3 {
@@ -321,33 +350,25 @@
       margin-bottom: 8px;
     }
 
-    .chapter p {
-      margin: 0;
-      color: var(--muted);
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
     .quote-band {
       background: var(--night);
       color: white;
-      padding: 84px 0;
+      padding: 78px 0;
     }
 
     .quote-band blockquote {
       margin: 0;
-      max-width: 930px;
-      font-size: clamp(30px, 4.3vw, 58px);
-      line-height: 1.12;
-      letter-spacing: -.048em;
+      max-width: 940px;
+      font-size: clamp(30px, 4vw, 56px);
+      line-height: 1.14;
+      letter-spacing: -.045em;
       font-weight: 500;
     }
 
     .quote-band cite {
       display: block;
       margin-top: 28px;
-      color: rgba(255,255,255,.58);
+      color: rgba(255,255,255,.62);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-style: normal;
       font-size: 13px;
@@ -355,16 +376,27 @@
       text-transform: uppercase;
     }
 
-    .note {
+    .release-note {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 28px;
     }
 
-    .note .panel {
+    .release-note .panel {
       border: 1px solid var(--line);
       background: rgba(255,255,255,.7);
       padding: 30px;
+    }
+
+    .release-note h2 {
+      margin-bottom: 18px;
+      font-size: clamp(28px, 3.4vw, 44px);
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: .94em;
+      color: #27344a;
     }
 
     footer {
@@ -389,21 +421,21 @@
     }
 
     @media (max-width: 900px) {
-      .hero-grid, .section-head, .note { grid-template-columns: 1fr; }
-      .thesis { grid-template-columns: 1fr; }
+      .hero-grid, .section-head, .release-note { grid-template-columns: 1fr; }
+      .edition-grid, .chapters, .meta-grid { grid-template-columns: 1fr; }
       .path { grid-template-columns: 1fr; }
-      .path article { border-right: 0; border-bottom: 1px solid var(--line); }
-      .path article:last-child { border-bottom: 0; }
-      .chapters { grid-template-columns: 1fr; }
+      .part { border-right: 0; border-bottom: 1px solid var(--line); }
+      .part:last-child { border-bottom: 0; }
       .links { display: none; }
       .footer-grid { flex-direction: column; }
     }
 
     @media (max-width: 560px) {
       .wrap { width: min(100% - 28px, 1120px); }
-      .hero { padding: 70px 0 52px; min-height: auto; }
-      section { padding: 62px 0; }
-      .card, .thesis article, .note .panel { padding: 24px; }
+      .hero { min-height: auto; padding: 68px 0 50px; }
+      section { padding: 60px 0; }
+      .status-panel, .edition, .release-note .panel { padding: 24px; }
+      .release { align-items: flex-start; flex-direction: column; }
       .chapter { grid-template-columns: 1fr; gap: 8px; }
     }
   </style>
@@ -411,10 +443,10 @@
 <body>
   <header>
     <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Mathematics and Axiomatization home"><span class="mark">∀</span><span>Mathematical Note</span></a>
+      <a class="brand" href="#top" aria-label="Mathematics and Axiomatization home"><span class="mark">&forall;</span><span>Mathematical Note</span></a>
       <nav class="links" aria-label="Primary navigation">
-        <a href="#idea">Idea</a>
-        <a href="#logic">Logic</a>
+        <a href="#editions">Editions</a>
+        <a href="#structure">Structure</a>
         <a href="#chapters">Chapters</a>
         <a href="https://github.com/JinShuo-Li/Mathematical-Note">Repository</a>
       </nav>
@@ -426,83 +458,113 @@
       <div class="wrap hero-grid">
         <div>
           <p class="eyebrow">Mathematics and Axiomatization</p>
-          <h1>From intuition to axioms, from axioms to structure.</h1>
-          <p class="lead">A personal mathematical manuscript that reconstructs mathematical knowledge as a coherent ascent: naive understanding is disciplined by logic, secured by set-theoretic foundations, and then extended into analysis, algebra, topology, graph theory, and probability.</p>
+          <h1>A completed bilingual note on mathematics as structure.</h1>
+          <p class="lead">This repository now contains synchronized English and Chinese editions of a LaTeX manuscript that moves from logic and set-theoretic foundations into analysis, linear algebra, abstract algebra, topology, complex analysis, graph theory, and probability.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/code/splited_version/code/main.pdf">Read the manuscript</a>
+            <a class="btn primary" href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/mathnote_en.pdf">Read English PDF</a>
+            <a class="btn primary" href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/mathnote_cn.pdf">Read Chinese PDF</a>
             <a class="btn" href="https://github.com/JinShuo-Li/Mathematical-Note">View source</a>
           </div>
         </div>
-        <aside class="card axiom-card" aria-label="Project motto">
-          <p class="formula">intuition<br>→ language<br>→ axiom<br>→ theorem</p>
-          <p class="caption">The project treats mathematics not as a catalogue of results, but as an architecture of justification.</p>
+        <aside class="status-panel" aria-label="Current project status">
+          <div class="release">
+            <div>
+              <p class="eyebrow">Current release</p>
+              <h2>v1.3.0</h2>
+            </div>
+            <span class="tag">Completed</span>
+          </div>
+          <div class="meta-grid">
+            <div class="meta">
+              <span class="meta-label">Editions</span>
+              <strong>2</strong>
+              <span>English and Chinese builds share the same four-part structure.</span>
+            </div>
+            <div class="meta">
+              <span class="meta-label">Chapters</span>
+              <strong>0-9</strong>
+              <span>From foundations to undergraduate core topics and applied models.</span>
+            </div>
+            <div class="meta">
+              <span class="meta-label">Practice</span>
+              <strong>10</strong>
+              <span>Chapter-level supplements are included for both editions.</span>
+            </div>
+            <div class="meta">
+              <span class="meta-label">Build</span>
+              <strong>XeLaTeX</strong>
+              <span>Separate source trees live in <code>code_en/</code> and <code>code_cn/</code>.</span>
+            </div>
+          </div>
         </aside>
       </div>
     </section>
 
-    <section id="idea">
+    <section id="editions">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">Central idea</p>
+          <p class="kicker">Bilingual editions</p>
           <div>
-            <h2>The manuscript begins from a tension, not from a topic list.</h2>
-            <p class="body-lg">Its preface frames mathematics as a movement between two forces: the human power of intuitive pattern recognition and the demand for logically controlled certainty. The aim is therefore not merely to summarize mathematical fields, but to show how formal systems are built when intuition is no longer reliable enough.</p>
+            <h2>Two maintained versions, one mathematical route.</h2>
+            <p class="body-lg">The July 2026 update aligns the Chinese edition with the English edition: front matter, reader's guide, four thematic parts, revised chapters, practice supplements, and afterword now follow the same book-level design.</p>
           </div>
         </div>
-        <div class="thesis">
-          <article>
-            <span class="num">01</span>
-            <h3>Intuition is the origin.</h3>
-            <p>Patterns, quantities, shapes, and relationships are the first material of mathematical thought. The project preserves this origin instead of hiding it behind notation.</p>
+        <div class="edition-grid">
+          <article class="edition">
+            <div>
+              <p class="kicker">English edition</p>
+              <h3><code>code_en/</code></h3>
+              <p>The English source is the primary LaTeX build and includes revised versions of Chapters 4, 5, 6, 7, and 9, plus chapter-level exercises and selected hints.</p>
+            </div>
+            <div class="edition-actions">
+              <a class="btn primary" href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/mathnote_en.pdf">Open PDF</a>
+              <a class="btn" href="https://github.com/JinShuo-Li/Mathematical-Note/tree/main/code_en">Source</a>
+            </div>
           </article>
-          <article>
-            <span class="num">02</span>
-            <h3>Formalization is the discipline.</h3>
-            <p>Logic and axioms are introduced as mechanisms for making statements precise, transmissible, and resistant to contradiction.</p>
-          </article>
-          <article>
-            <span class="num">03</span>
-            <h3>Structure is the payoff.</h3>
-            <p>Once the axioms are fixed, the same argument can travel across models: numbers, spaces, functions, transformations, graphs, and probabilistic systems.</p>
+          <article class="edition">
+            <div>
+              <p class="kicker">Chinese edition</p>
+              <h3><code>code_cn/</code></h3>
+              <p>The Chinese source is maintained as the translated counterpart of the English build, with matching chapters, revised files, supplements, and Chinese XeLaTeX font settings.</p>
+            </div>
+            <div class="edition-actions">
+              <a class="btn primary" href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/mathnote_cn.pdf">Open PDF</a>
+              <a class="btn" href="https://github.com/JinShuo-Li/Mathematical-Note/tree/main/code_cn">Source</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="logic">
+    <section id="structure">
       <div class="wrap">
         <div class="section-head">
-          <p class="kicker">Internal logic</p>
+          <p class="kicker">Book structure</p>
           <div>
-            <h2>A five-step route through the mathematical edifice.</h2>
-            <p class="body-lg">The sequence is deliberate: first a language for judgment, then a foundation for objects, then number systems and continuity, then linear and algebraic structures, and finally spaces and uncertainty.</p>
+            <h2>The current manuscript is organized into four thematic parts.</h2>
+            <p class="body-lg">The structure begins with optional foundations, develops core undergraduate mathematics, then turns to spaces, complex structure, discrete models, and probability.</p>
           </div>
         </div>
         <div class="path">
-          <article>
+          <article class="part">
             <span class="symbol">I</span>
-            <h3>Language</h3>
-            <p>Propositions, predicates, quantifiers, equivalence, and satisfiability define what a mathematical assertion can mean.</p>
+            <h3>Optional Foundations</h3>
+            <p>Logic, proof language, naive set theory, axiomatic set theory, and ZFC as the controlled foundation for later chapters.</p>
           </article>
-          <article>
+          <article class="part">
             <span class="symbol">II</span>
-            <h3>Foundation</h3>
-            <p>Naive set theory is shown to be useful but unsafe; ZFC enters as a controlled response to paradox.</p>
+            <h3>Core Undergraduate Mathematics</h3>
+            <p>Analysis I, linear algebra, abstract algebra, and Analysis II form the main technical spine of the notes.</p>
           </article>
-          <article>
+          <article class="part">
             <span class="symbol">III</span>
-            <h3>Construction</h3>
-            <p>Number systems are extended by closure, embedding, and minimality, leading toward real and complex analysis.</p>
+            <h3>Spaces and Complex Structure</h3>
+            <p>Topology and complex analysis extend the same formal habits into spaces, continuity, analytic functions, and residues.</p>
           </article>
-          <article>
+          <article class="part">
             <span class="symbol">IV</span>
-            <h3>Abstraction</h3>
-            <p>Vector spaces, groups, rings, fields, and modules expose shared laws beneath different mathematical objects.</p>
-          </article>
-          <article>
-            <span class="symbol">V</span>
-            <h3>Extension</h3>
-            <p>Topology, graph theory, and probability test how far the same axiomatic habit can organize space, relation, and uncertainty.</p>
+            <h3>Discrete and Probabilistic Models</h3>
+            <p>Graph theory and probability close the route with relational, random, and measure-theoretic viewpoints.</p>
           </article>
         </div>
       </div>
@@ -510,8 +572,8 @@
 
     <section class="quote-band" aria-label="Editorial statement">
       <div class="wrap">
-        <blockquote>Mathematics is presented here as a living architecture: rigorous enough to resist contradiction, but incomplete enough to remain open.</blockquote>
-        <cite>After the preface: certainty, mystery, and the limits of self-verification</cite>
+        <blockquote>Mathematics is presented here as a structured ascent: intuition becomes language, language becomes axiom, and axiom becomes reusable theory.</blockquote>
+        <cite>Repository theme: Mathematics and Axiomatization</cite>
       </div>
     </section>
 
@@ -520,34 +582,38 @@
         <div class="section-head">
           <p class="kicker">Map of the notes</p>
           <div>
-            <h2>The table of contents is an argument.</h2>
-            <p class="body-lg">The chapters should be read as a scaffold. Each stage supplies the conceptual machinery required by the next.</p>
+            <h2>Every chapter has a matching practice supplement.</h2>
+            <p class="body-lg">The current build includes front matter, a reader's guide, Chapters 0 through 9, practice supplements after each chapter, and an afterword in both editions.</p>
           </div>
         </div>
         <div class="chapters">
-          <article class="chapter"><span class="chapter-code">Preface</span><div><h3>The motive</h3><p>From naive understanding to formal axiomatic systems; from certainty to the shadow of incompleteness.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapter 0</span><div><h3>Logic and notation</h3><p>Propositional logic, predicate logic, logical equivalence, quantification, and the grammar of proof.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapter 1</span><div><h3>Set-theoretic foundations</h3><p>Naive sets, Russell’s paradox, ZFC, relations, functions, ordered pairs, partitions, and measure as an early stress test.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapter 2</span><div><h3>Analysis I</h3><p>Construction and extension of number systems; the transition from calculus intuition to analysis.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapter 3</span><div><h3>Linear algebra</h3><p>Linear systems, matrices, vector spaces, dimension, transformations, and geometric intuition beyond three dimensions.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapter 4</span><div><h3>Abstract algebra</h3><p>Operations, groups, rings, fields, and modules as structures determined by axioms rather than by their surface notation.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapters 5–7</span><div><h3>Analysis, topology, complex analysis</h3><p>Series, multivariable calculus, topological spaces, connectedness, compactness, complex differentiability, integration, and residues.</p></div></article>
-          <article class="chapter"><span class="chapter-code">Chapters 8–9</span><div><h3>Applied mathematical structures</h3><p>Graphs, trees, random graphs, probability, random variables, measure-theoretic foundations, and limit theorems.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Front</span><div><h3>Preface and reader's guide</h3><p>Motivation, reading strategy, and the conceptual promise of an axiomatic approach.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 0</span><div><h3>Fundamentals</h3><p>Propositional logic, predicate logic, proof language, notation, and basic formal habits.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 1</span><div><h3>The Axioms of ALL</h3><p>Naive set theory, axiomatic set theory, ZFC, and foundational viewpoints.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 2</span><div><h3>Mathematical Analysis I</h3><p>Number systems, limits, real numbers, derivatives, integration, and improper integrals.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 3</span><div><h3>Linear Algebra</h3><p>Linear equations, matrices, determinants, vectors in Euclidean space, transformations, and abstract vector spaces.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 4</span><div><h3>Abstract Algebra</h3><p>Operations, algebraic structures, groups, rings, fields, Galois theory, and modules.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 5</span><div><h3>Mathematical Analysis II</h3><p>Series, Euclidean limits and continuity, multivariable differential calculus, and multiple integrals.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 6</span><div><h3>Topology</h3><p>Metric spaces, topological spaces, bases, closed sets, connectedness, and compactness.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 7</span><div><h3>Complex Analysis</h3><p>Complex differentiability, Cauchy-Riemann equations, contour integration, power series, singularities, and residues.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 8</span><div><h3>Graph Theory</h3><p>Graph terminology, paths, circuits, trees, forests, and random graphs.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Ch. 9</span><div><h3>Probability Theory</h3><p>Classical probability, conditional probability, random variables, measure-theoretic foundations, limit theorems, and stochastic processes.</p></div></article>
+          <article class="chapter"><span class="chapter-code">Back</span><div><h3>Afterword</h3><p>A closing reflection on what the completed route makes visible, and what remains open for further study.</p></div></article>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="wrap note">
+      <div class="wrap release-note">
         <div class="panel">
-          <p class="kicker">How to read</p>
-          <h2>Do not read it as a formula archive.</h2>
-          <p>The value of the project lies in the transitions: why logic must precede set construction, why naive set theory fails, why completeness matters for analysis, and why abstraction lets one theorem operate across many models.</p>
+          <p class="kicker">Release note</p>
+          <h2>v1.3.0 completes the bilingual alignment.</h2>
+          <p>The current repository emphasizes structural synchronization rather than a complete mathematical rewrite: both editions now share the same entry points, chapter ordering, revised-source choices, supplements, and closing material.</p>
         </div>
         <div class="panel">
-          <p class="kicker">Current status</p>
-          <h2>Almost Done.</h2>
-          <p>The repository identifies the manuscript as an evolving LaTeX project. The most accurate entry point is the split source under <code>code/splited_version/code/main.tex</code>, with the compiled PDF available in the same working tree.</p>
+          <p class="kicker">Compilation</p>
+          <h2>Build each edition with XeLaTeX.</h2>
+          <p>Run XeLaTeX twice inside <code>code_en/</code> or <code>code_cn/</code> so the table of contents, bookmarks, and cross-references are updated. The Chinese build uses <code>ctexbook</code> and Windows CJK font settings.</p>
         </div>
       </div>
     </section>
@@ -555,7 +621,7 @@
 
   <footer>
     <div class="wrap footer-grid">
-      <p>© 2026 Jinshuo Li. This landing page is a non-commercial presentation of the project and preserves attribution to the original repository.</p>
+      <p>&copy; 2026 Jinshuo Li. Licensed for non-commercial educational use under CC BY-NC-SA 4.0.</p>
       <div class="small-links">
         <a href="https://github.com/JinShuo-Li/Mathematical-Note">GitHub</a>
         <a href="https://github.com/JinShuo-Li/Mathematical-Note/blob/main/README.md">README</a>
