@@ -19,13 +19,13 @@ The ZFC material is a foundations module, not a prerequisite for ordinary calcul
 Set theory supplies a common language for modern mathematics, but it is not the only possible starting point and it should not be confused with the working content of every subject. In most undergraduate calculations, naive set notation is sufficient. Axiomatic set theory becomes important when we ask which collections are legitimate sets, how constructions are justified, or why unrestricted set formation leads to paradoxes. This chapter therefore separates practical set language from the optional study of its formal foundations.
 
 \section{The Naïve Set Theory}
-Actually, if you are a student majoring in engineering or applied mathematics, learning naïve set theory is enough for you to cover the math you need during your work and study. But we need to know that the naïve theory is basically an intuitive definition, which is not included as a part of the modern axiomatic set theory. Although we say that the naïve set theory is a really clear and useful definition of the concept “set”, we have to declare that the naïve set theory is incomplete because naïve set theory itself cannot resolve Russell's paradox. We will introduce the paradox that causes the third mathematical crisis to readers later.
+For work in engineering or applied mathematics, naïve set theory already covers most of what is needed. It should be read for what it is: an intuitive convention rather than part of modern axiomatic set theory. As a definition of ``set'' it is clear and useful, but it is also incomplete — naïve set theory cannot resolve Russell's paradox, the contradiction that triggered the third crisis in the foundations of mathematics, discussed later in this chapter.
 
 \begin{definition}[Set]
 A \textbf{set} is an unordered collection of distinct objects, called \textbf{elements} or \textbf{members} of the set. A set is said to \emph{contain} its elements. We write $a \in A$ to denote that $a$ is an element of the set $A$. The notation $a \notin A$ means $a$ is not an element of the set.
 \end{definition}
 
-The concept of set is quite simple. A set can be the container of anything, like numbers, points, other sets, even an apple can be a set. The only requirement is that the elements in a set must be distinct. For example, the set $\{1, 2, 2, 3\}$ is actually equal to the set $\{1, 2, 3\}$ because the element $2$ is repeated.
+The concept is intentionally permissive: a set may contain numbers, points, other sets, even an apple. The only requirement is that its elements be distinct — $\{1, 2, 2, 3\}$ is the same set as $\{1, 2, 3\}$, since repetition is ignored.
 
 \begin{note}
 An object can only be in one of the two states: 'belonging to $A$' or 'not belonging to $A$'; it cannot be in both states at the same time, nor can it be in neither state.
@@ -36,7 +36,7 @@ An object can only be in one of the two states: 'belonging to $A$' or 'not belon
 We say that the set $A$ is a \textbf{subset} of $B$, written $A \subseteq B$, if every element of $A$ is an element of $B$. Additionally, $A$ is a \textbf{proper subset} of $B$, written $A \subset B$, if $A \subseteq B$ and $A \ne B$.
 \end{definition}
 
-The concept of subset is quite straightforward. If all the elements in set $A$ can be found in set $B$, then $A$ is a subset of $B$. For example, $\{1, 2\} \subseteq \{1, 2, 3\}$, and $\{1, 2\} \subset \{1, 2, 3\}$. However, in later study, we will find that the concept of subset creates contradcitions in naïve set theory, which is the root cause of Russell's paradox.
+The concept of subset is equally straightforward: if every element of $A$ is found in $B$, then $A$ is a subset of $B$. For example, $\{1, 2\} \subseteq \{1, 2, 3\}$, and $\{1, 2\} \subset \{1, 2, 3\}$. In later sections, however, unrestricted set formation will produce contradictions in naïve set theory — the root cause of Russell's paradox.
 
 \begin{definition}[Equality]
 Two sets $A$ and $B$ are \textbf{equal} (i.e., they are the same set), written $A = B$, if they contain the same members.
@@ -96,7 +96,7 @@ In order to mend such a flaw present in naive set theory, countless mathematicia
 \section{The Axiomatic Set Theory}
 
 \subsection{The ZFC Axioms System}
-ZFC stands for \textbf{Zermelo-Fraenkel Set theory with the axiom of choice}, which includes 9 different axioms (numbered from ZF1 to ZF8 and AC). We will now introduce them to the readers one by one.
+ZFC stands for \textbf{Zermelo-Fraenkel Set theory with the axiom of choice}, and consists of nine axioms (ZF1 through ZF8, plus AC). They are introduced one by one below.
 
 \paragraph{Principles:}
 \begin{itemize}
@@ -311,7 +311,7 @@ We have the following conclusions:
     \item $[0,1] \subseteq \bigcup_{q \in \mathbb{Q}^*} M_q$. (For any $x \in [0,1]$, let $m \in M$ be the representative $x$ is equivalent to, so $x-m = q \in \mathbb{Q}$. Since $x,m \in [0,1]$, $q \in [-1,1]$. Thus $x = m+q \in M_q$.)
     \item $\bigcup_{q \in \mathbb{Q}^*} M_q \subseteq [-1, 2]$. (Since $M \subseteq [0,1]$ and $\mathbb{Q}^* \subseteq [-1,1]$.)
 \end{enumerate}
-Now, let's try to measure $M$. Assume $m(M) = c$.
+We now measure $M$. Assume $m(M) = c$.
 By translation invariance, $m(M_q) = m(M) = c$ for all $q \in \mathbb{Q}^*$.
 By countable additivity (since $\mathbb{Q}^*$ is countable):
 $$ m\left(\bigcup_{q \in \mathbb{Q}^*} M_q\right) = \sum_{q \in \mathbb{Q}^*} m(M_q) = \sum_{q \in \mathbb{Q}^*} c $$
