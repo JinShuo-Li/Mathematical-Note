@@ -687,9 +687,7 @@ By induction, Huffman's algorithm produces an optimal prefix-free code for any s
 
 \end{proof}
 
-We have to claim that the construction process of the Huffman coding tree itself is an implementation of Kruskal's algorithm, since at each step we are combining two trees with the smallest weights, which is equivalent to adding the smallest weight edge that connects two components in Kruskal's algorithm.
-
-Also, as we dive deeper into the processes, the construction itself is a kind of mathematical induction, since at each step we are reducing the problem size by one (combining two characters into one), and we can prove the optimality using induction as shown in the proof above.
+The construction is greedy in the same spirit as Kruskal's algorithm: at each step it combines the two lightest trees, just as Kruskal adds the lightest edge joining two components. The optimality proof above mirrors this structure --- each combination reduces the problem by one character, which is exactly the induction step.
 
 \subsection*{Graph Algorithms Implementation}
 The following Python code implements BFS, DFS, Prim's Algorithm, and Kruskal's Algorithm using adjacency matrices represented as nested lists.
