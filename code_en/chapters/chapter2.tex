@@ -15,19 +15,9 @@ By the end of this chapter, you should be able to:
 For a first pass focused on calculus, the construction of the number systems may be skimmed. The operational core begins with sequence limits, while the earlier sections explain why the real-number framework supports those arguments.
 \end{mynote}
 
-\begin{quote}
-\emph{
-We now embark on a great undertaking: building a rigorous framework for calculus. Our journey through logic and set theory has provided the tools; the ordered structures of Chapter 1 have revealed a critical insight—the rational numbers, though dense, are incomplete. They possess gaps, like the legendary irrational $\sqrt{2}$, which defy representation as a ratio.
-}
+Calculus works, but its elementary arguments borrow freely from intuition: slopes, areas, and quantities that ``approach'' values. This chapter rebuilds that intuition on precise foundations. The construction begins with the number system itself — from Peano's axioms through the completeness of $\mathbb{R}$ — because the central concept of analysis, the limit, is exactly as reliable as the number system it is stated in.
 
-\emph{
-This chapter confronts that insufficiency. We will construct the real number system, a complete, continuous tapestry woven to fill these voids. Its cornerstone is the Completeness Axiom, which guarantees that bounded sets have precise bounds, a property the rationals fatally lack.
-}
-
-\emph{
-Upon this unshakable foundation, we will erect the central pillars of analysis: the precise theory of limits, the formal definition of continuity, and the powerful machinery of the derivative and integral in the next chapter. This is the transition from intuitive calculation to profound understanding—from calculus to Analysis.
-}
-\end{quote}
+With limits in place, the chapter develops derivatives, the mean value theorems, and integration, together with the improper integrals that later chapters use repeatedly. The plan is cumulative: completeness supports limits, limits support derivatives and integrals, and each new theorem is stated with the hypotheses that make it true.
 
 \section{Extension of the Number System}
 If asked about the foundation of mathematical analysis, the answer is clear: the axiom of real numbers. In this part, we will start from Peano Axioms to form the axioms of natural numbers. And for practical purposes, we extend it to integers and rational numbers. Then, to support theorems of calculus, we construct the axioms of real numbers and complex numbers.
@@ -108,9 +98,9 @@ A set is \textbf{countable} if either it is finite or it can be made in one-to-o
 \begin{theorem}[Cantor's Theorem]
 For every non-empty set $A$, $A \prec \mathcal{P}(A)$. (That is, $|A| < |\mathcal{P}(A)|$).
 \end{theorem}
-(This implies there is no "largest" infinity.)
+In particular, no set has strictly largest cardinality: every set is strictly smaller than its power set.
 
-In section 2.3, we will know that the cardinality of the real number set $\mathbb{R}$ is $|\mathbb{R}| = |\mathcal{P}(\mathbb{N})| = 2^{\aleph_0}$, which is called the \textbf{Continuum}.
+The real numbers themselves turn out to have cardinality $|\mathbb{R}| = |\mathcal{P}(\mathbb{N})| = 2^{\aleph_0}$, called the \textbf{continuum}; the identification with the power set of $\mathbb{N}$ follows by comparing binary expansions, and we do not prove it here.
 
 \paragraph{The Continuum Hypothesis (CH)}
 Some students might be interested whether there exists any size of a set between $\aleph_0$ and $2^{\aleph_0}$. The Continuum Hypothesis (CH) is a famous conjecture that proposes there is no set $S$ such that $\aleph_0 < |S| < 2^{\aleph_0}$.
@@ -118,7 +108,7 @@ Some students might be interested whether there exists any size of a set between
 So can we determine whether it’s true or false? It was proven (by Kurt Gödel and Paul Cohen) that CH is "undecidable" within the standard ZFC foundation of mathematics. This means it can neither be proven true nor false using the accepted axioms, revealing a fundamental limitation of that system.
 
 \subsection{Integers and Rational Numbers}
-Why do we need integers and rational numbers? Why are natural numbers not enough?
+Natural numbers support addition and multiplication but not subtraction or division; the following two constructions add exactly the elements needed to close those operations.
 \begin{definition}[Closure of operation]
 Closure of operation refers to the property that when an operation is performed on members of a set, the result is always a member of the same set.
 \end{definition}
@@ -271,7 +261,7 @@ While $\mathbb{R}$ solves the completeness problem of $\mathbb{Q}$, it is not \t
 
 \paragraph{Construction of Complex Numbers}
 
-We now construct a new number field which is the biggest field we ever known in human history.
+We now carry out the final extension in this section. The result is a field in which every polynomial equation acquires a root.
 
 \begin{definition}[Complex Numbers]
 The set of \textbf{complex numbers}, denoted $\mathbb{C}$, consists of all expressions of the form $a + bi$, where $a, b \in \mathbb{R}$ and $i$ is the \textbf{imaginary unit} satisfying $i^2 = -1$. For $z = a + bi \in \mathbb{C}$:
@@ -346,66 +336,56 @@ The complex numbers provide a powerful framework for many areas of mathematics, 
     \item Develop the mathematical foundation of quantum mechanics
 \end{itemize}
 
-\section{Sequence Limit and The Properties of Real Numbers}
+\section{Sequence Limits and the Properties of Real Numbers}
 
-As long as we finished the content about real numbers, we will now move on to the the core of the mathematical analysis: the \textbf{limit}. Why I claim that the limit is the core concept of mathematical analysis? In the following content you will realize that almost all the concept has some kind of connection with limit. I can say that the limit is the basis of many theory. And the language of limit represents a dynamic, approaching, and rigorous mathematical mindset. Let us begin.
+With the number systems in place, we can define the concept on which the rest of analysis rests: the \textbf{limit}. Nearly every notion introduced from now on — continuity, the derivative, the integral, the sum of a series — is defined as some limit, so the precise quantifier language of Chapter 0 now does real work.
 
 \subsection{Definitions and Basic Properties}
-
-\subsubsection{The Definition of Limits}
 
 \begin{definition}[limit of a sequence]
 A sequence $\{a_n\}$ converges to a real number $A$ if for all $\epsilon > 0$, there exists an integer $N$ such that $|a_n - A|<\epsilon$ if $n\ge N$. The number $A$ is the limit of the sequence and we write:
 \[\lim_{n \to \infty} a_n = A\]
 \end{definition}
-Naively speaking, if the sequence $\{a_n\}$ is a \textbf{convergent sequence} and $A$ is the limit of the sequence, the value of $a_n$ become arbitrarily close to a finite number $A$. You can get any value that is anyhow closer to the convergence $A$, once you pick a big enough $n$.
+The quantifiers deserve a slow reading. Convergence to $A$ means: once the index $n$ is large enough, the terms $a_n$ lie inside every neighborhood of $A$, no matter how small. The definition fixes only the tail of the sequence — finitely many early terms never affect convergence.
 
 In a more commonly used language, if we pick an open interval in the real number line, whose center is $a$ and radius is $\epsilon$, written as $(a-\epsilon,a+\epsilon)$. We call this kind of intervals the neighborhood, denoted as $O(a,\epsilon)$:
 
 \[O(a,\epsilon)=\{x|a-\epsilon < x < a+\epsilon\}\]
 And what the definition said is that for all terms after $a_n$ fall within the $O(a,\epsilon)$. Since the neighborhood is contractive, the sequence eventually converges to $a$.
 
-However, in the contrary, if a sequence $\{a_n\}$ is not convergent, we say it is a \textbf{divergent sequence}. Rigorously speaking, if for all $\epsilon > 0$, $N \in \mathbb{N}^*$ and $A \in \mathbb{R}$, there exists at least one $n_0$, $|a_{n_0} - A| > \epsilon$.
+A sequence that does not converge is called \textbf{divergent}. Unpacking the negation of the definition: $\{a_n\}$ diverges if and only if for every candidate $A \in \mathbb{R}$ there exists an $\epsilon > 0$ such that for every $N$ there is some $n \ge N$ with $|a_n - A| \ge \epsilon$. No proposed limit survives this test.
 
-For those sequences converges to $0$, we call those sequences \textbf{infinitesimal}. 
+A sequence converging to $0$ is called \textbf{infinitesimal}.
 
 \begin{remark}
-When we talk about infinitesimal, what we are discussing about is a sequence rather than a simple number. Be clear that infinitesimal is not a number.
+``Infinitesimal'' describes a whole sequence whose terms tend to $0$; it is not the name of any single number.
 \end{remark}
 
-\subsubsection{Properties of Limits}
-
-After we define what is limit, let's take a look at it's properties.
+With the definition in hand, we can establish the basic properties of limits.
 
 \begin{theorem}[the uniqueness of limit]
 The limit of a convergent sequence must be unique.
 \end{theorem}
 \begin{proof}
-Assume there exists a sequence $\{a_n\}$ that converges to two different values $a$ and $b$, $a\neq b$. According to the definition of limit:
-
+Suppose $\{a_n\}$ converges to both $a$ and $b$ with $a \neq b$. By the definition of limit:
 \[
-\forall\epsilon>0, \exists N_1, n>N_1:|x_n - a|< \epsilon/2
+\forall\epsilon>0, \exists N_1, n>N_1:|a_n - a|< \epsilon/2
 \]
 \[
-\forall\epsilon>0, \exists N_2, n>N_2:|x_n - b|< \epsilon/2
+\forall\epsilon>0, \exists N_2, n>N_2:|a_n - b|< \epsilon/2
 \]
-Pick $N=max\{N_1,N_2\}$, according to the triangle inequality, then $\forall n>N$ we have:
-
+Pick $N=max\{N_1,N_2\}$; by the triangle inequality, $\forall n>N$ we have:
 \[
-|a-b| = |a-x_n+x_n-b| \leq |x_n-a|+|x_n-b|<\epsilon
+|a-b| = |a-a_n+a_n-b| \leq |a_n-a|+|a_n-b|<\epsilon
 \]
-Since $\epsilon$ can get arbitrarily close to $0$, we know that $a=b$ 
+Since $\epsilon$ can be chosen arbitrarily small, this forces $a=b$.
 \end{proof}
 
 \begin{theorem}
 A convergent sequence must be bounded.
 \end{theorem}
 \begin{remark}
-However, the contrapositive is not always true. A bounded sequence may not be convergent.
-
-Consider $a_n = (-1)^n$, the sequence $\{a_n\}$ bounded from $-1$ to $1$, but the sequence won't converges to any value.
-
-In the future may be we can add a stronger condition to make the $\{a_n\}$ convergent. We will introduce it in future content.
+The converse fails: a bounded sequence need not converge. For $a_n = (-1)^n$ the terms stay between $-1$ and $1$, yet the sequence does not approach any value. Adding a hypothesis — for instance monotonicity, in the next subsection — restores convergence.
 \end{remark}
 
 \begin{proof}
@@ -416,12 +396,12 @@ let $m = max\{a_1, a_2, ..., a_N, a+1\}$, $M = min\{a_1, a_2, ..., a_N, a-1\}$
 Then we have $m \leq x_n \leq M$, which means that the sequence $\{x_n\}$ is bounded.
 \end{proof}
 
-\begin{theorem}[isotonicity]
+\begin{theorem}[Preservation of Order]
 Assume we have two sequence $\{x_n\}$ and $\{y_n\}$, they converges to two different limits $a$ and $b$, and $a<b$. There exists a $N$, $\forall n>N$, $x_n<y_n$
 \end{theorem}
 
 \begin{proof}
-For two sequence $\{x_n\}$ and $\{y_n\}$ that converge to two different values $a$ and $b$. Let's assume $a>b$
+Let $\{x_n\}$ and $\{y_n\}$ converge to $a$ and $b$ with $a>b$.
 
 According to the definition of limit, we take $\epsilon = \frac{a-b}{2}$, and we have:
 
@@ -432,12 +412,12 @@ According to the definition of limit, we take $\epsilon = \frac{a-b}{2}$, and we
 \[
 \exists N_2, \forall n>N_2, |y_n-b| < \epsilon
 \]
-Thus we have: $x_n > (a+b)/2 >y_n$ , pick $N = max \{N_1,N_2\}$, then we have $\forall n > N, x_n>y_n$. Finally we can claim that the limits have the property of isotonicity.
+Thus $x_n > (a+b)/2 > y_n$; picking $N = max \{N_1,N_2\}$ gives $\forall n > N,\ x_n>y_n$, which proves the preservation of order.
 \end{proof}
 
 
 
-\begin{theorem}[the calculations' law of limits]
+\begin{theorem}[Arithmetic of Limits]
 
 Assume that there exist two limits:
 
@@ -449,45 +429,40 @@ And we have:
     \item $\lim_{n \to \infty} (\frac{x_n}{y_n}) = \frac{a}{b},(b\neq0)$
 \end{itemize}
 \end{theorem}
-We recommend the readers finish the proof above themselves.
+The proofs are routine applications of the limit definition and are left to the reader.
 
-After we finished the definition and some basic properties of the convergent sequence, we will now move on to define a special kind of not-convergent sequence: \textbf{the infinity}.
-
-\subsubsection{Infinity}
+Besides convergent sequences, one kind of divergent sequence deserves its own notation: a sequence whose terms grow without bound.
 
 \begin{definition}[Infinity]
-If we have a sequence $\{x_n\}$, for every given $G$, $G>0$, we can find $N \in \mathbb{N}$, $\forall n > N$, we have $|x_n|>G$, we call the sequence $\{x_n\}$ is a infinity, denoted as:
+A sequence $\{x_n\}$ \textbf{diverges to infinity} if for every $G>0$ there exists $N \in \mathbb{N}$ such that $\forall n > N$, $|x_n|>G$. We write:
 
 \[\lim_{n \to \infty} x_n = \infty\]
 
 \end{definition}
 
-Just like infinitesimal, infinity is also a sequence rather that a number. But in some conditions, we will deal with it as if it is a number.
+As with ``infinitesimal'', this term describes a sequence rather than a number; algebraic manipulations may treat it like a number only with care.
 
-If a infinity start to be positive from some point, we call this form of infinity the \textbf{positive infinity}. We can define what is negative infinity likewise. We denote them specially like this:
+If, from some index onward, the terms are positive, we speak of the \textbf{positive infinity}; the \textbf{negative infinity} is defined likewise. They are written:
 
 \[
 \lim_{n \to \infty} a_n = + \infty,(\lim_{n \to \infty} a_n = - \infty)
 \]
 
 \begin{theorem}
-The infinity has special relationship with the infinitesimal:
-The sequence $\{x_n\}(x_n \neq 0)$ is infinity iff $\{\frac{1}{x_n}\}$ is infinitesimal. 
+Infinite sequences and infinitesimal sequences are reciprocal: the sequence $\{x_n\}$ with $x_n \neq 0$ diverges to infinity if and only if $\{\frac{1}{x_n}\}$ is infinitesimal.
 \end{theorem}
 
 Using the definition of the limit will be enough to prove this theorem. We'll skip this part here.
 
 \begin{theorem}
-Assume $\{x_n\}$ is a infinity, if when $n>N_0$, $|y_n| \ge \delta >0$, then $\{x_n y_n\}$ is infinity.
+Let $\{x_n\}$ diverge to infinity. If $|y_n| \ge \delta >0$ for all $n>N_0$, then $\{x_n y_n\}$ diverges to infinity.
 \end{theorem}
 
 \begin{inference}
-Assume $\{x_n\}$ is infinity, $\lim_{n \to \infty} y_n = b \neq 0$, then $\{x_n y_n\}$ and $\{\frac{x_n}{y_n}\}$ are both infinity.
+Let $\{x_n\}$ diverge to infinity and $\lim_{n \to \infty} y_n = b \neq 0$. Then $\{x_n y_n\}$ and $\{\frac{x_n}{y_n}\}$ both diverge to infinity.
 \end{inference}
 
-\subsubsection{Stolz Theorem}
-
-With the help of the definitions of the limit, we can calculate various kinds of limits using algebraic techniques and the definition of limit. But when we face certain forms of limit like $\frac{0}{0}$ and $\frac{\infty}{\infty}$, they are especially tricky to deal with. But with the help of \textbf{Stolz theorem} we are going to introduced now, it will be much easier to deal with them (in some occasions).
+Algebraic techniques and the definition handle many limits directly, but quotients tending to $\frac{0}{0}$ or $\frac{\infty}{\infty}$ resist such treatment. The \textbf{Stolz theorem} below — the sequence analogue of L'Hôpital's rule — settles many of these cases.
 
 \begin{definition}[Increasing Sequence]
 If a sequence $\{x_n\}$ satisfies: $x_n \leq x_{n+1}, n=1,2,3\cdots$, we will call it \textbf{the monotone increasing Sequence}. Similarly, if $\forall n \in \mathbb{N}$, $x_n < x_{n+1}$, we call it the \textbf{strict monotone increasing sequence}.
@@ -505,8 +480,8 @@ Then we have that:
 \end{theorem}
 
 \begin{proof}
-Let's consider the condition when $a=0$.
-Because $\lim_{n \to \infty} \frac{x_n -x_{n-1}}{y_n-y_{n-1}}=0$, according to the definition of limit, we know that:
+Consider first the case $a=0$.
+Since $\lim_{n \to \infty} \frac{x_n -x_{n-1}}{y_n-y_{n-1}}=0$, the definition of limit gives:
 
 \[
 \forall\epsilon > 0, \exists N_1,\forall n> N_1:|x_n-x_{n-1}|<\epsilon(y_n-y_{n-1})
@@ -533,11 +508,11 @@ And, for a fixed $N_1$, we can pick $N>N_1$, $\forall n >N: |\frac{x_{N_1}}{y_n}
 
 For other conditions: if $a$ is a bounded value, and $a \neq 0$, let ${x_n}'=x_n-ay_n$, and with the help of the proof above, we can reach the conclusion.
 
-When $a=+\infty$, We take the reciprocal of $\frac{x_n}{y_n}$. Similarly, it is not difficult to reach a conclusion.
+When $a=+\infty$, apply the same argument to the reciprocals; the conclusion follows similarly.
 
 \end{proof}
 
-We will see something very similar to the \textbf{Stolz theorem}, that is the \textbf{L'Hospital law}. There are many similarity between functions and sequences. We will see more examples in future chapters.
+The \textbf{L'Hospital rule} for functions is the close analogue of the Stolz theorem; the parallel between sequences and functions will recur throughout this chapter.
 
 
 \subsection{Convergence Criteria and the Properties of the Real Number System}
@@ -546,7 +521,7 @@ Before we discuss more advanced concepts in analysis (such as derivatives and in
 
 \subsubsection{The Completeness of the Real Number System}
 
-The completeness of the real number system can be expressed in several equivalent ways. Let's take a review. (The proof is in section 2.1.3)
+The completeness of the real number system can be expressed in several equivalent ways (see Section 2.1 for the construction).
 
 \begin{theorem}[The Completeness Axiom]
 \label{thm:completeness_en}
@@ -607,10 +582,10 @@ A sequence $\{x_n\}$ is called a \textbf{Cauchy Sequence} if:
 Intuitively, a Cauchy sequence is one whose terms become arbitrarily close to each other in the "tail" of the sequence.
 \end{definition}
 
-Before proving the Cauchy Criterion, we need a key lemma, which is itself an important consequence of the Completeness Axiom. And we also need to introduce a key concept called \textbf{subsequence} to introduced the Bolzano- Weierstrass Theorem.
+Before proving the Cauchy Criterion, we need one consequence of the Completeness Axiom — the Bolzano--Weierstrass Theorem — and for it, one piece of notation.
 
 \begin{definition}[Subsequence]
-    Assume we have a strict increasing monotone sequence$\{k_n\}$ and a "mother" sequence $\{a_n\}$:
+    Let $\{k_n\}$ be a strictly increasing sequence of natural numbers and let $\{a_n\}$ be the original sequence:
     \[
     k_1, k_2, \cdots, k_n, k_{n+1}, \cdots
     \]
@@ -695,7 +670,7 @@ This direction relies critically on the completeness of $\mathbb{R}$.
         \item Since $\lim_{k \to \infty} x_{n_k} = L$, $\exists K, \forall k > K: |x_{n_k} - L| < \frac{\epsilon}{2}$.
     \end{itemize}
     We need to find an $N$ such that $\forall n > N: |x_n - L| < \epsilon$.
-    Let's choose $N = N_2$. Then, we pick a single index $n_k$ from the subsequence such that $k > K$ and $n_k > N_2$. (This is always possible since $n_k \to \infty$ as $k \to \infty$).
+    Choose $N = N_2$. Then, we pick a single index $n_k$ from the subsequence such that $k > K$ and $n_k > N_2$. (This is always possible since $n_k \to \infty$ as $k \to \infty$).
     
     Now, for any $n > N_2$, we have:
     \[
@@ -709,13 +684,11 @@ This direction relies critically on the completeness of $\mathbb{R}$.
 \end{enumerate}
 \end{proof}
 
-\section{Derivatives and Related Theorem}
+\section{Derivatives and Related Theorems}
 
 \subsection{Derivatives and Differentials}
 
 Having studied limits of sequences and functions, we now turn to the central concept of differential calculus: the derivative. The derivative is the tool for studying the \textit{rate of change} of a function.
-
-\subsubsection{The Concept of the Derivative}
 
 \begin{definition}[Derivative]
 Let the function $f$ be defined in some neighborhood of a point $x_0$. If the limit
@@ -793,19 +766,17 @@ We check the left-hand and right-hand limits:
 Since the left and right limits are not equal, the limit does not exist. $f(x) = |x|$ is not differentiable at $x=0$.
 \end{example}
 
-Using the definition to calculate the differentiation is complex. It's worth remembering the expression of the differenciation of some commonly used functions.
+Computing derivatives directly from the definition is laborious, so the standard derivatives are worth committing to memory.
 
-\subsubsection{Differentiation Rules}
-
-Here are some basic rules for differentiation:
+Four rules generate most derivatives from the standard ones:
 \begin{itemize}
     \item Sum: $(u\pm v)'=u'\pm v'$.
     \item Product: $(uv)'=u'v+uv'$.
     \item Quotient: $(\frac{u}{v})'=\frac{u'v-uv'}{v^2}$.
-    \item Composition: $f'[g(x)]=f'(u) \cdot g'(x), u = g(x)$.
+    \item Composition: $(f\circ g)'(x) = f'(g(x))\cdot g'(x)$.
 \end{itemize}
 
-We (omit here) the proofs for basic differentiation rules (sum, product, quotient), but we will provide a rigorous proof for the Chain Rule.
+The proofs of the sum, product, and quotient rules are routine inductions from the limit laws; we omit them here, but prove the Chain Rule in full, since its proof requires a trick worth knowing.
 
 \begin{theorem}[The Chain Rule]
 Let $u = g(x)$ be differentiable at $x$, and let $y = f(u)$ be differentiable at $u = g(x)$.
@@ -850,13 +821,11 @@ Therefore,
 \end{proof}
 
 
-\subsubsection{Higher Derivative}
-
 \begin{definition}[Second Derivative]
-Likewise, if the differentiation of a function is differentiable, and we differentiate the differentiation, we get the second derivative of the function, and we call it differentiable for second order.
+If $f'$ is itself differentiable, its derivative $f''$ is called the \textbf{second derivative} of $f$, and $f$ is said to be twice differentiable.
 \end{definition}
 
-Similarly, we can define what is n-th derivative of the function $f(x)$, and we call the $f(x)$ n-th differentiable if the n-th derivative exists. The n-th derivative of $f(x)$ can be denoted as: $f^{(n)}(x)$ or $f^{(n)}$.
+Iterating gives the $n$-th derivative $f^{(n)}$, defined whenever each preceding derivative exists. Leibniz's theorem extends the product rule to this setting:
 
 \begin{theorem}[Leibniz theorem]
 If $u$ and $v$ are two functions that are differentiable up to $n$ times, the n-th derivative of their product can be expressed as:
@@ -866,9 +835,7 @@ If $u$ and $v$ are two functions that are differentiable up to $n$ times, the n-
 
 \end{theorem}
 
-The Leibniz formula solves the higher-order derivative of a product. For the derivatives of other operations, they can be easily derived from the preceding content.
-
-\subsubsection{The Differential}
+Higher derivatives of sums, quotients, and compositions follow from the rules above.
 
 The derivative $f'(x_0)$ is a number, representing the rate of change. The differential provides a linear approximation.
 
@@ -903,8 +870,6 @@ When $\Delta x$ is small, $dy \approx \Delta y$. This provides the basis for lin
 \subsection{Mean Value Theorems and L'Hôpital's Rule}
 
 The Mean Value Theorems are the bridge connecting the derivative of a function to its values, and they are the theoretical foundation for applications of differential calculus.
-
-\subsubsection{Mean Value Theorems}
 
 We begin with a necessary lemma.
 
@@ -1054,8 +1019,6 @@ Since $g'(x) \neq 0$, we know $g'(\xi) \neq 0$. We also know $g(a) \neq g(b)$. W
 \frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(\xi)}{g'(\xi)}
 \]
 \end{proof}
-
-\subsubsection{L'Hôpital's Rule}
 
 Cauchy's Mean Value Theorem is the key to proving L'Hôpital's Rule, which is used to evaluate indeterminate forms of type $\frac{0}{0}$ and $\frac{\infty}{\infty}$.
 
@@ -1353,7 +1316,7 @@ We need to answer this question because in many cases, we need to figure out the
 \end{cases}
 \]
 
-If we want to know the expression of $p(t)$, we need to use the knowledge and methods of integration. But because it's too simple, many readers can simply guess the answer: that is $p(t)=p_0 \cdot e^{\lambda x}$. But how about a more complex condition? Considering the model of logistic growth:
+Solving $p'(t) = \lambda p(t)$ by integration gives $p(t)=p_0 \cdot e^{\lambda t}$; the reader should verify this by differentiation. A more interesting model complicates the right-hand side — the logistic law of growth:
 
 \[
 \begin{cases}
@@ -1500,7 +1463,7 @@ Rearranging this gives the integration by parts formula. In the more compact dif
 The key to this method is to split the integrand into two parts, $u$ and $dv$, such that the new integral, $\int v \, du$, is simpler to solve than the original. The real magic of using integration by parts is to use the $u'$ to eliminate something.
 
 \paragraph*{Example:}
-Let's compute $\int x \cos(x) dx$.
+We compute $\int x \cos(x)\,dx$.
 
 We must choose $u$ and $dv$. A good choice is:
 \begin{itemize}
@@ -1573,7 +1536,7 @@ R(x) = \sum_{j=1}^{\alpha} \frac{A_j}{(x-a)^j} + \sum_{j=1}^{\beta} \frac{B_j}{(
 This factorization is unique for all proper rational fractions.
 \end{lemma}
 
-And it's easy to deduce that:
+From these relations it follows that:
 \[
 \int \frac{mx+n}{x^2 + px + q} dx = \frac{m}{2} \ln |x^2 + px + q| + \frac{2n-mp}{\sqrt{4q - p^2}} \arctan \frac{2x + p}{\sqrt{4q - p^2}} + C (q > \frac{p^2}{4})
 \]
@@ -1756,7 +1719,7 @@ And now we are going to prove that $L = \inf \{\overline{S}(P)|\overline{S}(P) \
 
 \begin{proof}
 We shall only present the proof of the Darboux upper sum. The situation of the Darboux lower sum is likewise.
-The basic idea is to use the $\epsilon - \delta$ language, select a Darboux upper sum that satisfy the limit's condition, and prove that $\forall P, \lambda = \max_{1 \leq i \leq n} (\Delta x_i) < \delta$, we have that $0 \leq \overline{S}(P)-L < \epsilon$.
+The basic idea is to work in $\epsilon$-$\delta$ language: select a Darboux upper sum meeting the limit condition, and prove that for every partition $P$ with $\lambda = \max_{1 \leq i \leq n} (\Delta x_i) < \delta$ we have $0 \leq \overline{S}(P)-L < \epsilon$.
 Now, assume we have partition $P'$ that satisfy $0 \leq \overline{S}(P') - L < \frac{\epsilon}{2}$. And:
 \[P' : a = x_0' <x_1' < x_2' < \cdots < x_p' = b\]
 We pick $\delta = \min \{\Delta x_1', \Delta x_2', \cdots , \Delta x_p', \frac{\epsilon}{2(p-1)(M-m)}\}$.
@@ -2156,11 +2119,11 @@ This integral requires analysis of both singularity and infinite bounds.
 \end{itemize}
 \textbf{Conclusion:} The integral converges for $s > 0$.
 
-At the end of this chapter, let's use the knowledge we learned to solve an interesting problem: the Gabriel's Horn.
+We close the chapter with a classical surprise: Gabriel's Horn.
 
 Considering we have a horn, whose cross section is a circle but longitudinal section is function $y = \frac{1}{x}, x \in (1,\infty)$.
 
-Let's first calculate the volume of the horn:
+First, the volume of the horn:
 
 \[V = \pi \int_{1}^{+\infty} (\frac{1}{x})^2 dx = \pi [-\frac{1}{x}]_{1}^{+\infty} = \pi\]
 
