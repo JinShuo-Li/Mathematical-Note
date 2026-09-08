@@ -13,15 +13,13 @@ By the end of this chapter, you should be able to:
 
 \section{Introduction to Graph Theory}
 
-Graph theory is the study of mathematical structures used to model pairwise relations between objects. It provides the theoretical foundation for analyzing networks, data structures, scheduling, optimization, and computational complexity. This chapter establishes rigorous definitions of graph-theoretic structures and provides detailed proofs for central theorems concerning connectivity, planarity, and traversability.
+A graph records nothing but objects and the pairwise relations between them — and that minimal vocabulary models networks, schedules, data structures, and processes of all kinds. The chapter develops the core of the theory: the basic definitions, paths and circuits, trees, and finally random graphs. The central theorems on connectivity, traversability, and thresholds are proved rather than stated.
 
 \subsection{Basic Concepts and Classification}
 
-This section covers the fundamental building blocks of graph theory, including definitions, representations, connectivity, and specific classifications of graphs.
+Everything later in the chapter is assembled from a handful of notions: what a graph is, how it can be encoded, how connected it is, and which standard shapes it takes.
 
-\subsubsection{Fundamental Definitions and Theorems}
-
-We begin by distinguishing between different types of graph structures based on the nature of their edges.
+The type of a graph is determined by what its edges are allowed to be.
 
 \begin{definition}[Simple Graph]
 A \textbf{simple graph} $G = (V, E)$ consists of a non-empty finite set of vertices $V$ and a set $E$ of 2-element subsets of $V$ (unordered pairs of distinct vertices). In a simple graph, there are no loops (edges connecting a vertex to itself) and no multiple edges (more than one edge between the same pair of vertices).
@@ -61,7 +59,7 @@ Thus, the sum of degrees equals twice the number of edges.
 Two graphs $G = (V, E)$ and $H = (W, F)$ are \textbf{isomorphic} if there exists a bijection $f: V \to W$ such that $\{u, v\} \in E$ if and only if $\{f(u), f(v)\} \in F$.
 \end{definition}
 
-Just like isotope in chemistry, isomorphic graphs are structurally identical, differing only in the labeling of vertices.
+Just as isotopes in chemistry are the same element differing only in neutron count, isomorphic graphs are structurally identical, differing only in the labeling of vertices.
 
 \begin{theorem}[Isomorphism Invariants]
 If two graphs are isomorphic, they must have:
@@ -124,7 +122,7 @@ The \textbf{incidence matrix} $M$ of a graph with $n$ vertices and $m$ edges is 
 
 Connectivity measures the resilience of a graph.
 
-\begin{definition}[Paths of undirected Graphs]
+\begin{definition}[Paths in Undirected Graphs]
 A path of length $n,(n \geq 0)$ from $u$ to $v$ in an undirected graph $G=(V,E)$ is a finite sequence of vertices $u = v_0, v_1, v_2, \ldots, v_n = v$ such that each set pair $\{v_{i-1}, v_i\}$ is an edge in $E$.
 \end{definition}
 
@@ -172,21 +170,24 @@ For any graph $G$, the vertex connectivity $\kappa(G)$, edge connectivity $\lamb
 \end{theorem}
 
 \begin{proof}
-\textbf{Part 1: $\lambda(G) \le \delta(G)$}
-Let $v$ be a vertex with minimum degree $\delta(G)$. The set of edges incident to $v$ forms an edge cut separating $v$ from the rest of the graph (assuming $n > 1$). This cut has size $\delta(G)$. Since $\lambda(G)$ is the size of the \textit{minimum} edge cut, $\lambda(G) \le \delta(G)$.
+\textbf{Part 1: $\lambda(G) \le \delta(G)$.}
+If $G$ is trivial the inequality is immediate. Otherwise, let $v$ be a vertex of minimum degree $\delta(G)$. Deleting the $\delta(G)$ edges incident with $v$ isolates $v$ from the rest of the graph, so some edge cut has size $\delta(G)$, and the \textit{minimum} edge cut is no larger: $\lambda(G) \le \delta(G)$.
 
-\textbf{Part 2: $\kappa(G) \le \lambda(G)$}
-Consider a minimum edge cut $[S, \bar{S}]$ consisting of $\lambda(G)$ edges.
+\textbf{Part 2: $\kappa(G) \le \lambda(G)$.}
+If $G$ is disconnected then $\kappa(G) = \lambda(G) = 0$ and there is nothing to prove, so assume $G$ connected. Let $[S, \bar{S}]$ be a minimum edge cut of $\lambda(G)$ edges; removing it leaves exactly two components, on vertex sets $S$ and $\bar{S}$.
 \begin{itemize}
-    \item \textbf{Case A:} If every vertex in $S$ is adjacent to every vertex in $\bar{S}$, then $\lambda(G) = |S||\bar{S}|$. In this case, removing all vertices in $S$ (or $\bar{S}$, whichever is smaller) disconnects the graph (or leaves a trivial graph). Since $|S| \le |S||\bar{S}|$ (assuming non-trivial sets), the inequality holds.
-    \item \textbf{Case B:} If not all edges exist between $S$ and $\bar{S}$, there exist $x \in S$ and $y \in \bar{S}$ such that $\{x, y\} \notin E$. We construct a vertex cut. For every edge $e = \{u, v\}$ in the edge cut, choose the endpoint that belongs to $S$ (or consistently $\bar{S}$). Let $T$ be this set of vertices. Removing $T$ breaks all paths between $S \setminus T$ and $\bar{S}$. We can optimize this selection: strictly speaking, Menger's Theorem or a direct construction shows that a vertex cut of size $\le \lambda(G)$ exists.
+    \item \textbf{Case A: every vertex of $S$ is adjacent to every vertex of $\bar{S}$.}
+    Then $\lambda(G) = |S||\bar{S}| \ge \min(|S|, |\bar{S}|)$, and deleting all vertices of the smaller side disconnects $G$ (or reduces it to a single vertex). Hence $\kappa(G) \le \min(|S|, |\bar{S}|) \le \lambda(G)$.
+    \item \textbf{Case B: some $x \in S$ and $y \in \bar{S}$ are non-adjacent.}
+    From each cut edge choose exactly one endpoint: for an edge incident with $x$, choose the $\bar{S}$-endpoint; for an edge incident with $y$, choose the $S$-endpoint; for each remaining cut edge, choose either endpoint. Let $T$ be the chosen set, so $|T| \le \lambda(G)$, and note that $x, y \notin T$.
+    Every $x$--$y$ path must cross from $S$ to $\bar{S}$ along some cut edge $e$, and in crossing it visits both endpoints of $e$ — one of which was placed in $T$. So every $x$--$y$ path meets $T$, while $x$ and $y$ themselves survive in $G - T$. Thus $G - T$ is disconnected, and $T$ is a vertex cut of size at most $\lambda(G)$.
 \end{itemize}
-Thus, $\kappa(G) \le \lambda(G)$.
+In both cases $\kappa(G) \le \lambda(G)$, which completes the proof.
 \end{proof}
 
 \subsubsection{Special Graph Classes}
 
-In this part we will introduce some special classes of graphs along with their properties.
+A few classes of graphs recur so often that they carry their own names.
 
 \paragraph{Complete Graphs}
 \begin{definition}
@@ -211,7 +212,7 @@ Another important class of graphs is bipartite graphs. They are widely used in m
 A \textbf{bipartite graph} is a graph $G = (V, E)$ where the vertex set $V$ can be partitioned into two disjoint sets $X$ and $Y$ such that every edge in $E$ connects a vertex in $X$ to a vertex in $Y$. There are no edges between vertices within the same set.
 \end{definition}
 
-A wonderful property of bipartite graphs is defined by the concept of matchings. A matching is a set of edges without common vertices.
+Bipartite graphs are the natural habitat of matchings — sets of edges no two of which share a vertex.
 
 \begin{definition}
 A \textbf{matching} in a graph $G = (V, E)$ is a subset of edges $M \subseteq E$ such that no two edges in $M$ share a common vertex. A maximal matching is a matching with the largest number of edges.
@@ -238,7 +239,7 @@ While a closed walk is not a simple cycle, a closed odd walk \textit{must} conta
 Thus, no edges exist within $X$ (similarly for $Y$). $G$ is bipartite.
 \end{proof}
 
-There is a famous theorem regarding matchings in bipartite graphs, known as Hall's Marriage Theorem. The theorem provides a necessary and sufficient condition for the existence of a perfect matching that saturates one part of the bipartition.
+The central result on matchings in bipartite graphs is Hall's Marriage Theorem, which gives a necessary and sufficient condition for a matching that saturates one part of the bipartition.
 
 \begin{theorem}[Hall's Marriage Theorem]
 Let $G = (X, Y, E)$ be a bipartite graph. There exists a matching that saturates $X$ if and only if for every subset $S \subseteq X$, $|N(S)| \ge |S|$, where $N(S)$ denotes the set of neighbors of vertices in $S$.
@@ -331,7 +332,7 @@ Every planar graph is 4-colorable.
 
 \section{Paths and Circuits}
 
-In graph theory, paths and circuits are fundamental concepts that describe ways to traverse a graph. A path is a sequence of vertices connected by edges, while a circuit is a closed path that starts and ends at the same vertex. This section explores key theorems related to Eulerian circuits and Hamiltonian cycles, providing rigorous proofs for each. We shall pay special attention to two special types of traversals: Eulerian circuits, which cover every edge exactly once, and Hamiltonian cycles, which visit every vertex exactly once.
+A path traverses vertices along edges; a circuit returns to its start. Two traversal problems organize this section: covering every \emph{edge} exactly once (Eulerian circuits) and visiting every \emph{vertex} exactly once (Hamiltonian cycles). The first admits a clean characterization; the second, famously, does not.
 
 \subsection{Eulerian Circuits}
 
@@ -411,7 +412,7 @@ This cycle visits every vertex exactly once, making $G^*$ Hamiltonian, which is 
 
 \section{Trees and Forests}
 
-Trees and forests are fundamental structures in graph theory with numerous applications in computer science, biology, and network design. A tree is a connected acyclic graph, while a forest is a disjoint union of trees. This section explores the properties and characterizations of trees and forests, providing rigorous definitions and theorems.
+A tree is a connected graph with no cycles, and a forest is a disjoint union of trees. These are the minimal graphs that still hold things together — the reason they appear everywhere from file systems to phylogenetics. This section develops their characterizations, together with the spanning trees that carry the idea to arbitrary graphs.
 
 \subsection{Definitions and Characterization}
 
@@ -996,7 +997,7 @@ Connectivity thresholds in random graphs provide baseline models for robustness 
 Random graph models are used to study disease spread in populations, where vertices represent individuals and edges represent contacts.
 
 \subsection{Conclusion and Future Directions}
-Random graph theory offers a powerful mathematical framework for studying complex networks. Although classical models like $G(n,p)$ differ from real-world networks in certain statistical properties (e.g., degree distribution, clustering), they remain foundational. Current research directions include:
+The $G(n,p)$ model is deliberately simple, and real networks deviate from it in degree distribution, clustering, and dependence structure. Its value is as a baseline: the deviations become the signals. Current research directions include:
 \begin{itemize}
 \item Developing more realistic random graph models
 \item Studying dynamic random graph processes
