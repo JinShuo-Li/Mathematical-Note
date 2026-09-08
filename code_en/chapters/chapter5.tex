@@ -11,7 +11,7 @@ By the end of this chapter, you should be able to:
 \end{itemize}
 \end{learningobjectives}
 
-Now we will move on to another part of the analysis, which is Mathematical Analysis II. In this chapter, we will study the properties of functions of several variables, including limits, continuity, differentiability, and integrability. We will also introduce the concept of vector-valued functions and study their properties. This chapter will provide a solid foundation for further studies in multivariable calculus, differential equations, and mathematical physics.
+Analysis II carries the limit concept from sequences of numbers to functions of several variables, and the chapter runs on one idea in three settings. For series of functions, the question is whether a limit of functions is itself well-behaved; uniform convergence is the notion that makes interchange of limits legitimate. In Euclidean space, limits must control every direction of approach at once, and the norm structure of $\mathbb{R}^n$ provides that control. In differential and integral calculus, these limits become tangent approximations — governed by the little-$o$ condition of differentiability — and accumulated quantities over regions. The later sections on implicit functions, extrema, and multiple integrals apply these three definitions in turn.
 
 \section{Series}
 
@@ -19,8 +19,6 @@ Now we will move on to another part of the analysis, which is Mathematical Analy
 The key idea of this section is that an infinite series is not an infinite act of addition performed all at once. It is a limit process. We add finitely many terms, obtain a sequence of partial sums, and then ask whether that sequence stabilizes. This distinction is essential: the behavior of the terms $a_n$ alone is not enough; what matters is the accumulated behavior of the partial sums.
 
 Many convergence tests can be understood as methods for comparing partial sums with simpler objects. Positive series are controlled by monotonicity and boundedness. Alternating series are controlled by cancellation. Dirichlet and Abel tests are controlled by bounded oscillation multiplied by monotone decay. Uniform convergence of function series adds one more layer: the stabilization must occur at the same speed for every point in the domain.
-
-Series are an essential concept in mathematical analysis, providing a way to represent functions as sums of simpler components. They are widely used in various fields, including physics, engineering, and economics, to model complex phenomena and solve problems.
 
 \subsection{Numerical Series}
 
@@ -56,7 +54,7 @@ Let $E$ be the set of all limit points of a sequence $\{x_n\}$. The \textbf{uppe
 A sequence $\{x_n\}$ converges to $L$ (possibly $\pm \infty$) if and only if $\limsup x_n = \liminf x_n = L$.
 \end{theorem}
 
-This theorem is really obvious: if the sequence converges, then all its subsequences converge to the same limit, so the set of limit points is just $\{L\}$, and both $\limsup$ and $\liminf$ equal $L$. Conversely, if $\limsup$ and $\liminf$ coincide at $L$, then all limit points are $L$, which means every subsequence has a further subsequence converging to $L$, forcing the whole sequence to converge to $L$.
+The theorem is immediate: if the sequence converges, then all its subsequences converge to the same limit, so the set of limit points is just $\{L\}$, and both $\limsup$ and $\liminf$ equal $L$. Conversely, if $\limsup$ and $\liminf$ coincide at $L$, then all limit points are $L$, which means every subsequence has a further subsequence converging to $L$, forcing the whole sequence to converge to $L$.
 
 \begin{property}
 For any two sequences $\{x_n\}$ and $\{y_n\}$:
@@ -196,9 +194,13 @@ Also, we can use the integral test to determine the convergence of improper inte
     Therefore, $a_n = I_1 + I_2 > \frac{1}{2(n+1)^4 \pi^3}$. Since the series $\sum \frac{1}{n^4}$ converges, by the comparison test, the series $\sum a_n$ converges. Hence, by the integral test, the integral $\int_{0}^{+\infty} \frac{dx}{1 + x^4 \sin^2 x}$ converges.
 \end{example}
 
-\paragraph{A Quick Detour: Upper and Lower Limits ($\limsup$ and $\liminf$)}
+\paragraph{Reminder on $\limsup$ and $\liminf$}
 Sometimes sequences refuse to settle down and bounce around like a hyperactive kangaroo. When a classic limit doesn't exist, we track their extreme accumulation points instead. These are the \textbf{Limit Superior} ($\limsup_{n \to \infty} x_n$) and \textbf{Limit Inferior} ($\liminf_{n \to \infty} x_n$). 
-A quirky feature of these is their arithmetic—it's not your standard algebra! For example, $\limsup (x_n + y_n) \le \limsup x_n + \limsup y_n$. They only strictly obey the equals sign when one of the sequences actually converges. Keep this in mind when Cauchy drops a $\limsup$ on you!
+The arithmetic of upper and lower limits is subadditive rather than exact: for instance,
+\[
+    \limsup (x_n + y_n) \le \limsup x_n + \limsup y_n,
+\]
+with equality guaranteed only when at least one of the sequences converges. This one-sided behavior is exactly what the comparison tests exploit.
 
 \paragraph{Ratio and Root Tests}
 These are the most commonly used tests for computation.
@@ -309,7 +311,7 @@ This highlights the dangerous nature of conditional convergence: the order of su
 \end{theorem}
 
 \subsubsection{Product of Series}
-Now we shall dive into the topic of multiplying two series together. We have following definition:
+Multiplying two series together — the Cauchy product — is subtle because partial sums of different lengths are involved. The definition is:
 
 \begin{definition}
     Assume we have two series $\sum_{n=1}^{\infty} a_n$ and $\sum_{n=1}^{\infty} b_n$. Their \textbf{Cauchy Product} is defined as the sum of this following elements:
@@ -378,9 +380,9 @@ Thus the Cauchy product converges absolutely to $AB$, and every rearrangement ha
 
 Just like series, we call $P_N$ the $N$-th partial product of the infinite product.
 
-Mind that if the infinite product "converges to zero", we still say it diverges. We will see why in the following theorem.
+One convention needs justification: an infinite product whose value tends to $0$ is still said to diverge. The reason appears in the following theorem.
 
-Here are some properties of infinite products:
+The basic properties of infinite products parallel those of series:
 
 \begin{theorem}
     If the infinite product $\prod_{n=1}^{\infty} a_n$ converges to a non-zero limit, then $\lim_{n \to \infty} a_n = 1$.
@@ -394,7 +396,7 @@ Sometimes, it is easier to study the convergence of infinite products by express
 \prod_{n=1}^{\infty} p_n = \prod_{n=1}^{\infty} (1 + a_n)
 \]
 
-Let's go back to the question of why we say the infinite product diverges if it converges to zero. This is because of the following theorem:
+The convention is now justified by the following theorem:
 
 \begin{theorem}
     Assume $a_n > -1$ for all $n$. The infinite product $\prod_{n=1}^{\infty} (1 + a_n)$ converges to a non-zero limit if and only if the series $\sum_{n=1}^{\infty} \ln(1 + a_n)$ converges.
@@ -425,9 +427,7 @@ When $n \to \infty$, we have the famous approximation:
 
 \subsection{Function Series}
 
-Function series generalize numerical series by summing functions instead of numbers. They are crucial for representing functions as power series, Fourier series, etc.
-
-Now we will broaden our discussion to series of functions. Consider a sequence of functions $\{f_n(x)\}$ defined on a set $E \subseteq \mathbb{R}$. We define the series of functions as:
+A function series sums functions instead of numbers, and with that one change a new question appears: the partial sums may converge at every point yet still misbehave as functions. Power series and Fourier series are the motivating examples, and uniform convergence is the tool that controls the misbehavior. Let $\{f_n(x)\}$ be a sequence of functions defined on a set $E \subseteq \mathbb{R}$. The series of functions is:
 
 \begin{definition}[Function Series]
 A \textbf{function series} is an expression of the form:
@@ -478,11 +478,11 @@ The limit function is:
 Although each $f_n$ is continuous, the limit function $f$ is \textbf{discontinuous}. Pointwise convergence fails to preserve continuity.
 \end{example}
 
-But wait, there's more! Let's look at more instances where pointwise convergence absolutely ruins our calculus dreams:
+Further instances show pointwise convergence breaking the interchange of limit with derivative and with integral:
 
 \begin{example}[Calculus Goes Bonkers]
 Consider the sequence $S_n(x) = nx(1-x^2)^n$ on $[0,1]$.
-For any $x \in [0, 1]$, the pointwise limit is clearly $S(x) = 0$. You would logically expect the integral to be $0$, right? But let's actually integrate the sequence:
+For any $x \in [0, 1]$, the pointwise limit is $S(x) = 0$, so exchanging limit and integral would give $0$. Computing the integrals shows otherwise:
 \[ \int _0^1 S_n(x) dx = \int_0^1 nx(1-x^2)^n dx = -\frac{n}{2} \int_0^1 (1-x^2)^n d(1-x^2) = \frac{n}{2(n+1)} \to \frac{1}{2} \]
 Pointwise convergence just watched the integral become $1/2$ and basically said "I'll pretend I didn't see that."
 \end{example}
@@ -530,7 +530,7 @@ If you can find even one sequence $\{x_n\}$ where the limit is not zero, uniform
 
 \begin{example}
 Consider $f_n(x) = \left(1+\frac{x}{n}\right)^n$ on $[0,+\infty)$. The pointwise limit is famously $f(x) = e^x$. 
-Does it converge uniformly? Let's pick a moving target sequence $x_n = n$. The distance becomes:
+Uniformity fails: along the moving targets $x_n = n$ the distance becomes:
 \[ |f_n(x_n) - f(x_n)| = \left| \left(1+\frac{n}{n}\right)^n - e^n \right| = |2^n - e^n| \to +\infty \]
 Uniform convergence practically left the chat. (However, note that it does converge uniformly on any bounded interval $[0, t]$!)
 \end{example}
@@ -541,7 +541,7 @@ Uniform convergence practically left the chat. (However, note that it does conve
 
 Compact convergence is weaker than uniform convergence on the entire set $E$, but stronger than pointwise convergence. For open sets or unbounded domains where global uniform convergence often fails, compact convergence serves as a natural and highly useful substitute. Importantly, since continuity is a local property, compact convergence is sufficient to ensure that the limit function remains continuous.
 
-Now let's return to the topic of uniform convergence. We have the following criterion for uniform convergence:
+The following criterion detects uniform convergence without knowing the sum function in advance:
 
 \begin{theorem}[Cauchy Criterion for Uniform Convergence]
 The sequence $\{f_n\}$ converges uniformly on $E$ if and only if for every $\epsilon > 0$, there exists $N$ such that for all $m, n > N$ and all $x \in E$:
@@ -561,12 +561,12 @@ Let $\{u_n(x)\}$ be a sequence of functions defined on $E$. Suppose there exists
 Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and absolutely on $E$.
 \end{theorem}
 
-Just like numerical series, when absolute convergence (M-Test) isn't an option, we have to rely on the dynamic duo: Abel and Dirichlet.
+For function series, as for numerical ones, absolute convergence is a sufficient but demanding hypothesis. When it is not available, the Abel and Dirichlet tests remain applicable in their uniform forms.
 
 \begin{theorem}[A-D Tests for Uniform Convergence]
 Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$. It converges uniformly on $E$ if either of the following conditions hold:
 \begin{enumerate}
-    \item \textbf{Dirichlet's Test}: The partial sums of $\sum b_n(x)$ are \textbf{uniformly bounded} on $E$ (i.e., bounded evenly everywhere, all at once, by a single $M$), and the sequence $a_n(x)$ is monotonic with respect to $n$ for each $x$ and converges \textbf{uniformly} to $0$ on $E$.
+    \item \textbf{Dirichlet's Test}: The partial sums of $\sum b_n(x)$ are \textbf{uniformly bounded} on $E$ (bounded by a single $M$ for all $x \in E$ at once), and the sequence $a_n(x)$ is monotonic with respect to $n$ for each $x$ and converges \textbf{uniformly} to $0$ on $E$.
     \item \textbf{Abel's Test}: The series $\sum b_n(x)$ converges uniformly on $E$, and $a_n(x)$ is monotonic with respect to $n$ for each $x$ and is \textbf{uniformly bounded} across all $n$ and $x \in E$.
 \end{enumerate}
 \end{theorem}
@@ -593,7 +593,7 @@ Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, 
 \[ S'(x) = \left( \sum_{n=1}^{\infty} u_n(x) \right)' = \sum_{n=1}^{\infty} u_n'(x) \]
 \end{theorem}
 
-There is also a powerful theorem that guarantees uniform convergence under specific conditions:
+Dini's theorem upgrades pointwise convergence to uniform convergence from compactness and monotonicity:
 
 \begin{theorem}[Dini's Theorem]
 Let $\{S_n(x)\}$ be a sequence of continuous functions defined on a compact interval $[a, b]$. If:
@@ -650,7 +650,7 @@ This theorem provides a powerful tool for formally evaluating sums of numerical 
 \[ \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \dots \]
 By the ratio test, this series has $R=1$. At $x=1$, the series is the alternating harmonic series $1 - 1/2 + 1/3 - \dots$, which converges by the Alternating Series Test. Therefore, by Abel's Theorem, we can take the limit as $x \to 1^-$ on the function $\ln(1+x)$ to deduce that $\ln 2 = 1 - 1/2 + 1/3 - \dots$.
 
-Here are some standard examples for calculating the sum function of a power series using term-by-term calculus:
+These examples use term-by-term calculus to compute sum functions of standard power series:
 
 \begin{example}
 Find the sum function $S(x)$ of the power series $\sum_{n=1}^{\infty} \frac{x^n}{n!}$.
@@ -697,8 +697,8 @@ where the remainder $r_n(x)$ is given by:
 \begin{proof}
 Let $r_n(x) = f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!} (x-x_0)^k$. By differentiating $r_n(x)$ with respect to $x$, most terms cancel out:
 \[ r_n'(x) = f'(x) - f'(x_0) - \sum_{k=2}^{n} \frac{f^{(k)}(x_0)}{(k-1)!} (x-x_0)^{k-1} = \frac{f^{(n+1)}(x)}{n!} (x-x)^{n} \]
-Wait, let's take a simpler approach by differentiating with respect to the continuous variable. Observe that $r_n(x_0) = r_n'(x_0) = \dots = r_n^{(n)}(x_0) = 0$, and we know $r_n^{(n+1)}(x) = f^{(n+1)}(x)$.
-We can express $r_n(x)$ through repeated integration from $x_0$ to $x$. Let's start with a single layer:
+There is a simpler approach, differentiating with respect to the continuous variable. Observe that $r_n(x_0) = r_n'(x_0) = \dots = r_n^{(n)}(x_0) = 0$, while $r_n^{(n+1)}(x) = f^{(n+1)}(x)$.
+Then $r_n(x)$ can be recovered through repeated integration from $x_0$ to $x$, one layer at a time:
 \[ r_n(x) = r_n(x) - r_n(x_0) = \int_{x_0}^{x} r_n'(t) \, dt = \int_{x_0}^{x} r_n'(t) \, d(t-x) \]
 Applying integration by parts:
 \[ = r_n'(t)(t-x) \Big|_{x_0}^{x} - \int_{x_0}^{x} r_n''(t)(t-x) \, dt = \int_{x_0}^{x} r_n''(t)(x-t) \, dt \]
@@ -726,7 +726,7 @@ The passage from one-variable analysis to several-variable analysis is not merel
 
 The norm, inner product, open balls, closed sets, compactness, and connectedness provide the language for this control. They allow us to state multivariable versions of familiar theorems without relying on pictures. For example, compactness replaces the closed bounded interval, and connectedness replaces the intuitive idea of an interval having no gaps.
 
-Moving from single-variable calculus to multivariable calculus requires a generalized setting. We replace the real line $\mathbb{R}$ with the $n$-dimensional Euclidean space $\mathbb{R}^n$. While many concepts generalize naturally, the geometry of $\mathbb{R}^n$ introduces new complexities, particularly regarding directions of approach for limits.
+The setting for all of this is $\mathbb{R}^n$, and one new phenomenon drives the section: a point can now be approached along infinitely many paths, so a genuine limit must be path-independent.
 
 \subsection{The Structure of Euclidean Space \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
@@ -815,7 +815,7 @@ By De Morgan's laws, any intersection of closed sets is closed, and any finite u
 \textbf{Counterexample for infinite intersection of open sets:} The sets $S_i = (-1 - 1/i, 1 + 1/i)$ are open, but their infinite intersection $\bigcap_{i=1}^{\infty} S_i = [-1, 1]$ is closed, not open.
 \end{property}
 
-\subsubsection{Fundamental Theorems of \texorpdfstring{$\mathbb{R}^n$}{R n}}
+\subsubsection{Completeness of \texorpdfstring{$\mathbb{R}^n$}{R n}}
 
 The real numbers $\mathbb{R}$ rely on the completeness axiom. In $\mathbb{R}^n$, the equivalent completeness properties are formulated through the following equivalent theorems:
 
@@ -978,7 +978,7 @@ Partial derivatives measure change along coordinate axes, but differentiability 
 
 The total differential is the linear part of the best local approximation. When $f$ is differentiable at a point, the error after subtracting this linear part is small compared with the distance to the point. In symbols, the remainder is $o(\|h\|)$. This little-$o$ condition is the precise analytic form of the phrase ``locally linear.''
 
-From here, we formally transition into the differential calculus of multivariable functions. We will first introduce partial derivatives and then introduce the idea of directional derivatives.
+The partial derivative — change along a coordinate axis — is the simplest directional rate, and it is where the formal development starts.
 
 \subsection{Partial Derivatives}
 
