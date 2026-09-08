@@ -53,7 +53,6 @@
 % Colorful Environments for Theorems, Definitions, etc.
 \newtcbtheorem[number within=section]{mydef}{定义}{
         enhanced,
-        breakable,
         colback=blue!5!white,
         colframe=blue!75!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -63,7 +62,6 @@
 
 \newtcbtheorem[number within=section]{mythm}{定理}{
         enhanced,
-        breakable,
         colback=red!5!white,
         colframe=red!75!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -73,7 +71,6 @@
 
 \newtcbtheorem[number within=section]{myproposition}{命题}{
         enhanced,
-        breakable,
         colback=orange!5!white,
         colframe=orange!80!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -83,7 +80,6 @@
 
 \newtcbtheorem[number within=section]{myprop}{性质}{
         enhanced,
-        breakable,
         colback=green!5!white,
         colframe=green!60!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -93,7 +89,6 @@
 
 \newtcbtheorem[number within=section]{mycor}{推论}{
         enhanced,
-        breakable,
         colback=violet!5!white,
         colframe=violet!75!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -103,7 +98,6 @@
 
 \newtcbtheorem[number within=section]{myex}{例}{
         enhanced,
-        breakable,
         colback=teal!5!white,
         colframe=teal!75!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -113,7 +107,6 @@
 
 \newtcbtheorem[number within=section]{myrem}{注记}{
         enhanced,
-        breakable,
         colback=gray!5!white,
         colframe=gray!75!black,
         attach boxed title to top left={yshift*=-\tcboxedtitleheight/2},
@@ -123,7 +116,6 @@
 
 \newtcolorbox{mynote}{
         enhanced,
-        breakable,
         colback=yellow!10!white,
         colframe=orange!85!black,
         title={\textbf{注}},
@@ -133,42 +125,47 @@
         sharp corners=south,
 }
 
+% Flush a pending run-in heading so an unbreakable box starts on a fresh line.
+\makeatletter
+\newcommand{\flushruninheading}{\if@noskipsec\leavevmode\par\fi}
+\makeatother
+
 % Environment Mappings
 \theoremstyle{definition}
 \newtheorem{definition}{定义}[section]
 
 \ProvideDocumentEnvironment{theorem}{o}
-    {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
     {\end{mythm}}
 
 \ProvideDocumentEnvironment{proposition}{o}
-    {\IfValueTF{#1}{\begin{myproposition}{#1}{}}{\begin{myproposition}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{myproposition}{#1}{}}{\begin{myproposition}{}{}}}
     {\end{myproposition}}
 
 \ProvideDocumentEnvironment{property}{o}
-    {\IfValueTF{#1}{\begin{myprop}{#1}{}}{\begin{myprop}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{myprop}{#1}{}}{\begin{myprop}{}{}}}
     {\end{myprop}}
 
 \ProvideDocumentEnvironment{corollary}{o}
-    {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
     {\end{mycor}}
 
 \ProvideDocumentEnvironment{inference}{o}
-    {\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{mycor}{#1}{}}{\begin{mycor}{}{}}}
     {\end{mycor}}
 
 \ProvideDocumentEnvironment{example}{o}
-    {\IfValueTF{#1}{\begin{myex}{#1}{}}{\begin{myex}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{myex}{#1}{}}{\begin{myex}{}{}}}
     {\end{myex}}
 
 \ProvideDocumentEnvironment{remark}{o}
-    {\IfValueTF{#1}{\begin{myrem}{#1}{}}{\begin{myrem}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{myrem}{#1}{}}{\begin{myrem}{}{}}}
     {\end{myrem}}
 
-\ProvideDocumentEnvironment{note}{}{\begin{mynote}}{\end{mynote}}
+\ProvideDocumentEnvironment{note}{}{\flushruninheading\begin{mynote}}{\end{mynote}}
 
 \ProvideDocumentEnvironment{lemma}{o}
-    {\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
+    {\flushruninheading\IfValueTF{#1}{\begin{mythm}{#1}{}}{\begin{mythm}{}{}}}
     {\end{mythm}}
 
 
@@ -194,7 +191,6 @@
 
 \newtcolorbox{learningobjectives}{
     enhanced,
-    breakable,
     colback=cyan!4!white,
     colframe=cyan!55!black,
     title={\textbf{学习目标}},
@@ -204,7 +200,6 @@
 
 \newtcolorbox{workedexample}[1]{
     enhanced,
-    breakable,
     colback=teal!4!white,
     colframe=teal!65!black,
     title={\textbf{例题：#1}},
@@ -214,7 +209,6 @@
 
 \newtcolorbox{applicationbox}[1]{
     enhanced,
-    breakable,
     colback=purple!4!white,
     colframe=purple!65!black,
     title={\textbf{应用：#1}},
