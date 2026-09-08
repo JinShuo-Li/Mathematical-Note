@@ -441,7 +441,7 @@ A connected simple graph $G=(V,E)$ satisfies that $|E| \geq |V|-1$.
 \end{theorem}
 
 \begin{proof}
-If a connected simple graph $G$ has $|E| < |V|-1$, then we can add edges to $G$ until it has $|V|-1$ edges. The resulting graph is still connected, but by the previous theorem, it must be a tree. However, a tree with $n$ vertices has exactly $n-1$ edges, so adding edges to reach $n-1$ edges contradicts the assumption that we started with fewer than $n-1$ edges. Therefore, any connected simple graph must have at least $|V|-1$ edges.
+Grow a connected subgraph one vertex at a time: start from any vertex, and while some vertex lies outside, use connectedness to find an edge with exactly one endpoint inside and add it. Each step adds one vertex and one edge and creates no cycle, so the process ends with a spanning tree containing $|V|-1$ edges of $G$. Hence $|E| \geq |V|-1$.
 \end{proof}
 
 \begin{proof}
