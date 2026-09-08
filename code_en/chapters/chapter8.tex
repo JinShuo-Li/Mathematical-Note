@@ -453,7 +453,7 @@ Since $T$ is acyclic and finite ($n \ge 2$), it must contain at least two vertic
 Consider $T' = T - \{v\}$. $T'$ is still connected (removing a leaf does not break connectivity) and acyclic. Thus $T'$ is a tree with $k$ vertices.
 By the inductive hypothesis, $T'$ has $k-1$ edges. Since $T$ has exactly one more edge than $T'$, $|E(T)| = (k-1) + 1 = k = (k+1)-1$.
 
-A more rigorous proof is done by randomly selecting a vertex in the tree, and discussing all the vertices in the neighborhood of the vertex. Once we remove the vertex, all the neighbors become roots of subtrees. We can apply the inductive hypothesis on each subtree because they all satisfy the inductive hypothesis, and sum up the number of edges. Mark that according to the definition of tree, there is no cycle in the graph, so there is no edge between any two subtrees, and the intersections between subtrees are empty. Thus the total number of edges is the sum of edges in each subtree plus the number of edges connecting the root vertex to each subtree (which is exactly the number of subtrees). This gives us the desired result.
+A more structured proof chooses a vertex $r$ and considers the subtrees hanging at its neighbors: removing $r$ leaves disjoint subtrees with no edges between them (a tree has no cycles), the induction hypothesis applies to each subtree, and the total edge count is the sum over the subtrees plus one edge from $r$ to each subtree.
 
 \textbf{($\Leftarrow$) Connected and $n-1$ edges $\implies$ Tree.}
 Assume $G$ is connected with $n-1$ edges. We must show $G$ is acyclic.
