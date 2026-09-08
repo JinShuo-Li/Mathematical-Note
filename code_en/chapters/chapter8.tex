@@ -593,7 +593,7 @@ Note that we view each step as adding an edge to the existing forest, connecting
 We will prove that the spanning tree $T$ produced by Kruskal's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
 The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
 \begin{quote}
-Let $S \subset V$ be a subset of vertices, and let $e$ be a minimum-weight edge crossing the cut $(S, V \setminus S)$. Then, $e$ belongs to every MST of $G$.
+Let $S \subset V$ be a subset of vertices, and let $e$ be a minimum-weight edge crossing the cut $(S, V \setminus S)$. Then, $e$ belongs to some MST of $G$. (With ties, a light edge need not belong to \emph{every} MST.)
 \end{quote}
 Kruskal's algorithm, at each step, chooses exactly such a minimum-weight edge (a \emph{light edge}) that does not form a cycle with the edges already selected.
 
