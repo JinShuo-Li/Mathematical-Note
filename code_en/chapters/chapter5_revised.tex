@@ -247,8 +247,6 @@ Let $a_n > 0$. Consider the limit:
 \subsubsection{Alternating Series}
 An alternating series has the form $\sum_{n=1}^{\infty} (-1)^{n-1} a_n$ where $a_n > 0$.
 
-\newpage
-
 \begin{theorem}[Leibniz Test]
 If the sequence $\{a_n\}$ satisfies:
 \begin{enumerate}
@@ -565,8 +563,6 @@ Then the series $\sum_{n=1}^{\infty} u_n(x)$ converges \textbf{uniformly} and ab
 
 Just like numerical series, when absolute convergence (M-Test) isn't an option, we have to rely on the dynamic duo: Abel and Dirichlet.
 
-\newpage
-
 \begin{theorem}[A-D Tests for Uniform Convergence]
 Consider the function series $\sum_{n=1}^{\infty} a_n(x) b_n(x)$ defined on $E$. It converges uniformly on $E$ if either of the following conditions hold:
 \begin{enumerate}
@@ -598,8 +594,6 @@ Let $\{u_n(x)\}$ be a sequence of continuously differentiable functions on $[a, 
 \end{theorem}
 
 There is also a powerful theorem that guarantees uniform convergence under specific conditions:
-
-\newpage
 
 \begin{theorem}[Dini's Theorem]
 Let $\{S_n(x)\}$ be a sequence of continuous functions defined on a compact interval $[a, b]$. If:
@@ -658,8 +652,6 @@ By the ratio test, this series has $R=1$. At $x=1$, the series is the alternatin
 
 Here are some standard examples for calculating the sum function of a power series using term-by-term calculus:
 
-\newpage
-
 \begin{example}
 Find the sum function $S(x)$ of the power series $\sum_{n=1}^{\infty} \frac{x^n}{n!}$.
 \\ \textbf{Solution:} Using the ratio test, the radius of convergence is $R = +\infty$. For $x \in (-\infty, +\infty)$, we differentiate term-by-term:
@@ -690,8 +682,6 @@ If a function $f(x)$ can be expanded as a power series $\sum_{n=0}^{\infty} a_n 
 The resulting series $\sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n$ is called the \textbf{Taylor Series} of $f$ centered at $x_0$. If $x_0=0$, it is specifically called the \textbf{Maclaurin Series}.
 \end{theorem}
 
-\newpage
-
 \begin{remark}[Analyticity]
 It is crucial to note that simply being $C^\infty$ (having derivatives of all orders) is not enough to guarantee that the Taylor series of $f(x)$ actually converges to $f(x)$. The series might only converge at $x_0$, or it might converge to a completely different function. Functions that are equal to their Taylor series on an open interval are called \textbf{real analytic functions}. A famous example of a smooth but non-analytic function is $f(x) = e^{-1/x^2}$ for $x \neq 0$ and $f(0) = 0$, where all derivatives at $0$ vanish, making its Maclaurin series identically zero.
 \end{remark}
@@ -716,8 +706,6 @@ Repeating this process $n-1$ more times gives:
 \[ r_n(x) = \frac{1}{n!} \int_{x_0}^{x} r_n^{(n+1)}(t) (x-t)^n \, dt = \frac{1}{n!} \int_{x_0}^{x} f^{(n+1)}(t) (x-t)^n \, dt \]
 This completes the proof.
 \end{proof}
-
-\newpage
 
 \begin{example}[Standard Maclaurin Expansions]
 The following cornerstone expansions appear frequently throughout analysis and physics. Notice the intervals of convergence:
@@ -1074,8 +1062,6 @@ Equivalently, there exist constants $A_1,\dots,A_n$ such that
 \]
 \end{definition}
 
-\newpage
-
 \begin{theorem}[Coefficients of the Differential]
 If $f$ is differentiable at $\mathbf{x}_0$, then all partial derivatives $\partial f/\partial x_i$ exist at $\mathbf{x}_0$, and
 \[
@@ -1372,8 +1358,6 @@ For two equations
 \end{cases}
 \]
 one wants to solve locally for $u$ and $v$ as functions of $x$ and $y$.
-
-\newpage
 
 \begin{theorem}[Implicit Function Theorem for a System]
 Suppose $F$ and $G$ have continuous first-order partial derivatives near $(x_0,y_0,u_0,v_0)$ and
@@ -1695,8 +1679,6 @@ Assume all functions involved are integrable on the relevant Jordan measurable d
 \]
 \end{property}
 
-\newpage
-
 \begin{theorem}[Mean Value Theorem for Double Integrals]
 If $f$ and $g$ are integrable on $D$, and $g$ does not change sign, then there exists
 \[
@@ -1807,8 +1789,6 @@ where
         y_u & y_v
     \end{vmatrix}.
 \]
-
-\newpage
 
 \begin{example}[Polar Coordinates]
 The polar transformation is
