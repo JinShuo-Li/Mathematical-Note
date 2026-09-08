@@ -25,14 +25,21 @@
 \usepackage{needspace}
 \allowdisplaybreaks
 
-% Font settings for XeLaTeX on Windows.
-\setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}
-\setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}
-\setCJKmonofont{SimSun}
-
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Consolas}
+% Font settings for XeLaTeX. The Windows fonts are used when available;
+% otherwise the edition falls back to the Noto CJK families so that the
+% build also works on Linux, where the Microsoft fonts are absent.
+\IfFontExistsTF{SimSun}{%
+  \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}%
+  \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}%
+  \setCJKmonofont{SimSun}%
+  \setmainfont{Times New Roman}%
+  \setsansfont{Arial}%
+  \setmonofont{Consolas}%
+}{%
+  \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Serif SC}%
+  \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Sans SC}%
+  \setCJKmonofont{Noto Serif SC}%
+}
 
 \DeclareMathOperator{\arcsec}{arcsec}
 \DeclareMathOperator{\arccot}{arccot}
