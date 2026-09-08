@@ -85,15 +85,10 @@ Let $S = (d_1, d_2, \dots, d_n)$ be a finite list of nonnegative integers that i
 
 ($\Leftarrow$) If $S'$ is graphic, there exists a graph $G'$ with degree sequence $S'$. We can construct a graph $G$ with sequence $S$ by adding a new vertex $v_1$ and connecting it to the $d_1$ vertices whose degrees were reduced by 1 in $S'$. Since we connect $v_1$ to distinct vertices, the result is a simple graph.
 
-($\Rightarrow$) If $S$ is graphic, there exists a realization $G$. We must show that there exists a \textit{specific} realization where the vertex with degree $d_1$ connects to the $d_1$ vertices with the highest degrees.
-Let $v_1$ be a vertex with degree $d_1$. Let $N(v_1)$ be its neighbors. If $N(v_1)$ consists of the $d_1$ vertices with the highest degrees (excluding $v_1$), we are done (removing $v_1$ yields $S'$).
-If not, there exist vertices $x, y$ such that $x \in N(v_1)$, $y \notin N(v_1)$, but $\deg(y) > \deg(x)$ (or $\deg(y) \ge \deg(x)$ where $y$ is a preferred high-degree target).
-Since $\deg(y) \ge \deg(x)$, there must be a vertex $z$ such that $z$ is adjacent to $y$ but not to $x$.
-We perform an \textbf{edge swap}: remove edges $\{v_1, x\}$ and $\{y, z\}$, and add edges $\{v_1, y\}$ and $\{x, z\}$.
-This preserves all degrees but moves a neighbor of $v_1$ to a higher-degree vertex. Repeating this process eventually ensures $v_1$ is connected to the $d_1$ highest-degree vertices. Removing $v_1$ then yields a graph with sequence $S'$.
+($\Rightarrow$) Suppose $S$ is graphic, and let $G$ be a realization of $S$. We show that $G$ can be modified, without changing any degree, into a realization in which the vertex $v_1$ of degree $d_1$ is adjacent to $d_1$ vertices of largest degree. Among all realizations of $S$, choose one for which the total degree of the neighbors of $v_1$ is as large as possible.
+Let $x$ be a neighbor of $v_1$ of minimum degree within $N(v_1)$, and let $y$ be a non-neighbor of $v_1$ of maximum degree outside $N(v_1)$. If $y$ exists, we first claim there is a vertex $z$ adjacent to $y$ but not to $x$: otherwise $N(y) \subseteq N(x)$, and since $v_1 \in N(x) \setminus N(y)$, we would get $\deg(y) \le \deg(x) - 1$.
+If $\deg(y) > \deg(x)$, perform an \textbf{edge swap}: delete edges $\{v_1, x\}$ and $\{y, z\}$, and add edges $\{v_1, y\}$ and $\{x, z\}$. Both new edges were absent, so the graph stays simple; every degree is unchanged; but the total degree of the neighbors of $v_1$ increases by $\deg(y) - \deg(x) > 0$, contradicting the maximality of our choice. Hence $\deg(y) \le \deg(x)$ for every non-neighbor $y$ of $v_1$: every neighbor of $v_1$ has degree at least as large as every non-neighbor, so the neighbors of $v_1$ are $d_1$ vertices of largest degree. Deleting $v_1$ then yields a simple graph with degree sequence $S'$.
 \end{proof}
-
-The key point of the proof is to \textbf{SWAP} edges to ensure the highest-degree vertices are connected to the vertex with larger degree, thus preserving the degree sequence while constructing a valid graph.
 
 \subsubsection{Graph Representations}
 
