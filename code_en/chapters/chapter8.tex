@@ -340,7 +340,7 @@ A path traverses vertices along edges; a circuit returns to its start. Two trave
 An \textbf{Eulerian circuit} in a graph is a closed trail that visits every edge exactly once.
 \end{definition}
 
-To define whether a graph has an Eulerian circuit, we can use the following theorem.
+The following theorem characterizes exactly when a graph has an Eulerian circuit.
 
 \begin{theorem}
 A connected graph $G$ has an Eulerian circuit (a closed trail covering every edge exactly once) if and only if every vertex in $G$ has an even degree.
@@ -358,13 +358,13 @@ A connected graph $G$ has an Eulerian circuit (a closed trail covering every edg
 Therefore, $T$ must contain all edges.
 \end{proof}
 
-Also, there is another concept similar to Eulerian circuits, called Euler paths.
+A closely related notion relaxes the requirement that the walk be closed.
 
 \begin{definition}
 An \textbf{Euler path} in a graph is a trail that visits every edge exactly once but does not necessarily start and end at the same vertex.
 \end{definition}
 
-Similarly, we can define whether a graph has an Euler path or not.
+The analogous characterization is the following.
 
 \begin{theorem}[Euler Trail Criterion]
 A connected graph $G$ has an Euler trail if and only if it has either zero or two vertices of odd degree. The trail is closed precisely when there are no odd-degree vertices; when there are exactly two, every Euler trail starts at one odd vertex and ends at the other.
@@ -378,7 +378,7 @@ Conversely, if every degree is even, the preceding Euler-circuit theorem applies
 
 \subsection{Hamiltonian Cycles}
 
-Another important concept in graph theory is the existence of Hamiltonian cycles.
+Hamiltonian cycles pose a different kind of traversal problem.
 
 \begin{definition}
 A \textbf{Hamiltonian cycle} in a graph is a closed loop that visits every vertex exactly once.
