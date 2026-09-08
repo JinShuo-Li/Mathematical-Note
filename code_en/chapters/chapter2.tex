@@ -1517,18 +1517,20 @@ R(x) = \frac{P(x)}{Q(x)}
 Here $P(x)$ and $Q(x)$ are polynomials with real coefficients. If the degree of $P(x)$ is smaller than that of $Q(x)$, then $R(x)$ is a proper fraction. Otherwise, $R(x)$ is an improper fraction.
 \end{definition}
 
-And according to the \textbf{Fundamental Theorem of Algebra}, which we will introduce in later chapter, we know that the $Q(x)$ has the same amount of solutions of the number of the power.
-
-Thus we can rewrite the $Q(x)$ in form of:
+By the \textbf{Fundamental Theorem of Algebra} (Section 2.1), a polynomial of degree $n$ has exactly $n$ complex roots, counted with multiplicity. Consequently, $Q(x)$ factors into linear factors over $\mathbb{C}$, and into linear and irreducible quadratic factors over $\mathbb{R}$:
 
 \[
 Q(x) = k (x-a)^{\alpha} (x-b)^{\beta} \cdots (x^2 + px + q)^{\mu} (x^2 + rx + s)^{\delta} \cdots
 \]
 
-And now we will introduce a lemma, readers can try to prove it themselves.
+\[
+Q(x) = k (x-a)^{\alpha} (x-b)^{\beta} \cdots (x^2 + px + q)^{\mu} (x^2 + rx + s)^{\delta} \cdots
+\]
+
+The following lemma justifies the partial fraction decomposition; its proof is a good exercise.
 
 \begin{lemma}
-If we have a proper fraction $R(x) = \frac{P(x)}{Q(x)}$. and $Q(x)$ has factorization like above, then we can assert that:
+If $R(x) = \frac{P(x)}{Q(x)}$ is a proper fraction and $Q(x)$ has the factorization above, then:
 
 \[
 R(x) = \sum_{j=1}^{\alpha} \frac{A_j}{(x-a)^j} + \sum_{j=1}^{\beta} \frac{B_j}{(x-b)^j} + \cdots + \sum_{j=1}^{\mu} \frac{2K_jx + L_j}{(x^2 + px +q)^j} + \sum_{j=1}^{\delta} \frac{2M_jx + N_j}{(x^2 + rx +s)^j} + \cdots
