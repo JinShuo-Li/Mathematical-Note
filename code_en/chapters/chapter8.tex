@@ -613,7 +613,7 @@ Now, consider the new tree $T'' = T' \setminus \{e' \} \cup \{e\}$. $T''$ is als
 
 \[w(T'') = w(T') - w(e') + w(e).\]
 
-Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$. But this contradicts the assumption that $w(T') < w(T)$, since $T''$ is a spanning tree of $G$ and $w(T'') \leq w(T')$. Therefore, our assumption must be false, and Kruskal's algorithm produces a minimum spanning tree.
+Since $w(e) \leq w(e')$, we have $w(T'') \leq w(T')$, so $T''$ is also a minimum spanning tree. By the choice of $e$ as the \emph{first} accepted edge missing from $T'$, all earlier accepted edges lie in $T'$, and the removed edge $e'$ crosses the cut $(S, V \setminus S)$ at a moment when no earlier accepted edge does --- so $e'$ is not among them. Hence $T''$ contains $e$ together with all previously accepted edges. Iterating, some minimum spanning tree contains every accepted edge; the accepted edges themselves form a spanning tree with exactly $|V|-1$ edges, so Kruskal's algorithm produces a minimum spanning tree.
 
 \end{proof}
 
