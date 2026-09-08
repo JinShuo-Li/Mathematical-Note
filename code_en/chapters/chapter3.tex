@@ -10,33 +10,15 @@ By the end of this chapter, you should be able to:
     \item formulate least-squares, data-compression, and dynamical problems in linear-algebraic language.
 \end{itemize}
 \end{learningobjectives}
-\begin{quote}
-\emph{
-So long after we finished the first part of the analysis section, we will now move on to the new chapter: Linear Algebra. It's a completely new part of mathematics.
-}
+Linear algebra begins with a computational problem — solving systems of linear equations — and ends with a language in which functions, polynomials, and geometric transformations appear as instances of a single structure, the vector space. The chapter follows that arc. Matrices and determinants supply the mechanics; vectors in $\mathbb{R}^n$ supply the geometry; linear transformations connect the two; abstract linear spaces then free the ideas from coordinates, culminating in eigenvalues, orthogonality, and quadratic forms.
 
-\emph{
-Unlike analysis and calculus, linear algebra requires more geometric understanding. Here, proof is still important. But what is more crucial for learners is to construct geometric intuition for the subject. We would like to claim that intuition is different from imagination. Though we can only imagine the three dimensional Euclidean space, but our intuition can bring us forward to higher dimension, and more abstract linear spaces.
-}
-
-\emph{
-In this part, we will start from the topic of solving Systems of Linear Equations, then we will move on to study a special kind of linear space: the Vector Space. Finally, we will move on to a more abstract part: the Linear Space, this equipped us with a new tool to study more general forms of algebraic structure and system.
-}
-
-\emph{
-Specifically, in the final part focusing on abstract Linear Spaces, we will delve into key concepts such as linear independence, basis, dimension, and linear transformations. Understanding these foundational ideas allows us to unify seemingly disparate mathematical objects—like functions, polynomials, and matrices—under a single, powerful framework. This abstraction is not just an academic exercise; it provides the essential language and tools for tackling complex problems in fields ranging from differential equations and data science to quantum mechanics and engineering optimization. The geometric intuition developed in the study of $\mathbb{R}^n$ will prove indispensable as we navigate these higher-dimensional, abstract realms, cementing linear algebra as one of the most fundamental and broadly applicable areas of modern mathematics.
-}
-
-\emph{
-In latter chapters, we will introduce another branch of Algebra, the abstract algebra. Unlike Linear algebra that focused more on multivariate equations, abstract algebra study the solution structure of higher-degree equations, which is an even more abstract part of mathematics. But even in abstract algebra we still need the knowledge about linear algebra. So now, let's get started.
-}
-\end{quote}
+Unlike analysis, which rests on order and completeness, linear algebra rests on geometric intuition — and intuition is not imagination. We can picture only three dimensions, but the habits built in $\mathbb{R}^n$, such as projection, combination, and change of basis, remain correct in every dimension. Chapter 4 generalizes these structures to groups, rings, and modules, and the later applied chapters compute with them.
 
 \section{Linear Equations and Matrices}
 
 \subsection{Systems of Linear Equations}
 
-I believe most of the readers have seen systems of equations like this:
+Systems of equations of the following form are familiar from every algebra course:
 
 \[
 \begin{cases}
@@ -248,7 +230,7 @@ AB = \begin{pmatrix}
 \end{pmatrix}
 = \begin{pmatrix} 28 & 14 \\ 79 & 44 \end{pmatrix}
 \]
-Now let's compute $BA$. This will be a $3 \times 3$ matrix.
+Now we compute $BA$. This will be a $3 \times 3$ matrix.
 \[
 BA = \begin{pmatrix} 7 & 8 \\ 9 & 0 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}
 = \begin{pmatrix}
@@ -524,7 +506,7 @@ This algorithm to get to REF/RREF is the core of our solution method.
 \end{definition}
 
 \paragraph{The Algorithm (Gauss-Jordan Elimination)}
-Let's solve a system completely.
+We now solve a system completely.
 \[
 \begin{cases}
 x_2 + 3x_3 = 4 \\
@@ -783,7 +765,7 @@ Alternatively, we can expand down \textbf{any} column $j$:
 \end{theorem}
 
 \begin{example}[Cofactor Expansion of 3x3]
-Let $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix}$. Let's expand along Row 1.
+Let $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix}$. We expand along Row 1.
 \[ \det(A) = 1 \cdot C_{11} + 2 \cdot C_{12} + 3 \cdot C_{13} \]
 \[ C_{11} = (-1)^{1+1} \begin{vmatrix} 5 & 6 \\ 8 & 9 \end{vmatrix} = +1(5\cdot 9 - 6\cdot 8) = 45 - 48 = -3 \]
 \[ C_{12} = (-1)^{1+2} \begin{vmatrix} 4 & 6 \\ 7 & 9 \end{vmatrix} = -1(4\cdot 9 - 6\cdot 7) = -(36 - 42) = 6 \]
@@ -803,7 +785,7 @@ The determinant is the unique function det: $M_n(\mathbb{R}) \leftarrow \mathbb{
 \end{enumerate}
 \end{definition}
 
-Another definition is more \textbf{modern}, it's about exterior product
+A more modern definition formulates the same geometry through the exterior product.
 
 \begin{definition}[Exterior Product (Wedge Product)]
 Let $V$ be a vector space over field $\mathbb{K}$. The \textbf{exterior product} (or \textbf{wedge product}) is a bilinear map:
@@ -1625,7 +1607,7 @@ Continuing the previous example, $A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatri
 \[
 P = \begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix}, \quad D = \begin{pmatrix} 1 & 0 \\ 0 & 3 \end{pmatrix}
 \]
-It's easy to verify that $A = PDP^{-1}$.
+One checks directly that $A = PDP^{-1}$.
 \end{example}
 
 Once diagonalized, computing powers of $A$ becomes straightforward:
@@ -1763,7 +1745,7 @@ Any linear transformation $T(\mathbf{x}) = A\mathbf{x}$ maps the unit sphere in 
 
 \section{Conclusions}
 
-In this chapter, we have learned a lot of concepts. From matrix to determinant, from rank to eigenvalue $\cdots$. We can spot very beautiful symmetry between each part, we are actually using one single language to describe different things from the same perspective but have varying results. This is what makes mathematics attractive. Now we will focus on two concepts about Linear Algebra, to conclude what we have learned through out the journey:
+The chapter has moved through matrices, determinants, rank, and eigenvalues, and the same notions kept reappearing in different languages — one structure described from several directions. Two ideas collect the chapter best: the rank of a matrix, which can be read computationally, algebraically, and geometrically; and the vector-space axioms, which place everything under a single definition.
 
 \subsection{Interpretations of Rank}
 
