@@ -97,7 +97,6 @@ The current edition is organized using the standard book structure:
 .
 ├── code_en/
 │   ├── main.tex
-│   ├── main.pdf
 │   ├── assets/
 │   └── chapters/
 │       ├── preface.tex
@@ -119,7 +118,6 @@ The current edition is organized using the standard book structure:
 │           └── chapter9_practice.tex
 ├── code_cn/
 │   ├── main.tex
-│   ├── main.pdf
 │   ├── assets/
 │   └── chapters/
 │       ├── preface_cn.tex
@@ -178,6 +176,8 @@ xelatex main.tex
 ```
 
 Running XeLaTeX twice is recommended so that the table of contents, PDF bookmarks, and cross-references are updated correctly.
+
+The compiled `main.pdf` in each edition is a build artifact. It is written next to `main.tex`, but it is ignored by Git (see `.gitignore`) and therefore does not appear in the repository layout above; clone the repository and build it locally.
 
 ### Font Notes for the Chinese Edition
 
