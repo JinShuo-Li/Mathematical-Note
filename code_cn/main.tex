@@ -28,18 +28,20 @@
 % Font settings for XeLaTeX. The Windows fonts are used when available;
 % otherwise the edition falls back to the Noto CJK families so that the
 % build also works on Linux, where the Microsoft fonts are absent.
+% be absent), and each Latin family is guarded separately because the
+% Windows Latin fonts are also missing on Linux.
 \IfFontExistsTF{SimSun}{%
   \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimSun}%
   \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{SimHei}%
   \setCJKmonofont{SimSun}%
-  \setmainfont{Times New Roman}%
-  \setsansfont{Arial}%
-  \setmonofont{Consolas}%
 }{%
   \setCJKmainfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Serif SC}%
   \setCJKsansfont[AutoFakeBold=2, AutoFakeSlant=0.2]{Noto Sans SC}%
   \setCJKmonofont{Noto Serif SC}%
 }
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{}
+\IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{}
 
 \DeclareMathOperator{\arcsec}{arcsec}
 \DeclareMathOperator{\arccot}{arccot}
