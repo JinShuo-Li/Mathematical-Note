@@ -583,10 +583,12 @@ Another popular algorithm for finding a minimum spanning tree is Kruskal's algor
 
 Note that we view each step as adding an edge to the existing forest, connecting two isolated components, ensuring that no cycles are formed. Every isolated vertex is considered a component.
 
+\begin{theorem}[Kruskal's Algorithm Correctness]
+The spanning tree $T$ produced by Kruskal's algorithm is a minimum spanning tree of the given connected, undirected graph $G=(V,E)$ with weight function $w:E\to\mathbb{R}$.
+\end{theorem}
+
 \begin{proof}
-\textbf{Kruskal's Algorithm Correctness}
-We will prove that the spanning tree $T$ produced by Kruskal's algorithm is a minimum spanning tree (MST) of the given connected, undirected graph $G=(V,E)$ with weight function $w: E \rightarrow \mathbb{R}$.
-The core of the proof relies on the \textbf{MST property} (also called the \textbf{cut property}):
+The core of the argument is the \textbf{MST property} (also called the \textbf{cut property}):
 \begin{quote}
 Let $S \subset V$ be a subset of vertices, and let $e$ be a minimum-weight edge crossing the cut $(S, V \setminus S)$. Then, $e$ belongs to some MST of $G$. (With ties, a light edge need not belong to \emph{every} MST.)
 \end{quote}
@@ -598,7 +600,7 @@ Assume, for the sake of contradiction, that the tree $T$ produced by Kruskal's a
 
 Let us consider the moment when Kruskal's algorithm adds edge $e = (u,v)$ to $T$. At that moment, the algorithm's selected edges form a forest, and $e$ necessarily joins two distinct components of this forest, since Kruskal's algorithm rejects any edge whose endpoints already lie in the same component. Let $S$ be the set of vertices in one of these components (say, the component containing $u$). Since $e$ is not in $T'$, if we add $e$ to $T'$, it creates a unique cycle $C$ in $T' \cup \{e\}$.
 
-Within this cycle $C$, there must be at least one other edge $e' = (x,y)$ that also crosses the cut $(S, V \setminus S)$ (with $x \in S$ and $y \in V \setminus S$). This is because the cycle starts and ends in $S$ and must leave and re-enter $S$; edge $e$ provides one crossing, so there must be another crossing to complete the cycle.
+Since the cycle leaves $S$ through $e$ and must return to $S$, it contains another edge $e'=(x,y)$ crossing the cut $(S, V\setminus S)$, with $x\in S$ and $y\in V\setminus S$.
 
 By Kruskal's algorithm's greedy choice, $e$ is a minimum-weight edge crossing the cut $(S, V \setminus S)$. Therefore, we have
 

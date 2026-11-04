@@ -82,16 +82,16 @@ According to the definition above, we can easily find several conclusions below:
 \end{inference}
 
 \subsection*{Russell’s Paradox}
-Russell’s Paradox makes the naïve set theory incomplete. Russell assumed there exists a set $X$ that contains sets that don’t include themselves.
+Russell’s paradox shows that naïve set theory is inconsistent. Russell assumed that there is a set $X$ containing exactly the sets that do not contain themselves.
 $$ X = \{ x \mid x \notin x \} $$
 And then he found that $X$ can neither belong to itself nor fail to belong to itself.
 \begin{align*}
     X \in X \implies X \notin X \\
     X \notin X \implies X \in X
 \end{align*}
-So, does $X$ belong to $X$ or not? Thus, this creates a contradiction, because $X$ either belongs to $X$ or does not belong to $X$, which is determined by the nature of naive set theory itself. However, the properties of the naïve set theory allow the existence of set $X$, which creates a contradiction.
+So, does $X$ belong to $X$ or not? Thus, this creates a contradiction, because $X$ either belongs to itself or does not, and one of the two must hold. Yet the unrestricted comprehension principle of naïve set theory allows such a set $X$ to exist, which creates a contradiction.
 
-In order to mend such a flaw present in naive set theory, countless mathematicians devoted themselves tirelessly and proposed the ZFC axiomatic system, which ultimately became the core of modern set theory.
+To repair this flaw in naïve set theory, mathematicians proposed the ZFC axiomatic system, which became the core of modern set theory.
 
 \section{The Axiomatic Set Theory}
 

@@ -5,7 +5,7 @@ By the end of this chapter, you should be able to:
 \begin{itemize}
     \item explain how completeness distinguishes the real numbers from the rationals;
     \item prove and compute limits of sequences and functions;
-    \item use derivatives, mean-value theorems, Taylor expansion, and L'Hopital's rule with their hypotheses visible;
+    \item use derivatives, mean-value theorems, Taylor expansion, and L'Hôpital's rule with their hypotheses visible;
     \item construct and evaluate Riemann and improper integrals;
     \item select convergence tests and justify limiting operations rigorously.
 \end{itemize}
@@ -512,7 +512,7 @@ When $a=+\infty$, apply the same argument to the reciprocals; the conclusion fol
 
 \end{proof}
 
-The \textbf{L'Hospital rule} for functions is the close analogue of the Stolz theorem; the parallel between sequences and functions will recur throughout this chapter.
+The \textbf{L'Hôpital rule} for functions is the close analogue of the Stolz theorem; the parallel between sequences and functions will recur throughout this chapter.
 
 
 \subsection{Convergence Criteria and the Properties of the Real Number System}
@@ -1327,22 +1327,24 @@ Solving $p'(t) = \lambda p(t)$ by integration gives $p(t)=p_0 \cdot e^{\lambda t
 
 Guesses won't be enough to get the answers. Thus, we need to know how to do the work of integration.
 
-\begin{definition}
-If in a specific interval, the function $F(x)$ and $f(x)$ satisfy the following relationship:
-\[F'(x) = f(x)\]
-Or equivalently,
-\[d[F(x)]=f(x)\cdot dx\]
-Then we call F(x) is \textbf{one of} the \textbf{antiderivative} in this interval.
+\begin{definition}[Antiderivative]
+Let $f$ be defined on an interval $I$. A function $F$ is an \textbf{antiderivative} of $f$ on $I$ if
+\[F'(x)=f(x)\]
+for every $x\in I$, or equivalently if
+\[dF(x)=f(x)\,dx.\]
 \end{definition}
 
-The reason why we said "one of" is because the antiderivative of a function is \textbf{not unique}. For example, if a function $F(x)$ is the antiderivative of $f(x)$, then $\forall [F(x)+C]$ $C$ is a constant,
-$F(x)+C$ is also the antiderivative of $f(x)$. So we can say that there are infinity many antiderivatives of a function once it is integrable, and if we know one of the antiderivative of the function, we can use $G(x) = F(x)+C$ to represent all the primitive functions of the $f(x)$.
+The phrase ``one of'' matters because an antiderivative is \textbf{not unique}. If $F$ is an antiderivative of $f$, then for every constant $C$ the function $F(x)+C$ is also an antiderivative of $f$. Hence an integrable function has infinitely many antiderivatives, and once a single antiderivative $F$ is known, the family $G(x)=F(x)+C$ describes all of them.
 
-\begin{definition}
-All the antiderivative of a function $f(x)$ is called the \textbf{indefinite integration} of this function. denoted as $\int f(x)d(x)$. The sign $\int$ is called the integral sign, $f(x)$ is called the integrant, and $x$ is called the variable of integration.
+\begin{definition}[Indefinite Integral]
+The family of all antiderivatives of $f$ is called the \textbf{indefinite integral} of $f$, written
+\[
+\int f(x)\,dx = F(x)+C.
+\]
+The sign $\int$ is called the integral sign, $f(x)$ is the \textbf{integrand}, and $x$ is the variable of integration.
 \end{definition}
 
-In fact, the process of finding antiderivative is to find the primitive function of the derivative. And integration is the inverse operation of differentiation. And based on the table of derivative of commonly used function in section 2.3.1, we can deduce the integration of the commonly used functions.
+In fact, finding an antiderivative is the inverse of differentiating. Using the derivative table in Section 2.3.1, we can read off the integrals of the standard functions.
 
 One of the most important properties of the integration is its linear properties. We can express it in such way:
 
@@ -1354,17 +1356,16 @@ If $f(x)$ and $g(x)$ are both integrable, then for every constant $k_1$ and $k_2
 This is called the linear property of integration.
 \end{theorem}
 
-However, since our primitive purpose is to find ways to figure out the antiderivative of a function, using the definition won't be enough to cover all the needs of figure out the antiderivative of a function. So we will introduce several methods to help us figure out the antiderivative.
+The definition alone, however, does not give a practical method for computing an antiderivative. The following subsections introduce the standard techniques.
 
 \subsubsection{Integration By Substitutions}
 Substitution is one of the most popular methods in analysis. When figuring out the antiderivative of the function $f(x)$, we can use this protocol.
 
 \begin{definition}[Integration by Substitution (First Part)]
-If the integrant can be transformed into the form: $f(x) = g(h(x))\cdot h'(x)$, and the integration of $g(u)$ is easy to know. Then we have:
+If the integrand can be written as $f(x)=g(h(x))\,h'(x)$, and if $\int g(u)\,du=G(u)$ is known, then
 \[
-\int f(x)dx = \int g(h(x))\cdot h'(x)\cdot dx = \int g(h(x)) \cdot d(h(x)) = G(h(x)) +C
+\int f(x)\,dx = \int g(h(x))\,h'(x)\,dx = \int g(h(x))\,d(h(x)) = G(h(x))+C.
 \]
-(We denote the integration of the function $g(x)$ as $G(x)$)
 \end{definition}
 
 \begin{definition}[Integration by Substitution (Second Part)]
@@ -1497,10 +1498,10 @@ Applying the formula $\int u \, dv = uv - \int v \, du$:
     \item \textbf{The "Boomerang" Technique:} For integrals like $\int e^x \cos(x) dx$, applying integration by parts twice (using consistent choices for $u$ and $dv$) will result in the original integral appearing on the right-hand side of the equation. You can then algebraically solve for the value of the integral.
 \end{itemize}
 
-Also, For functions in forms like $\int P(x) e^x dx$, $\int P(x) \sin x dx$, $\int P(x) \cos x dx$, We can apply the integration by parts again and again. Then we will have that:
+For integrands of the form $P(x)e^x$, $P(x)\sin x$, or $P(x)\cos x$ with $P$ a polynomial, repeated integration by parts gives
 
 \[
-\int u v^{(n+1)} dx = u v^{(n)} - u'v^{(n-1)} +u''v^{(n-2)} - u^{(3)}v^{(n-3)} + \cdots + (-1)^n u^{(n)} v + (-1)^{n+1} \int u^{n+1} v dx
+\int u v^{(n+1)}\,dx = u v^{(n)} - u'v^{(n-1)} + u''v^{(n-2)} - u^{(3)}v^{(n-3)} + \cdots + (-1)^n u^{(n)} v + (-1)^{n+1}\int u^{(n+1)} v\,dx.
 \]
 
 This formula is especially useful if $u$ is a \textbf{polynomial function}.
@@ -1517,7 +1518,7 @@ R(x) = \frac{P(x)}{Q(x)}
 Here $P(x)$ and $Q(x)$ are polynomials with real coefficients. If the degree of $P(x)$ is smaller than that of $Q(x)$, then $R(x)$ is a proper fraction. Otherwise, $R(x)$ is an improper fraction.
 \end{definition}
 
-By the \textbf{Fundamental Theorem of Algebra} (Section 2.1), a polynomial of degree $n$ has exactly $n$ complex roots, counted with multiplicity. Consequently, $Q(x)$ factors into linear factors over $\mathbb{C}$, and into linear and irreducible quadratic factors over $\mathbb{R}$:
+By the \textbf{Fundamental Theorem of Algebra} (Section 2.1.3), a polynomial of degree $n$ has exactly $n$ complex roots, counted with multiplicity. Consequently, $Q(x)$ factors into linear factors over $\mathbb{C}$, and into linear and irreducible quadratic factors over $\mathbb{R}$:
 
 \[
 Q(x) = k (x-a)^{\alpha} (x-b)^{\beta} \cdots (x^2 + px + q)^{\mu} (x^2 + rx + s)^{\delta} \cdots
@@ -1547,13 +1548,13 @@ From these relations it follows that:
 \int \frac{mx+n}{x^2 + px + q} dx = \frac{m}{2} \ln |x^2 + px + q| + \frac{2n-mp}{2\sqrt{p^2 - 4q}} \ln \left| \frac{2x + p - \sqrt{p^2 - 4q}}{2x + p + \sqrt{p^2 - 4q}} \right| + C (q < \frac{p^2}{4})
 \]
 
-Although the forms of factorization is complex, but they are all integrable.
+Although the partial-fraction forms look complicated, each of them is integrable.
 
 \begin{itemize}
-    \item $\int \frac{A}{(x-a)^n} dx = \frac{A}{1-n} (x-a)^{1-n} +C,(n \neq 1)$
-    \item $\int \frac{A}{x-a} dx = A \ln|x-a| + C$
-    \item $\int \frac{Mx+N}{x^2 + px + q} dx = \int \frac{\frac{M}{2} (2x+p) + N - \frac{M}{2} p}{(x+\frac{p}{x})^2 - \frac{p^2}{4} + q} dx$
-    \item $I_r = \int \frac{1}{(x^2 + px + q)^r} dx = $, $I_r = \frac{2x + p}{(4q - p^2)(r-1)(x^2 + px + q)^{r-1}} + \frac{2(2r-3)}{(4q - p^2)(r-1)} I_{r-1}$
+    \item $\displaystyle\int \frac{A}{(x-a)^n}\,dx = \frac{A}{1-n}(x-a)^{1-n}+C \quad (n\neq 1)$
+    \item $\displaystyle\int \frac{A}{x-a}\,dx = A\ln|x-a|+C$
+    \item $\displaystyle\int \frac{Mx+N}{x^2+px+q}\,dx = \int \frac{\frac{M}{2}(2x+p) + \left(N-\frac{Mp}{2}\right)}{\left(x+\frac{p}{2}\right)^2 + q - \frac{p^2}{4}}\,dx$
+    \item $\displaystyle I_r = \int \frac{dx}{(x^2+px+q)^r} = \frac{2x+p}{(4q-p^2)(r-1)(x^2+px+q)^{r-1}} + \frac{2(2r-3)}{(4q-p^2)(r-1)}I_{r-1}$
 \end{itemize}
 
 
@@ -1704,7 +1705,7 @@ Likewise, we can prove that $\underline{S}(P) \leq \underline{S}(P')$
 
 Now we can deduce that $m(b-a) \leq \underline{S}(P_2) \leq \overline{S}(P_1) \leq M(b-a)$.
 
-By the Monotone Convergence Theorem (Section 2.2.2), the limits of $\lim_{\lambda \to 0} \overline{S}(P)$ and $\lim_{\lambda \to 0} \underline{S}(P)$ exist.
+By the Monotone Convergence Theorem (Theorem~\ref{thm:mct_en}), the limits of $\lim_{\lambda \to 0} \overline{S}(P)$ and $\lim_{\lambda \to 0} \underline{S}(P)$ exist.
 
 We denoted that:
 
@@ -2047,7 +2048,7 @@ Let $f(x)$ be a positive function defined on $[a, +\infty)$. Consider the limit 
 Test $\int_1^{+\infty} \frac{\ln x}{x^2} \, dx$.
 We suspect convergence because $x^2$ dominates. Let's compare with $p=1.5$ (since $1 < 1.5 < 2$, giving us "room").
 \[
-\lim_{x \to +\infty} x^{1.5} \frac{\ln x}{x^2} = \lim_{x \to +\infty} \frac{\ln x}{x^{0.5}} = 0 \quad (\text{by L'Hopital})
+\lim_{x \to +\infty} x^{1.5} \frac{\ln x}{x^2} = \lim_{x \to +\infty} \frac{\ln x}{x^{0.5}} = 0 \quad (\text{by L'Hôpital's rule})
 \]
 Since $p=1.5 > 1$ and the limit is finite, the integral converges.
 \end{example}

@@ -925,7 +925,8 @@ Note that this theorem is uniquely true for $\mathbb{R}^n$ (more generally, for 
 In addition, there is an equivalent definition based on accumulation points: $S$ is compact if and only if every infinite subset of $S$ has at least one accumulation point in $S$.
 \end{remark}
 \begin{proof}[Outline of Proof for $\mathbb{R}^2$]
-$(\implies)$ If $S$ is compact, we can cover $S$ with open disks $U(0, k)$ for $k=1,2,\dots$. A finite subcover implies $S$ is bounded. To show $S$ is closed, assume $a \notin S$ is an accumulation point. We can construct an open cover of $S$ using sets $V_n = \{ \mathbf{x} : \|\mathbf{x} - a\| > 1/n \}$. Since $a \notin S$, $\bigcup_{n=1}^\infty V_n \supseteq S$. However, since $a$ is an accumulation point, any finite number of $V_n$'s will fail to cover some points in $S$ that are very close to $a$. This contradicts compactness, so $S$ must be closed. \\
+$(\implies)$ If $S$ is compact, we can cover $S$ with open disks $U(0, k)$ for $k=1,2,\dots$. A finite subcover implies $S$ is bounded. To show $S$ is closed, assume $a \notin S$ is an accumulation point. We can construct an open cover of $S$ using sets $V_n = \{ \mathbf{x} : \|\mathbf{x} - a\| > 1/n \}$. Since $a \notin S$, $\bigcup_{n=1}^\infty V_n \supseteq S$. However, since $a$ is an accumulation point, any finite number of $V_n$'s will fail to cover some points in $S$ that are very close to $a$. This contradicts compactness, so $S$ must be closed.
+
 $(\Longleftarrow)$ If $S$ is closed and bounded, we can enclose it in a large closed rectangle. Using the Nested Closed Rectangle Theorem or Bolzano-Weierstrass, one can systematically show that any open cover must have a finite subcover by dividing the rectangle into smaller pieces repeatedly.
 \end{proof}
 

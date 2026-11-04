@@ -27,9 +27,9 @@ x-y =0
 \end{cases}
 \]
 
-They might have different numbers of variables and equations, but they all shared the same feature: \textbf{Each equation is linear.} Variables are raised only to the first power, with no products between variables (like $xy$), or nonlinear functions (e.g., $\sin(x)$ or $\sqrt{x}$).
+They might have different numbers of variables and equations, but they all share one feature: \textbf{each equation is linear}. Each variable appears only to the first power, with no products such as $xy$ and no nonlinear functions such as $\sin x$ or $\sqrt{x}$.
 
-For such kind of equation system, we call it the \textbf{system of linear equations}. Their general expression has $m$ equations and $n$ variables (also called an $m \times n$ system):
+A system of this kind is called a \textbf{system of linear equations}. Its general form has $m$ equations and $n$ variables (an $m \times n$ system):
 
 \[
 \begin{cases}
@@ -43,7 +43,7 @@ Here, $x_1, \ldots, x_n$ are the \textbf{variables} (unknowns), the $a_{ij}$ are
 
 A \textbf{solution} to the system is a set of numbers $(s_1, s_2, \ldots, s_n)$ that satisfies all $m$ equations simultaneously when substituted for $(x_1, x_2, \ldots, x_n)$. The set of all possible solutions is called the \textbf{solution set}.
 
-\begin{example}[A 2x2 System]
+\begin{example}[A $2\times 2$ System]
 Consider the system:
 \[
 \begin{cases}
@@ -66,7 +66,7 @@ In linear algebra, we are interested in three questions:
     \item \textbf{Computation:} If solutions exist, how do we find them?
 \end{enumerate}
 
-Geometrically, for a 2x2 system, each equation represents a line in the $\mathbb{R}^2$ plane. The solution set is the intersection of these lines.
+Geometrically, for a $2\times 2$ system, each equation represents a line in the $\mathbb{R}^2$ plane. The solution set is the intersection of these lines.
 \begin{itemize}
     \item \textbf{Unique Solution:} The lines intersect at a single point.
     \item \textbf{No Solution:} The lines are parallel and distinct.
@@ -74,7 +74,7 @@ Geometrically, for a 2x2 system, each equation represents a line in the $\mathbb
 \end{itemize}
 % 
 
-For a 3x3 system, each equation is a plane in $\mathbb{R}^3$. The solution set is the intersection of these three planes, which could be a point, a line, a plane, or empty.
+For a $3\times 3$ system, each equation is a plane in $\mathbb{R}^3$. The solution set is the intersection of these three planes, which could be a point, a line, a plane, or empty.
 % 
 
 The methods of substitution and elimination become extremely cumbersome for larger systems (e.g., 5 equations, 5 variables). We need a more systematic and efficient approach. This is where matrices come in.
@@ -405,7 +405,7 @@ If no such matrix $B$ exists, $A$ is \textbf{singular} (or \textbf{non-invertibl
 
 
 
-\begin{example}[Inverse of a 2x2 Matrix]
+\begin{example}[Inverse of a $2\times 2$ Matrix]
 Let $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$.
 If $ad-bc \neq 0$, then $A$ is invertible and
 \[ A^{-1} = \frac{1}{ad-bc} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix} \]
@@ -764,7 +764,7 @@ Alternatively, we can expand down \textbf{any} column $j$:
 \[ \det(A) = a_{1j}C_{1j} + a_{2j}C_{2j} + \cdots + a_{nj}C_{nj} = \sum_{i=1}^{n} a_{ij}C_{ij} \]
 \end{theorem}
 
-\begin{example}[Cofactor Expansion of 3x3]
+\begin{example}[Cofactor Expansion of a $3\times 3$ Matrix]
 Let $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix}$. We expand along Row 1.
 \[ \det(A) = 1 \cdot C_{11} + 2 \cdot C_{12} + 3 \cdot C_{13} \]
 \[ C_{11} = (-1)^{1+1} \begin{vmatrix} 5 & 6 \\ 8 & 9 \end{vmatrix} = +1(5\cdot 9 - 6\cdot 8) = 45 - 48 = -3 \]
@@ -854,7 +854,7 @@ Consider the composition on $\Lambda^n(V)$:
 But also equals $\det(AB)(e_1 \wedge \cdots \wedge e_n)$, so $\det(AB) = \det(A)\det(B)$.
 \end{proof}
 
-\begin{remark}[Sarrus's Rule for 3x3]
+\begin{remark}[Sarrus's Rule for $3\times 3$ Matrices]
 For $3 \times 3$ matrices \emph{only}, there is a shortcut.
 % 
 Write the first two columns again to the right:
@@ -867,7 +867,7 @@ Sum the products of the down-right diagonals and subtract the products of the up
 Using our example:
 $(1\cdot 5\cdot 9 + 2\cdot 6\cdot 7 + 3\cdot 4\cdot 8) - (7\cdot 5\cdot 3 + 8\cdot 6\cdot 1 + 9\cdot 4\cdot 2)$
 $= (45 + 84 + 96) - (105 + 48 + 72) = 225 - 225 = 0$.
-\textbf{Warning:} This \emph{does not} work for 4x4 or larger.
+\textbf{Warning:} This \emph{does not} work for $4\times 4$ matrices or larger.
 \end{remark}
 
 \subsection{Properties of Determinants}
@@ -1010,7 +1010,7 @@ We define two fundamental operations on vectors. Let $\mathbf{u} = \begin{pmatri
     Geometrically, this scales the length of the vector by $|c|$ and reverses its direction if $c < 0$.
 \end{enumerate}
 
-These operations satisfy the 8 properties (associativity, commutativity, etc.) listed in Section 2.2.1, making $\mathbb{R}^n$ a prime example of a vector space.
+These operations satisfy the ten axioms listed in Section 3.5.1, making $\mathbb{R}^n$ the prototype of a vector space.
 
 \subsection{Dot Product, Norm, and Orthogonality}
 
@@ -1341,23 +1341,24 @@ A \textbf{Linear Space} (or \textbf{Vector Space}) $V$ is a non-empty set of obj
 
 \subsection{Examples of Linear Spaces}
 The power of this definition comes from the variety of sets that satisfy these axioms.
-\begin{itemize}
-    \item \textbf{Example 1: $\mathbb{R}^n$}
-    As we've just seen, $\mathbb{R}^n$ with standard component-wise operations is our prototype vector space.
-    
-    \item \textbf{Example 2: The Space of Polynomials $\mathcal{P}_n$}
-    Let $V = \mathcal{P}_n$ be the set of all polynomials of degree \textbf{at most} $n$. A "vector" in this space is a polynomial $\mathbf{p}(t) = a_0 + a_1t + \cdots + a_nt^n$.
-    Standard polynomial addition and scalar multiplication satisfy all ten axioms. The "zero vector" is the zero polynomial, $\mathbf{0}(t) = 0$.
-    
-    \item \textbf{Example 3: The Space of Matrices $M_{m \times n}$}
-    The set $V = M_{m \times n}$ of all $m \times n$ matrices, with standard matrix addition and scalar multiplication (as defined in Section 2.2), forms a vector space. The "zero vector" is the $m \times n$ zero matrix.
-    
-    \item \textbf{Example 4: The Space of Functions $C[a, b]$}
-    Let $V = C[a, b]$ be the set of all \emph{continuous} real-valued functions on an interval $[a, b]$.
-    We define operations "pointwise":
-    $(f+g)(x) = f(x) + g(x)$ \quad and \quad $(cf)(x) = c \cdot f(x)$.
-    Since the sum of continuous functions is continuous, and a scalar multiple is continuous, the set is closed. The "zero vector" is the constant function $f(x) = 0$. This forms a vector space.
-\end{itemize}
+\begin{example}[The space $\mathbb{R}^n$]
+With the standard componentwise operations, $\mathbb{R}^n$ is the prototype vector space.
+\end{example}
+
+\begin{example}[The space of polynomials $\mathcal{P}_n$]
+Let $V=\mathcal{P}_n$ be the set of all polynomials of degree \textbf{at most} $n$. A vector in this space is a polynomial $\mathbf{p}(t)=a_0+a_1t+\cdots+a_nt^n$.
+Polynomial addition and scalar multiplication satisfy all ten axioms; the zero vector is the zero polynomial $\mathbf{0}(t)=0$.
+\end{example}
+
+\begin{example}[The space of matrices $M_{m\times n}$]
+The set $V=M_{m\times n}$ of all $m\times n$ matrices, with the matrix addition and scalar multiplication of Section 3.1.2, forms a vector space whose zero vector is the $m\times n$ zero matrix.
+\end{example}
+
+\begin{example}[The space of functions $C[a,b]$]
+Let $V=C[a,b]$ be the set of all \emph{continuous} real-valued functions on an interval $[a,b]$, with the pointwise operations
+$(f+g)(x)=f(x)+g(x)$ and $(cf)(x)=c\,f(x)$.
+Sums and scalar multiples of continuous functions are continuous, so $V$ is closed under both operations; the zero vector is the constant function $0$, and $V$ is a vector space.
+\end{example}
 
 \subsection{Subspaces}
 Often, a vector space is contained inside a larger one.
